@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
 import { DM_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/ui/theme-wrapper";
 
 import "@/styles/globals.css";
 import { api } from "@/lib/api";
@@ -20,9 +21,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <main className={cn(dmSans.className)}>
-        <Component {...pageProps} />
-      </main>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <main className={cn(dmSans.className)}>
+          <Component {...pageProps} />
+        </main>
+      </ThemeProvider>
     </SessionProvider>
   );
 };

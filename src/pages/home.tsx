@@ -6,14 +6,10 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AlbumArtwork } from "@/components/album-artwork";
-import { Menu } from "@/components/menu";
 import { UserNav } from "@/components/UserNav";
 import { CreateConfig } from "@/components/placeholder";
 import { Sidebar } from "@/components/sidebar";
-// import { listenNowAlbums, madeForYouAlbums } from "./data/albums";
-// import { playlists } from "./data/playlists";
 import Image from "next/image";
-import { PlusCircle, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -24,7 +20,6 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const [currentTopic, setCurrentTopic] = React.useState("Algebra");
-
 
   return (
     <>
@@ -103,7 +98,7 @@ export default function Home() {
                       </div>
                       <div className="mt-6 space-y-1">
                         <h2 className="text-2xl font-semibold tracking-tight">
-                          Made for You
+                          Past Exams (2020-2021)
                         </h2>
                         <p className="text-sm text-muted-foreground">
                           Your personal playlists. Updated daily.

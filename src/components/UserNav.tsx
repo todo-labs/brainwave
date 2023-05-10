@@ -34,6 +34,8 @@ export function UserNav() {
     void signOut();
   };
 
+  console.log(session?.user?.role);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
