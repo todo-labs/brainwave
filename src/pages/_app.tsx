@@ -3,6 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
 import { DM_Sans } from "next/font/google";
+import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
 import { api } from "@/lib/api";
@@ -19,7 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <main className={dmSans.className}>
+      <main className={cn(dmSans.className)}>
         <Component {...pageProps} />
       </main>
     </SessionProvider>

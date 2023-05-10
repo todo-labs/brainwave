@@ -2,11 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Command } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
 import { UserAuthForm } from "@/components/AuthForm";
 import { getServerAuthSession } from "@/server/auth";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 
 export default function AuthenticationPage() {
   return (
