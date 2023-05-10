@@ -1,0 +1,42 @@
+{
+  "defaultHome": {
+    "loading": {
+      "title": "Loading Reminders...",
+      "message": "We're fetching your reminders now. This should only take a few seconds."
+    },
+    "error": {
+      "title": "Whoops!",
+      "message": "It looks like something went wrong while trying to fetch your reminders. Don't worry, we got this.",
+      "btn": "Go Back"
+    },
+    "empty": {
+      "title": "No Reminders Available",
+      "message": "You don't have any reminders available. Create one now!",
+      "btn": "Create Reminder"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} Notification Reminder Startup. All rights reserved.",
+    "address": "1234 Street Name, City, Country",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contactUs": "Contact Us"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "FutureText helps you stay connected with friends, family, and customers by providing an innovative scheduling platform that allows you to set up text messages to be sent in the future. Our clean and simple user interface makes scheduling texts easy for everyone. Join us today and never forget an important occasion or deadline again!",
+    "personalizationTitle": "Personalization",
+    "personalizationDescription": "We believe that every message counts and that's why we're here to help you send them. So why not join us and start scheduling your texts today?",
+    "securityTitle": "Security",
+    "securityDescription": "We take security seriously and have implemented a number of measures to ensure that your data is safe with us.",
+    "privacyTitle": "Privacy",
+    "privacyDescription": "We take privacy seriously and have implemented a number of measures to ensure that your data is safe with us."
+  },
+  "userNav": {
+    "profile": "profile",
+    "settings": "settings",
+    "logout": "logout",
+    "addCredits": "add credits",
+    "dashboard": "dashboard"
+  }
+}
