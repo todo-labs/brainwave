@@ -1,10 +1,12 @@
 # Brainwave
 
-Brainwave is a quiz platform that uses OpenAI to generate questions and answers in real-time. The platform offers users the opportunity to take quizzes in a wide range of subjects and receive instant feedback on their performance.
+Brainwave is a quiz platform that uses OpenAI to generate questions and answers in real-time. 
+The platform offers users the opportunity to take quizzes in a wide range of subjects and receive instant feedback on their performance.
 
 ## Vision
 
-Our vision is to create an accessible and engaging platform for anyone who wants to learn and challenge themselves through quizzes. By leveraging the power of OpenAI, we aim to provide a unique and dynamic learning experience that adapts to each user's knowledge level.
+Our vision is to create an accessible and engaging platform for anyone who wants to learn and challenge themselves through quizzes. 
+By leveraging the power of OpenAI, we aim to provide a unique and dynamic learning experience that adapts to each user's knowledge level.
 
 ## Getting Started
 
@@ -14,6 +16,7 @@ To get started with Brainwave, you will need to set up your development environm
 
 - Node.js (v14 or later)
 - PostgreSQL
+- Yarn
 
 ### Installing
 
@@ -26,7 +29,7 @@ git clone
 2. Install dependencies:
 
 ```bash
-npm install
+yarn install
 ```
 
 3. Create a `.env` file in the root directory and add the following environment variables:

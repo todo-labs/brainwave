@@ -12,6 +12,9 @@ import { Icons } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 type AuthFormProps = React.HTMLAttributes<HTMLDivElement>;
+type Credentials = {
+  email: string;
+};
 
 export function UserAuthForm({ className, ...props }: AuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -20,9 +23,9 @@ export function UserAuthForm({ className, ...props }: AuthFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<Credentials>();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: Credentials) => {
     setIsLoading(true);
     await signIn("email", { email: data.email });
     setIsLoading(false);
@@ -58,4 +61,3 @@ export function UserAuthForm({ className, ...props }: AuthFormProps) {
     </div>
   );
 }
-

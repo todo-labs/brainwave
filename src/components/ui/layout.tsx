@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-import Meta from "./Meta";
-import FullScreenConfetti from "./Confetti";
-import { UserNav } from "./UserNav";
-import { Brand } from "./Brand";
+import Meta from "./meta";
+import FullScreenConfetti from "./confetti";
+import { UserNav } from "../UserNav";
 
 import { api } from "@/lib/api";
 
 import useStore from "@/store/useStore";
-import { Paragraph } from "./Typography";
+import { Paragraph } from "./typography";
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -22,7 +21,6 @@ interface ILayoutProps {
 const Layout = ({ children, meta }: ILayoutProps) => {
   const { showConfetti, setShowConfetti } = useStore();
   const { data: session } = useSession();
-  const profileQuery = api.profile.get.useQuery();
 
   useEffect(() => {
     if (showConfetti) {
@@ -44,28 +42,7 @@ const Layout = ({ children, meta }: ILayoutProps) => {
         <div className="flex items-start justify-between">
           <div className="flex w-full flex-col md:space-y-4">
             <section>
-              <div className="flex justify-between border-b-2 bg-white px-4 py-6 shadow-md">
-                <Brand />
-                {session && (
-                  <div className="flex space-x-5">
-                    {profileQuery.data?.credits && (
-                      <div className="flex items-center justify-center">
-                        <div className="text-sm font-semibold text-gray-500">
-                          <Paragraph
-                            tx="credits"
-                            className="capitalize"
-                            txOptions={{
-                              num: profileQuery.data?.credits || 0,
-                            }}
-                          />
-                        </div>
-                        <div className="text-2xl font-bold text-gray-800"></div>
-                      </div>
-                    )}
-                    <UserNav />
-                  </div>
-                )}
-              </div>
+              <div className="flex justify-between border-b-2 bg-white px-4 py-6 shadow-md"></div>
             </section>
             <div className="h-screen overflow-auto bg-gray-100/50 p-10 pb-24 md:px-6">
               {children}

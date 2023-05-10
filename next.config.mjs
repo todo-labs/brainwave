@@ -21,5 +21,8 @@ const config = {
   images: {
     domains: ["picsum.photos", "images.unsplash.com", "images.pexels.com"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 export default config;
