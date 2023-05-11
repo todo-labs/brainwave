@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-wrapper";
 
 import "@/styles/globals.css";
+import "src/styles/verify-request.css"
 import { api } from "@/lib/api";
 
 const dmSans = DM_Sans({
