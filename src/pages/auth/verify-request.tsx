@@ -48,12 +48,16 @@ const VerifyRequestPage: React.FC = (props) => {
             <Command className="mr-2 h-6 w-6" /> Brainwave
             
           </div>
+      <div>
+      <h2 className="text-1xl font-semibold tracking-tight">Unlocking Your Brain's Potential with BrainWave</h2>
+
+      </div>
       <div className="w-full text-center lg:w-2/3 bg-blue bg-gradient-to-t  rounded-3xl ">
       <h1 className="bg-gradient-to-t from-zinc-100/50 to-white bg-clip-text py-4 text-center text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
   <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text">
     Check Your Email
   </span>
-  <span className="text-white-500 bg-gradient-to-r from-blue-500 to-grey-600 bg-clip-text ml-1">
+  <span className="text-white-500 bg-gradient-to-r from-blue-500 to-gray-600 bg-clip-text ml-1">
     !
   </span>
 </h1>
@@ -72,7 +76,7 @@ const VerifyRequestPage: React.FC = (props) => {
           <Button
               variant="default"
               onClick={() => router.push("/auth/sign-in")}
-              className="bg-gray-500 text-white500 bg-gradient-to-r from-blue-500 to-grey-600 font-semibold hover:bg-gray-700 transition duration-300 ease-in-out px-4 py-2 rounded-md">
+              className="bg-gray-900 text-white500 bg-gradient-to-r from-blue-500 to-grey-600 font-semibold hover:bg-gray-700 transition duration-300 ease-in-out px-4 py-2 rounded-md">
                     Sign In
             </Button>
         </div>
