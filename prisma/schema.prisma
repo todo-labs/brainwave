@@ -1,6 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+
+
 generator client {
     provider = "prisma-client-js"
     previewFeatures = ["jsonProtocol"]
@@ -13,6 +15,7 @@ datasource db {
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
+    
 }
 
 // Necessary for Next auth
@@ -57,6 +60,17 @@ model User {
     sessions      Session[]
     role          Role      @default(USER)
     credits       Int       @default(10)
+}
+
+model Quiz {
+  id        Int      @id @default(autoincrement())
+  title     String
+  description String
+  topic     String
+  type      String
+  questions String
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
