@@ -14,8 +14,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { error } from "console";
 
-
-
 export const metadata: Metadata = {
   title: "Music App",
   description: "Example music app using the components.",

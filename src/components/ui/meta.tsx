@@ -57,11 +57,7 @@ export default function Meta(props: SeoProps) {
             property="og:publish_date"
             content={meta.date}
           />
-          <meta
-            name="author"
-            property="article:author"
-            content="David Ojo"
-          />
+          <meta name="author" property="article:author" content="David Ojo" />
         </>
       )}
 

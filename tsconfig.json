@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.mjs"
-, "src/components/placeholder."  ],
+    "**/*.mjs",
+    "src/components/placeholder."
+  ],
   "exclude": ["node_modules"]
 }

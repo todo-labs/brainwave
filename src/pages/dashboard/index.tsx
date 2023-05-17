@@ -15,12 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarDateRangePicker } from "@/components/dashboard/date-range-picker";
 import { Overview } from "@/components/dashboard/overview";
 import { RecentSales } from "@/components/dashboard/recent-sales";
@@ -154,9 +149,7 @@ export default function DashboardPage() {
               </div>
             </TabsContent>
             <TabsContent value="analytics">
-              <Heading level="h2">
-                Not Implemented Yet
-              </Heading>
+              <Heading level="h2">Not Implemented Yet</Heading>
             </TabsContent>
           </Tabs>
         </div>

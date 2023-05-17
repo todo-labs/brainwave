@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-//change the homepage 
+//change the homepage
 export const topics = [
   {
     name: "Math",

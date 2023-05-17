@@ -14,7 +14,6 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 
-
 interface Album {
   name: string;
   artist: string;

@@ -56,9 +56,7 @@ export function UserNav() {
           <div className="flex flex-col space-y-1">
             <Paragraph>{session?.user.email || "Anonymous"}</Paragraph>
             <p className="text-xs leading-none text-muted-foreground">
-              <span className="font-bold text-primary">
-                {credits || 0}
-              </span>{" "}
+              <span className="font-bold text-primary">{credits || 0}</span>{" "}
               credits remaining
             </p>
           </div>

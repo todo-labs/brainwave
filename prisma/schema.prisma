@@ -83,7 +83,6 @@ enum QuizDifficulty {
 }
 
 enum Topics {
-  //Replace everything below in this enum as caps 
   ALGEBRA
   GEOMETRY
   TRIGONOMETRY

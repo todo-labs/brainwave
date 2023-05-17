@@ -36,10 +36,8 @@ export default function AuthenticationPage() {
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
             <Command className="mr-2 h-6 w-6" /> Brainwave
-            
           </div>
-          
-          
+
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
@@ -53,7 +51,9 @@ export default function AuthenticationPage() {
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <h2 className="text-1xl font-semibold tracking-tight">Unlock Your Brain's Potential with BrainWave</h2>
+            <h2 className="text-1xl font-semibold tracking-tight">
+              Unlock Your Brain's Potential with BrainWave
+            </h2>
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Sign in to your account

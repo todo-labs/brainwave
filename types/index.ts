@@ -28,4 +28,3 @@ type RecursiveKeyOfHandleValue<
   : TValue extends object
   ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
   : Text;
-

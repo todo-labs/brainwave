@@ -41,9 +41,7 @@ export function CreateConfig() {
     <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
       <ScrollArea className="h-fit w-full">
         <CardHeader>
-          <CardTitle>
-            Lets build your exam 
-          </CardTitle>
+          <CardTitle>Lets build your exam</CardTitle>
           <CardDescription>
             What area are you having problems with?
           </CardDescription>

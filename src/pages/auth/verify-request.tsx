@@ -45,42 +45,43 @@ const VerifyRequestPage: React.FC = (props) => {
         className="rounded object-cover object-center"
       /> */}
       <div className="relative z-20 flex items-center text-lg font-medium">
-            <Command className="mr-2 h-6 w-6" /> Brainwave
-            
-          </div>
-      <div>
-      <h2 className="text-1xl font-semibold tracking-tight">Unlocking Your Brain's Potential with BrainWave</h2>
-
+        <Command className="mr-2 h-6 w-6" /> Brainwave
       </div>
-      <div className="w-full text-center lg:w-2/3 bg-blue bg-gradient-to-t  rounded-3xl ">
-      <h1 className="bg-gradient-to-t from-zinc-100/50 to-white bg-clip-text py-4 text-center text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
-  <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text">
-    Check Your Email
-  </span>
-  <span className="text-white-500 bg-gradient-to-r from-blue-500 to-gray-600 bg-clip-text ml-1">
-    !
-  </span>
-</h1>
+      <div>
+        <h2 className="text-1xl font-semibold tracking-tight">
+          Unlocking Your Brain's Potential with BrainWave
+        </h2>
+      </div>
+      <div className="bg-blue w-full rounded-3xl bg-gradient-to-t text-center  lg:w-2/3 ">
+        <h1 className="bg-gradient-to-t from-zinc-100/50 to-white bg-clip-text py-4 text-center text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
+          <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text">
+            Check Your Email
+          </span>
+          <span className="text-white-500 ml-1 bg-gradient-to-r from-blue-500 to-gray-600 bg-clip-text">
+            !
+          </span>
+        </h1>
 
         <p className="mb-8 leading-relaxed">
           We&apos;ve sent a verification link to your email address. Please
           click the link to complete your account setup.
         </p>
-        <div className="flex justify-center space-x-4 mt-8">
+        <div className="mt-8 flex justify-center space-x-4">
           <Button
-             variant="outline"
-             onClick={() => router.push("/")}
-             className=" text-white  font-semibold hover:bg-gray-700 transition duration-300 ease-in-out px-4 py-2 rounded-md">
-             Go Home
+            variant="outline"
+            onClick={() => router.push("/")}
+            className=" rounded-md  px-4 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-gray-700"
+          >
+            Go Home
           </Button>
           <Button
-              variant="default"
-              onClick={() => router.push("/auth/sign-in")}
-              className="bg-gray-900 text-white500 bg-gradient-to-r from-blue-500 to-grey-600 font-semibold hover:bg-gray-700 transition duration-300 ease-in-out px-4 py-2 rounded-md">
-                    Sign In
-            </Button>
+            variant="default"
+            onClick={() => router.push("/auth/sign-in")}
+            className="text-white500 to-grey-600 rounded-md bg-gray-900 bg-gradient-to-r from-blue-500 px-4 py-2 font-semibold transition duration-300 ease-in-out hover:bg-gray-700"
+          >
+            Sign In
+          </Button>
         </div>
-
       </div>
     </section>
   );
