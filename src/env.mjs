@@ -25,6 +25,9 @@ export const env = createEnv({
     EMAIL_FROM: z.string().min(1).optional(),
     PEXELS_API_KEY: z.string().min(1).optional(),
     MAX_QUESTIONS_PER_QUIZ: z.string().regex(/^\d+$/).optional(),
+    STRIPE_SECRET_KEY: z.string().min(1).optional(),
+    STRIPE_WEB_HOOK_SECRET: z.string().min(1).optional(),
+    PRICE_ID: z.string().min(1).optional(),
   },
 
   /**
@@ -35,6 +38,7 @@ export const env = createEnv({
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
     NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ: z.string().regex(/^\d+$/).optional(),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
   },
 
   /**
@@ -55,5 +59,10 @@ export const env = createEnv({
     PEXELS_API_KEY: process.env.PEXELS_API_KEY,
     MAX_QUESTIONS_PER_QUIZ: process.env.MAX_QUESTIONS_PER_QUIZ,
     NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ: process.env.MAX_QUESTIONS_PER_QUIZ,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+    STRIPE_WEB_HOOK_SECRET: process.env.STRIPE_WEB_HOOK_SECRET,
+    PRICE_ID: process.env.PRICE_ID,
   },
 });

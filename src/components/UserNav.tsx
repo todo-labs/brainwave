@@ -1,6 +1,7 @@
 import { CreditCard, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import router from "next/router";
+import { Role } from "@prisma/client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -14,9 +15,11 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Role } from "@prisma/client";
 import { Paragraph } from "./ui/typography";
+
 import { api } from "@/lib/api";
+import { useBuyCredits } from "@/hooks/useBuyCredits";
+import useStore from "@/store/useStore";
 
 export function UserNav() {
   const { data: session } = useSession();
@@ -34,7 +37,8 @@ export function UserNav() {
     void signOut();
   };
 
-  console.log(session?.user?.role);
+  const { buyCredits } = useBuyCredits();
+  const { showConfetti } = useStore();
 
   return (
     <DropdownMenu>
@@ -68,7 +72,11 @@ export function UserNav() {
             <Paragraph className="capitalize" tx="userNav.profile" />
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => void router.push(`/billing`)}>
+          <DropdownMenuItem
+            onClick={() => {
+              buyCredits().catch(console.error);
+            }}
+          >
             <CreditCard className="mr-2 h-4 w-4" />
             <Paragraph className="capitalize" tx="userNav.addCredits" />
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
