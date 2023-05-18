@@ -10,6 +10,8 @@ import { UserNav } from "@/components/UserNav";
 import { CreateConfig } from "@/components/placeholder";
 import { Sidebar } from "@/components/sidebar";
 import Image from "next/image";
+import { quizForm } from 'src/components/quizForm';
+
 
 import { Button } from "@/components/ui/button";
 import { error } from "console";
@@ -24,6 +26,11 @@ export default function Home() {
 
   return (
     <>
+  
+  
+      {quizForm()}
+   
+  
       <div className="md:hidden">
         <Image
           src="/examples/music-light.png"

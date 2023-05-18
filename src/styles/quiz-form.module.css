@@ -1,0 +1,83 @@
+.container {
+    background-image: linear-gradient(to bottom left, teal, rgb(5, 5, 63));
+    margin: 50px;
+    padding: 4%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container h1 {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 2%;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .formContainer label {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 5px;
+  }
+  
+  .formContainer input,
+  .formContainer select {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  
+  .placeholder {
+    color: lightgrey;
+    font-weight: 100;
+  }
+  
+  .formContainer input[type='radio'] {
+    margin-right: 5px;
+  }
+  
+  .formContainer input[type='submit'] {
+    background-color: #00b4d8;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .formContainer input[type='submit']:hover {
+    background-color: #0077b6;
+  }
+  
+
+  .formContainer button {
+    border-radius: 10%;
+    padding: 10px;
+    background-image: linear-gradient(to bottom left, teal, rgb(5, 5, 63));
+
+  }
+
+  .formContainer button:hover {
+    border-radius: 10%;
+    padding: 10px;
+    background-image: linear-gradient(to bottom left,rgb(5, 5, 63), teal,);
+    color: black;
+  }

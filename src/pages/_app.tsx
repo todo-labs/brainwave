@@ -24,6 +24,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <main className={cn(dmSans.className)}>
+          
           <Component {...pageProps} />
         </main>
       </ThemeProvider>
