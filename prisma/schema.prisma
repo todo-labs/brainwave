@@ -56,7 +56,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   role          Role      @default(USER)
-  credits       Int       @default(10)
+  credits       Int       @default(15)
   quizzes       Quiz[]
 }
 
@@ -88,11 +88,11 @@ enum Topics {
   TRIGONOMETRY
   STATISTICS
   CALCULUS
-  ANCIENT
-  EUROPEAN
-  AMERICAN
-  ASIAN
-  AFRICAN
+  ANCIENT_HISTORY
+  EUROPEAN_HISTORY
+  AMERICAN_HISTORY
+  ASIAN_HISTORY
+  AFRICAN_HISTORY
   CHEMISTRY
   BIOLOGY
   PHYSICS

@@ -24,6 +24,7 @@ export const env = createEnv({
     EMAIL_PASSWORD: z.string().min(1).optional(),
     EMAIL_FROM: z.string().min(1).optional(),
     PEXELS_API_KEY: z.string().min(1).optional(),
+    MAX_QUESTIONS_PER_QUIZ: z.string().regex(/^\d+$/).optional(),
   },
 
   /**
@@ -33,6 +34,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+    NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ: z.string().regex(/^\d+$/).optional(),
   },
 
   /**
@@ -51,5 +53,7 @@ export const env = createEnv({
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
     EMAIL_FROM: process.env.EMAIL_FROM,
     PEXELS_API_KEY: process.env.PEXELS_API_KEY,
+    MAX_QUESTIONS_PER_QUIZ: process.env.MAX_QUESTIONS_PER_QUIZ,
+    NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ: process.env.MAX_QUESTIONS_PER_QUIZ,
   },
 });

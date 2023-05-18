@@ -1,9 +1,9 @@
-import { Plus, Podcast } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 
 import {
   Card,
@@ -36,6 +36,7 @@ const diffuculty = [
 
 export function CreateConfig() {
   const [type, setType] = useState("easy");
+  const [numQuestions, setNumQuestions] = useState(10);
 
   return (
     <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
@@ -67,14 +68,19 @@ export function CreateConfig() {
                 </SelectContent>
               </Select>
             </div>
-            {/* <div>
-              <Label htmlFor="phone">Phone</Label>
-              <Input id="phone" placeholder="Phone Number" />
-            </div> */}
+            <div>
+              <Label htmlFor="text">University</Label>
+              <Input id="university" placeholder="Brown University" />
+            </div>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="subject">Message Title</Label>
-            <Input id="title" placeholder="Reminder for..." />
+            <Label htmlFor="subject">{numQuestions} Questions</Label>
+            <Slider
+              defaultValue={[numQuestions]}
+              max={50}
+              step={1}
+              onValueChange={(value) => setNumQuestions(value[0] as number)}
+            />
           </div>
           <div className="grid gap-2">
             <div className="w-full">

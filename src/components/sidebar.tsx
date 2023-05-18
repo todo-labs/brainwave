@@ -2,12 +2,17 @@ import { topics } from "@/lib/utils";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import useStore from "@/store/useStore";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  playlists: [];
-}
+type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
-export function Sidebar({ className, playlists }: SidebarProps) {
+export function Sidebar({ className }: SidebarProps) {
+  const { currentTopic, setCurrentTopic } = useStore();
+
+  const isActive = (topic: string) => {
+    return currentTopic === topic;
+  };
+
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -22,7 +27,10 @@ export function Sidebar({ className, playlists }: SidebarProps) {
                   key={subtopic.name}
                   variant="ghost"
                   size="sm"
-                  className="w-full justify-start"
+                  className={cn("w-full justify-start", {
+                    "bg-accent": isActive(subtopic.topic),
+                  })}
+                  onClick={() => setCurrentTopic(subtopic.topic)}
                 >
                   {subtopic.name} {subtopic.emoji}
                 </Button>

@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
 import * as React from "react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Image from "next/image";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import { AlbumArtwork } from "@/components/album-artwork";
 import { UserNav } from "@/components/UserNav";
-import { CreateConfig } from "@/components/placeholder";
+import { CreateConfig } from "@/components/createConfig";
 import { Sidebar } from "@/components/sidebar";
-import Image from "next/image";
-import { quizForm } from 'src/components/quizForm';
 
+import useStore from "@/store/useStore";
 
 import { Button } from "@/components/ui/button";
-import { error } from "console";
 
 export const metadata: Metadata = {
-  title: "Music App",
-  description: "Example music app using the components.",
+  title: "Brainwave",
+  description:
+    "Brainwave is a platform for learning and testing your knowledge.",
 };
 
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
+
 export default function Home() {
-  const [currentTopic, setCurrentTopic] = React.useState("Algebra");
+  const { currentTopic } = useStore();
 
   return (
     <>
-  
-  
-      {quizForm()}
-   
-  
+      {/* {quizForm()} */}
       <div className="md:hidden">
         <Image
           src="/examples/music-light.png"
@@ -52,7 +56,7 @@ export default function Home() {
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">
-              <Sidebar playlists={[]} className="hidden lg:block" />
+              <Sidebar className="hidden lg:block" />
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
                   <Tabs defaultValue="exam" className="h-full space-y-6">
@@ -74,8 +78,12 @@ export default function Home() {
                     >
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
-                          <h2 className="text-2xl font-semibold tracking-tight">
-                            Listen Now
+                          <h2 className="text-2xl font-semibold capitalize tracking-tight">
+                            Choose your{" "}
+                            {currentTopic
+                              .replace(/-/g, " ")
+                              .toLocaleLowerCase()}{" "}
+                            Exam
                           </h2>
                           <p className="text-sm text-muted-foreground">
                             Top picks for you. Updated daily.
