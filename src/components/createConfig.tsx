@@ -22,11 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const diffuculty = [
   { label: "Easy", value: "easy" },
@@ -39,7 +35,7 @@ export function CreateConfig() {
   const [numQuestions, setNumQuestions] = useState(10);
 
   return (
-    <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
+    <div className="flex  shrink-0 items-center justify-center rounded-md border border-dashed">
       <ScrollArea className="h-fit w-full">
         <CardHeader>
           <CardTitle>Lets build your exam</CardTitle>
@@ -81,6 +77,72 @@ export function CreateConfig() {
               step={1}
               onValueChange={(value) => setNumQuestions(value[0] as number)}
             />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <div className="items-top flex space-x-2">
+                <Checkbox id="terms1" />
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Multiple Choice
+                  </label>
+                  <p className="text-sm text-muted-foreground">
+                    Multiple choice questions with 4 options
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="items-top flex space-x-2">
+                <Checkbox id="terms1" />
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Short Answer
+                  </label>
+                  <p className="text-sm text-muted-foreground">
+                    Short answer questions with 1-2 sentences
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="items-top flex space-x-2">
+                <Checkbox id="terms1" />
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    True/False
+                  </label>
+                  <p className="text-sm text-muted-foreground">
+                    True or false questions
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="items-top flex space-x-2">
+                <Checkbox id="terms1" />
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Matching
+                  </label>
+                  <p className="text-sm text-muted-foreground">
+                    Match the correct answer to the question
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="grid gap-2">
             <div className="w-full">
