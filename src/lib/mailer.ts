@@ -61,7 +61,11 @@ export function html(params: { url: string }) {
         <h1>Login Verification Code</h1>
         <p>Dear User,</p>
         <p>Thank you for choosing our platform. To securely log in, please use the following verification code:</p>
-        <h2 class="verification-code">${url}</h2>
+        <a href="${url}" >
+          <h2 class="verification-code">
+            Click here to login
+          </h2>
+        </a>
         <p class="disclaimer">This code is valid for a limited time and should not be shared with anyone. If you did not request this code, please ignore this email.</p>
         <p>Happy exploring!<br>Brainwave.quest</p>
       </div>
