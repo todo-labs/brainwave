@@ -187,10 +187,10 @@
     picocolors "^1.0.0"
     tslib "^2.5.0"
 
-"@prisma/client@^4.11.0", "@prisma/client@>=2.26.0 || >=3":
-  version "4.14.0"
-  resolved "https://registry.npmjs.org/@prisma/client/-/client-4.14.0.tgz"
-  integrity sha512-MK/XaA2sFdfaOa7I9MjNKz6dxeIEdeZlnpNRoF2w3JuRLlFJLkpp6cD3yaqw2nUUhbrn3Iqe3ZpVV+VuGGil7Q==
+"@prisma/client@^4.14.1", "@prisma/client@>=2.26.0 || >=3":
+  version "4.14.1"
+  resolved "https://registry.npmjs.org/@prisma/client/-/client-4.14.1.tgz"
+  integrity sha512-TZIswkeX1ccsHG/eN2kICzg/csXll0osK3EHu1QKd8VJ3XLcXozbNELKkCNfsCUvKJAwPdDtFCzF+O+raIVldw==
   dependencies:
     "@prisma/engines-version" "4.14.0-67.d9a4c5988f480fa576d43970d5a23641aa77bc9c"
 
@@ -697,7 +697,7 @@
   resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-4.29.5.tgz"
   integrity sha512-xXIiyQ/4r9KfaJ3k6kejqcaqFXXBTzN2aOJ5H1J6aTJE9hl/nbgAdfF6oiIu0CD5xowejJEJ6bBg8TO7BN4NuQ==
 
-"@tanstack/react-query@^4.18.0", "@tanstack/react-query@^4.28.0":
+"@tanstack/react-query@^4.0.0", "@tanstack/react-query@^4.18.0", "@tanstack/react-query@^4.28.0":
   version "4.29.5"
   resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-4.29.5.tgz"
   integrity sha512-F87cibC3s3eG0Q90g2O+hqntpCrudKFnR8P24qkH9uccEhXErnJxBC/AAI4cJRV2bfMO8IeGZQYf3WyYgmSg0w==
@@ -705,7 +705,7 @@
     "@tanstack/query-core" "4.29.5"
     use-sync-external-store "^1.2.0"
 
-"@trpc/client@^10.18.0", "@trpc/client@10.25.1":
+"@trpc/client@^10.0.0", "@trpc/client@^10.18.0", "@trpc/client@10.25.1":
   version "10.25.1"
   resolved "https://registry.npmjs.org/@trpc/client/-/client-10.25.1.tgz"
   integrity sha512-6ymAOKrbUgi6H/MxDZiDXXiADCF0B2fsGewBe7yWSQGNl/MK1GTuIzltJ6WAUqjmMmzrCxE621uzUihdFZ4tow==
@@ -722,7 +722,7 @@
   resolved "https://registry.npmjs.org/@trpc/react-query/-/react-query-10.25.1.tgz"
   integrity sha512-2VFxD8qoULKzlWORU0l2cR0AmOHWNZC8AOpX7v1lZE/IllFzBH5KQGK6pGCQuSqLvxwJEBjSpw4bkFNMrMeg9g==
 
-"@trpc/server@^10.18.0", "@trpc/server@10.25.1":
+"@trpc/server@^10.0.0", "@trpc/server@^10.18.0", "@trpc/server@10.25.1":
   version "10.25.1"
   resolved "https://registry.npmjs.org/@trpc/server/-/server-10.25.1.tgz"
   integrity sha512-zi08QKVvWPK0EEGpEy7i5PlOK9CBlQb3LqiIdmaIpe27DzFNz6+yZ4qXwsLXTwDcDphELl/BNw+RzzQ2+Ou2vw==
@@ -3093,7 +3093,7 @@ react-dom-confetti@^0.2.0:
   dependencies:
     dom-confetti "0.2.2"
 
-react-dom@*, "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18", react-dom@^18.2.0, react-dom@>=15.0.0, react-dom@>=16.8.0, react-dom@>=18.0.0, react-dom@18.2.0:
+react-dom@*, "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18", react-dom@^18.0.0, react-dom@^18.2.0, react-dom@>=15.0.0, react-dom@>=16.8.0, react-dom@>=18.0.0, react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -3182,7 +3182,7 @@ react-transition-group@2.9.0:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@*, "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18", react@^18.2.0, "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>= 17.0.2", react@>=15.0.0, react@>=16.8, react@>=16.8.0, react@>=18.0.0, react@18.2.0:
+react@*, "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18", react@^18.0.0, react@^18.2.0, "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>= 17.0.2", react@>=15.0.0, react@>=16.8, react@>=16.8.0, react@>=18.0.0, react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -3571,6 +3571,16 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+trpc-react@^0.1.0-beta.12:
+  version "0.1.0-beta.12"
+  resolved "https://registry.npmjs.org/trpc-react/-/trpc-react-0.1.0-beta.12.tgz"
+  integrity sha512-nyfYghzHFOVnDNXAOb16zgmRgVghF/5Ds8MNzqyL1fM2iNujVIyGtzNjtKfD/1dHxWq3/yazypD29xnOZD5Qkg==
+
+trpc@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.npmjs.org/trpc/-/trpc-0.8.2.tgz"
+  integrity sha512-YVUABtsFOapHN8xOnuy5Kzzd+C8g1jlVqoXwq020CKd5ua9ItBax3SqSWmO1pw/DM3ObKSCZJpoNpxBAfFigSA==
 
 ts-interface-checker@^0.1.9:
   version "0.1.13"

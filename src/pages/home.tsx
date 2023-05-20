@@ -13,6 +13,9 @@ import { Sidebar } from "@/components/sidebar";
 
 import useStore from "@/store/useStore";
 
+// import the trpc quiz.ts into the file
+// import { quizRouter } from "src/server/api/routers/quiz";
+
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -30,6 +33,9 @@ export async function getStaticProps({ locale }: { locale: string }) {
 }
 
 export default function Home() {
+
+  // const examList = quizRouter.listExams
+  // console.log(examList)
   const { currentTopic } = useStore();
 
   return (
@@ -116,6 +122,7 @@ export default function Home() {
                         <h2 className="text-2xl font-semibold tracking-tight">
                           Past Exams (2020-2021)
                         </h2>
+
                         <p className="text-sm text-muted-foreground">
                           Your personal playlists. Updated daily.
                         </p>

@@ -7,6 +7,7 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";  // bu
 // Import the 'QuizDifficulty' and 'Topics' enums from the '@prisma/client' library
 import { QuizDifficulty, Topics } from "@prisma/client";
 
+
 // Create a router object for quizzes using the 'createTRPCRouter' function
 export const quizRouter = createTRPCRouter({
   // Define a procedure for getting past exams
@@ -16,6 +17,7 @@ export const quizRouter = createTRPCRouter({
       where: {
         userId: ctx.session.user.id,
       },
+      
     });
   }),
 
@@ -48,7 +50,34 @@ export const quizRouter = createTRPCRouter({
           userId: ctx.session.user.id,
         },
       });
+
     }),
+
+    // Define a procedure for listing the list of past exams to the users
+    listExams: protectedProcedure.query(async ({ ctx}) => { 
+      try {
+        // Query the database using Prisma to retrieve quizzes associated with the current user ID
+        const exams =  await ctx.prisma.quiz.findMany({
+          where: {
+            userId: ctx.session.user.id,
+          },
+        });
+        return exams;
+        //catch an error just incase we cannont retrieve user exams
+      } catch (error) {
+      
+        console.error(error);
+        throw new Error("There are no past exams");
+        
+      }     
+      
+   
+ 
+      
+
+    }),
+
+
 
   // Define a procedure for getting a secret message
   getSecretMessage: protectedProcedure.query(() => {
