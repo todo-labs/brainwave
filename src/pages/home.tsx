@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+
+
 import * as React from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
@@ -11,12 +13,16 @@ import { UserNav } from "@/components/UserNav";
 import { CreateConfig } from "@/components/createConfig";
 import { Sidebar } from "@/components/sidebar";
 
-import useStore from "@/store/useStore";
+
+
 
 // import the trpc quiz.ts into the file
-// import { quizRouter } from "src/server/api/routers/quiz";
+import { quizRouter } from "src/server/api/routers/quiz";
 
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+
+
 
 export const metadata: Metadata = {
   title: "Brainwave",
@@ -32,11 +38,42 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
+import { api } from "@/lib/api";
+import useStore from "@/store/useStore";
 export default function Home() {
 
-  // const examList = quizRouter.listExams
-  // console.log(examList)
   const { currentTopic } = useStore();
+  const [message, setMessage] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  const { data: session } = useSession();
+
+  const { data, isError, isLoading, refetch } = api.quizRouter.listExams.useQuery(
+    { exams: currentTopic },
+    {
+      enabled: !!currentTopic && !!session?.user,
+    }
+  );
+
+  React.useEffect(() => {
+    if (isError) {
+      setError("Error retrieving past exams");
+    }
+  }, [isError]);
+
+  React.useEffect(() => {
+    if (data) {
+      setMessage("Successfully retrieved past exams");
+      // Do something with the retrieved exams (e.g., update state, display them in the UI)
+      console.log(data);
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  
 
   return (
     <>
@@ -124,7 +161,7 @@ export default function Home() {
                         </h2>
 
                         <p className="text-sm text-muted-foreground">
-                          Your personal playlists. Updated daily.
+                          View Past Exams 
                         </p>
                       </div>
                       <Separator className="my-4" />
