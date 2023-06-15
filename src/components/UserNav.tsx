@@ -70,7 +70,6 @@ export function UserNav() {
           <DropdownMenuItem onClick={() => void router.push(`/profile`)}>
             <User className="mr-2 h-4 w-4" />
             <Paragraph className="capitalize" tx="userNav.profile" />
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
@@ -79,12 +78,10 @@ export function UserNav() {
           >
             <CreditCard className="mr-2 h-4 w-4" />
             <Paragraph className="capitalize" tx="userNav.addCredits" />
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => void router.push(`/settings`)}>
             <Settings className="mr-2 h-4 w-4" />
             <Paragraph className="capitalize" tx="userNav.settings" />
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
           {session?.user?.role === Role.ADMIN && (
             <DropdownMenuItem>
@@ -97,7 +94,6 @@ export function UserNav() {
         <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 h-4 w-4" />
           <Paragraph tx="userNav.logout" />
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

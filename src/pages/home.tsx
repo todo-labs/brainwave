@@ -6,13 +6,14 @@ import Image from "next/image";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlbumArtwork } from "@/components/album-artwork";
+import { QuizCard } from "@/components/QuizCard";
 import { UserNav } from "@/components/UserNav";
 import { CreateConfig } from "@/components/createConfig";
 import { Sidebar } from "@/components/sidebar";
+import Question from "@/components/Question";
 
 import useStore from "@/store/useStore";
-
+import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -29,8 +30,18 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
+type Steps = "exam" | "config" | "live";
+
 export default function Home() {
-  const { currentTopic } = useStore();
+  const { currentTopic, currentStep, currentQuiz, setCurrentStep, reset } =
+    useStore();
+  const getPastExams = api.quiz.getPastExams.useQuery({
+    topic: currentTopic,
+  });
+
+  React.useEffect(() => {
+    reset();
+  }, []);
 
   return (
     <>
@@ -59,21 +70,41 @@ export default function Home() {
               <Sidebar className="hidden lg:block" />
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
-                  <Tabs defaultValue="exam" className="h-full space-y-6">
+                  <Tabs defaultValue={currentStep} className="h-full space-y-6">
                     <div className="space-between flex items-center">
-                      <TabsList>
-                        <TabsTrigger value="exam" className="relative">
+                      <TabsList defaultValue="choice">
+                        <TabsTrigger
+                          value="choice"
+                          className="relative"
+                          disabled={
+                            currentStep.includes("config") || !!currentQuiz
+                          }
+                        >
                           Pick an Exam
                         </TabsTrigger>
-                        <TabsTrigger value="config">Config</TabsTrigger>
-                        <TabsTrigger value="live">Live</TabsTrigger>
+                        <TabsTrigger
+                          value="config"
+                          disabled={currentStep.includes("exam")}
+                        >
+                          Config
+                        </TabsTrigger>
+                        <TabsTrigger
+                          value="exam"
+                          disabled={
+                            (!currentStep.includes("exam") ||
+                              !currentStep.includes("config")) &&
+                            !currentQuiz
+                          }
+                        >
+                          Live
+                        </TabsTrigger>
                       </TabsList>
                       <div className="ml-auto mr-4">
                         <UserNav />
                       </div>
                     </div>
                     <TabsContent
-                      value="exam"
+                      value="choice"
                       className="border-none p-0 outline-none"
                     >
                       <div className="flex items-center justify-between">
@@ -81,7 +112,7 @@ export default function Home() {
                           <h2 className="text-2xl font-semibold capitalize tracking-tight">
                             Choose your{" "}
                             {currentTopic
-                              .replace(/-/g, " ")
+                              .replace(/_/g, " ")
                               .toLocaleLowerCase()}{" "}
                             Exam
                           </h2>
@@ -95,17 +126,16 @@ export default function Home() {
                         <ScrollArea>
                           <div className="flex space-x-4 pb-4">
                             {new Array(10).fill(null).map((album) => (
-                              <AlbumArtwork
+                              <QuizCard
                                 key={"album.name"}
-                                album={{
-                                  name: "album.name",
-                                  artist: "album.artist",
-                                  cover: "https://picsum.photos/250/330",
-                                }}
                                 className="w-[250px]"
                                 aspectRatio="portrait"
+                                selected
                                 width={250}
                                 height={330}
+                                onClick={() => {
+                                  setCurrentStep("config");
+                                }}
                               />
                             ))}
                           </div>
@@ -124,20 +154,21 @@ export default function Home() {
                       <div className="relative">
                         <ScrollArea>
                           <div className="flex space-x-4 pb-4">
-                            {new Array(5).fill(null).map((album) => (
-                              <AlbumArtwork
-                                key={"album.name"}
-                                album={{
-                                  name: "album.name",
-                                  artist: "album.artist",
-                                  cover: "https://picsum.photos/150/150",
-                                }}
-                                className="w-[150px]"
-                                aspectRatio="square"
-                                width={150}
-                                height={150}
-                              />
-                            ))}
+                            {getPastExams.isLoading && <h1>Loading....</h1>}
+                            {getPastExams.isError && <h1>Loading....</h1>}
+                            {getPastExams.data &&
+                              getPastExams.data.map((album) => (
+                                <QuizCard
+                                  key={"album.name"}
+                                  className="w-[150px]"
+                                  aspectRatio="square"
+                                  width={150}
+                                  height={150}
+                                  onClick={() => {
+                                    console.log("clicked");
+                                  }}
+                                />
+                              ))}
                           </div>
                           <ScrollBar orientation="horizontal" />
                         </ScrollArea>
@@ -145,6 +176,23 @@ export default function Home() {
                     </TabsContent>
                     <TabsContent
                       value="config"
+                      className="h-full flex-col border-none p-0 data-[state=active]:flex"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-1">
+                          <h2 className="text-2xl font-semibold tracking-tight">
+                            Create your Exam
+                          </h2>
+                          <p className="text-sm text-muted-foreground">
+                            Your favorite podcasts. Updated daily.
+                          </p>
+                        </div>
+                      </div>
+                      <Separator className="my-4" />
+                      <CreateConfig />
+                    </TabsContent>
+                    <TabsContent
+                      value="exam"
                       className="h-full flex-col border-none p-0 data-[state=active]:flex"
                     >
                       <div className="flex items-center justify-between">
@@ -158,7 +206,21 @@ export default function Home() {
                         </div>
                       </div>
                       <Separator className="my-4" />
-                      <CreateConfig />
+                      <section className="flex flex-col space-y-4">
+                        {currentQuiz &&
+                          currentQuiz.map((question) => (
+                            <Question
+                              key={question.question}
+                              question={question}
+                              onSubmit={(answer) => {
+                                console.log(answer);
+                              }}
+                            />
+                          ))}
+                      </section>
+                      <Button onClick={() => setCurrentStep("config")}>
+                        Submit Quiz
+                      </Button>
                     </TabsContent>
                   </Tabs>
                 </div>

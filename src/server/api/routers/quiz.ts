@@ -1,60 +1,124 @@
-// Import the 'z' object from the 'zod' library
-import { z } from "zod";  // Validation library 
+import { z } from "zod";
+import { Topics } from "@prisma/client";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createQuizSchema } from "@/server/validators";
+import { genQuiz, gradeQuiz } from "@/lib/ai";
+import { TRPCError } from "@trpc/server";
+import { startOfDay } from "date-fns";
 
-// Import the 'createTRPCRouter' and 'protectedProcedure' functions from the '@/server/api/trpc' file
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";  // build typesafe API endpoints 
-
-// Import the 'QuizDifficulty' and 'Topics' enums from the '@prisma/client' library
-import { QuizDifficulty, Topics } from "@prisma/client";
-
-// Create a router object for quizzes using the 'createTRPCRouter' function
 export const quizRouter = createTRPCRouter({
-  // Define a procedure for getting past exams
-  getPastExams: protectedProcedure.query(async ({ ctx }) => {
-    // Query the database using Prisma to retrieve quizzes associated with the current user ID
-    return await ctx.prisma.quiz.findMany({
-      where: {
-        userId: ctx.session.user.id,
-      },
-    });
-  }),
-
-  // Define a procedure for creating a new exam
-  createExam: protectedProcedure
+  getPastExams: protectedProcedure
     .input(
-      // Define a validation schema for the input using the 'z' library
       z.object({
-        difficulty: z.nativeEnum(QuizDifficulty), // Validate that 'difficulty' is a valid value from the 'QuizDifficulty' enum
-        university: z.string(), // Validate that 'university' is a string
-        title: z
-          .string()
-          .min(1, "Should be more than 1 character long.")
-          .max(50), // Validate that 'title' is a string with a length between 1 and 50 characters
-        description: z
-          .string()
-          .min(1, "Should be more than 1 character long.")
-          .max(50), // Validate that 'description' is a string with a length between 1 and 50 characters
-        topic: z.nativeEnum(Topics), // Validate that 'topic' is a valid value from the 'Topics' enum
+        topic: z.nativeEnum(Topics),
       })
     )
-    .mutation(async ({ input, ctx }) => {
-      // Create a new quiz in the database using Prisma
-      await ctx.prisma.quiz.create({
-        data: {
-          difficulty: input.difficulty,
-          title: input.title,
-          description: input.description,
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.quiz.findMany({
+        where: {
+          email: ctx.session.user.email as string,
           topic: input.topic,
-          userId: ctx.session.user.id,
         },
       });
     }),
+  createExam: protectedProcedure
+    .input(createQuizSchema)
+    .mutation(async ({ ctx, input }) => {
+      console.log(ctx.session.user);
 
-  // Define a procedure for getting a secret message
-  getSecretMessage: protectedProcedure.query(() => {
-    // Return a secret message
-    return "you can now see this secret message!";
+      const quiz = await genQuiz(input);
+
+      if (!quiz) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to generate quiz",
+        });
+      }
+
+      await ctx.prisma.quiz.create({
+        data: {
+          topic: input.subject,
+          difficulty: input.difficulty,
+          questions: {
+            create: quiz.map((q) => ({
+              question: q.question,
+              answer: q.answer,
+              options: q.options ?? [],
+              type: q.type,
+            })),
+          },
+          email: ctx.session.user.email as string,
+        },
+      });
+    }),
+  getExam: protectedProcedure.query(async ({ ctx }) => {
+    const quiz = await ctx.prisma.quiz.findFirst({
+      where: {
+        email: ctx.session.user.email as string,
+        createdAt: {
+          gte: startOfDay(new Date()),
+        },
+        score: 0,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    if (!quiz) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Quiz not found",
+      });
+    }
+    return quiz;
   }),
+  gradeExam: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        answers: z.array(z.string()),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const quiz = await ctx.prisma.quiz.findUnique({
+        where: {
+          id: input.id,
+        },
+        include: {
+          questions: true,
+        },
+      });
+      if (!quiz) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Quiz not found",
+        });
+      }
+
+      // TODO: Check if quiz is already graded
+      if (quiz.score > 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Quiz already graded",
+        });
+      }
+
+      // TODO: call open ai to grade the quiz
+      // const { score, explanation } = await gradeQuiz(
+      //   quiz.topic,
+      //   quiz.difficulty,
+      //   quiz.questions,
+      //   input.answers
+      // );
+
+      // await ctx.prisma.quiz.update({
+      //   where: {
+      //     id: input.id,
+      //   },
+      //   data: {
+      //     score,
+      //   },
+      // });
+      // return score;
+    }),
 });
-
-

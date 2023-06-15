@@ -7,7 +7,7 @@ import useStore from "@/store/useStore";
 type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function Sidebar({ className }: SidebarProps) {
-  const { currentTopic, setCurrentTopic } = useStore();
+  const { currentTopic, setCurrentTopic, currentStep } = useStore();
 
   const isActive = (topic: string) => {
     return currentTopic === topic;
@@ -27,6 +27,10 @@ export function Sidebar({ className }: SidebarProps) {
                   key={subtopic.name}
                   variant="ghost"
                   size="sm"
+                  disabled={
+                    currentStep.includes("exam") ||
+                    currentStep.includes("config")
+                  }
                   className={cn("w-full justify-start", {
                     "bg-accent": isActive(subtopic.topic),
                   })}
