@@ -7,12 +7,12 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { QuizCard } from "@/components/QuizCard";
-import { UserNav } from "@/components/UserNav";
+import { UserNav } from "@/components/user/Nav";
 import { CreateConfig } from "@/components/createConfig";
 import { Sidebar } from "@/components/sidebar";
 import Question from "@/components/Question";
 
-import useStore from "@/store/useStore";
+import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 

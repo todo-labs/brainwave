@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useForm } from "react-hook-form";
 
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -37,8 +38,11 @@ import {
 } from "@/components/ui/form";
 
 import { api } from "@/lib/api";
-import useStore from "@/store/useStore";
-import { CreateQuizRequestType, createQuizSchema } from "@/server/validators";
+import useStore from "@/hooks/useStore";
+import {
+  type CreateQuizRequestType,
+  createQuizSchema,
+} from "@/server/validators";
 
 export function CreateConfig() {
   const { currentTopic, setCurrentQuiz, setCurrentStep } = useStore();

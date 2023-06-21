@@ -22,7 +22,7 @@ const store: StateCreator<State> = persist(
   (set) => ({
     showConfetti: false,
     setShowConfetti: (showConfetti) => set({ showConfetti }),
-    currentTopic: Topics.CALCULUS,
+    currentTopic: Topics.MATH_I,
     setCurrentTopic: (currentTopic) =>
       set({ currentTopic: currentTopic as Topics }),
     currentStep: "choice",
@@ -32,7 +32,7 @@ const store: StateCreator<State> = persist(
     reset: () =>
       set({
         showConfetti: false,
-        currentTopic: Topics.CALCULUS,
+        currentTopic: Topics.MATH_I,
         currentStep: "choice",
         currentQuiz: null,
       }),

@@ -15,44 +15,26 @@ type TopicList = {
   }[];
 };
 
-//change the homepage
 export const topics: TopicList[] = [
   {
     name: "Math",
     children: [
-      { name: "Algebra", emoji: "➕", topic: Topics.ALGEBRA },
-      { name: "Geometry", emoji: "🔺", topic: Topics.GEOMETRY },
-      { name: "Trigonometry", emoji: "📐", topic: Topics.TRIGONOMETRY },
-      { name: "Calculus", emoji: "📈", topic: Topics.CALCULUS },
+      { name: "Math I", emoji: "🔢", topic: Topics.MATH_I },
+      { name: "Math II", emoji: "📈", topic: Topics.MATH_II },
     ],
   },
   {
     name: "History",
     children: [
       {
-        name: "Ancient",
-        emoji: "🏛️",
-        topic: Topics.ANCIENT_HISTORY,
-      },
-      {
-        name: "European",
-        emoji: "🏰",
-        topic: Topics.EUROPEAN_HISTORY,
-      },
-      {
-        name: "American",
-        emoji: "🗽",
-        topic: Topics.AMERICAN_HISTORY,
-      },
-      {
-        name: "Asian",
-        emoji: "🏯",
-        topic: Topics.ASIAN_HISTORY,
-      },
-      {
-        name: "African",
+        name: "World History",
         emoji: "🌍",
-        topic: Topics.AFRICAN_HISTORY,
+        topic: Topics.WORLD_HISTORY,
+      },
+      {
+        name: "American History",
+        emoji: "🗽",
+        topic: Topics.US_HISTORY,
       },
     ],
   },
@@ -65,15 +47,24 @@ export const topics: TopicList[] = [
         topic: Topics.CHEMISTRY,
       },
       {
-        name: "Biology",
+        name: "Biology E",
         emoji: "🧬",
-        topic: Topics.BIOLOGY,
+        topic: Topics.BIOLOGY_E,
+      },
+      {
+        name: "Biology M",
+        emoji: "🔬",
+        topic: Topics.BIOLOGY_M,
       },
       {
         name: "Physics",
-        emoji: "🌌",
+        emoji: "⚛️",
         topic: Topics.PHYSICS,
       },
     ],
   },
 ];
+
+export const cleanEnum = (str: string) => {
+  return str.replace(/_/g, " ");
+};

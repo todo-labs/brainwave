@@ -28,6 +28,8 @@ export const env = createEnv({
     STRIPE_SECRET_KEY: z.string().min(1).optional(),
     STRIPE_WEB_HOOK_SECRET: z.string().min(1).optional(),
     PRICE_ID: z.string().min(1).optional(),
+    UPLOADTHING_SECRET: z.string().min(1).optional(),
+    UPLOADTHING_APP_ID: z.string().min(1).optional(),
   },
 
   /**
@@ -64,5 +66,7 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     STRIPE_WEB_HOOK_SECRET: process.env.STRIPE_WEB_HOOK_SECRET,
     PRICE_ID: process.env.PRICE_ID,
+    UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
+    UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
   },
 });

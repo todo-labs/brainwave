@@ -1,22 +1,38 @@
-import { z } from "zod";
-
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { TRPCError } from "@trpc/server";
+import { profileSchema } from "@/server/validators";
 
 export const userRouter = createTRPCRouter({
-  getCredits: protectedProcedure.query(async ({ ctx }) => {
-    const user = await ctx.prisma.user.findFirst({
-      where: { email: ctx.session.user.email },
-      select: { credits: true },
+  get: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.user.findUnique({
+      where: {
+        email: ctx.session?.user.email as string,
+      },
+      select: {
+        name: true,
+        credits: true,
+      },
     });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    return (user.credits as number) || 0;
   }),
+  update: protectedProcedure
+    .input(profileSchema)
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const data = await ctx.prisma.user.update({
+          where: {
+            email: ctx.session?.user.email as string,
+          },
+          data: {
+            name: input.name,
+          },
+        });
 
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+        return data;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Could not update profile",
+        });
+      }
+    }),
 });

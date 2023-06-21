@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Command } from "lucide-react";
 
-import { UserAuthForm } from "@/components/AuthForm";
+import { UserAuthForm } from "@/components/user/AuthForm";
 import { getServerAuthSession } from "@/server/auth";
 import type { GetServerSideProps } from "next";
 
@@ -51,9 +51,7 @@ export default function AuthenticationPage() {
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <h2 className="text-1xl font-semibold tracking-tight">
-              Unlock Your Brain's Potential with BrainWave
-            </h2>
+            
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Sign in to your account

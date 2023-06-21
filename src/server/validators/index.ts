@@ -16,4 +16,26 @@ export const createQuizSchema = z.object({
   subject: z.nativeEnum(Topics),
 });
 
+export const profileSchema = z.object({
+  name: z
+    .string()
+    .min(2, {
+      message: "Name must be at least 2 characters.",
+    })
+    .max(30, {
+      message: "Name must not be longer than 30 characters.",
+    }),
+  dob: z.date({
+    required_error: "A date of birth is required.",
+  }),
+  profilePicture: z
+    .string()
+    .url({
+      message: "Profile picture must be a valid URL.",
+    })
+    .optional(),
+});
+
+
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;
+export type ProfileRequestType = z.infer<typeof profileSchema>;

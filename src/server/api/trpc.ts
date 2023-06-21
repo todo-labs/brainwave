@@ -32,7 +32,7 @@ type CreateContextOptions = {
  * - testing, so we don't have to mock Next.js' req/res
  * - tRPC's `createSSGHelpers`, where we don't have req/res
  *
- * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
+ * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
@@ -61,26 +61,16 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 /**
  * 2. INITIALIZATION
  *
- * This is where the tRPC API is initialized, connecting the context and transformer. We also parse
- * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
- * errors on the backend.
+ * This is where the tRPC API is initialized, connecting the context and transformer.
  */
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
-import { ZodError } from "zod";
 import { Role } from "@prisma/client";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
-      },
-    };
+  errorFormatter({ shape }) {
+    return shape;
   },
 });
 
@@ -120,7 +110,8 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
-const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
+/** Reusable middleware to ensure the user is an admin */
+export const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
   if (
     !ctx.session ||
     !ctx.session.user ||
@@ -145,3 +136,13 @@ const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+/**
+ * Admin procedure
+ *
+ * If you want a query or mutation to ONLY be accessible to admins, use this. It verifies
+ * the session is valid and guarantees `ctx.session.user` is not null and is an admin.
+ *
+ * @see https://trpc.io/docs/procedures
+ */
+export const adminProcedure = t.procedure.use(enforceUserIsAdmin);

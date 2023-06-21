@@ -11,6 +11,9 @@ const config = {
     defaultLocale: "en",
     locales: ["en", "es", "fr", "de"],
   },
+  experimental: {
+    esmExternals: false,
+  },
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.svg$/,

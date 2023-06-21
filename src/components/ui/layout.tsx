@@ -7,7 +7,7 @@ import { UserNav } from "../UserNav";
 
 import { api } from "@/lib/api";
 
-import useStore from "@/store/useStore";
+import useStore from "@/hooks/useStore";
 import { Paragraph } from "./typography";
 
 interface ILayoutProps {

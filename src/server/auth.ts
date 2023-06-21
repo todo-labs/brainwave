@@ -10,7 +10,8 @@ import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import type { Role } from "@prisma/client";
 import { createTransport } from "nodemailer";
-import { html, text } from "@/lib/mailer";
+import { MagicLinkEmail } from "@/emails/magic-link";
+import { render } from "@react-email/render";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -75,8 +76,7 @@ export const authOptions: NextAuthOptions = {
             to: email,
             from: from,
             subject: "Sign in to Brainwave",
-            text: text({ url }),
-            html: html({ url }),
+            html: render(MagicLinkEmail({ url })),
           });
         } catch (error) {
           console.error("SEND_VERIFICATION_EMAIL_ERROR", error);

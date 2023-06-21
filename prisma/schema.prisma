@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["jsonProtocol"]
@@ -8,10 +5,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-  // Further reading:
-  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
 }
 
@@ -63,7 +56,7 @@ model User {
 enum QuestionType {
   MCQ
   SA
-  TF 
+  TF
   MT
 }
 
@@ -84,18 +77,14 @@ enum QuizDifficulty {
 }
 
 enum Topics {
-  ALGEBRA
-  GEOMETRY
-  TRIGONOMETRY
-  STATISTICS
-  CALCULUS
-  ANCIENT_HISTORY
-  EUROPEAN_HISTORY
-  AMERICAN_HISTORY
-  ASIAN_HISTORY
-  AFRICAN_HISTORY
+  LITERATURE
+  US_HISTORY
+  WORLD_HISTORY
+  MATH_I
+  MATH_II
+  BIOLOGY_E
+  BIOLOGY_M
   CHEMISTRY
-  BIOLOGY
   PHYSICS
 }
 
@@ -110,6 +99,25 @@ model Quiz {
   updatedAt   DateTime       @updatedAt
   score       Int            @default(0)
   reviewNotes String?        @default("")
+}
+
+enum DocumentType {
+  PDF
+  DOCX
+  DOC
+  TXT
+}
+
+model Documents {
+  id        Int          @id @default(autoincrement())
+  email     String
+  name      String
+  topic     Topics
+  subtopic  String
+  type      DocumentType
+  url       String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }
 
 model VerificationToken {

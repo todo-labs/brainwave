@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import type { GetServerSideProps, NextPage } from "next";
 import { getServerAuthSession } from "@/server/auth";
+import { buttonVariants } from "@/components/ui/button";
 
 const Landing: NextPage = () => {
   return (
@@ -22,34 +23,39 @@ const Landing: NextPage = () => {
               Ignite your{" "}
               <span className="font-semibold text-zinc-200">
                 Intelligence
-                <span aria-hidden="true">&rarr;</span>
+                <span className="ml-2" aria-hidden="true">
+                  &rarr;
+                </span>
               </span>
             </Link>
           </div>
           <div>
             <h1 className="bg-gradient-to-t from-zinc-100/50 to-white bg-clip-text py-4 text-center text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
-              Quizzes made easy
+              AI SAT Prep
             </h1>
             <p className="mt-6 leading-5 text-zinc-600 sm:text-center">
               Brainwave: the ultimate quiz platform for learners. Take quizzes
               on your favorite subjects, at your desired difficulty level. Build
-              your knowledge and earn badges to showcase your skills. Start your
-              learning journey today!
+              your knowledge and earn badges to showcase your skills. Brainwave
+              is the perfect tool for studying for the SAT.
             </p>
             <div className="mx-auto mt-8 flex flex-col justify-center gap-4 sm:max-w-lg sm:flex-row ">
               <Link
                 href="/auth/sign-in"
-                className="hover:drop-shadow-cta inline-block space-x-2 rounded px-4 py-1.5 text-base font-semibold leading-7 text-white ring-1 ring-zinc-600  duration-150 hover:bg-white hover:text-zinc-900 hover:ring-white sm:w-1/2 sm:text-center md:py-2"
+                className={buttonVariants({
+                  variant: "default",
+                  size: "lg",
+                })}
               >
                 Get Started
               </Link>
-              <Link
+              {/* <Link
                 href="/share"
                 className="hover:drop-shadow-cta inline-block space-x-2 rounded bg-zinc-50  px-4 py-1.5 text-base font-semibold leading-7 text-zinc-800 ring-1 ring-transparent   transition-all duration-150 hover:bg-zinc-900/20 hover:text-zinc-100 hover:ring-zinc-600/80  sm:w-1/2 sm:text-center md:py-2"
               >
                 <span>How it Works</span>
                 <span aria-hidden="true">&rarr;</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import { topics } from "@/lib/utils";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import useStore from "@/store/useStore";
+import useStore from "@/hooks/useStore";
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -32,11 +32,11 @@ export function Sidebar({ className }: SidebarProps) {
                     currentStep.includes("config")
                   }
                   className={cn("w-full justify-start", {
-                    "bg-accent": isActive(subtopic.topic),
+                    "bg-accent text-white": isActive(subtopic.topic),
                   })}
                   onClick={() => setCurrentTopic(subtopic.topic)}
                 >
-                  {subtopic.name} {subtopic.emoji}
+                  {subtopic.emoji} {subtopic.name}
                 </Button>
               ))}
             </div>

@@ -21,11 +21,18 @@ export const quizRouter = createTRPCRouter({
         },
       });
     }),
+  // getQuizConfig: protectedProcedure
+  //   .input(
+  //     z.object({
+  //       topic: z.nativeEnum(Topics),
+  //     })
+  //   )
+  //   .query(async ({ ctx }) => {
+
+  //   }),
   createExam: protectedProcedure
     .input(createQuizSchema)
     .mutation(async ({ ctx, input }) => {
-      console.log(ctx.session.user);
-
       const quiz = await genQuiz(input);
 
       if (!quiz) {
@@ -47,7 +54,11 @@ export const quizRouter = createTRPCRouter({
               type: q.type,
             })),
           },
-          email: ctx.session.user.email as string,
+          user: {
+            connect: {
+              email: ctx.session.user.email as string,
+            },
+          },
         },
       });
     }),
