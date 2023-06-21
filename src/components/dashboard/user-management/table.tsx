@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { User } from "@prisma/client";
+import type { Quiz, User } from "@prisma/client";
 import { formatDistanceToNow } from "date-fns";
 import { BatteryWarningIcon, Loader2Icon, User2Icon } from "lucide-react";
 
@@ -12,9 +12,9 @@ import DefaultState from "@/components/DefaultState";
 
 import { api } from "@/lib/api";
 
-type Column = User & { Experiment: Experiment[] };
+// type Column = User & { quizzes: Quiz[] };
 
-const columns: ColumnDef<Column>[] = [
+const columns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -100,6 +100,7 @@ const columns: ColumnDef<Column>[] = [
       }
     },
     filterFn: (row, id, value) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
       return value.includes(row.getValue(id));
     },
   },

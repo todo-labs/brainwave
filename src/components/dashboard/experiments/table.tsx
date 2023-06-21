@@ -1,19 +1,19 @@
-import type { Experiment, User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { Checkbox } from "~/components/ui/Checkbox";
-import { DataTableColumnHeader } from "~/components/query-table/header";
-import DefaultState from "~/components/DefaultState";
-import { DataTable } from "~/components/query-table/data-table";
+import { Checkbox } from "@/components/ui/checkbox";
+import { DataTableColumnHeader } from "@/components/query-table/header";
+import DefaultState from "@/components/DefaultState";
+import { DataTable } from "@/components/query-table/data-table";
 
-import { DataTableRowActions } from "./row-actions";
-import { api } from "~/utils/api";
+// import { DataTableRowActions } from "@/components/query-table/row-actions";
+import { api } from "@/lib/api";
 
-type Column = Experiment & {
-  createdBy: User;
-};
+// type Column = Experiment & {
+//   createdBy: User;
+// };
 
-const columns: ColumnDef<Experiment>[] = [
+const columns: ColumnDef<any>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -108,31 +108,31 @@ const columns: ColumnDef<Experiment>[] = [
   //     return value.includes(row.getValue(id));
   //   },
   // },
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ];
 
 const ExperimentTable = () => {
-  const { data, isLoading, isError, refetch } =
-    api.admin.totalExperiments.useQuery(undefined);
+  // const { data, isLoading, isError, refetch } =
+  //   api.admin.totalExperiments.useQuery(undefined);
 
-  return isLoading ? (
-    <DefaultState
-      title="Loading experiments"
-      description="Please wait while we load the experiments"
-    />
-  ) : isError ? (
-    <DefaultState
-      title="Error loading experiments"
-      description="Something went wrong while loading the experiments"
-      btnText="Retry"
-      onClick={void refetch()}
-    />
-  ) : (
-    <DataTable data={data} columns={columns} />
-  );
+  // return isLoading ? (
+  //   <DefaultState
+  //     title="Loading experiments"
+  //     description="Please wait while we load the experiments"
+  //   />
+  // ) : isError ? (
+  //   <DefaultState
+  //     title="Error loading experiments"
+  //     description="Something went wrong while loading the experiments"
+  //     btnText="Retry"
+  //     onClick={void refetch()}
+  //   />
+  // ) : (
+  //   <DataTable data={data} columns={columns} />
+  // );
 };
 
 export default ExperimentTable;

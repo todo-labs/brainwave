@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { createQuizSchema } from "@/server/validators";
-import { genQuiz, gradeQuiz } from "@/lib/ai";
+import { genQuiz } from "@/lib/ai";
 import { TRPCError } from "@trpc/server";
 import { startOfDay } from "date-fns";
 

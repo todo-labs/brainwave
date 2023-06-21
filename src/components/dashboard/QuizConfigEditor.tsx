@@ -38,8 +38,7 @@ export const QuizConfigEditor: React.FC = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="capitalize">
-              {cleanEnum(selectedTopic?.toLocaleLowerCase() as string)}{" "}
-              Documents
+              {selectedTopic} Documents
             </DialogTitle>
             <DialogDescription>
               Here is where you can upload document that will be used to provide

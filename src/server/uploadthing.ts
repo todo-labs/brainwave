@@ -28,19 +28,19 @@ export const ourFileRouter = {
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return {
-        topic: req.body.topic,
+        // topic: req.body.topic,
+        userId: user.id,
       };
     })
-    .onUploadComplete(async ({ metadata, file }) => {
+    .onUploadComplete(({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
-      await prisma.documents.create({
-        data: {
-          name: file.name,
-          url: file.url,
-          // userId: metadata.userId,
-        },
-      });
+      // await prisma.documents.create({
+      //   data: {
+      //     name: file.name,
+      //     url: file.url,
+      //   },
+      // });
       console.log("file url", file.url);
     }),
 } satisfies FileRouter;

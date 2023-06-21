@@ -37,7 +37,7 @@ export function QuizCard({
     </svg>
       </div>
       <div className="space-y-1 text-sm">
-        <h3 className="font-medium leading-none">{quiz?.title}</h3>
+        {/* <h3 className="font-medium leading-none">{quiz?.}</h3> */}
         <p className="text-xs text-muted-foreground">{quiz?.topic}</p>
       </div>
     </div>

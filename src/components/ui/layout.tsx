@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 
 import Meta from "./meta";
 import FullScreenConfetti from "./confetti";
-import { UserNav } from "../UserNav";
+import { UserNav } from "../user/Nav";
 
 import { api } from "@/lib/api";
 
