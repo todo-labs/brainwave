@@ -105,6 +105,17 @@ const columns: ColumnDef<User>[] = [
     },
   },
   {
+    accessorKey: "credits",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Credits" />
+    ),
+    cell: ({ row }) => {
+      return <div className="w-[100px]">{row.getValue("credits")}</div>;
+    },
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },

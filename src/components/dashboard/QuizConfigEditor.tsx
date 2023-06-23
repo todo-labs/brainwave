@@ -104,13 +104,15 @@ export const QuizConfigEditor: React.FC = () => {
             </DialogDescription>
             {getSubTopics.isLoading && <p>Loading...</p>}
             {getSubTopics.isError && <p>Error...</p>}
-            {getSubTopics.data?.map((subtopic) => {
-              return (
-                <Badge key={subtopic} className="mr-2">
-                  {subtopic}
-                </Badge>
-              );
-            })}
+            <div className="flex flex-row flex-wrap gap-4">
+              {getSubTopics.data?.map((subtopic) => {
+                return (
+                  <Badge key={subtopic} className="mr-2">
+                    {subtopic}
+                  </Badge>
+                );
+              })}
+            </div>
             <Form {...form}>
               <form className="pt-6" onSubmit={form.handleSubmit(onSubmit)}>
                 <FormField
@@ -142,14 +144,14 @@ export const QuizConfigEditor: React.FC = () => {
         <CardTitle>Sub Topics</CardTitle>
         <CardDescription>Card Description</CardDescription>
       </CardHeader>
-      <CardContent className=" flex flex-col ">
+      <CardContent className="flex flex-col ">
         <section className="flex flex-wrap">
           {Object.keys(Topics).map((topic, index) => {
             return (
               <Card
                 key={index}
                 className={cn(
-                  "mr-3 flex max-w-[200px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 p-6 text-center hover:border-4 hover:border-primary hover:text-white xl:m-3",
+                  "mr-3 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 p-6 text-center hover:border-4 hover:border-primary hover:text-white xl:m-3",
                   {
                     "border-4 border-primary bg-primary shadow-lg":
                       selectedTopic === topic,
