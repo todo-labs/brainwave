@@ -43,6 +43,7 @@ import {
 } from "@/server/validators";
 import React from "react";
 import type { AIQuiz } from "types";
+import { env } from "@/env.mjs";
 
 export function CreateConfig() {
   const { currentTopic, setCurrentQuiz, currentSubTopic } = useStore();
@@ -70,7 +71,7 @@ export function CreateConfig() {
       const quiz = await createQuizMutation.mutateAsync({
         ...values,
       });
-      console.log(quiz);
+      // console.log(quiz);
       setCurrentQuiz(quiz as AIQuiz);
     } catch (err) {
       console.log(err);
@@ -148,15 +149,15 @@ export function CreateConfig() {
                         </span>
                       </FormLabel>
                       <FormDescription>
-                        Enter your preferred reading time. Time increments are
-                        in 5 mins.
+                        How many questions would you like to solve in this
+                        session.
                       </FormDescription>
                       <FormControl>
                         <Slider
                           defaultValue={[field.value]}
                           onValueChange={(value) => field.onChange(value[0])}
                           disabled={createQuizMutation.isLoading}
-                          max={50}
+                          max={20}
                           step={1}
                         />
                       </FormControl>
@@ -164,7 +165,7 @@ export function CreateConfig() {
                     </FormItem>
                   )}
                 />
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="options"
                   render={() => (
@@ -212,7 +213,7 @@ export function CreateConfig() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   control={form.control}
                   name="notes"

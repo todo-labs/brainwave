@@ -4,7 +4,6 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { createQuizSchema } from "@/server/validators";
 import { genQuiz } from "@/lib/ai";
 import { TRPCError } from "@trpc/server";
-import { startOfDay } from "date-fns";
 
 export const quizRouter = createTRPCRouter({
   getPastExams: protectedProcedure
@@ -21,15 +20,6 @@ export const quizRouter = createTRPCRouter({
         },
       });
     }),
-  // getQuizConfig: protectedProcedure
-  //   .input(
-  //     z.object({
-  //       topic: z.nativeEnum(Topics),
-  //     })
-  //   )
-  //   .query(async ({ ctx }) => {
-
-  //   }),
   createExam: protectedProcedure
     .input(createQuizSchema)
     .mutation(async ({ ctx, input }) => {
@@ -59,6 +49,7 @@ export const quizRouter = createTRPCRouter({
               email: ctx.session.user.email as string,
             },
           },
+          title: `[${input.difficulty}] Quiz for ${input.subject}`,
         },
       });
 
@@ -85,7 +76,7 @@ export const quizRouter = createTRPCRouter({
   gradeExam: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string().cuid(),
         answers: z.array(z.string()),
       })
     )

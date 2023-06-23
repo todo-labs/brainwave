@@ -23,4 +23,12 @@ export const adminRouter = createTRPCRouter({
   allUsers: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.findMany();
   }),
+  addCredits: protectedProcedure
+    .input(z.object({ id: z.string().cuid(), credits: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.user.update({
+        where: { id: input.id },
+        data: { credits: { increment: input.credits } },
+      });
+    }),
 });

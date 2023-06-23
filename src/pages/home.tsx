@@ -165,11 +165,9 @@ export default function Home() {
                             {getPastExams.data &&
                               getPastExams.data.map((album) => (
                                 <QuizCard
-                                  key={"album.name"}
-                                  className="w-[150px]"
-                                  aspectRatio="square"
-                                  width={150}
-                                  height={150}
+                                  key={album.id}
+                                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                                  title={album.title ?? ""}
                                   onClick={() => {
                                     console.log("clicked");
                                   }}
@@ -224,7 +222,7 @@ export default function Home() {
                             />
                           ))}
                       </section>
-                      <Button onClick={() => setCurrentStep("config")}>
+                      <Button onClick={() => alert("apply some logic here")}>
                         Submit Quiz
                       </Button>
                     </TabsContent>

@@ -31,7 +31,7 @@ type RecursiveKeyOfHandleValue<
   : Text;
 
 export type AIQuiz = {
-  id: number;
+  id: string;
   topic: Topics;
   difficulty: QuizDifficulty;
   questions: {

@@ -1,5 +1,5 @@
 import type { Row } from "@tanstack/react-table";
-import { EyeIcon, MoreHorizontal, Trash } from "lucide-react";
+import { DollarSignIcon, EyeIcon, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "@/hooks/useToast";
 import type { User } from "@prisma/client";
 
@@ -23,6 +23,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { api } from "@/lib/api";
 
@@ -60,48 +69,59 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps<User>) {
 
   return (
     <AlertDialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-          >
-            <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
-          {/* <DropdownMenuItem
-            onClick={() =>
-              window.open(`/experiment/${row.original.id}`, "_blank")
-            }
-          >
-            <EyeIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            View Experiment
-          </DropdownMenuItem>
-          <DropdownMenuSeparator /> */}
-          <AlertDialogTrigger asChild>
-            <DropdownMenuItem>
-              <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-              Delete
-              <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </AlertDialogTrigger>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this user
-            record and all their associated data.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      <Dialog>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+              <span className="sr-only">Open menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-[160px]">
+            <DialogTrigger>
+              <DropdownMenuItem>
+                <DollarSignIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Add Credits
+              </DropdownMenuItem>
+            </DialogTrigger>
+            <DropdownMenuSeparator />
+            <AlertDialogTrigger asChild>
+              <DropdownMenuItem>
+                <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Delete
+                <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete this
+              user record and all their associated data.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add more credits!</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </AlertDialog>
   );
 }

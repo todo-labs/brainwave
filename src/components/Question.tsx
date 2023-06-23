@@ -4,12 +4,13 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "./ui/checkbox";
+import type { QuestionType } from "@prisma/client";
 
 export interface IQuestionCardProps {
   question: {
     question: string;
-    type: "MCQ" | "SA" | "TF";
-    options?: string[];
+    type: QuestionType;
+    options?: string[] | undefined;
   };
   onSubmit: (answer: string) => void;
   width?: string;

@@ -7,11 +7,12 @@ export const createQuizSchema = z.object({
   subtopic: z.string().min(1).max(100),
   questions: z.number().int().min(1).max(100),
   options: z
-    .array(z.nativeEnum(QuestionType))
+    .array(z.enum([QuestionType.MCQ, QuestionType.SA]))
     .max(3)
     .refine((value) => value.some((item) => item), {
       message: "You have to select at least one item.",
-    }),
+    })
+    .optional(),
   notes: z.string().max(1000),
   subject: z.nativeEnum(Topics),
 });
