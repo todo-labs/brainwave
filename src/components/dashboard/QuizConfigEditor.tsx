@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Topics } from "@prisma/client";
-// import { UploadFileView, UploadProvider, UploadZone } from "@uploadthing/react";
-import { UploadButton, UploadDropzone } from "@uploadthing/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 import {
   Card,
@@ -14,23 +14,80 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Badge } from "../ui/badge";
 
-import type { OurFileRouter } from "@/server/uploadthing";
 import { cleanEnum, cn } from "@/lib/utils";
 import { useToast } from "@/hooks/useToast";
+
+import { z } from "zod";
+import { Input } from "../ui/input";
+import { api } from "@/lib/api";
+import { Button } from "../ui/button";
 import "@uploadthing/react/styles.css";
 
 export const QuizConfigEditor: React.FC = () => {
   const [selected, setSelected] = React.useState(false);
   const [selectedTopic, setSelectedTopic] = React.useState<Topics>();
-
   const { toast } = useToast();
+
+  const getSubTopics = api.meta.getSubtopics.useQuery(
+    {
+      topic: selectedTopic as Topics,
+    },
+    {
+      enabled: !!selectedTopic,
+    }
+  );
+
+  const addSubtopic = api.meta.addSubtopic.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Subtopic Added",
+        description: "The subtopic has been added successfully",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error with adding subtopic",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const schema = z.object({
+    topic: z.nativeEnum(Topics),
+    subtopic: z.string(),
+  });
+
+  type CreateQuizRequestType = z.infer<typeof schema>;
+
+  const form = useForm<CreateQuizRequestType>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      topic: selectedTopic,
+    },
+  });
+
+  async function onSubmit(values: CreateQuizRequestType) {
+    try {
+      await addSubtopic.mutateAsync(values);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const EditDialog = () => {
     return (
@@ -45,19 +102,34 @@ export const QuizConfigEditor: React.FC = () => {
               context for the quiz. Our system will parse the documents and
               generate questions based on the content.
             </DialogDescription>
-            <div className="flex flex-col items-center justify-center gap-4">
-              <UploadDropzone<OurFileRouter>
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  // Do something with the response
-                  console.log("Files: ", res);
-                  alert("Upload Completed");
-                }}
-                onUploadError={(error: Error) => {
-                  alert(`ERROR! ${error.message}`);
-                }}
-              />
-            </div>
+            {getSubTopics.isLoading && <p>Loading...</p>}
+            {getSubTopics.isError && <p>Error...</p>}
+            {getSubTopics.data?.map((subtopic) => {
+              return (
+                <Badge key={subtopic} className="mr-2">
+                  {subtopic}
+                </Badge>
+              );
+            })}
+            <Form {...form}>
+              <form className="pt-6" onSubmit={form.handleSubmit(onSubmit)}>
+                <FormField
+                  control={form.control}
+                  name="subtopic"
+                  render={({ field }) => (
+                    <FormItem className="space-y-5">
+                      <Input
+                        {...field}
+                        placeholder="Choose an appropriate sub topic"
+                      />
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Add Subtopic</Button>
+              </form>
+            </Form>
           </DialogHeader>
         </DialogContent>
       </Dialog>

@@ -4,7 +4,7 @@ import z from "zod";
 
 export const createQuizSchema = z.object({
   difficulty: z.nativeEnum(QuizDifficulty),
-  university: z.string().min(1).max(100),
+  subtopic: z.string().min(1).max(100),
   questions: z.number().int().min(1).max(100),
   options: z
     .array(z.nativeEnum(QuestionType))
@@ -35,7 +35,6 @@ export const profileSchema = z.object({
     })
     .optional(),
 });
-
 
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;
 export type ProfileRequestType = z.infer<typeof profileSchema>;

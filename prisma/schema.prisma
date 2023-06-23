@@ -62,7 +62,7 @@ enum QuestionType {
 
 model Questions {
   id       Int          @id @default(autoincrement())
-  quizId   Int
+  quizId   String
   question String
   type     QuestionType @default(MCQ)
   options  String[]     @default([])
@@ -89,11 +89,12 @@ enum Topics {
 }
 
 model Quiz {
-  id          Int            @id @default(autoincrement())
+  id          String         @id  @default(cuid())
   email       String
   user        User           @relation(fields: [email], references: [id], onDelete: Cascade)
   topic       Topics
   difficulty  QuizDifficulty
+  title       String
   questions   Questions[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
@@ -108,8 +109,8 @@ enum DocumentType {
   TXT
 }
 
-model Documents {
-  id        Int          @id @default(autoincrement())
+model Document {
+  id        String       @id @default(cuid())
   email     String
   name      String
   topic     Topics
@@ -118,6 +119,15 @@ model Documents {
   url       String
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  content   String
+}
+
+model Metadata {
+  id        String      @id  @default(cuid())
+  topic     Topics      @unique
+  subtopics String[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model VerificationToken {

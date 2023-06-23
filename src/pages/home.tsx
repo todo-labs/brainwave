@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { QuizCard } from "@/components/QuizCard";
+import QuizCard from "@/components/QuizCard";
 import { UserNav } from "@/components/user/Nav";
 import { CreateConfig } from "@/components/createConfig";
 import { Sidebar } from "@/components/sidebar";
@@ -15,6 +15,7 @@ import Question from "@/components/Question";
 import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
+import { Topics } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Brainwave",
@@ -30,11 +31,24 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-type Steps = "exam" | "config" | "live";
-
 export default function Home() {
-  const { currentTopic, currentStep, currentQuiz, setCurrentStep, reset } =
-    useStore();
+  const {
+    currentTopic,
+    currentQuiz,
+    reset,
+    currentSubTopic,
+    setCurrentSubTopic,
+  } = useStore();
+
+  const getSubTopics = api.meta.getSubtopics.useQuery(
+    {
+      topic: currentTopic,
+    },
+    {
+      enabled: !!currentTopic,
+    }
+  );
+
   const getPastExams = api.quiz.getPastExams.useQuery({
     topic: currentTopic,
   });
@@ -45,7 +59,6 @@ export default function Home() {
 
   return (
     <>
-      {/* {quizForm()} */}
       <div className="md:hidden">
         <Image
           src="/examples/music-light.png"
@@ -63,39 +76,31 @@ export default function Home() {
         />
       </div>
       <div className="hidden md:block">
-        {/* <Menu /> */}
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">
               <Sidebar className="hidden lg:block" />
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
-                  <Tabs defaultValue={currentStep} className="h-full space-y-6">
+                  <Tabs defaultValue="config" className="h-full space-y-6">
                     <div className="space-between flex items-center">
                       <TabsList defaultValue="choice">
                         <TabsTrigger
                           value="choice"
                           className="relative"
                           disabled={
-                            currentStep.includes("config") || !!currentQuiz
+                            !!currentQuiz || !currentTopic || !!currentSubTopic
                           }
                         >
                           Pick an Exam
                         </TabsTrigger>
                         <TabsTrigger
                           value="config"
-                          disabled={currentStep.includes("exam")}
+                          disabled={!currentSubTopic || !!currentQuiz}
                         >
                           Config
                         </TabsTrigger>
-                        <TabsTrigger
-                          value="exam"
-                          disabled={
-                            (!currentStep.includes("exam") ||
-                              !currentStep.includes("config")) &&
-                            !currentQuiz
-                          }
-                        >
+                        <TabsTrigger value="exam" disabled={!currentQuiz}>
                           Live
                         </TabsTrigger>
                       </TabsList>
@@ -117,7 +122,8 @@ export default function Home() {
                             Exam
                           </h2>
                           <p className="text-sm text-muted-foreground">
-                            Top picks for you. Updated daily.
+                            Top picks for you. Updated{" "}
+                            <span className="text-primary">weekly</span>.
                           </p>
                         </div>
                       </div>
@@ -125,19 +131,19 @@ export default function Home() {
                       <div className="relative">
                         <ScrollArea>
                           <div className="flex space-x-4 pb-4">
-                            {new Array(10).fill(null).map((album) => (
-                              <QuizCard
-                                key={"album.name"}
-                                className="w-[250px]"
-                                aspectRatio="portrait"
-                                selected
-                                width={250}
-                                height={330}
-                                onClick={() => {
-                                  setCurrentStep("config");
-                                }}
-                              />
-                            ))}
+                            {getPastExams.isLoading && <h1>Loading....</h1>}
+                            {getPastExams.isError && <h1>Loading....</h1>}
+                            {getSubTopics.data &&
+                              getSubTopics.data.map((subtopic) => (
+                                <QuizCard
+                                  key={subtopic}
+                                  title={subtopic}
+                                  selected={subtopic === currentSubTopic}
+                                  onClick={() => {
+                                    setCurrentSubTopic(subtopic);
+                                  }}
+                                />
+                              ))}
                           </div>
                           <ScrollBar orientation="horizontal" />
                         </ScrollArea>
@@ -208,10 +214,10 @@ export default function Home() {
                       <Separator className="my-4" />
                       <section className="flex flex-col space-y-4">
                         {currentQuiz &&
-                          currentQuiz.map((question) => (
+                          currentQuiz.questions.map((q) => (
                             <Question
-                              key={question.question}
-                              question={question}
+                              key={q.question}
+                              question={q}
                               onSubmit={(answer) => {
                                 console.log(answer);
                               }}

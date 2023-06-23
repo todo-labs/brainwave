@@ -59,19 +59,23 @@ type GradeQuizParserType = z.infer<typeof gradeQuizParser.schema>;
 export async function genQuiz(
   config: CreateQuizRequestType
 ): Promise<QuizParserType | undefined> {
-  const prompt = `Greetings! As an esteemed professor at {university}, your extensive expertise and extensive experience in the field of {subject} make you the perfect candidate for the following task:
-We have an upcoming examination in {subject} and need to create a customized quiz that will effectively prepare our students. The quiz should comprise approximately {questions} thought-provoking questions.
-To ensure the quiz is suitable for students of varying proficiency levels, it should align with a {difficulty} level of complexity. This will guarantee that the quiz is both challenging and engaging, catering to a wide range of abilities.
-To assess students' comprehensive understanding and provide diverse engagement opportunities, the quiz should incorporate a variety of question formats. Consider utilizing the following question types:
-Multiple Choice Questions (MCQ)
-True or False Questions (TF)
-Short Answer Questions (SA)
-Matching Questions (MT)
-As you prepare the quiz, kindly adhere to the provided formatting guidelines: {formatInstruction}. These guidelines will contribute to a cohesive and organized quiz structure.
-In particular, ensure that the quiz features questions from the specified categories: {options}. This will encompass a comprehensive assessment of the subject matter, ensuring a well-rounded evaluation.
-While crafting the quiz, strive for a delicate balance between educational value and clarity. The questions should be formulated in a manner that fosters learning, making them accessible and comprehensible to all students. Avoid adding excessive explanations to maintain a concise and focused quiz format.
-We appreciate your expertise and dedication to creating an enriching examination experience for our students. Thank you for your contributions!
-Please proceed with crafting the quiz based on the provided instructions.
+  const prompt = `Greetings! As an esteemed SAT Quiz master, your extensive expertise and extensive experience in the field of {subject} make you the perfect candidate for the following task:
+    We have an upcoming examination in {subtopic} and need to create a customized quiz that will effectively prepare our students. 
+    As you prepare the quiz, kindly adhere to the provided formatting guidelines: {formatInstruction}. 
+    The quiz should comprise approximately {questions} thought-provoking questions.
+    To ensure the quiz is suitable for students of varying proficiency levels, it should align with a {difficulty} level of complexity. 
+    This will guarantee that the quiz is both challenging and engaging, catering to a wide range of abilities.
+    To assess students' comprehensive understanding and provide diverse engagement opportunities, the quiz should incorporate a variety of question formats. 
+    Here are our supported question formats:
+    Multiple Choice Questions (MCQ)
+    Short Answer Questions (SA)
+    This will encompass a comprehensive assessment of the subject matter, ensuring a well-rounded evaluation.
+    While crafting the quiz, strive for a delicate balance between educational value and clarity. 
+    The questions should be formulated in a manner that fosters learning, making them accessible and comprehensible to all students. 
+    Avoid adding excessive explanations to maintain a concise and focused quiz format.
+    We appreciate your expertise and dedication to creating an enriching examination experience for our students. 
+    Thank you for your contributions!
+    Please proceed with crafting the quiz based on the provided instructions.
   `;
 
   const format = quizParser.getFormatInstructions();
@@ -80,13 +84,7 @@ Please proceed with crafting the quiz based on the provided instructions.
 
   const template = new PromptTemplate({
     template: prompt,
-    inputVariables: [
-      "university",
-      "subject",
-      "questions",
-      "difficulty",
-      "options",
-    ],
+    inputVariables: ["subject", "subtopic", "questions", "difficulty"],
     partialVariables: { formatInstruction: format },
     outputParser: fixParser,
   });
@@ -105,11 +103,10 @@ Please proceed with crafting the quiz based on the provided instructions.
   const start = performance.now();
 
   const response = await chain.call({
-    university: config.university,
     subject: config.subject,
+    subtopic: config.subtopic,
     questions: config.questions,
     difficulty: config.difficulty,
-    options: config.options,
   });
 
   const end = performance.now();

@@ -42,7 +42,7 @@ export const quizRouter = createTRPCRouter({
         });
       }
 
-      await ctx.prisma.quiz.create({
+      const data = await ctx.prisma.quiz.create({
         data: {
           topic: input.subject,
           difficulty: input.difficulty,
@@ -61,28 +61,27 @@ export const quizRouter = createTRPCRouter({
           },
         },
       });
-    }),
-  getExam: protectedProcedure.query(async ({ ctx }) => {
-    const quiz = await ctx.prisma.quiz.findFirst({
-      where: {
-        email: ctx.session.user.email as string,
-        createdAt: {
-          gte: startOfDay(new Date()),
+
+      // get questions
+      const questions = await ctx.prisma.questions.findMany({
+        where: {
+          quizId: data.id,
         },
-        score: 0,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    if (!quiz) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Quiz not found",
       });
-    }
-    return quiz;
-  }),
+
+      return {
+        id: data.id,
+        topic: data.topic,
+        difficulty: data.difficulty,
+        questions: questions.map((q) => {
+          return {
+            question: q.question,
+            options: q.options,
+            type: q.type,
+          };
+        }),
+      };
+    }),
   gradeExam: protectedProcedure
     .input(
       z.object({

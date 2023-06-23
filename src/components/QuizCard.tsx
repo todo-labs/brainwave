@@ -1,45 +1,42 @@
-import Image from "next/image";
-import type { Quiz } from "@prisma/client";
-
+import React from "react";
+import { FileCodeIcon } from "lucide-react";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-interface QuizCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  aspectRatio?: "portrait" | "square";
-  width?: number;
-  height?: number;
-  quiz?: Quiz;
+interface QuizCardProps {
+  title: string;
+  onClick?: () => void;
   selected?: boolean;
+  documents?: number;
 }
 
-export function QuizCard({
-  quiz,
-  aspectRatio = "portrait",
-  width,
-  height,
-  className,
+const QuizCard: React.FC<QuizCardProps> = ({
+  title,
   selected,
-  ...props
-}: QuizCardProps) {
-  return (
-    <div
-      className={cn("space-y-3 rounded-md", className, {
-        "border-4 border-primary": selected,
-      })}
-      {...props}
-    >
-      <div className="overflow-hidden rounded-md">
-      <svg width={width} height={height}>
-      <linearGradient id="myGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#ff0000" />
-        <stop offset="100%" stopColor="#0000ff" />
-      </linearGradient>
-      <rect x="10" y="10" width={width} height={height} fill="url(#myGradient)" />
-    </svg>
-      </div>
-      <div className="space-y-1 text-sm">
-        {/* <h3 className="font-medium leading-none">{quiz?.}</h3> */}
-        <p className="text-xs text-muted-foreground">{quiz?.topic}</p>
-      </div>
-    </div>
-  );
-}
+  documents,
+  onClick,
+}) => (
+  <Card
+    className={cn({
+      "border-2 border-primary": selected,
+    })}
+    onClick={onClick}
+  >
+    <CardHeader>
+      <CardTitle>{title}</CardTitle>
+      {!!documents && (
+        <CardDescription>
+          {documents} {documents === 1 ? "document" : "documents"}
+          <FileCodeIcon className="ml-1 inline-block" size={16} />
+        </CardDescription>
+      )}
+    </CardHeader>
+  </Card>
+);
+
+export default QuizCard;

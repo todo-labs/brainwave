@@ -3,11 +3,14 @@ import { Heading } from "./ui/typography";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-import type { AIQuiz } from "types";
 import { Checkbox } from "./ui/checkbox";
 
 export interface IQuestionCardProps {
-  question: AIQuiz;
+  question: {
+    question: string;
+    type: "MCQ" | "SA" | "TF";
+    options?: string[];
+  };
   onSubmit: (answer: string) => void;
   width?: string;
 }
@@ -39,7 +42,7 @@ const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
                 <div className="grid gap-1.5 leading-none">
                   <label
                     htmlFor="terms1"
-                    className="text-sm font-medium text-gray-500 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="text-sm font-medium leading-none text-gray-500 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {option}
                   </label>

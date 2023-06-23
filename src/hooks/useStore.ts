@@ -4,17 +4,15 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { Topics } from "@prisma/client";
 import type { AIQuiz } from "types";
 
-type Steps = "choice" | "config" | "exam" | "result";
-
 interface State {
   showConfetti: boolean;
   setShowConfetti: (showConfetti: boolean) => void;
   currentTopic: Topics;
+  currentSubTopic: string | null;
   setCurrentTopic: (topic: Topics | null) => void;
-  currentStep: Steps;
-  setCurrentStep: (step: Steps) => void;
-  currentQuiz: AIQuiz[] | null;
-  setCurrentQuiz: (quiz: AIQuiz[]) => void;
+  setCurrentSubTopic: (subTopic: string | null) => void;
+  currentQuiz: AIQuiz | null;
+  setCurrentQuiz: (quiz: AIQuiz) => void;
   reset: () => void;
 }
 
@@ -26,15 +24,16 @@ const store: StateCreator<State> = persist(
     setCurrentTopic: (currentTopic) =>
       set({ currentTopic: currentTopic as Topics }),
     currentStep: "choice",
-    setCurrentStep: (currentStep) => set({ currentStep }),
+    currentSubTopic: null,
+    setCurrentSubTopic: (currentSubTopic) => set({ currentSubTopic }),
     currentQuiz: null,
     setCurrentQuiz: (currentQuiz) => set({ currentQuiz }),
     reset: () =>
       set({
         showConfetti: false,
         currentTopic: Topics.MATH_I,
-        currentStep: "choice",
         currentQuiz: null,
+        currentSubTopic: null,
       }),
   }),
   {

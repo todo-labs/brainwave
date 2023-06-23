@@ -1,10 +1,8 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { QuestionType, QuizDifficulty } from "@prisma/client";
 import { Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import { useForm } from "react-hook-form";
-
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,9 +41,11 @@ import {
   type CreateQuizRequestType,
   createQuizSchema,
 } from "@/server/validators";
+import React from "react";
+import type { AIQuiz } from "types";
 
 export function CreateConfig() {
-  const { currentTopic, setCurrentQuiz, setCurrentStep } = useStore();
+  const { currentTopic, setCurrentQuiz, currentSubTopic } = useStore();
   const createQuizMutation = api.quiz.createExam.useMutation();
 
   const form = useForm<CreateQuizRequestType>({
@@ -54,7 +54,7 @@ export function CreateConfig() {
       difficulty: "EASY",
       questions: 10,
       options: [QuestionType.MCQ],
-      university: "",
+      subtopic: currentSubTopic as string,
       notes: "",
       subject: currentTopic,
     },
@@ -67,11 +67,11 @@ export function CreateConfig() {
 
   async function onSubmit(values: CreateQuizRequestType) {
     try {
-      await createQuizMutation.mutateAsync({
+      const quiz = await createQuizMutation.mutateAsync({
         ...values,
       });
-      // setCurrentQuiz(quiz);
-      setCurrentStep("exam");
+      console.log(quiz);
+      setCurrentQuiz(quiz as AIQuiz);
     } catch (err) {
       console.log(err);
     }
@@ -127,18 +127,11 @@ export function CreateConfig() {
                   />
                   <FormField
                     control={form.control}
-                    name="university"
+                    name="subtopic"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>University</FormLabel>
-                        <Input
-                          {...field}
-                          placeholder="Brown University"
-                          disabled={createQuizMutation.isLoading}
-                        />
-                        <FormDescription>
-                          This is your public display name.
-                        </FormDescription>
+                        <FormLabel>Subtopic</FormLabel>
+                        <Input {...field} disabled={!!currentSubTopic} />
                         <FormMessage />
                       </FormItem>
                     )}
@@ -210,14 +203,6 @@ export function CreateConfig() {
                                 </FormControl>
                                 <div className="space-y-1 leading-none">
                                   <FormLabel>{item}</FormLabel>
-                                  <FormDescription>
-                                    You can manage your mobile notifications in
-                                    the{" "}
-                                    <a href="/examples/forms">
-                                      mobile settings
-                                    </a>{" "}
-                                    page.
-                                  </FormDescription>
                                 </div>
                               </FormItem>
                             );

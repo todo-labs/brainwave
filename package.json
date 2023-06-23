@@ -9,6 +9,9 @@
     "lint": "next lint",
     "start": "next start"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
     "@next-auth/prisma-adapter": "^1.0.5",
@@ -55,6 +58,8 @@
     "next-i18next": "^13.2.2",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.1",
+    "pdf-parse": "^1.1.1",
+    "puppeteer": "^20.7.3",
     "react": "18.2.0",
     "react-day-picker": "^8.7.1",
     "react-dom": "18.2.0",
