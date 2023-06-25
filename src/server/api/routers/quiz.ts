@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { createQuizSchema } from "@/server/validators";
-import { genQuiz } from "@/lib/ai";
+import { createQuizSchema, gradeQuizSchema } from "@/server/validators";
+import { genQuiz, gradeQuiz } from "@/lib/ai";
 import { TRPCError } from "@trpc/server";
 
 export const quizRouter = createTRPCRouter({
@@ -74,21 +74,17 @@ export const quizRouter = createTRPCRouter({
       };
     }),
   gradeExam: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().cuid(),
-        answers: z.array(z.string()),
-      })
-    )
+    .input(gradeQuizSchema)
     .mutation(async ({ ctx, input }) => {
       const quiz = await ctx.prisma.quiz.findUnique({
         where: {
-          id: input.id,
+          id: input.quizId,
         },
         include: {
           questions: true,
         },
       });
+
       if (!quiz) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -96,7 +92,6 @@ export const quizRouter = createTRPCRouter({
         });
       }
 
-      // TODO: Check if quiz is already graded
       if (quiz.score > 0) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -104,22 +99,29 @@ export const quizRouter = createTRPCRouter({
         });
       }
 
-      // TODO: call open ai to grade the quiz
-      // const { score, explanation } = await gradeQuiz(
-      //   quiz.topic,
-      //   quiz.difficulty,
-      //   quiz.questions,
-      //   input.answers
-      // );
+      const result = await gradeQuiz(
+        quiz.topic,
+        quiz.difficulty,
+        quiz.questions ?? [],
+        input.answers
+      );
 
-      // await ctx.prisma.quiz.update({
-      //   where: {
-      //     id: input.id,
-      //   },
-      //   data: {
-      //     score,
-      //   },
-      // });
-      // return score;
+      if (!result) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to grade quiz",
+        });
+      }
+
+      await ctx.prisma.quiz.update({
+        where: {
+          id: input.quizId,
+        },
+        data: {
+          score: result.score,
+        },
+      });
+
+      return result;
     }),
 });

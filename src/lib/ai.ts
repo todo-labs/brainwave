@@ -6,7 +6,7 @@ import {
   StructuredOutputParser,
   OutputFixingParser,
 } from "langchain/output_parsers";
-import { QuestionType } from "@prisma/client";
+import { QuestionType, Questions } from "@prisma/client";
 import { initializeAgentExecutorWithOptions } from "langchain/agents";
 import { DynamicStructuredTool } from "langchain/tools";
 import { SerpAPI, ChainTool } from "langchain/tools";
@@ -54,7 +54,13 @@ const gradeQuizParser = StructuredOutputParser.fromZodSchema(
   })
 );
 
-type GradeQuizParserType = z.infer<typeof gradeQuizParser.schema>;
+export type GradeQuizParserType = z.infer<typeof gradeQuizParser.schema>;
+
+type ContextDocument = {
+  title: string;
+  url: string;
+  text: string;
+};
 
 export async function genQuiz(
   config: CreateQuizRequestType
@@ -62,7 +68,7 @@ export async function genQuiz(
   const prompt = `Greetings! As an esteemed SAT Quiz master, your extensive expertise and extensive experience in the field of {subject} make you the perfect candidate for the following task:
     We have an upcoming examination in {subtopic} and need to create a customized quiz that will effectively prepare our students. 
     As you prepare the quiz, kindly adhere to the provided formatting guidelines: {formatInstruction}. 
-    The quiz should comprise approximately {questions} thought-provoking questions.
+    The quiz must comprise approximately {questions} thought-provoking questions.
     To ensure the quiz is suitable for students of varying proficiency levels, it should align with a {difficulty} level of complexity. 
     This will guarantee that the quiz is both challenging and engaging, catering to a wide range of abilities.
     To assess students' comprehensive understanding and provide diverse engagement opportunities, the quiz should incorporate a variety of question formats. 
@@ -73,9 +79,6 @@ export async function genQuiz(
     While crafting the quiz, strive for a delicate balance between educational value and clarity. 
     The questions should be formulated in a manner that fosters learning, making them accessible and comprehensible to all students. 
     Avoid adding excessive explanations to maintain a concise and focused quiz format.
-    We appreciate your expertise and dedication to creating an enriching examination experience for our students. 
-    Thank you for your contributions!
-    Please proceed with crafting the quiz based on the provided instructions.
   `;
 
   const format = quizParser.getFormatInstructions();
@@ -91,14 +94,6 @@ export async function genQuiz(
 
   const chain = new LLMChain({ llm: model, prompt: template });
 
-  console.log(
-    `Making request to OpenAI with the following parameters: ${JSON.stringify(
-      config,
-      null,
-      2
-    )}`
-  );
-
   console.log(`\nAI is thinking...`);
   const start = performance.now();
 
@@ -109,64 +104,70 @@ export async function genQuiz(
     difficulty: config.difficulty,
   });
 
+  console.log({
+    subject: config.subject,
+    subtopic: config.subtopic,
+    questions: config.questions,
+    difficulty: config.difficulty,
+  });
+
   const end = performance.now();
   console.log(`\nAI took ${Math.fround((end - start) / 1000)}s to respond`);
-  console.log(`\nAI response: ${JSON.stringify(response.text)}`);
+  console.log(`\nAI response: ${JSON.stringify(response.text, null, 2)}`);
 
   return response.text as QuizParserType;
 }
 
-// export async function gradeQuiz(
-//   subject: string,
-//   difficulty: string,
-//   questions: QuizParserType,
-//   answers: string[]
-// ): Promise<GradeQuizParserType | undefined> {
-//   const prompt = `Greetings! As an accomplished {subject} professor with over a decade of teaching experience, you've been tasked with the job of grading a quiz.
-//     Earlier in the day, you administered a quiz to your students, gauged at a {difficulty} level of difficulty.
-//     You provided the questions, along with the correct answers as follows:
-//     {questions}
-//     You've since received the students' responses:
-//     {answers}
-//     Your task now is to grade the quiz, providing valuable feedback to the students.
-//     Please grade the quiz on a scale of 100.
-//     For each incorrect answer, it's crucial that you provide a clear explanation.
-//     The purpose of this is twofold: to clarify any misunderstandings and to promote learning from the student's errors.
-//     Without these explanations, the students will not have the opportunity to learn from their mistakes and make improvements for the future.
-//     Ensure you provide your response according to these guidelines: {formatInstruction}.
-//     In the grading process, we are focusing solely on the data.
-//     Please avoid including any extraneous information or personal insights.
-//     The grading should be objective and straightforward, solely focused on the student's performance in relation to the correct answers.`;
+export async function gradeQuiz(
+  subject: string,
+  difficulty: string,
+  questions: Questions[],
+  answers: string[]
+): Promise<GradeQuizParserType | undefined> {
+  const prompt = `Greetings! As an accomplished {subject} professor with over a decade of teaching experience, you've been tasked with the job of grading a quiz.
+    Earlier in the day, you administered a quiz to your students, gauged at a {difficulty} level of difficulty.
+    Ensure you provide your response according to these guidelines: {formatInstruction}.
+    You provided the questions, along with the correct answers as follows:
+    {questions}
+    You've since received the students' responses:
+    {answers}
+    Your task now is to grade the quiz, providing valuable feedback to the students.
+    Please grade the quiz on a scale of 1 to 100.
+    For each incorrect answer, it's crucial that you provide a clear explanation.
+    The purpose of this is twofold: to clarify any misunderstandings and to promote learning from the student's errors.
+    Without these explanations, the students will not have the opportunity to learn from their mistakes and make improvements for the future.
+    In the grading process, we are focusing solely on the data.
+    Please avoid including any extraneous information or personal insights.
+    The grading should be objective and straightforward, solely focused on the student's performance in relation to the correct answers.`;
 
-//   const format = quizParser.getFormatInstructions();
+  const format = gradeQuizParser.getFormatInstructions();
 
-//   const template = new PromptTemplate({
-//     template: prompt,
-//     inputVariables: ["subject", "difficulty", "questions"],
-//     partialVariables: { formatInstruction: format },
-//   });
+  const template = new PromptTemplate({
+    template: prompt,
+    inputVariables: ["subject", "difficulty", "questions", "answers"],
+    partialVariables: { formatInstruction: format },
+    outputParser: gradeQuizParser,
+  });
 
-//   const questionsString = questions.map((question) => {
-//     return `Q:${question.question}\nA:${question.answer}\n`;
-//   });
+  const questionsString = questions.map((question) => {
+    return `Q:${question.question}\nA:${question.answer}\n`;
+  });
 
-//   const input = await template.format({
-//     subject,
-//     difficulty,
-//     questions: questionsString,
-//     answers,
-//   });
+  const chain = new LLMChain({ llm: model, prompt: template });
 
-//   const result = await callOpenAi<GradeQuizParserType>(input, gradeQuizParser);
-//   return result as GradeQuizParserType;
-// }
+  console.log(`\nAI is thinking...`);
+  const start = performance.now();
 
-type ContextDocument = {
-  title: string;
-  url: string;
-  text: string;
-};
+  const response = await chain.call({
+    subject,
+    difficulty,
+    questions: questionsString.join("\n"),
+    answers: answers.join("\n"),
+  });
 
-// export async function findContextDocuments(
-//   type: Topics
-// ): Promise<ContextDocument[]> {
+  const end = performance.now();
+  console.log(`\nAI took ${Math.fround((end - start) / 1000)}s to respond`);
+  console.log(`\nAI response: ${JSON.stringify(response.text, null, 2)}`);
+
+  return response.text as GradeQuizParserType;
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import * as React from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
+import { Loader2Icon } from "lucide-react";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -11,11 +12,21 @@ import { UserNav } from "@/components/user/Nav";
 import { CreateConfig } from "@/components/createConfig";
 import { Sidebar } from "@/components/sidebar";
 import Question from "@/components/Question";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";
-import { Button } from "@/components/ui/button";
-import { Topics } from "@prisma/client";
+import { useToast } from "@/hooks/useToast";
+import { GradeQuizRequestType } from "@/server/validators";
+import { GradeQuizParserType } from "@/lib/ai";
 
 export const metadata: Metadata = {
   title: "Brainwave",
@@ -40,6 +51,9 @@ export default function Home() {
     setCurrentSubTopic,
   } = useStore();
 
+  const { toast } = useToast();
+  const [answers, setAnswers] = React.useState(new Map<number, string>());
+  const [result, setResult] = React.useState<GradeQuizParserType | null>();
   const getSubTopics = api.meta.getSubtopics.useQuery(
     {
       topic: currentTopic,
@@ -52,6 +66,30 @@ export default function Home() {
   const getPastExams = api.quiz.getPastExams.useQuery({
     topic: currentTopic,
   });
+
+  const gradeQuiz = api.quiz.gradeExam.useMutation({
+    onSuccess: (data) => {
+      toast({
+        title: "Success",
+        description: "Quiz graded successfully",
+      });
+      console.log(data);
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
+    },
+  });
+
+  const submitQuiz = async () => {
+    const res = await gradeQuiz.mutateAsync({
+      quizId: currentQuiz?.id ?? "",
+      answers: [],
+    });
+    setResult(res);
+  };
 
   React.useEffect(() => {
     reset();
@@ -88,9 +126,7 @@ export default function Home() {
                         <TabsTrigger
                           value="choice"
                           className="relative"
-                          disabled={
-                            !!currentQuiz || !currentTopic || !!currentSubTopic
-                          }
+                          disabled={!!currentQuiz || !!currentSubTopic}
                         >
                           Pick an Exam
                         </TabsTrigger>
@@ -101,7 +137,7 @@ export default function Home() {
                           Config
                         </TabsTrigger>
                         <TabsTrigger value="exam" disabled={!currentQuiz}>
-                          Live
+                          Quiz
                         </TabsTrigger>
                       </TabsList>
                       <div className="ml-auto mr-4">
@@ -163,11 +199,11 @@ export default function Home() {
                             {getPastExams.isLoading && <h1>Loading....</h1>}
                             {getPastExams.isError && <h1>Loading....</h1>}
                             {getPastExams.data &&
-                              getPastExams.data.map((album) => (
+                              getPastExams.data.map((exam) => (
                                 <QuizCard
-                                  key={album.id}
+                                  key={exam.id}
                                   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                                  title={album.title ?? ""}
+                                  title={exam.title ?? ""}
                                   onClick={() => {
                                     console.log("clicked");
                                   }}
@@ -202,27 +238,30 @@ export default function Home() {
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <h2 className="text-2xl font-semibold tracking-tight">
-                            New Episodes
+                            {currentQuiz?.title}
                           </h2>
-                          <p className="text-sm text-muted-foreground">
+                          {/* <p className="text-sm text-muted-foreground">
                             Your favorite podcasts. Updated daily.
-                          </p>
+                          </p> */}
                         </div>
                       </div>
                       <Separator className="my-4" />
                       <section className="flex flex-col space-y-4">
                         {currentQuiz &&
-                          currentQuiz.questions.map((q) => (
+                          currentQuiz.questions.map((q, index) => (
                             <Question
                               key={q.question}
                               question={q}
                               onSubmit={(answer) => {
-                                console.log(answer);
+                                setAnswers(answers.set(index, answer));
                               }}
                             />
                           ))}
                       </section>
-                      <Button onClick={() => alert("apply some logic here")}>
+                      <Button onClick={() => void submitQuiz()}>
+                        {gradeQuiz.isLoading && (
+                          <Loader2Icon className="mr-2 h-5 w-5 animate-spin text-white" />
+                        )}
                         Submit Quiz
                       </Button>
                     </TabsContent>
@@ -233,6 +272,20 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Dialog open={!!result}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>You scored Passed</DialogTitle>
+            <DialogDescription>
+              You scored <strong className="">{result?.score}</strong> out of
+              100
+              <div className="mt-4 text-muted-foreground">
+                {result?.explanation}
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

@@ -1,8 +1,11 @@
 import { create, type StateCreator } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { Topics } from "@prisma/client";
-import type { AIQuiz } from "types";
+import { Topics, type Quiz, type Questions } from "@prisma/client";
+
+type QuizWithQuestions = Quiz & {
+  questions: Questions[];
+};
 
 interface State {
   showConfetti: boolean;
@@ -11,8 +14,8 @@ interface State {
   currentSubTopic: string | null;
   setCurrentTopic: (topic: Topics | null) => void;
   setCurrentSubTopic: (subTopic: string | null) => void;
-  currentQuiz: AIQuiz | null;
-  setCurrentQuiz: (quiz: AIQuiz) => void;
+  currentQuiz: QuizWithQuestions | null;
+  setCurrentQuiz: (quiz: QuizWithQuestions) => void;
   reset: () => void;
 }
 

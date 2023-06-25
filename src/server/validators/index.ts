@@ -1,4 +1,3 @@
-// implement a validator function to ensure the selected quiz topic is valid and supported
 import { QuestionType, QuizDifficulty, Topics } from "@prisma/client";
 import z from "zod";
 
@@ -29,13 +28,13 @@ export const profileSchema = z.object({
   dob: z.date({
     required_error: "A date of birth is required.",
   }),
-  profilePicture: z
-    .string()
-    .url({
-      message: "Profile picture must be a valid URL.",
-    })
-    .optional(),
+});
+
+export const gradeQuizSchema = z.object({
+  quizId: z.string().cuid(),
+  answers: z.array(z.string()),
 });
 
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;
 export type ProfileRequestType = z.infer<typeof profileSchema>;
+export type GradeQuizRequestType = z.infer<typeof gradeQuizSchema>;

@@ -56,12 +56,10 @@ model User {
 enum QuestionType {
   MCQ
   SA
-  TF
-  MT
 }
 
 model Questions {
-  id       Int          @id @default(autoincrement())
+  id       String       @id @default(cuid())
   quizId   String
   question String
   type     QuestionType @default(MCQ)
@@ -89,7 +87,7 @@ enum Topics {
 }
 
 model Quiz {
-  id          String         @id  @default(cuid())
+  id          String         @id @default(cuid())
   email       String
   user        User           @relation(fields: [email], references: [id], onDelete: Cascade)
   topic       Topics
@@ -123,11 +121,11 @@ model Document {
 }
 
 model Metadata {
-  id        String      @id  @default(cuid())
-  topic     Topics      @unique
+  id        String   @id @default(cuid())
+  topic     Topics   @unique
   subtopics String[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
