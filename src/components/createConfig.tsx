@@ -42,8 +42,7 @@ import {
   createQuizSchema,
 } from "@/server/validators";
 import React from "react";
-import type { AIQuiz } from "types";
-import { env } from "@/env.mjs";
+import type { QuizWithQuestions } from "types";
 
 export function CreateConfig() {
   const { currentTopic, setCurrentQuiz, currentSubTopic } = useStore();
@@ -71,8 +70,7 @@ export function CreateConfig() {
       const quiz = await createQuizMutation.mutateAsync({
         ...values,
       });
-      // console.log(quiz);
-      setCurrentQuiz(quiz as AIQuiz);
+      setCurrentQuiz(quiz as QuizWithQuestions);
     } catch (err) {
       console.log(err);
     }
@@ -165,55 +163,6 @@ export function CreateConfig() {
                     </FormItem>
                   )}
                 />
-                {/* <FormField
-                  control={form.control}
-                  name="options"
-                  render={() => (
-                    <FormItem>
-                      <div className="mb-4">
-                        <FormLabel className="text-base">
-                          Question Types
-                        </FormLabel>
-                        <FormDescription>
-                          Select the items you want to display in the sidebar.
-                        </FormDescription>
-                      </div>
-                      {Object.keys(QuestionType).map((item) => (
-                        <FormField
-                          key={item}
-                          control={form.control}
-                          name="options"
-                          render={({ field }) => {
-                            return (
-                              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                                <FormControl>
-                                  <Checkbox
-                                    checked={field.value?.includes(
-                                      item as QuestionType
-                                    )}
-                                    onCheckedChange={(checked) => {
-                                      return checked
-                                        ? field.onChange([...field.value, item])
-                                        : field.onChange(
-                                            field.value?.filter(
-                                              (value) => value !== item
-                                            )
-                                          );
-                                    }}
-                                  />
-                                </FormControl>
-                                <div className="space-y-1 leading-none">
-                                  <FormLabel>{item}</FormLabel>
-                                </div>
-                              </FormItem>
-                            );
-                          }}
-                        />
-                      ))}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
                 <FormField
                   control={form.control}
                   name="notes"

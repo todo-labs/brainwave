@@ -1,11 +1,8 @@
 import { create, type StateCreator } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { Topics, type Quiz, type Questions } from "@prisma/client";
-
-type QuizWithQuestions = Quiz & {
-  questions: Questions[];
-};
+import { Topics } from "@prisma/client";
+import type { QuizWithQuestions } from "types";
 
 interface State {
   showConfetti: boolean;

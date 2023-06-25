@@ -54,6 +54,8 @@ export default function Home() {
   const { toast } = useToast();
   const [answers, setAnswers] = React.useState(new Map<number, string>());
   const [result, setResult] = React.useState<GradeQuizParserType | null>();
+  const [showDialog, setShowDialog] = React.useState(false);
+
   const getSubTopics = api.meta.getSubtopics.useQuery(
     {
       topic: currentTopic,
@@ -89,6 +91,7 @@ export default function Home() {
       answers: [],
     });
     setResult(res);
+    setShowDialog(true);
   };
 
   React.useEffect(() => {
@@ -272,7 +275,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Dialog open={!!result}>
+      <Dialog open={showDialog} onOpenChange={(open) => setShowDialog(open)}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>You scored Passed</DialogTitle>
