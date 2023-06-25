@@ -18,15 +18,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
-import { GradeQuizRequestType } from "@/server/validators";
-import { GradeQuizParserType } from "@/lib/ai";
 
 export const metadata: Metadata = {
   title: "Brainwave",
@@ -53,7 +50,7 @@ export default function Home() {
 
   const { toast } = useToast();
   const [answers, setAnswers] = React.useState(new Map<number, string>());
-  const [result, setResult] = React.useState<GradeQuizParserType | null>();
+  const [result, setResult] = React.useState<typeof gradeQuiz.data | null>();
   const [showDialog, setShowDialog] = React.useState(false);
 
   const getSubTopics = api.meta.getSubtopics.useQuery(
@@ -88,15 +85,13 @@ export default function Home() {
   const submitQuiz = async () => {
     const res = await gradeQuiz.mutateAsync({
       quizId: currentQuiz?.id ?? "",
-      answers: [],
+      answers: Array.from(answers.values()),
     });
     setResult(res);
     setShowDialog(true);
-  };
-
-  React.useEffect(() => {
     reset();
-  }, []);
+    setAnswers(new Map<number, string>());
+  };
 
   return (
     <>
@@ -126,22 +121,11 @@ export default function Home() {
                   <Tabs defaultValue="config" className="h-full space-y-6">
                     <div className="space-between flex items-center">
                       <TabsList defaultValue="choice">
-                        <TabsTrigger
-                          value="choice"
-                          className="relative"
-                          disabled={!!currentQuiz || !!currentSubTopic}
-                        >
+                        <TabsTrigger value="choice" className="relative">
                           Pick an Exam
                         </TabsTrigger>
-                        <TabsTrigger
-                          value="config"
-                          disabled={!currentSubTopic || !!currentQuiz}
-                        >
-                          Config
-                        </TabsTrigger>
-                        <TabsTrigger value="exam" disabled={!currentQuiz}>
-                          Quiz
-                        </TabsTrigger>
+                        <TabsTrigger value="config">Config</TabsTrigger>
+                        <TabsTrigger value="exam">Quiz</TabsTrigger>
                       </TabsList>
                       <div className="ml-auto mr-4">
                         <UserNav />
@@ -189,7 +173,7 @@ export default function Home() {
                       </div>
                       <div className="mt-6 space-y-1">
                         <h2 className="text-2xl font-semibold tracking-tight">
-                          Past Exams (2020-2021)
+                          Past Exams
                         </h2>
                         <p className="text-sm text-muted-foreground">
                           Your personal playlists. Updated daily.
@@ -261,7 +245,10 @@ export default function Home() {
                             />
                           ))}
                       </section>
-                      <Button onClick={() => void submitQuiz()}>
+                      <Button
+                        onClick={() => void submitQuiz()}
+                        disabled={gradeQuiz.isLoading}
+                      >
                         {gradeQuiz.isLoading && (
                           <Loader2Icon className="mr-2 h-5 w-5 animate-spin text-white" />
                         )}
@@ -278,13 +265,27 @@ export default function Home() {
       <Dialog open={showDialog} onOpenChange={(open) => setShowDialog(open)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>You scored Passed</DialogTitle>
+            <DialogTitle>
+              {result?.score && result?.score > 50
+                ? "Congratulations"
+                : "Oh no!"}
+            </DialogTitle>
             <DialogDescription>
-              You scored <strong className="">{result?.score}</strong> out of
+              You scored{" "}
+              <strong className="text-primary">{result?.score}</strong> out of
               100
-              <div className="mt-4 text-muted-foreground">
-                {result?.explanation}
-              </div>
+              {result?.result.map((r, index) => (
+                <div key={r.question}>
+                  <p className="text-sm text-muted-foreground">{r.question}</p>
+                  <p className="text-sm text-primary">
+                    Correct Answer: {result.correctAnswers[index]}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Your Answer: {r.answer}
+                  </p>
+                  <Separator className="my-4" />
+                </div>
+              ))}
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

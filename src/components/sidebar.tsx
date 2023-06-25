@@ -7,7 +7,7 @@ import useStore from "@/hooks/useStore";
 type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function Sidebar({ className }: SidebarProps) {
-  const { currentTopic, setCurrentTopic, currentSubTopic } = useStore();
+  const { currentTopic, setCurrentTopic } = useStore();
 
   const isActive = (topic: string) => {
     return currentTopic === topic;
@@ -27,7 +27,6 @@ export function Sidebar({ className }: SidebarProps) {
                   key={subtopic.name}
                   variant="ghost"
                   size="sm"
-                  disabled={!!currentSubTopic}
                   className={cn("w-full justify-start", {
                     "bg-accent text-white": isActive(subtopic.topic),
                   })}

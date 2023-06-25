@@ -48,10 +48,24 @@ const quizParser = StructuredOutputParser.fromZodSchema(
 type QuizParserType = z.infer<typeof quizParser.schema>;
 
 const gradeQuizParser = StructuredOutputParser.fromZodSchema(
-  z.object({
-    score: z.number().min(0).max(100).describe("the score of the quiz"),
-    explanation: z.string().min(1).max(1000).describe("the explanation"),
-  })
+  z
+    .object({
+      question: z
+        .string()
+        .min(1)
+        .max(300)
+        .describe("the question the student answered"),
+      answer: z
+        .string()
+        .min(1)
+        .max(300)
+        .describe("the answer the student gave"),
+      explanation: z.string().min(1).max(1000).describe("the explanation"),
+      correct: z
+        .boolean()
+        .describe("Whether the question was answered correctly"),
+    })
+    .array()
 );
 
 export type GradeQuizParserType = z.infer<typeof gradeQuizParser.schema>;
@@ -104,13 +118,6 @@ export async function genQuiz(
     difficulty: config.difficulty,
   });
 
-  console.log({
-    subject: config.subject,
-    subtopic: config.subtopic,
-    questions: config.questions,
-    difficulty: config.difficulty,
-  });
-
   const end = performance.now();
   console.log(`\nAI took ${Math.fround((end - start) / 1000)}s to respond`);
   console.log(`\nAI response: ${JSON.stringify(response.text, null, 2)}`);
@@ -124,21 +131,19 @@ export async function gradeQuiz(
   questions: Questions[],
   answers: string[]
 ): Promise<GradeQuizParserType | undefined> {
-  const prompt = `Greetings! As an accomplished {subject} professor with over a decade of teaching experience, you've been tasked with the job of grading a quiz.
-    Earlier in the day, you administered a quiz to your students, gauged at a {difficulty} level of difficulty.
-    Ensure you provide your response according to these guidelines: {formatInstruction}.
-    You provided the questions, along with the correct answers as follows:
-    {questions}
-    You've since received the students' responses:
-    {answers}
-    Your task now is to grade the quiz, providing valuable feedback to the students.
-    Please grade the quiz on a scale of 1 to 100.
-    For each incorrect answer, it's crucial that you provide a clear explanation.
-    The purpose of this is twofold: to clarify any misunderstandings and to promote learning from the student's errors.
-    Without these explanations, the students will not have the opportunity to learn from their mistakes and make improvements for the future.
-    In the grading process, we are focusing solely on the data.
-    Please avoid including any extraneous information or personal insights.
-    The grading should be objective and straightforward, solely focused on the student's performance in relation to the correct answers.`;
+  const prompt = `
+  Greetings! As a highly esteemed {subject} professor with a wealth of experience in teaching spanning over a decade, you have been entrusted with the significant responsibility of grading a quiz.
+  Earlier today, you conducted a quiz for your students, carefully designed to assess their knowledge at a {difficulty} level of difficulty.
+  The quiz consisted of the following thought-provoking questions:
+  {questions}
+  Now, it's time to evaluate your students' responses, which are as follows:
+  {answers}
+  Your primary objective is to grade the quiz accurately, providing invaluable feedback to help the students grow and improve.
+  Please assign a numerical grade to each quiz, using a scale of 1 to 100. Remember, for every incorrect answer, it is crucial to offer a clear and concise explanation. 
+  This serves a dual purpose: it clarifies any misunderstandings and encourages students to learn from their mistakes, fostering a mindset of continuous improvement.
+  It is essential to maintain objectivity throughout the grading process, focusing solely on the provided data. Refrain from including any extraneous information or personal insights. 
+  The grading should be straightforward and unbiased, assessing the students' performance solely in relation to the correct answers.
+  As you prepare your results, kindly adhere to the provided formatting guidelines: {formatInstruction}.`;
 
   const format = gradeQuizParser.getFormatInstructions();
 
@@ -149,19 +154,17 @@ export async function gradeQuiz(
     outputParser: gradeQuizParser,
   });
 
-  const questionsString = questions.map((question) => {
-    return `Q:${question.question}\nA:${question.answer}\n`;
-  });
-
   const chain = new LLMChain({ llm: model, prompt: template });
 
   console.log(`\nAI is thinking...`);
   const start = performance.now();
 
+  const _questions = questions.map((q) => q.question).join("\n");
+
   const response = await chain.call({
     subject,
     difficulty,
-    questions: questionsString.join("\n"),
+    questions: _questions,
     answers: answers.join("\n"),
   });
 

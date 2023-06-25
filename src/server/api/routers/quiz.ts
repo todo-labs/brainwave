@@ -102,7 +102,7 @@ export const quizRouter = createTRPCRouter({
       const result = await gradeQuiz(
         quiz.topic,
         quiz.difficulty,
-        quiz.questions ?? [],
+        quiz.questions,
         input.answers
       );
 
@@ -113,15 +113,18 @@ export const quizRouter = createTRPCRouter({
         });
       }
 
+      const score = result.reduce((acc, curr) => {
+        if (curr.correct) return acc + 1;
+        return acc;
+      }, 0);
+
+      const correctAnswers = quiz.questions.map((q) => q.answer);
+
       await ctx.prisma.quiz.update({
-        where: {
-          id: input.quizId,
-        },
-        data: {
-          score: result.score,
-        },
+        where: { id: input.quizId },
+        data: { score: Math.floor((score / result.length) * 100) },
       });
 
-      return result;
+      return { result, score, correctAnswers };
     }),
 });

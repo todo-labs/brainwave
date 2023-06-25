@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -51,9 +50,8 @@ export function CreateConfig() {
   const form = useForm<CreateQuizRequestType>({
     resolver: zodResolver(createQuizSchema),
     defaultValues: {
-      difficulty: "EASY",
-      questions: 10,
-      options: [QuestionType.MCQ],
+      difficulty: QuizDifficulty.EASY,
+      questions: 5,
       subtopic: currentSubTopic as string,
       notes: "",
       subject: currentTopic,
