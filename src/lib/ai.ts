@@ -1,4 +1,5 @@
-import { env } from "@/env.mjs";
+import { QuestionType, Questions } from "@prisma/client";
+
 import { z } from "zod";
 import { OpenAI } from "langchain/llms/openai";
 import { PromptTemplate } from "langchain/prompts";
@@ -6,13 +7,16 @@ import {
   StructuredOutputParser,
   OutputFixingParser,
 } from "langchain/output_parsers";
-import { QuestionType, Questions } from "@prisma/client";
 import { initializeAgentExecutorWithOptions } from "langchain/agents";
 import { DynamicStructuredTool } from "langchain/tools";
 import { SerpAPI, ChainTool } from "langchain/tools";
 import { HNSWLib } from "langchain/vectorstores/hnswlib";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { LLMChain } from "langchain/chains";
+import { PineconeClient } from "@pinecone-database/pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
+
+import { env } from "@/env.mjs";
 import type { CreateQuizRequestType } from "@/server/validators";
 
 const model = new OpenAI({
@@ -28,7 +32,7 @@ const model = new OpenAI({
 //   gl: "us",
 // });
 
-// const vectorStore = await HNSWLib.fromDocuments([], new OpenAIEmbeddings());
+const client = new PineconeClient();
 
 const quizParser = StructuredOutputParser.fromZodSchema(
   z

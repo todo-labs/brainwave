@@ -66,6 +66,8 @@ export default function Home() {
     topic: currentTopic,
   });
 
+  console.log(getPastExams.data);
+
   const gradeQuiz = api.quiz.gradeExam.useMutation({
     onSuccess: (data) => {
       toast({
@@ -93,6 +95,16 @@ export default function Home() {
     setAnswers(new Map<number, string>());
   };
 
+  const getCurrentTab = () => {
+    if (currentQuiz) {
+      return "exam";
+    }
+    if (currentTopic && !currentQuiz && !!currentSubTopic) {
+      return "config";
+    }
+    return "choice";
+  };
+
   return (
     <>
       <div className="md:hidden">
@@ -118,7 +130,11 @@ export default function Home() {
               <Sidebar className="hidden lg:block" />
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
-                  <Tabs defaultValue="config" className="h-full space-y-6">
+                  <Tabs
+                    activationMode="manual"
+                    value={getCurrentTab()}
+                    className="h-full space-y-6"
+                  >
                     <div className="space-between flex items-center">
                       <TabsList defaultValue="choice">
                         <TabsTrigger value="choice" className="relative">

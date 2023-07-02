@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Topics } from "@prisma/client";
+import { Role, Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { createQuizSchema, gradeQuizSchema } from "@/server/validators";
 import { genQuiz, gradeQuiz } from "@/lib/ai";
@@ -15,7 +15,9 @@ export const quizRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.quiz.findMany({
         where: {
-          email: ctx.session.user.email as string,
+          user: {
+            email: ctx.session.user.email as string,
+          },
           topic: input.topic,
         },
       });
@@ -32,26 +34,38 @@ export const quizRouter = createTRPCRouter({
         });
       }
 
-      const data = await ctx.prisma.quiz.create({
-        data: {
-          topic: input.subject,
-          difficulty: input.difficulty,
-          questions: {
-            create: quiz.map((q) => ({
-              question: q.question,
-              answer: q.answer,
-              options: q.options ?? [],
-              type: q.type,
-            })),
+      const [data, _] = await Promise.all([
+        ctx.prisma.quiz.create({
+          data: {
+            topic: input.subject,
+            difficulty: input.difficulty,
+            questions: {
+              create: quiz.map((q) => ({
+                question: q.question,
+                answer: q.answer,
+                options: q.options ?? [],
+                type: q.type,
+              })),
+            },
+            user: {
+              connect: {
+                email: ctx.session.user.email as string,
+              },
+            },
+            title: `[${input.difficulty}] Quiz for ${input.subject}`,
           },
-          user: {
-            connect: {
-              email: ctx.session.user.email as string,
+        }),
+        ctx.prisma.user.update({
+          where: {
+            email: ctx.session.user.email as string,
+          },
+          data: {
+            credits: {
+              decrement: 3,
             },
           },
-          title: `[${input.difficulty}] Quiz for ${input.subject}`,
-        },
-      });
+        }),
+      ]);
 
       // get questions
       const questions = await ctx.prisma.questions.findMany({

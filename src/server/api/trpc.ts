@@ -111,11 +111,11 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 });
 
 /** Reusable middleware to ensure the user is an admin */
-export const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
+const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
   if (
     !ctx.session ||
     !ctx.session.user ||
-    ctx.session.user.role !== Role.ADMIN
+    ctx.session.user.role != Role.ADMIN
   ) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
@@ -126,6 +126,7 @@ export const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
     },
   });
 });
+
 
 /**
  * Protected (authenticated) procedure

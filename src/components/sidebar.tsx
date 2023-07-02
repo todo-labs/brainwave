@@ -1,13 +1,13 @@
-import { topics } from "@/lib/utils";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+
+import { topics } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import useStore from "@/hooks/useStore";
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function Sidebar({ className }: SidebarProps) {
-  const { currentTopic, setCurrentTopic } = useStore();
+  const { currentTopic, setCurrentTopic, currentSubTopic } = useStore();
 
   const isActive = (topic: string) => {
     return currentTopic === topic;
@@ -30,6 +30,7 @@ export function Sidebar({ className }: SidebarProps) {
                   className={cn("w-full justify-start", {
                     "bg-accent text-white": isActive(subtopic.topic),
                   })}
+                  disabled={!!currentSubTopic}
                   onClick={() => setCurrentTopic(subtopic.topic)}
                 >
                   {subtopic.emoji} {subtopic.name}
