@@ -102,6 +102,14 @@ export function UserNav() {
               <Settings className="mr-2 h-4 w-4" />
               <p className="capitalize">Settings</p>
             </DropdownMenuItem>
+            {
+              session.user.role === Role.ADMIN && (
+                <DropdownMenuItem onClick={() => void router.push(`/dashboard`)}>
+                <Settings className="mr-2 h-4 w-4" />
+                <p className="capitalize">Dashboard</p>
+              </DropdownMenuItem>
+              )
+            }
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem>

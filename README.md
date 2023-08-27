@@ -1,78 +1,180 @@
-# Brainwave
+<a name="readme-top"></a>
 
-Brainwave is a quiz platform that uses OpenAI to generate questions and answers in real-time.
-The platform offers users the opportunity to take quizzes in a wide range of subjects and receive instant feedback on their performance.
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-## Vision
+<br />
+<div align="center">
+  <a href="https://github.com/todo-labs/brainwave">
+    <img src="public/logo.svg" alt="Logo" width="80" height="80">
+  </a>
 
-Our vision is to create an accessible and engaging platform for anyone who wants to learn and challenge themselves through quizzes.
-By leveraging the power of OpenAI, we aim to provide a unique and dynamic learning experience that adapts to each user's knowledge level.
+<h1 align="center">Brainwave</h1>
+  <p align="center">
+    <a href="https://brainwave.quest">View Demo</a>
+    ·
+    <a href="https://github.com/todo-labs/brainwave/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/todo-labs/brainwave/issues">Request Feature</a>
+  </p>
+</div>
 
-## Getting Started
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-To get started with Brainwave, you will need to set up your development environment. Here's how:
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]][app-url]
+
+Introducing Brainwave, an innovative quiz platform that harnesses the capabilities of OpenAI to generate real-time practice exams. Our vision is to establish an accessible and engaging hub for learning and self-challenge through quizzes. By capitalizing on OpenAI's potential, we strive to offer a distinctive and dynamic learning journey that adjusts to individual users' knowledge levels. With Brainwave, users can explore quizzes in diverse subjects, obtaining instant performance feedback for an enriched educational experience.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+- [![Next][Next.js]][Next-url]
+- [![React][React.js]][React-url]
+- [![Prisma][Prisma]][Prisma-url]
+- [![Tailwind CSS][Tailwind CSS]][Tailwind CSS-url]
+- [![Vercel][Vercel]][Verce-url]
+- [![OpenAi][OpenAi]][OpenAi-url]
+- [Next Auth](https://next-auth.js.org/)
+- [Langchain](https://js.langchain.com/docs/get_started/introduction)
+- [shadcn/ui](https://ui.shadcn.com/docs)
+- [TRPC](https://trpc.io/)
+
+### Features
+
+- Email Magic Link Authentication
+- Quiz Generation
+- Results Breakdown
+
+### What I Learned ?
+
+- How to use NextAuth.js to implement authentication and authorization
+- Langchain API integration
+- How to use tRPC to implement a GraphQL-like API
+- How to use Tailwind CSS & Radix UI to build a responsive and engaging UI
+- How to setup an embedding vector database
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Prerequisites
 
-- Node.js (v14 or later)
-- PostgreSQL
-- Yarn
+To get started with Brainwave, you will need to set up your development environment. You will need the following tools:
 
-### Installing
+- [Node.js](https://nodejs.org/) (Recommended version: +18)
+- [Yarn](https://yarnpkg.com/) (Recommended version: 1.22.x)
+- [Postgresql](https://www.postgresql.org/) (Recommended version: 15)
 
-1. Clone the repository:
+### Installation
 
-```bash
-git clone
-```
+1. Get an Open AI API Key at [Open AI Platform](https://platform.openai.com/)
+2. Clone the repo
+   ```bash
+    git clone https://github.com/todo-labs/brainwave.git
+   ```
+3. Install NPM packages
+   ```bash
+    yarn install
+   ```
+4. Copy over your env file
+   ```bash
+    cp .env.example  .env
+   ```
+5. Run the development server
+   ```bash
+    yarn dev
+   ```
+6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-2. Install dependencies:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```bash
-yarn install
-```
+## Roadmap
 
-3. Create a `.env` file in the root directory and add the following environment variables:
+- [ ] Setup the vector database
+- [ ] Enhance the quiz generation procedure
+- [ ] Enhance results breakdown UI and functionality
+- [ ] Add a leaderboard and ranking system
+- [ ] Enhance the mobile experience
 
-```bash
-DATABASE_URL=postgres://<username>:<password>@localhost:5432/brainwave
-```
+See the [open issues](https://github.com/todo-labs/brainwave/issues) for a full list of proposed features (and known issues).
 
-4. Create a database:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```bash
-createdb brainwave
-```
+## Contributing
 
-5. Run the migrations:
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-```bash
-npm run migrate
-```
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-6. Seed the database:
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'feat(scope): Add some AmazingFeature (fixes #123)'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-```bash
-psql -U <username> -d brainwave -f ./seeds/seed.quiz_tables.sql
-```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-7. Start the server:
+## License
 
-```bash
-npm run dev
-```
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-8. Open the app in your browser:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```bash
-open http://localhost:3000
-```
+## Contact
 
-## Built With
+David Ojo - [@todo-labs](https://github.com/todo-labs) - todo-labs@gmail.com
 
-- [Nextjs](https://nextjs.org/) - Front-end framework
-- [PostgreSQL](https://www.postgresql.org/) - Database
-- [OpenAI](https://openai.com/) - AI-powered question generation
-- [Tailwind CSS](https://tailwindcss.com/) - CSS framework
-- [Vercel](https://vercel.com/) - Deployment
-- [TRPC](https://trpc.io/) - RPC framework
+Project Link: [https://github.com/todo-labs/brainwave](https://github.com/todo-labs/brainwave)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+[contributors-shield]: https://img.shields.io/github/contributors/todo-labs/brainwave.svg?style=for-the-badge
+[contributors-url]: https://github.com/todo-labs/brainwave/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/todo-labs/brainwave.svg?style=for-the-badge
+[forks-url]: https://github.com/todo-labs/brainwave/network/members
+[stars-shield]: https://img.shields.io/github/stars/todo-labs/brainwave.svg?style=for-the-badge
+[stars-url]: https://github.com/todo-labs/brainwave/stargazers
+[issues-shield]: https://img.shields.io/github/issues/todo-labs/brainwave.svg?style=for-the-badge
+[issues-url]: https://github.com/todo-labs/brainwave/issues
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/david-ojo-66a12a147
+[product-screenshot]: public/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Prisma]: https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white
+[Prisma-url]: https://www.prisma.io/
+[app-url]: https://jumba.todo-labs.dev
+[Verce-url]: https://vercel.com/
+[Vercel]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
+[Tailwind CSS]: https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind CSS-url]: https://tailwindcss.com/
+[OpenAi]: https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white
+[OpenAi-url]: https://openai.com/
