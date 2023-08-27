@@ -171,7 +171,7 @@ Project Link: [https://github.com/todo-labs/brainwave](https://github.com/todo-l
 [React-url]: https://reactjs.org/
 [Prisma]: https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white
 [Prisma-url]: https://www.prisma.io/
-[app-url]: https://jumba.todo-labs.dev
+[app-url]: https://brainwave.quest
 [Verce-url]: https://vercel.com/
 [Vercel]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
 [Tailwind CSS]: https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
