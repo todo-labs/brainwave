@@ -148,7 +148,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-David Ojo - [@todo-labs](https://github.com/todo-labs) - todo-labs@gmail.com
+David Ojo - [@conceptcodes](https://github.com/conceptcodes) - conceptcodes@gmail.com
 
 Project Link: [https://github.com/todo-labs/brainwave](https://github.com/todo-labs/brainwave)
 
