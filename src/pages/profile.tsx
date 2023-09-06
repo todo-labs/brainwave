@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import type { Metadata } from "next";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

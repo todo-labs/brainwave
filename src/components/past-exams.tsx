@@ -6,6 +6,7 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import useStore from "@/hooks/useStore";
 import { cleanEnum } from "@/lib/utils";
 import { format } from "date-fns";
+import { FileEditIcon } from "lucide-react";
 
 const PastExams = () => {
   const { currentTopic, setCurrentQuiz, setCurrentStep } = useStore();
@@ -21,6 +22,18 @@ const PastExams = () => {
           {getPastExams.isLoading &&
             new Array(10).fill(0).map((_, i) => <QuizSkeleton key={i} />)}
           {getPastExams.isError && <h1>Loading....</h1>}
+          {getPastExams.data?.length === 0 && (
+            <div className="flex h-[300px] w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed">
+              <FileEditIcon className="h-16 w-16 text-muted" />
+              <h2 className="text-xl font-bold">
+                No past exams for this topic
+              </h2>
+              <p className="max-w-sm text-center text-base text-muted-foreground">
+                You have not taken any exams for this topic. Kinda weird, but to
+                each their own.
+              </p>
+            </div>
+          )}
           {getPastExams.data &&
             getPastExams.data.map((exam) => (
               <QuizCard

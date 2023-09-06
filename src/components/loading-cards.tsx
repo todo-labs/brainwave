@@ -11,20 +11,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const TopicSkeleton = () => {
   return (
     <Card>
-      <CardContent>
-        <CardHeader>
-          <Skeleton />
-        </CardHeader>
+      <CardContent className="p-5">
         <CardTitle>
-          <Skeleton />
+          <Skeleton className="h-4 w-[100px]" />
         </CardTitle>
-        <CardDescription>
-          <Skeleton />
-        </CardDescription>
       </CardContent>
-      <CardFooter>
-        <Skeleton />
-      </CardFooter>
     </Card>
   );
 };
@@ -32,7 +23,7 @@ export const TopicSkeleton = () => {
 export const QuizSkeleton = () => {
   return (
     <Card>
-      <CardContent>
+      <CardContent className="p-5">
         <div className="flex items-center space-x-4">
           <Skeleton className="h-12 w-12 rounded-full" />
           <div className="space-y-2">

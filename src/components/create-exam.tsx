@@ -1,4 +1,4 @@
-import { QuizDifficulty } from "@prisma/client";
+import { QuizDifficulty, Role } from "@prisma/client";
 import { Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -43,12 +43,14 @@ import React from "react";
 import type { QuizWithQuestions } from "types";
 import { useToast } from "@/hooks/useToast";
 import { env } from "@/env.mjs";
+import { useSession } from "next-auth/react";
 
 export function CreateConfig() {
   const { currentTopic, setCurrentQuiz, currentSubTopic, setCurrentStep } =
     useStore();
 
   const { toast } = useToast();
+  const { data: session } = useSession();
 
   const createQuizMutation = api.quiz.createExam.useMutation({
     onSuccess: (data) => {
@@ -202,7 +204,11 @@ export function CreateConfig() {
                       <span className="ml-2">Generating</span>
                     </>
                   ) : (
-                    `Submit (${env.NEXT_PUBLIC_CREDITS_PER_QUIZ} credits)`
+                    `Submit ${
+                      session?.user.role != Role.ADMIN
+                        ? `(${env.NEXT_PUBLIC_CREDITS_PER_QUIZ} credits)`
+                        : ""
+                    }`
                   )}
                 </Button>
               </CardFooter>

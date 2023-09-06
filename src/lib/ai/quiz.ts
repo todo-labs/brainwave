@@ -58,7 +58,7 @@ export async function genQuiz(
         "Generate a SAT Practice Exam with {questions} questions."
       )
       .setRelevance(
-        "The exam should focus on the {subtopic} as it pertains to your discipline."
+        "The exam should focus on the subtopic: [{subtopic}] as it pertains to your discipline."
       )
       .setConstraints(
         "Here are our supported question formats:",

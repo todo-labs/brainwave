@@ -1,9 +1,4 @@
-import {
-  BatteryWarningIcon,
-  Loader2Icon,
-  ThumbsDownIcon,
-  ThumbsUpIcon,
-} from "lucide-react";
+import { BatteryWarningIcon, Loader2Icon } from "lucide-react";
 
 import Markdown from "./ui/markdown";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
@@ -48,12 +43,15 @@ const Results = () => {
   }
 
   return (
-    <div className="flex">
-      <ScrollArea className="h-[800px]">
-        <Markdown content={data?.reviewNotes} />
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    </div>
+    <ScrollArea className="h-[800px]">
+      <div className="flex text-sm text-muted">
+          <h3>
+            {data.topic} / {data.subtopic} / {data.difficulty}
+          </h3>
+        </div>
+      <Markdown content={data?.reviewNotes} />
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 };
 
