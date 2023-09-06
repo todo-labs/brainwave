@@ -90,6 +90,7 @@ model Quiz {
   email       String
   user        User           @relation(fields: [email], references: [id], onDelete: Cascade)
   topic       Topics
+  subtopic    String
   difficulty  QuizDifficulty
   questions   Questions[]
   createdAt   DateTime       @default(now())
