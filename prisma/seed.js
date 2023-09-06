@@ -103,7 +103,7 @@ const seedMetadata = async () => {
 
 async function main() {
   try {
-    await Promise.all([seedMetadata()]);
+    await seedMetadata();
   } catch (error) {
     console.error("Error seeding data:", error);
   } finally {
