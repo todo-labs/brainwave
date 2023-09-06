@@ -8,7 +8,7 @@ import { DataTableColumnHeader } from "@/components/query-table/header";
 import { DataTableRowActions } from "./row-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import DefaultState from "@/components/DefaultState";
+import DefaultState from "@/components/default";
 
 import { api } from "@/lib/api";
 

@@ -1,5 +1,4 @@
-import { useMemo } from "react";
-import { QuestionType, QuizDifficulty } from "@prisma/client";
+import { QuizDifficulty } from "@prisma/client";
 import { Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -42,10 +41,28 @@ import {
 } from "@/server/validators";
 import React from "react";
 import type { QuizWithQuestions } from "types";
+import { useToast } from "@/hooks/useToast";
+import { env } from "@/env.mjs";
 
 export function CreateConfig() {
-  const { currentTopic, setCurrentQuiz, currentSubTopic } = useStore();
-  const createQuizMutation = api.quiz.createExam.useMutation();
+  const { currentTopic, setCurrentQuiz, currentSubTopic, setCurrentStep } =
+    useStore();
+
+  const { toast } = useToast();
+
+  const createQuizMutation = api.quiz.createExam.useMutation({
+    onSuccess: (data) => {
+      setCurrentQuiz(data as QuizWithQuestions);
+      setCurrentStep("exam");
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   const form = useForm<CreateQuizRequestType>({
     resolver: zodResolver(createQuizSchema),
@@ -58,16 +75,9 @@ export function CreateConfig() {
     },
   });
 
-  const numCredits = useMemo(() => {
-    // think of a good credit system
-    return 3;
-  }, [form.watch]);
-
   async function onSubmit(values: CreateQuizRequestType) {
     try {
-      const quiz = await createQuizMutation.mutateAsync({
-        ...values,
-      });
+      const quiz = await createQuizMutation.mutateAsync(values);
       setCurrentQuiz(quiz as QuizWithQuestions);
     } catch (err) {
       console.log(err);
@@ -93,7 +103,7 @@ export function CreateConfig() {
                     name="difficulty"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Quiz Diffuculuty</FormLabel>
+                        <FormLabel>Quiz Difficulty</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -115,9 +125,6 @@ export function CreateConfig() {
                             ))}
                           </SelectContent>
                         </Select>
-                        <FormDescription>
-                          This is your public display name.
-                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -175,11 +182,7 @@ export function CreateConfig() {
                         />
                       </FormControl>
                       <FormDescription>
-                        You can{" "}
-                        <span className="font-medium text-primary">
-                          @mention
-                        </span>{" "}
-                        other users and organizations.
+                        How would you like the AI to generate your exam?
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -199,7 +202,7 @@ export function CreateConfig() {
                       <span className="ml-2">Generating</span>
                     </>
                   ) : (
-                    `Submit (${numCredits} credits)`
+                    `Submit (${env.NEXT_PUBLIC_CREDITS_PER_QUIZ} credits)`
                   )}
                 </Button>
               </CardFooter>

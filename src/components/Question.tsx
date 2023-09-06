@@ -1,18 +1,14 @@
 import React from "react";
-import type { QuestionType } from "@prisma/client";
+import { QuestionType, type Questions } from "@prisma/client";
 
-import { Heading } from "./ui/typography";
-import { Input } from "./ui/input";
-import { Checkbox } from "./ui/checkbox";
+import { Heading } from "@/components/ui/typography";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 import { cn } from "@/lib/utils";
 
 export interface IQuestionCardProps {
-  question: {
-    question: string;
-    type: QuestionType;
-    options?: string[] | undefined;
-  };
+  question: Questions;
   onSubmit: (answer: string) => void;
   width?: string;
 }
@@ -21,9 +17,9 @@ const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
   return (
     <div className={cn("flex flex-col space-y-4", width)}>
       <Heading level="h3" className="font-bold capitalize">
-        {question.question}
+        {question.label}
       </Heading>
-      {question.type === "MCQ" && (
+      {question.type === QuestionType.MCQ && (
         <div>
           {question.options?.map((option, index) => (
             <div key={index} className="pb-4">
@@ -42,9 +38,10 @@ const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
           ))}
         </div>
       )}
-      {question.type === "SA" && (
-        <Input
+      {question.type === QuestionType.SA && (
+        <Textarea
           onChange={(e) => onSubmit(e.target.value)}
+          className="pb-4"
           placeholder="Enter your answer"
         />
       )}

@@ -2,38 +2,42 @@ import { create, type StateCreator } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { Topics } from "@prisma/client";
-import type { QuizWithQuestions } from "types";
+import type { QuizWithQuestions, Tabs } from "types";
 
 interface State {
   showConfetti: boolean;
-  setShowConfetti: (showConfetti: boolean) => void;
   currentTopic: Topics;
   currentSubTopic: string | null;
+  currentStep: Tabs;
+  currentQuiz: QuizWithQuestions | null;
   setCurrentTopic: (topic: Topics | null) => void;
   setCurrentSubTopic: (subTopic: string | null) => void;
-  currentQuiz: QuizWithQuestions | null;
+  setShowConfetti: (showConfetti: boolean) => void;
   setCurrentQuiz: (quiz: QuizWithQuestions) => void;
+  setCurrentStep: (step: Tabs) => void;
   reset: () => void;
 }
 
 const store: StateCreator<State> = persist(
   (set) => ({
     showConfetti: false,
-    setShowConfetti: (showConfetti) => set({ showConfetti }),
+    currentStep: "choice",
     currentTopic: Topics.MATH_I,
+    currentSubTopic: null,
+    currentQuiz: null,
+    setShowConfetti: (showConfetti) => set({ showConfetti }),
     setCurrentTopic: (currentTopic) =>
       set({ currentTopic: currentTopic as Topics }),
-    currentStep: "choice",
-    currentSubTopic: null,
     setCurrentSubTopic: (currentSubTopic) => set({ currentSubTopic }),
-    currentQuiz: null,
     setCurrentQuiz: (currentQuiz) => set({ currentQuiz }),
+    setCurrentStep: (currentStep) => set({ currentStep }),
     reset: () =>
       set({
         showConfetti: false,
         currentTopic: Topics.MATH_I,
         currentQuiz: null,
         currentSubTopic: null,
+        currentStep: "choice",
       }),
   }),
   {

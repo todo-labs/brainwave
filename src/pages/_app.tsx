@@ -5,6 +5,8 @@ import { appWithTranslation } from "next-i18next";
 import { DM_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-wrapper";
+import { Toaster } from "@/components/ui/toaster"
+
 
 import "@/styles/globals.css";
 import "src/styles/verify-request.css";
@@ -26,6 +28,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <main className={cn(dmSans.className)}>
           
           <Component {...pageProps} />
+          <Toaster />
         </main>
       </ThemeProvider>
     </SessionProvider>

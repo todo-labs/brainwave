@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Command } from "lucide-react";
 
-import { UserAuthForm } from "@/components/user/AuthForm";
+import { UserAuthForm } from "@/components/user/auth-form";
 import { getServerAuthSession } from "@/server/auth";
 import type { GetServerSideProps } from "next";
 

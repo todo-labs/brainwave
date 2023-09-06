@@ -1,16 +1,30 @@
+import { Topics } from "@prisma/client";
+
 import { Button } from "@/components/ui/button";
 
-import { topics } from "@/lib/utils";
-import { cn } from "@/lib/utils";
+import { cn, topics } from "@/lib/utils";
 import useStore from "@/hooks/useStore";
+import { api } from "@/lib/api";
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function Sidebar({ className }: SidebarProps) {
-  const { currentTopic, setCurrentTopic, currentSubTopic } = useStore();
+  const {
+    currentTopic,
+    setCurrentTopic,
+    setCurrentSubTopic,
+    currentStep,
+    setCurrentStep,
+  } = useStore();
 
   const isActive = (topic: string) => {
     return currentTopic === topic;
+  };
+
+  const handleClicked = (topic: Topics) => {
+    setCurrentTopic(topic);
+    setCurrentStep("choice");
+    setCurrentSubTopic("");
   };
 
   return (
@@ -28,10 +42,10 @@ export function Sidebar({ className }: SidebarProps) {
                   variant="ghost"
                   size="sm"
                   className={cn("w-full justify-start", {
-                    "bg-accent text-white": isActive(subtopic.topic),
+                    "bg-accent text-primary": isActive(subtopic.topic),
                   })}
-                  disabled={!!currentSubTopic}
-                  onClick={() => setCurrentTopic(subtopic.topic)}
+                  disabled={currentStep === "exam"}
+                  onClick={() => handleClicked(subtopic.topic)}
                 >
                   {subtopic.emoji} {subtopic.name}
                 </Button>

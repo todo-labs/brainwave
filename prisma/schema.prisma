@@ -1,26 +1,24 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
-// Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -61,10 +59,11 @@ enum QuestionType {
 model Questions {
   id       String       @id @default(cuid())
   quizId   String
-  question String
+  label    String
   type     QuestionType @default(MCQ)
   options  String[]     @default([])
-  answer   String
+  answer   String?
+  solution String
   quiz     Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }
 
@@ -92,12 +91,12 @@ model Quiz {
   user        User           @relation(fields: [email], references: [id], onDelete: Cascade)
   topic       Topics
   difficulty  QuizDifficulty
-  title       String
   questions   Questions[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   score       Int            @default(0)
-  reviewNotes String?        @default("")
+  reviewNotes String         @default("")
+  approved    Boolean        @default(false)
 }
 
 enum DocumentType {

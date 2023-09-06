@@ -16,14 +16,14 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import SettingsLayout from "@/components/user/SidebarNav";
+import SettingsLayout from "@/components/user/sidebar-nav";
 import { Separator } from "@/components/ui/separator";
 
 import { toast } from "@/hooks/useToast";
 
 type Theme = "light" | "dark";
 
-const SettingsPage: NextPage = () => {
+const SettingsPage: NextPage = (props) => {
   const { setTheme, theme: currentTheme } = useTheme();
   const appearanceFormSchema = z.object({
     theme: z.enum(["light", "dark"], {

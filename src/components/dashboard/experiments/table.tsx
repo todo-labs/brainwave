@@ -3,7 +3,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/query-table/header";
-import DefaultState from "@/components/DefaultState";
+import DefaultState from "@/components/default";
 import { DataTable } from "@/components/query-table/data-table";
 
 // import { DataTableRowActions } from "@/components/query-table/row-actions";
@@ -117,7 +117,6 @@ const columns: ColumnDef<any>[] = [
 const ExperimentTable = () => {
   // const { data, isLoading, isError, refetch } =
   //   api.admin.totalExperiments.useQuery(undefined);
-
   // return isLoading ? (
   //   <DefaultState
   //     title="Loading experiments"

@@ -92,15 +92,13 @@ const metadata = [
 ];
 
 const seedMetadata = async () => {
-  for (const item of metadata) {
-    await prisma.metadata.create({
-      data: {
-        topic: item.topic,
-        subtopics: item.subtopics,
-      },
-    });
-  }
-  console.log("metadat seeded successfully.");
+  await prisma.metadata.createMany({
+    data: metadata.map((item) => ({
+      topic: item.topic,
+      subtopics: item.subtopics,
+    })),
+  });
+  console.log("metadata seeded successfully.");
 };
 
 async function main() {

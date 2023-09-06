@@ -29,13 +29,16 @@ import { useBuyCredits } from "@/hooks/useBuyCredits";
 import { api } from "@/lib/api";
 import { Paragraph } from "../ui/typography";
 import { Role } from "@prisma/client";
+import useStore from "@/hooks/useStore";
 
 export function UserNav() {
   const { data: session } = useSession();
   const { buyCredits } = useBuyCredits();
+  const { reset } = useStore();
 
   const profileQuery = api.user.get.useQuery(undefined, {
     enabled: !!session?.user,
+    staleTime: 0,
   });
 
   const getInitials = (name: string) => {
@@ -46,6 +49,7 @@ export function UserNav() {
   };
 
   const handleSignOut = () => {
+    reset();
     void signOut();
   };
 
@@ -102,14 +106,12 @@ export function UserNav() {
               <Settings className="mr-2 h-4 w-4" />
               <p className="capitalize">Settings</p>
             </DropdownMenuItem>
-            {
-              session.user.role === Role.ADMIN && (
-                <DropdownMenuItem onClick={() => void router.push(`/dashboard`)}>
+            {session.user.role === Role.ADMIN && (
+              <DropdownMenuItem onClick={() => void router.push(`/dashboard`)}>
                 <Settings className="mr-2 h-4 w-4" />
                 <p className="capitalize">Dashboard</p>
               </DropdownMenuItem>
-              )
-            }
+            )}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem>

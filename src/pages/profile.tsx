@@ -18,34 +18,37 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 import { profileSchema, type ProfileRequestType } from "@/server/validators";
-import SettingsLayout from "@/components/user/SidebarNav";
+import SettingsLayout from "@/components/user/sidebar-nav";
 import { api } from "@/lib/api";
+import { useSession } from "next-auth/react";
 
-export const metadata: Metadata = {
-  title: "Forms",
-  description: "Advanced form example using react-hook-form and Zod.",
-};
-
-const ProfilePage: NextPage = () => {
-  const { data: profile } = api.user.get.useQuery();
+const ProfilePage: NextPage = (props) => {
+  const { data: session, update } = useSession();
 
   const form = useForm<ProfileRequestType>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: profile?.name || "",
+      name: session?.user?.name ?? "",
     },
   });
 
   const { toast } = useToast();
 
   const updateProfileMutation = api.user.update.useMutation({
-    onSuccess() {
+    onSuccess: (_, variables) => {
       toast({
         title: "Success",
         description: `Your profile has been updated`,
       });
+      update({
+        ...session,
+        user: {
+          ...session?.user,
+          name: variables.name,
+        },
+      });
     },
-    onError(error) {
+    onError: (error) => {
       toast({
         title: "Error",
         description: error.message,
@@ -67,7 +70,7 @@ const ProfilePage: NextPage = () => {
           <h3 className="text-lg font-medium">Profile</h3>
           <p className="text-sm text-muted-foreground">
             Update your account settings. Set your preferred language and
-            timezone.
+            timezone. (Coming soon)
           </p>
         </div>
         <Separator />

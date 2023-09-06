@@ -1,5 +1,11 @@
 import Image from "next/image";
-import { Activity, CreditCard, ChefHatIcon, Users, ShieldQuestionIcon } from "lucide-react";
+import {
+  Activity,
+  CreditCard,
+  ChefHatIcon,
+  Users,
+  ShieldQuestionIcon,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useMemo } from "react";
 
@@ -13,14 +19,14 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChartComponent } from "@/components/dashboard/overview";
 // import { RecentlyCreatedExperiments } from "@/components/dashboard/recently-created-experiments";
-import SettingsLayout from "@/components/user/SidebarNav";
+import SettingsLayout from "@/components/user/sidebar-nav";
 import ExperimentTable from "@/components/dashboard/experiments/table";
 
 import { api } from "@/lib/api";
 import UserTable from "@/components/dashboard/user-management/table";
 import QuizConfigEditor from "@/components/dashboard/QuizConfigEditor";
 
-export default function DashboardPage() {
+export default function DashboardPage(props) {
   const { data: session } = useSession();
 
   const { data: totalUsers } = api.admin.totalUsers.useQuery(undefined, {

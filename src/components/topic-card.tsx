@@ -8,23 +8,28 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-interface QuizCardProps {
+interface TopicCardProps {
   title: string;
   onClick?: () => void;
   selected?: boolean;
   documents?: number;
+  children?: React.ReactNode;
 }
 
-const QuizCard: React.FC<QuizCardProps> = ({
+const TopicCard: React.FC<TopicCardProps> = ({
   title,
   selected,
   documents,
   onClick,
+  children,
 }) => (
   <Card
-    className={cn({
-      "border-2 border-primary": selected,
-    })}
+    className={cn(
+      {
+        "border-2 border-primary": selected,
+      },
+      "cursor-pointer"
+    )}
     onClick={onClick}
   >
     <CardHeader>
@@ -36,7 +41,8 @@ const QuizCard: React.FC<QuizCardProps> = ({
         </CardDescription>
       )}
     </CardHeader>
+    {children}
   </Card>
 );
 
-export default QuizCard;
+export default TopicCard;

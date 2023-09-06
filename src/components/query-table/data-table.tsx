@@ -26,7 +26,7 @@ import {
 import { DataTablePagination } from "./pagination";
 import { DataTableToolbar } from "./toolbar";
 import { MagnetIcon } from "lucide-react";
-import DefaultState from "@/components/DefaultState";
+import DefaultState from "@/components/default";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

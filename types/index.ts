@@ -1,5 +1,5 @@
 import type common from "../public/locales/en/common.json";
-import type { QuestionType, Questions, Quiz, QuizDifficulty, Topics } from "@prisma/client";
+import type { Questions, Quiz } from "@prisma/client";
 
 /**
  * Builds up valid keypaths for translations.
@@ -31,5 +31,7 @@ type RecursiveKeyOfHandleValue<
   : Text;
 
 export type QuizWithQuestions = Quiz & {
-  questions: Questions[];
+  questions: Questions[] | null;
 };
+
+export type Tabs = "choice" | "config" | "exam" | "result";
