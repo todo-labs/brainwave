@@ -15,31 +15,17 @@ const Timer = (props: TimerProps) => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
-  
+
     timerRef.current = setInterval(() => {
-      setTimePassed((prevTimePassed: number) => {
-        if (prevTimePassed >= env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ) {
-          clearInterval(timerRef?.current);
-          return env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ;
-        } else {
-          return prevTimePassed + 1;
-        }
-      });
+      setTimePassed((prevTimePassed: number) =>
+        prevTimePassed > env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ
+          ? env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ
+          : prevTimePassed + 1
+      );
     }, 1000);
   };
 
-  useEffect(() => {
-    if (props.completed) {
-      setTimePassed(0);
-      return;
-    }
-    setupTimer();
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [props.completed]);
+  console.log(env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -65,13 +51,14 @@ const Timer = (props: TimerProps) => {
   }, [props.completed]);
 
   return (
-    <div className="my-10 flex w-full items-center justify-center space-x-6">
+    <div className="my-10 flex w-full items-center justify-center">
       <span className="text-xs font-normal text-muted">
         {formatTime(timePassed)}
       </span>
       <Progress
         value={(timePassed / env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ) * 100}
         max={env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ}
+        className="mx-4 w-full"
       />
       <span className="text-xs font-normal">
         {formatTime(env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ)}
