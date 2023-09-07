@@ -19,7 +19,7 @@ const Exam = () => {
   const { toast } = useToast();
 
   const gradeQuiz = api.quiz.gradeExam.useMutation({
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast({
         title: "Success",
         description: "Your quiz has been graded. Check your results now.",

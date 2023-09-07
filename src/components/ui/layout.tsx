@@ -3,12 +3,8 @@ import { useSession } from "next-auth/react";
 
 import Meta from "./meta";
 import FullScreenConfetti from "./confetti";
-import { UserNav } from "../user/nav";
-
-import { api } from "@/lib/api";
 
 import useStore from "@/hooks/useStore";
-import { Paragraph } from "./typography";
 
 interface ILayoutProps {
   children: React.ReactNode;
