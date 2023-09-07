@@ -3,7 +3,7 @@ import { z } from "zod";
 import { PromptTemplate } from "langchain/prompts";
 import { StructuredOutputParser } from "langchain/output_parsers";
 
-import type { CreateQuizRequestType } from "@/server/validators";
+import type { CreateQuizRequestType } from "@/server/schemas";
 import PromptBuilder from "./prompt";
 import { callOpenAi } from ".";
 

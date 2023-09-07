@@ -12,6 +12,8 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
+import { Tailwind } from "@react-email/tailwind";
+import theme from "../../tailwind.config";
 
 interface MagicLinkEmailProps {
   url?: string;
@@ -23,90 +25,47 @@ const baseUrl = process.env.VERCEL_URL
 
 export function MagicLinkEmail(props: MagicLinkEmailProps) {
   return (
-    <Html>
-      <Head />
+    <Tailwind config={theme}>
       <Preview>Log in with this magic link.</Preview>
-      <Body style={main}>
-        <Container style={container}>
+      <Body className="bg-white font-sans">
+        <Container
+          className="mx-auto bg-cover bg-bottom bg-no-repeat px-4 py-8"
+          style={{ backgroundImage: `url(${baseUrl}/bg.png)` }}
+        >
           <Img
-            src={`${baseUrl}/logo.png`}
+            src={`${baseUrl}/logo.svg`}
             width={48}
             height={48}
             alt="Brainwave"
+            className="mx-auto mb-8"
           />
-          <Heading style={heading}>🪄 Your magic link</Heading>
-          <Section style={body}>
-            <Text style={paragraph}>
-              <Link style={link} href={props.url}>
+          <Heading className="mb-8 text-4xl font-bold">
+            🪄 Your magic link
+          </Heading>
+          <Section className="mb-8">
+            <Text className="mb-4 text-lg leading-6">
+              <Link className="text-primary" href={props.url}>
                 👉 Click here to sign in 👈
               </Link>
             </Text>
-            <Text style={paragraph}>
+            <Text className="text-lg leading-6">
               If you didn't request this, please ignore this email.
             </Text>
           </Section>
-          <Text style={paragraph}>
+          <Text className="mb-4 text-lg leading-6">
             Best,
-            <br />- Jumba Team
+            <br />- Brainwave Team
           </Text>
-          <Hr style={hr} />
+          <Hr className="my-8 border-gray-400" />
           <Img
             src={`${baseUrl}/logo.png`}
             width={32}
             height={32}
-            style={{
-              WebkitFilter: "grayscale(100%)",
-              filter: "grayscale(100%)",
-              margin: "20px 0",
-            }}
+            className="mx-auto mb-4 grayscale filter"
           />
-          <Text style={footer}>Brainwave.quest</Text>
+          <Text className="text-sm text-gray-600">Brainwave.quest</Text>
         </Container>
       </Body>
-    </Html>
+    </Tailwind>
   );
 }
-
-const main = {
-  backgroundColor: "#ffffff",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-};
-
-const container = {
-  margin: "0 auto",
-  padding: "20px 25px 48px",
-  backgroundImage: 'url("/bg.png")',
-  backgroundPosition: "bottom",
-  backgroundRepeat: "no-repeat, no-repeat",
-};
-
-const heading = {
-  fontSize: "28px",
-  fontWeight: "bold",
-  marginTop: "48px",
-};
-
-const body = {
-  margin: "24px 0",
-};
-
-const paragraph = {
-  fontSize: "16px",
-  lineHeight: "26px",
-};
-
-const link = {
-  color: "#FF6363",
-};
-
-const hr = {
-  borderColor: "#dddddd",
-  marginTop: "48px",
-};
-
-const footer = {
-  color: "#8898aa",
-  fontSize: "12px",
-  marginLeft: "4px",
-};

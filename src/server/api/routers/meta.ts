@@ -21,18 +21,23 @@ export const metaRouter = createTRPCRouter({
     .input(
       z.object({
         topic: z.nativeEnum(Topics),
-        subtopic: z.string(),
+        subtopic: z.string().min(1).max(100),
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const topic = await ctx.prisma.metadata.findUniqueOrThrow({
+        where: {
+          topic: input.topic,
+        },
+      });
+
+      topic.subtopics.push(input.subtopic);
       return await ctx.prisma.metadata.update({
         where: {
           topic: input.topic,
         },
         data: {
-          subtopics: {
-            push: input.subtopic,
-          },
+          subtopics: topic.subtopics,
         },
       });
     }),

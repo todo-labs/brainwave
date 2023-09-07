@@ -18,9 +18,6 @@ export const profileSchema = z.object({
     .max(30, {
       message: "Name must not be longer than 30 characters.",
     }),
-  dob: z.date({
-    required_error: "A date of birth is required.",
-  }),
 });
 
 export const gradeQuizSchema = z.object({

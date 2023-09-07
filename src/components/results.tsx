@@ -6,6 +6,7 @@ import DefaultState from "./default";
 
 import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";
+import { cleanEnum } from "@/lib/utils";
 
 const Results = () => {
   const { currentQuiz } = useStore();
@@ -24,8 +25,8 @@ const Results = () => {
       <DefaultState
         icon={Loader2Icon}
         iconClassName="animate-spin"
-        title="Loading Users"
-        description="Please wait while we load all the users"
+        title="Loading Results"
+        description="Please wait while we load your exam results"
       />
     );
   }
@@ -34,8 +35,8 @@ const Results = () => {
     return (
       <DefaultState
         icon={BatteryWarningIcon}
-        title="Error loading Users"
-        description="Something went wrong while loading the experiments"
+        title="uh oh!"
+        description="Something went wrong while loading your results."
         btnText="Retry"
         onClick={void refetch()}
       />
@@ -43,12 +44,13 @@ const Results = () => {
   }
 
   return (
-    <ScrollArea className="h-[800px]">
-      <div className="flex text-sm text-muted">
-          <h3>
-            {data.topic} / {data.subtopic} / {data.difficulty}
-          </h3>
-        </div>
+    <ScrollArea className="mx-auto flex h-[800px] flex-col">
+      <div className="flex text-sm capitalize text-primary">
+        <h3>
+          {cleanEnum(data.topic).toLowerCase()} / {data.subtopic} /{" "}
+          {cleanEnum(data.difficulty).toLowerCase()}
+        </h3>
+      </div>
       <Markdown content={data?.reviewNotes} />
       <ScrollBar orientation="horizontal" />
     </ScrollArea>

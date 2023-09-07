@@ -73,9 +73,6 @@ export function UserNav() {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mt-2 w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
-            {session.user.name}
-          </DropdownMenuLabel>
-          <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               {session.user.role === Role.ADMIN ? (
                 <div className="flex items-center space-x-2">

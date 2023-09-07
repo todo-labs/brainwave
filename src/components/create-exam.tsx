@@ -35,10 +35,7 @@ import {
 
 import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
-import {
-  type CreateQuizRequestType,
-  createQuizSchema,
-} from "@/server/validators";
+import { type CreateQuizRequestType, createQuizSchema } from "@/server/schemas";
 import React from "react";
 import type { QuizWithQuestions } from "types";
 import { useToast } from "@/hooks/useToast";

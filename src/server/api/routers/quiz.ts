@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Role, Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { createQuizSchema, gradeQuizSchema } from "@/server/validators";
+import { createQuizSchema, gradeQuizSchema } from "@/server/schemas";
 import { TRPCError } from "@trpc/server";
 import { genQuiz, genReviewNotes, gradeQuiz } from "@/lib/ai/quiz";
 import { env } from "@/env.mjs";
@@ -14,20 +14,28 @@ export const quizRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
-      return await ctx.prisma.quiz.findMany({
-        where: {
-          user: {
-            email: ctx.session.user.email as string,
+      try {
+        return await ctx.prisma.quiz.findMany({
+          where: {
+            user: {
+              email: ctx.session.user.email as string,
+            },
+            topic: input.topic,
           },
-          topic: input.topic,
-        },
-      });
+        });
+      } catch (e) {
+        console.log(e);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to get past exams",
+        });
+      }
     }),
   createExam: protectedProcedure
     .input(createQuizSchema)
     .mutation(async ({ ctx, input }) => {
       try {
-        // TODO: reveavle this no credits should be removed if everything fails move to end
+        // TODO: revisit this no credits should be removed if everything fails move to end
         await ctx.prisma.$transaction(async (prisma) => {
           const user = await prisma.user.findUnique({
             where: {
@@ -88,7 +96,10 @@ export const quizRouter = createTRPCRouter({
             },
             data: {
               credits: {
-                decrement: env.CREDITS_PER_QUIZ,
+                decrement:
+                  ctx.session.user.role === Role.ADMIN
+                    ? 0
+                    : env.CREDITS_PER_QUIZ,
               },
             },
           }),
@@ -118,64 +129,73 @@ export const quizRouter = createTRPCRouter({
   gradeExam: protectedProcedure
     .input(gradeQuizSchema)
     .mutation(async ({ ctx, input }) => {
-      const quiz = await ctx.prisma.quiz.findUnique({
-        where: {
-          id: input.quizId,
-        },
-        include: {
-          questions: true,
-        },
-      });
-
-      if (!quiz) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Quiz not found",
+      try {
+        const quiz = await ctx.prisma.quiz.findUnique({
+          where: {
+            id: input.quizId,
+          },
+          include: {
+            questions: true,
+          },
         });
-      }
 
-      if (quiz.score > 0) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Quiz already graded",
+        if (!quiz) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Quiz not found",
+          });
+        }
+
+        if (quiz.score > 0) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Quiz already graded",
+          });
+        }
+
+        const result = await gradeQuiz(
+          quiz.topic,
+          quiz.difficulty,
+          quiz.questions.map((q, index) => ({
+            ...q,
+            answer: input.answers[index] ?? "[NOT_SUPPLIED]",
+          }))
+        );
+
+        if (!result) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to grade quiz",
+          });
+        }
+
+        const score = result.reduce((acc, curr) => {
+          if (curr.correct) return acc + 1;
+          return acc;
+        }, 0);
+
+        const reviewNotes = await genReviewNotes(
+          result,
+          {
+            subject: quiz.topic,
+            difficulty: quiz.difficulty,
+            score,
+          },
+          ctx.session.user.name || "[NOT_SUPPLIED]"
+        );
+
+        await ctx.prisma.quiz.update({
+          where: { id: input.quizId },
+          data: { score, reviewNotes },
         });
-      }
-
-      const result = await gradeQuiz(
-        quiz.topic,
-        quiz.difficulty,
-        quiz.questions.map((q, index) => ({
-          ...q,
-          answer: input.answers[index] ?? "NOT_SUPPLIED",
-        }))
-      );
-
-      if (!result) {
+      } catch (e) {
+        console.log(e);
+        if (e instanceof TRPCError) throw e;
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to grade quiz",
         });
       }
-
-      const score = result.reduce((acc, curr) => {
-        if (curr.correct) return acc + 1;
-        return acc;
-      }, 0);
-
-      const reviewNotes = await genReviewNotes(
-        result,
-        {
-          subject: quiz.topic,
-          difficulty: quiz.difficulty,
-          score,
-        },
-        ctx.session.user.name || "[NOT_SUPPLIED]"
-      );
-
-      await ctx.prisma.quiz.update({
-        where: { id: input.quizId },
-        data: { score, reviewNotes },
-      });
     }),
   getQuiz: protectedProcedure
     .input(
@@ -184,18 +204,27 @@ export const quizRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
-      const quiz = await ctx.prisma.quiz.findUnique({
-        where: { id: input.quizId },
-        include: { questions: true },
-      });
+      try {
+        const quiz = await ctx.prisma.quiz.findUnique({
+          where: { id: input.quizId },
+          include: { questions: true },
+        });
 
-      if (!quiz) {
+        if (!quiz) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Quiz not found",
+          });
+        }
+
+        return quiz;
+      } catch (e) {
+        console.log(e);
+        if (e instanceof TRPCError) throw e;
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Quiz not found",
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to get quiz",
         });
       }
-
-      return quiz;
     }),
 });

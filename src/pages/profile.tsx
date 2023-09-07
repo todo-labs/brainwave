@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 
 import { Separator } from "@/components/ui/separator";
-import { profileSchema, type ProfileRequestType } from "@/server/validators";
+import { profileSchema, type ProfileRequestType } from "@/server/schemas";
 import SettingsLayout from "@/components/user/sidebar-nav";
 import { api } from "@/lib/api";
 import { useSession } from "next-auth/react";

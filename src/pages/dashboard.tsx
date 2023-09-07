@@ -1,11 +1,5 @@
 import Image from "next/image";
-import {
-  Activity,
-  CreditCard,
-  ChefHatIcon,
-  Users,
-  ShieldQuestionIcon,
-} from "lucide-react";
+import { Activity, CreditCard, Users, ShieldQuestionIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useMemo } from "react";
 
@@ -26,7 +20,7 @@ import { api } from "@/lib/api";
 import UserTable from "@/components/dashboard/user-management/table";
 import QuizConfigEditor from "@/components/dashboard/QuizConfigEditor";
 
-export default function DashboardPage(props) {
+export default function DashboardPage(props: any) {
   const { data: session } = useSession();
 
   const { data: totalUsers } = api.admin.totalUsers.useQuery(undefined, {

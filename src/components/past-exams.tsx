@@ -26,7 +26,7 @@ const PastExams = () => {
             <div className="flex h-[300px] w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed">
               <FileEditIcon className="h-16 w-16 text-muted" />
               <h2 className="text-xl font-bold">
-                No past exams for this topic
+                There are no previous <span className="text-primary">{cleanEnum(currentTopic)}</span> exams
               </h2>
               <p className="max-w-sm text-center text-base text-muted-foreground">
                 You have not taken any exams for this topic. Kinda weird, but to
