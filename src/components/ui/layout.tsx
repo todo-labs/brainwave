@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useSession } from "next-auth/react";
 
 import Meta from "./meta";
 import FullScreenConfetti from "./confetti";
@@ -16,7 +15,6 @@ interface ILayoutProps {
 
 const Layout = ({ children, meta }: ILayoutProps) => {
   const { showConfetti, setShowConfetti } = useStore();
-  const { data: session } = useSession();
 
   useEffect(() => {
     if (showConfetti) {

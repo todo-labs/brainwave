@@ -44,7 +44,7 @@ const Results = () => {
   }
 
   return (
-    <ScrollArea className="mx-auto flex h-[800px] flex-col">
+    <ScrollArea className="mx-auto flex xl:h-[1000px] flex-col md:h-[800px]">
       <div className="flex text-sm capitalize text-primary">
         <h3>
           {cleanEnum(data.topic).toLowerCase()} / {data.subtopic} /{" "}

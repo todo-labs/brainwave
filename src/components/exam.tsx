@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/useToast";
 import useStore from "@/hooks/useStore";
 
 const Exam = () => {
-  const { currentQuiz, setCurrentStep } = useStore();
+  const { currentQuiz, setCurrentStep, setShowConfetti } = useStore();
   const [answers, setAnswers] = useState(new Map<number, string>());
   const [completed, setCompleted] = useState(false);
 
@@ -26,6 +26,7 @@ const Exam = () => {
       });
       setCurrentStep("result");
       setAnswers(new Map<number, string>());
+      setShowConfetti(true)
     },
     onError: (error) => {
       toast({
