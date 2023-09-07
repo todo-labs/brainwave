@@ -1,7 +1,7 @@
 import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
 
-import Question from "./question";
+import QuestionCard from "./question-card";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { ScrollArea } from "./ui/scroll-area";
@@ -57,7 +57,7 @@ const Exam = () => {
         <div className="flex-col space-y-4">
           {!!currentQuiz &&
             currentQuiz.questions?.map((q, index) => (
-              <Question
+              <QuestionCard
                 key={q.label}
                 question={q}
                 onSubmit={(answer) => {
