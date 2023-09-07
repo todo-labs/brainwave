@@ -25,8 +25,6 @@ const Timer = (props: TimerProps) => {
     }, 1000);
   };
 
-  console.log(env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ);
-
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -52,7 +50,7 @@ const Timer = (props: TimerProps) => {
 
   return (
     <div className="my-10 flex w-full items-center justify-center">
-      <span className="text-xs font-normal text-muted">
+      <span className="text-xs font-normal text-muted-foreground">
         {formatTime(timePassed)}
       </span>
       <Progress

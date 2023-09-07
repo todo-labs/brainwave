@@ -13,12 +13,6 @@ import Exam from "@/components/exam";
 
 import useStore from "@/hooks/useStore";
 
-export const metadata: Metadata = {
-  title: "Brainwave",
-  description:
-    "Brainwave is a platform for learning and testing your knowledge.",
-};
-
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
@@ -34,23 +28,7 @@ export default function Home(
 
   return (
     <>
-      <div className="md:hidden">
-        <Image
-          src="/examples/music-light.png"
-          width={1280}
-          height={1114}
-          alt="Music"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/music-dark.png"
-          width={1280}
-          height={1114}
-          alt="Music"
-          className="hidden dark:block"
-        />
-      </div>
-      <div className="hidden md:block">
+      <div className="">
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">

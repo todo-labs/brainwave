@@ -5,7 +5,7 @@ export const createQuizSchema = z.object({
   difficulty: z.nativeEnum(QuizDifficulty),
   subtopic: z.string().min(1).max(100),
   questions: z.number().int().min(1).max(100),
-  notes: z.string().max(1000),
+  notes: z.string().max(1000).optional(),
   subject: z.nativeEnum(Topics),
 });
 

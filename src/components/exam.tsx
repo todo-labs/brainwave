@@ -26,7 +26,7 @@ const Exam = () => {
       });
       setCurrentStep("result");
       setAnswers(new Map<number, string>());
-      setShowConfetti(true)
+      setShowConfetti(true);
     },
     onError: (error) => {
       toast({
@@ -54,7 +54,7 @@ const Exam = () => {
         <Timer completed={completed} />
       </div>
       <Separator className="my-4" />
-      <ScrollArea className="h-[800px]">
+      <ScrollArea className="xl:h-[800px] sm:h-[500px]">
         <div className="flex-col space-y-4">
           {!!currentQuiz &&
             currentQuiz.questions?.map((q, index) => (

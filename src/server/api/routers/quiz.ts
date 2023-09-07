@@ -3,8 +3,14 @@ import { Role, Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { createQuizSchema, gradeQuizSchema } from "@/server/schemas";
 import { TRPCError } from "@trpc/server";
-import { genQuiz, genReviewNotes, gradeQuiz } from "@/lib/ai/quiz";
+import {
+  genQuiz,
+  genReviewNotes,
+  gradeQuiz,
+  reviewComment,
+} from "@/lib/ai/quiz";
 import { env } from "@/env.mjs";
+import sentiment from "sentiment";
 
 export const quizRouter = createTRPCRouter({
   getPastExams: protectedProcedure
@@ -53,6 +59,30 @@ export const quizRouter = createTRPCRouter({
             });
           }
         });
+
+        if (input.notes) {
+          const score = new sentiment().analyze(input.notes).score;
+          if (score < 0) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Please provide something more constructive.",
+            });
+          }
+
+          const { approved, suggestion } = await reviewComment(input.notes, {
+            subject: input.subject,
+            subtopic: input.subtopic,
+          });
+
+          if (!approved) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message:
+                suggestion ||
+                "Your notes were found to be inappropriate. Please revise and resubmit.",
+            });
+          }
+        }
 
         const quiz = await genQuiz(input);
 
@@ -169,15 +199,14 @@ export const quizRouter = createTRPCRouter({
           });
         }
 
-        const score = result.reduce((acc, curr) => {
-          if (curr.correct) return acc + 1;
-          return acc;
-        }, 0);
+        const correctAnswers = result.filter((answer) => answer.correct);
+        const score = (correctAnswers.length / result.length) * 100;
 
         const reviewNotes = await genReviewNotes(
           result,
           {
             subject: quiz.topic,
+            subtopic: quiz.subtopic,
             difficulty: quiz.difficulty,
             score,
           },

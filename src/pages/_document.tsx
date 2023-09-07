@@ -14,7 +14,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html suppressHydrationWarning>
         <Head>
           <script async src="https://js.stripe.com/v3/"></script>
         </Head>

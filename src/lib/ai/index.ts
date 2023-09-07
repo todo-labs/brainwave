@@ -1,6 +1,10 @@
 import { env } from "@/env.mjs";
 import { OpenAI } from "langchain";
-import { OutputFixingParser, StructuredOutputParser } from "langchain/output_parsers";
+import {
+  OutputFixingParser,
+  StructuredOutputParser,
+} from "langchain/output_parsers";
+import { OpenAIModerationChain } from "langchain/chains";
 import { z } from "zod";
 
 export const gpt4 = new OpenAI({
@@ -25,7 +29,9 @@ export async function callOpenAi<T>(
   prompt: string,
   parser?: StructuredOutputParser<z.ZodSchema<T>>
 ): Promise<T | string | undefined> {
-  console.log("Making request to OpenAI API with prompt: \n\n", prompt);
+  const text = await isToxic(prompt);
+  if (!text) return;
+  console.log("Making request to OpenAI API with prompt: \n\n", text);
   console.log(`\nAI is thinking...`);
   const start = performance.now();
   const response = await gpt4.call(prompt);
@@ -43,5 +49,22 @@ export async function callOpenAi<T>(
     const output = await fixParser.parse(response);
     console.log("Fixed output: ", !!output);
     return output;
+  }
+}
+
+export async function isToxic(text: string): Promise<string | undefined> {
+  try {
+    console.log("Checking if prompt violates our community guidelines...");
+    const moderation = new OpenAIModerationChain({
+      throwError: true,
+      openAIApiKey: env.OPEN_API_KEY,
+    });
+    const { output } = await moderation.call({
+      input: text,
+    });
+    return output;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }

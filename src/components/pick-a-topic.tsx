@@ -8,19 +8,21 @@ import { TopicSkeleton } from "./loading-cards";
 import { Button } from "./ui/button";
 
 const PickATopic = () => {
-  const { currentTopic, currentSubTopic, setCurrentSubTopic, setCurrentStep } =
-    useStore();
+  const {
+    currentTopic: topic,
+    currentSubTopic,
+    setCurrentSubTopic,
+    setCurrentStep,
+  } = useStore();
 
   const { isLoading, data, isError } = api.meta.getSubtopics.useQuery(
+    { topic },
     {
-      topic: currentTopic,
-    },
-    {
-      enabled: !!currentTopic,
+      enabled: !!topic,
     }
   );
 
-  const cleanTopic = currentTopic.replace(/_/g, " ").toLocaleLowerCase();
+  const cleanTopic = topic.replace(/_/g, " ").toLocaleLowerCase();
 
   return (
     <Section
@@ -44,14 +46,14 @@ const PickATopic = () => {
               />
             ))}
         </div>
-        <Button
-          disabled={!currentSubTopic}
-          onClick={() => setCurrentStep("config")}
-        >
-          Continue
-        </Button>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
+      <Button
+        disabled={!currentSubTopic}
+        onClick={() => setCurrentStep("config")}
+      >
+        Continue
+      </Button>
     </Section>
   );
 };

@@ -83,6 +83,8 @@ export function CreateConfig() {
     }
   }
 
+  console.log(env.NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ);
+
   return (
     <div className="flex  shrink-0 items-center justify-center rounded-md border border-dashed">
       <ScrollArea className="h-fit w-full">
@@ -159,7 +161,7 @@ export function CreateConfig() {
                           defaultValue={[field.value]}
                           onValueChange={(value) => field.onChange(value[0])}
                           disabled={createQuizMutation.isLoading}
-                          max={20}
+                          max={env.NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ}
                           step={1}
                         />
                       </FormControl>
@@ -175,13 +177,14 @@ export function CreateConfig() {
                       <FormLabel>Notes</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Tell us a little bit about yourself"
+                          placeholder="Enter your notes here"
                           className="resize-none"
                           {...field}
                         />
                       </FormControl>
                       <FormDescription>
-                        How would you like the AI to generate your exam?
+                        We will use these notes in our prompt to build your
+                        exam.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>

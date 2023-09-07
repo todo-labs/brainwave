@@ -37,6 +37,22 @@ const gradeQuizParser = StructuredOutputParser.fromZodSchema(
   )
 );
 
+const sentimentParser = StructuredOutputParser.fromZodSchema(
+  z.object({
+    approved: z
+      .boolean()
+      .describe(
+        "Whether or not this review is appropriate for the given content"
+      ),
+    suggestion: z
+      .string()
+      .describe(
+        "Why this comment was not approved, if approved return an empty string"
+      ),
+  })
+);
+
+type SentimentParserResponseType = z.infer<typeof sentimentParser.schema>;
 type QuizResponseType = z.infer<typeof quizParser.schema>;
 type GradeQuizResponseType = z.infer<typeof gradeQuizParser.schema>;
 
@@ -58,7 +74,8 @@ export async function genQuiz(
         "Generate a SAT Practice Exam with {questions} questions."
       )
       .setRelevance(
-        "The exam should focus on the subtopic: [{subtopic}] as it pertains to your discipline."
+        "The exam should focus on the subtopic: [{subtopic}] as it pertains to your discipline.",
+        "Here are some user notes: {notes}"
       )
       .setConstraints(
         "Here are our supported question formats:",
@@ -71,7 +88,13 @@ export async function genQuiz(
 
     const promptTemplate = new PromptTemplate({
       template: prompt.build(),
-      inputVariables: ["subject", "questions", "subtopic", "difficulty"],
+      inputVariables: [
+        "subject",
+        "questions",
+        "subtopic",
+        "notes",
+        "difficulty",
+      ],
       partialVariables: { formatInstruction: format },
     });
 
@@ -146,6 +169,7 @@ export async function genReviewNotes(
   results: GradeQuizResponseType,
   data: {
     subject: string;
+    subtopic: string;
     difficulty: QuizDifficulty;
     score: number;
   },
@@ -158,25 +182,26 @@ export async function genReviewNotes(
         "Write an informative breakdown of the students performance on their recent exam."
       )
       .setRelevance(
-        "The exam was {difficulty} difficulty.",
+        "The student recently took an exam on the topic of {subtopic} with a {difficulty} difficulty level.",
         "The student scored {score}% on the exam.",
-        "Here were your students answers: ",
+        "Here were your student's answers: ",
         "{results}"
       )
       .setConstraints(
-        "The review notes MUST be written in markdown format including latex math expressions and code examples if applicable."
+        "The review notes MUST be written in markdown format including latex math expressions if applicable."
       )
       .setRequirements("Should contain no more than 500 words.")
-      .setPersonalization({ name })
+      .setPersonalization({ name, teacher: "Brainwave" })
       .build();
 
     const promptTemplate = new PromptTemplate({
       template: prompt,
-      inputVariables: ["subject", "difficulty", "score", "results"],
+      inputVariables: ["subject", "subtopic", "difficulty", "score", "results"],
     });
 
     const input = await promptTemplate.format({
       subject: data.subject,
+      subtopic: data.subtopic,
       results: JSON.stringify(results),
       difficulty: data.difficulty,
       score: data.score,
@@ -188,5 +213,47 @@ export async function genReviewNotes(
   } catch (e) {
     console.error(e);
     throw e;
+  }
+}
+
+export async function reviewComment(
+  comment: string,
+  content: {
+    subject: string;
+    subtopic: string;
+  }
+): Promise<SentimentParserResponseType> {
+  try {
+    const prompt = new PromptBuilder()
+      .setContext()
+      .setInstructions("Review the following comment: {comment}.")
+      .setRelevance(
+        "The comment is in response to the following content: {content}"
+      )
+      .setRequirements();
+
+    const formatInstruction = sentimentParser.getFormatInstructions();
+
+    const promptTemplate = new PromptTemplate({
+      template: prompt.build(),
+      inputVariables: ["subject", "comment", "content"],
+      partialVariables: { formatInstruction },
+    });
+
+    const input = await promptTemplate.format({
+      comment,
+      content: JSON.stringify(content),
+      subject: content.subject,
+    });
+
+    const result = await callOpenAi<SentimentParserResponseType>(
+      input,
+      sentimentParser
+    );
+
+    return result as SentimentParserResponseType;
+  } catch (e) {
+    console.error(e);
+    return { approved: false, suggestion: "Failed to parse comment" };
   }
 }
