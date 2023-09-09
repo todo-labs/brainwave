@@ -34,6 +34,7 @@ const PickATopic = () => {
           {isLoading &&
             new Array(10).fill(0).map((_, i) => <TopicSkeleton key={i} />)}
           {isError && <h1>Error....</h1>}
+          {data && data.length === 0 && <h1>Coming soon 🚀</h1>}
           {data &&
             data.map((subtopic) => (
               <QuizCard

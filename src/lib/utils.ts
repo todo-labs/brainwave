@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Topics } from "@prisma/client";
+import { Topics, ReportStatus } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -67,4 +67,17 @@ export const topics: TopicList[] = [
 
 export const cleanEnum = (str: string) => {
   return str.replace(/_/g, " ");
+};
+
+export const statusToColor = (status: ReportStatus) => {
+  switch (status) {
+    case ReportStatus.OPEN:
+      return "text-red-500";
+    case ReportStatus.CLOSED:
+      return "text-green-500";
+    case ReportStatus.IN_PROGRESS:
+      return "text-yellow-500";
+    default:
+      return "text-red-500";
+  }
 };

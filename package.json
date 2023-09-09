@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "pnpx prisma generate",
+    "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start"
   },

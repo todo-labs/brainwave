@@ -1,6 +1,15 @@
 import type { Row } from "@tanstack/react-table";
-import { DollarSignIcon, EyeIcon, MoreHorizontal, Trash } from "lucide-react";
-import { toast } from "@/hooks/useToast";
+import {
+  Copy,
+  EyeIcon,
+  MoreHorizontal,
+  Star,
+  Tags,
+  MailCheckIcon,
+  Trash,
+  Pencil,
+} from "lucide-react";
+import { format } from "date-fns";
 import type { User } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
@@ -8,8 +17,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -32,28 +46,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Paragraph } from "@/components/ui/typography";
 
 import { api } from "@/lib/api";
+import { toast, useToast } from "@/hooks/useToast";
 
-interface DataTableRowActionsProps<T> {
-  row: Row<T>;
+interface DataTableRowActionsProps {
+  row: Row<User>;
 }
 
-export function DataTableRowActions({ row }: DataTableRowActionsProps<User>) {
+export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const utils = api.useContext();
+  const { toast } = useToast();
 
-  const deleteMutation = api.admin.removeUser.useMutation({
+  const deleteUserMutation = api.admin.removeUser.useMutation({
     async onSuccess() {
+      // toast.success("User deleted successfully");
       toast({
-        title: "User deleted",
-        description: `User ${row.original.name || "NA"} has been deleted.`,
+        title: "User deleted successfully",
+        description: `The user ${row.original.name} has been deleted.`,
       });
       await utils.admin.allUsers.invalidate();
     },
-    onError(error) {
+    onError() {
       toast({
-        title: "Error",
-        description: error.message || "Something went wrong. Please try again.",
+        title: "Something went wrong",
+        description: `The user ${row.original.name} could not be deleted.`,
         variant: "destructive",
       });
     },
@@ -61,7 +79,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps<User>) {
 
   const handleDelete = async () => {
     try {
-      await deleteMutation.mutateAsync(row.original.id);
+      await deleteUserMutation.mutateAsync(row.original.id);
     } catch (error) {
       console.error(error);
     }
@@ -81,12 +99,20 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps<User>) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <DropdownMenuItem>
-                <DollarSignIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-                Add Credits
+                <EyeIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                View
               </DropdownMenuItem>
             </DialogTrigger>
+            <DropdownMenuItem>
+              <Pencil className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <MailCheckIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Alert
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <AlertDialogTrigger asChild>
               <DropdownMenuItem>
@@ -101,8 +127,8 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps<User>) {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this
-              user record and all their associated data.
+              This action cannot be undone. This will permanently delete the
+              {row.original.name} account and all of their data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -114,12 +140,16 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps<User>) {
         </AlertDialogContent>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add more credits!</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+            <DialogTitle className="capitalize">
+              {row.original.name || "Anonymous"}
+            </DialogTitle>
+            <DialogDescription className="space-y-2">
+              <Paragraph className="text-muted-foreground/70"></Paragraph>
             </DialogDescription>
           </DialogHeader>
+          <DialogFooter>
+            <Button>Close</Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </AlertDialog>

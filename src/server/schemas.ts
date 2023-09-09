@@ -9,6 +9,13 @@ export const createQuizSchema = z.object({
   subject: z.nativeEnum(Topics),
 });
 
+export const paginationSchema = z.object({
+  pageIndex: z.number().default(1),
+  pageSize: z.number().min(1).default(10),
+  sortAsc: z.boolean().optional().default(false),
+  query: z.string().optional(),
+});
+
 export const profileSchema = z.object({
   name: z
     .string()
@@ -28,3 +35,4 @@ export const gradeQuizSchema = z.object({
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;
 export type ProfileRequestType = z.infer<typeof profileSchema>;
 export type GradeQuizRequestType = z.infer<typeof gradeQuizSchema>;
+export type PaginationRequestType = z.infer<typeof paginationSchema>;

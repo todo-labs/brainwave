@@ -1,13 +1,17 @@
 import * as z from "zod";
 import { adminProcedure, createTRPCRouter } from "@/server/api/trpc";
+import { paginationSchema } from "@/server/schemas";
+import { cleanEnum } from "@/lib/utils";
 
 export const adminRouter = createTRPCRouter({
   totalUsers: adminProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.count();
   }),
-  allQuizzes: adminProcedure.query(async ({ ctx }) => {
-    const quizzes = await ctx.prisma.quiz.findMany();
-    return quizzes || [];
+  totalQuizzes: adminProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.quiz.count();
+  }),
+  totalReports: adminProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.report.count();
   }),
   removeUser: adminProcedure
     .input(z.string().cuid())
@@ -16,12 +20,92 @@ export const adminRouter = createTRPCRouter({
         where: { id: input },
       });
     }),
-  allUsers: adminProcedure.query(async ({ ctx }) => {
-    return await ctx.prisma.user.findMany({
-      include: {
-        quizzes: true,
+  allUsers: adminProcedure
+    .input(paginationSchema)
+    .query(async ({ ctx, input }) => {
+      const users = await ctx.prisma.user.findMany({
+        where: {
+          name: {
+            contains: input.query || "",
+            mode: "insensitive",
+          },
+        },
+        take: input.pageSize,
+        skip: input.pageIndex * input.pageSize,
+        include: {
+          quizzes: true,
+        },
+        orderBy: {
+          name: !input.sortAsc ? "asc" : "desc",
+        },
+      });
+      const count = (await ctx.prisma.user.count()) || 0;
+      return { users, count };
+    }),
+  allQuizzes: adminProcedure
+    .input(paginationSchema)
+    .query(async ({ ctx, input }) => {
+      const quizzes = await ctx.prisma.quiz.findMany({
+        where: {
+          user: {
+            name: {
+              contains: input.query || "",
+              mode: "insensitive",
+            },
+          },
+        },
+
+        take: input.pageSize,
+        skip: input.pageIndex  * input.pageSize,
+        include: {
+          user: true,
+        },
+        orderBy: {
+          createdAt: !input.sortAsc ? "asc" : "desc",
+        },
+      });
+      const count = (await ctx.prisma.quiz.count()) || 0;
+      return { quizzes, count };
+    }),
+  allReports: adminProcedure
+    .input(paginationSchema)
+    .query(async ({ input, ctx }) => {
+      const reports = await ctx.prisma.report.findMany({
+        where: {
+          txt: {
+            contains: input.query,
+            mode: "insensitive",
+          },
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        skip: input.pageIndex * input.pageSize,
+        take: input.pageSize,
+      });
+
+      const count = await ctx.prisma.report.count();
+
+      return {
+        reports: reports || [],
+        count: count || 0,
+      };
+    }),
+  quizBreakdown: adminProcedure.query(async ({ ctx }) => {
+    // TODO: return a count of quizzes by their topic
+    const results = await ctx.prisma.quiz.groupBy({
+      by: ["topic"],
+      _count: {
+        topic: true,
       },
     });
+    return results.map((result) => ({
+      label: cleanEnum(result.topic),
+      amount: result._count.topic,
+    }));
   }),
   addCredits: adminProcedure
     .input(z.object({ id: z.string().cuid(), credits: z.number() }))
@@ -29,6 +113,30 @@ export const adminRouter = createTRPCRouter({
       return await ctx.prisma.user.update({
         where: { id: input.id },
         data: { credits: { increment: input.credits } },
+      });
+    }),
+  removeQuiz: adminProcedure
+    .input(z.string().cuid())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.quiz.delete({
+        where: { id: input },
+      });
+    }),
+  averageScore: adminProcedure.query(async ({ ctx }) => {
+    const { _avg } = await ctx.prisma.quiz.aggregate({
+      _avg: {
+        score: true,
+      },
+    });
+    return Number(_avg.score || 0).toFixed(2);
+  }),
+  removeReport: adminProcedure
+    .input(z.string().cuid())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.report.delete({
+        where: {
+          id: input,
+        },
       });
     }),
 });

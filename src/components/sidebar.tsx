@@ -74,7 +74,7 @@ export function Sidebar({ className }: SidebarProps) {
   const Mobile = () => {
     return (
       <AlertDialog>
-        <AlertDialogTrigger className="md:hidden p-5">
+        <AlertDialogTrigger className="p-5 md:hidden">
           <Menu className="h-6 w-6 text-primary" />
         </AlertDialogTrigger>
         <AlertDialogContent>

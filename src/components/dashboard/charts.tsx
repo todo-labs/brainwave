@@ -1,7 +1,7 @@
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 interface IChartProps {
-  data: { label: string; amount: number }[];
+  data?: { label: string; amount: number }[];
 }
 
 export function BarChartComponent({ data }: IChartProps) {

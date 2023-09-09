@@ -34,7 +34,7 @@ const Landing: NextPage = () => {
               AI SAT Prep
             </h1>
             <p className="mt-6 leading-5 text-zinc-600 sm:text-center">
-              Brainwave: the ultimate quiz platform for learners. Take quizzes
+              Introducing Brainwave: the ultimate quiz platform for learners. Take quizzes
               on your favorite subjects, at your desired difficulty level. Build
               your knowledge and earn badges to showcase your skills. Brainwave
               is the perfect tool for studying for the SAT.

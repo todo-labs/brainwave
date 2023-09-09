@@ -31,6 +31,10 @@ export const env = createEnv({
     UPLOADTHING_SECRET: z.string().min(1).optional(),
     UPLOADTHING_APP_ID: z.string().min(1).optional(),
     CREDITS_PER_QUIZ: z.coerce.number().default(1),
+    LANGCHAIN_TRACING_V2: z.coerce.boolean(),
+    LANGCHAIN_ENDPOINT: z.string().url(),
+    LANGCHAIN_API_KEY: z.string().min(1),
+    LANGCHAIN_PROJECT: z.string().default("default"),
   },
 
   /**
@@ -74,5 +78,9 @@ export const env = createEnv({
     NEXT_PUBLIC_MAX_TIME_PER_QUIZ: process.env.NEXT_PUBLIC_MAX_TIME_PER_QUIZ,
     NEXT_PUBLIC_CREDITS_PER_QUIZ: process.env.CREDITS_PER_QUIZ,
     CREDITS_PER_QUIZ: process.env.CREDITS_PER_QUIZ,
+    LANGCHAIN_TRACING_V2: process.env.LANGCHAIN_TRACING_V2,
+    LANGCHAIN_ENDPOINT: process.env.LANGCHAIN_ENDPOINT,
+    LANGCHAIN_API_KEY: process.env.LANGCHAIN_API_KEY,
+    LANGCHAIN_PROJECT: process.env.LANGCHAIN_PROJECT
   },
 });

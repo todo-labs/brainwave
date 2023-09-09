@@ -48,9 +48,9 @@ export function UserNav() {
       return `${firstName.charAt(0)}${lastName?.charAt(0)}`;
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     reset();
-    void signOut();
+    await signOut();
   };
 
   if (!session) return null;

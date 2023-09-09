@@ -49,6 +49,7 @@ model User {
   role          Role      @default(USER)
   credits       Int       @default(15)
   quizzes       Quiz[]
+  Report        Report[]
 }
 
 enum QuestionType {
@@ -134,4 +135,37 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum ReportStatus {
+  OPEN
+  CLOSED
+  IN_PROGRESS
+}
+
+enum ReportType {
+  FUNCTIONAL
+  DISPLAY
+  COMPATIBILITY
+  PERFORMANCE
+  ACCESSIBILITY
+  CONTENT
+  USABILITY
+  OTHER
+}
+
+model Report {
+  id           String       @id @default(cuid())
+  txt          String
+  ticketNumber String
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pageUrl      String
+  type         ReportType   @default(OTHER)
+  component    String?
+  userAgent    String?
+  status       ReportStatus @default(OPEN)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  timeline     Json?
 }
