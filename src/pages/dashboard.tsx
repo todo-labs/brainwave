@@ -14,6 +14,7 @@ import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
 import QuizBreakdown from "@/components/dashboard/quiz-breakdown";
 import { BarChart2Icon, BugIcon, GraduationCapIcon, User2Icon } from "lucide-react";
+import ReportTable from "@/components/dashboard/report-table";
 
 export default function DashboardPage() {
   // POWER CARDS
@@ -43,13 +44,13 @@ export default function DashboardPage() {
                 >
                   Users
                 </TabsTrigger>
-                {/* <TabsTrigger
+                <TabsTrigger
                   value="reports"
                   onClick={() => setDashboardTab("reports")}
                 >
                   {" "}
                   Reports
-                </TabsTrigger> */}
+                </TabsTrigger>
                 <TabsTrigger
                   value="quizzes"
                   onClick={() => setDashboardTab("quizzes")}
@@ -101,7 +102,7 @@ export default function DashboardPage() {
                     <CardTitle>Reported Bugs</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    {/* <ReportTable />, */}
+                    <ReportTable />
                   </CardContent>
                 </Card>
               </TabsContent>

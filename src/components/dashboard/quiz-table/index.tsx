@@ -24,6 +24,7 @@ import { DataTableRowActions } from "./row-actions";
 
 import { api } from "@/lib/api";
 import { cleanEnum } from "@/lib/utils";
+import { DataTableToolbar } from "./toolbar";
 
 type Column = Quiz & {
   user: User | null;
@@ -156,6 +157,7 @@ export const QuizTable = () => {
     />
   ) : (
     <DataTable<Column>
+      toolbar={<DataTableToolbar<Column> table={table} />}
       columns={columns}
       emptyDesc="No quizzes found."
       empty="No quizzes found"
