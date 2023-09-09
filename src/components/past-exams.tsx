@@ -9,9 +9,51 @@ import { cleanEnum } from "@/lib/utils";
 import { format } from "date-fns";
 import { FileEditIcon } from "lucide-react";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Badge } from "./ui/badge";
+import { Quiz } from "@prisma/client";
+import { Progress } from "./ui/progress";
+
+const PastExamCard = (props: Quiz) => {
+  const { setCurrentQuiz, setCurrentStep } = useStore();
+
+  return (
+    <Card
+      className="h-[200px] max-w-[500px] min-w-[250px] cursor-pointer justify-center rounded-xl border-2 p-2 shadow-none transition-shadow hover:border-primary hover:border-primary hover:shadow-lg"
+      onClick={() => {
+        setCurrentQuiz({ ...props, questions: [] });
+        setCurrentStep("result");
+      }}
+    >
+      <CardHeader className="mt-2">
+        <Badge className="w-fit rounded-md">
+          {cleanEnum(props.difficulty)}
+        </Badge>
+        <CardTitle className="overflow-ellipsis text-2xl capitalize">
+          {props.subtopic}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex w-full flex-col justify-between space-y-4">
+        <CardDescription className="text-clip text-sm">
+          <Progress value={props.score} max={100} />
+        </CardDescription>
+        {/* <CardFooter className="float-right text-muted">
+          {format(props.createdAt, "dd MMM yyyy")}
+        </CardFooter> */}
+      </CardContent>
+    </Card>
+  );
+};
 
 const PastExams = () => {
-  const { currentTopic, setCurrentQuiz, setCurrentStep } = useStore();
+  const { currentTopic } = useStore();
 
   const { data, isError, isLoading } = api.quiz.getPastExams.useQuery({
     topic: currentTopic,
@@ -46,26 +88,7 @@ const PastExams = () => {
               </p>
             </div>
           )}
-          {data &&
-            data.map((exam) => (
-              <QuizCard
-                title={cleanEnum(exam.topic)}
-                key={exam.id}
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                onClick={() => {
-                  setCurrentQuiz({ ...exam, questions: [] });
-                  setCurrentStep("result");
-                }}
-              >
-                <div className="flex items-center justify-between p-3">
-                  <div className="space-y-1">
-                    <h2 className="text-sm font-semibold tracking-tight text-muted-foreground">
-                      {format(exam.createdAt, "dd MMM yyyy")}
-                    </h2>
-                  </div>
-                </div>
-              </QuizCard>
-            ))}
+          {data && data.map((exam) => <PastExamCard key={exam.id} {...exam} />)}
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
