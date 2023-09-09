@@ -18,13 +18,14 @@ import { useMemo, useState } from "react";
 
 import { DataTableColumnHeader } from "@/components/query-table/header";
 import { Badge } from "@/components/ui/badge";
-import Default from "@/components/ui/default";
+import Default from "@/components/default";
 import { DataTableRowActions } from "./row-actions";
 import { DataTableToolbar } from "./toolbar";
 
 import { cn, cleanEnum, statusToColor } from "@/lib/utils";
 import { api } from "@/lib/api";
 import { DataTable } from "@/components/query-table/data-table";
+import { Loader2Icon } from "lucide-react";
 
 type ReportWithUser = Report & {
   user: User;
@@ -178,16 +179,17 @@ const ReportTable = () => {
 
   return isLoading ? (
     <Default
-      titleTx="listReports.loading.title"
-      descriptionTx="listReports.loading.message"
-      type="loading"
+      title="Loading Reports"
+      description="Please wait while we load the reports."
+      icon={Loader2Icon}
+      iconClassName="animate-spin"
     />
   ) : (
-    <DataTable
-      toolbar={<DataTableToolbar table={table} />}
+    <DataTable<ReportWithUser>
       columns={columns}
-      emptyTx="listReports.empty.title"
-      emptyDescTx="listReports.empty.message"
+      toolbar={<DataTableToolbar table={table} />}
+      empty="No reports found."
+      emptyDesc="Please try again later."
       table={table}
     />
   );

@@ -18,21 +18,21 @@ import Default from "@/components/default";
 import { DataTablePagination } from "./pagination";
 import type { TxKeys } from "types";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  emptyTx: TxKeys;
-  emptyDescTx: TxKeys;
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData>[];
+  empty: string;
+  emptyDesc: string;
   table: ReactTable<TData>;
   toolbar?: React.ReactNode;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData>({
   columns,
-  emptyTx,
-  emptyDescTx,
+  empty,
+  emptyDesc,
   table,
   toolbar,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   return (
     <div className="space-y-4">
       {toolbar && toolbar}
@@ -80,8 +80,8 @@ export function DataTable<TData, TValue>({
                   className="py-20 text-center"
                 >
                   <Default
-                    title={emptyTx}
-                    description={emptyDescTx}
+                    title={empty}
+                    description={emptyDesc}
                   />
                 </TableCell>
               </TableRow>

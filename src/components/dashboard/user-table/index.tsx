@@ -142,10 +142,10 @@ export const UserTable = () => {
       iconClassName="animate-spin"
     />
   ) : (
-    <DataTable
+    <DataTable<Column>
       columns={columns}
-      emptyDescTx="defaultHome.loading.message"
-      emptyTx="defaultHome.empty.title"
+      emptyDesc="Users are not available at the moment."
+      empty="No users found"
       table={table}
     />
   );

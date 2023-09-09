@@ -149,16 +149,16 @@ export const QuizTable = () => {
 
   return isLoading ? (
     <Default
-      title="Loading user data"
-      description="Please wait while we load the user data."
+      title="Loading quiz data"
+      description="Please wait while we load the quiz data."
       icon={Loader2Icon}
       iconClassName="animate-spin"
     />
   ) : (
-    <DataTable
+    <DataTable<Column>
       columns={columns}
-      emptyDescTx="defaultHome.loading.message"
-      emptyTx="defaultHome.empty.title"
+      emptyDesc="No quizzes found."
+      empty="No quizzes found"
       table={table}
     />
   );

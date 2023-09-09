@@ -2,6 +2,7 @@ import * as z from "zod";
 import { adminProcedure, createTRPCRouter } from "@/server/api/trpc";
 import { paginationSchema } from "@/server/schemas";
 import { cleanEnum } from "@/lib/utils";
+import { ReportStatus } from "@prisma/client";
 
 export const adminRouter = createTRPCRouter({
   totalUsers: adminProcedure.query(async ({ ctx }) => {
@@ -128,6 +129,23 @@ export const adminRouter = createTRPCRouter({
       return await ctx.prisma.report.delete({
         where: {
           id: input,
+        },
+      });
+    }),
+  updateTicketStatus: adminProcedure
+    .input(
+      z.object({
+        id: z.string().cuid(),
+        status: z.nativeEnum(ReportStatus),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.report.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: input.status,
         },
       });
     }),
