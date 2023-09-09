@@ -46,19 +46,11 @@ export const adminRouter = createTRPCRouter({
     .input(paginationSchema)
     .query(async ({ ctx, input }) => {
       const quizzes = await ctx.prisma.quiz.findMany({
-        where: {
-          user: {
-            name: {
-              contains: input.query || "",
-              mode: "insensitive",
-            },
-          },
-        },
-
         take: input.pageSize,
         skip: input.pageIndex  * input.pageSize,
         include: {
           user: true,
+          questions: true,
         },
         orderBy: {
           createdAt: !input.sortAsc ? "asc" : "desc",

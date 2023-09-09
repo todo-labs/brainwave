@@ -3,15 +3,17 @@ import { QuizSkeleton } from "./loading-cards";
 import QuizCard from "./topic-card";
 import Section from "./section";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import useStore from "@/hooks/useStore";
 import { cleanEnum } from "@/lib/utils";
 import { format } from "date-fns";
 import { FileEditIcon } from "lucide-react";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 const PastExams = () => {
   const { currentTopic, setCurrentQuiz, setCurrentStep } = useStore();
 
-  const getPastExams = api.quiz.getPastExams.useQuery({
+  const { data, isError, isLoading } = api.quiz.getPastExams.useQuery({
     topic: currentTopic,
   });
 
@@ -19,10 +21,18 @@ const PastExams = () => {
     <Section title="Past Exams" description="">
       <ScrollArea>
         <div className="flex space-x-4 pb-4">
-          {getPastExams.isLoading &&
+          {isLoading &&
             new Array(10).fill(0).map((_, i) => <QuizSkeleton key={i} />)}
-          {getPastExams.isError && <h1>Loading....</h1>}
-          {getPastExams.data?.length === 0 && (
+          {isError && (
+            <Alert variant="destructive">
+              <ExclamationTriangleIcon className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                There was an error fetching your past exams. Please try again
+              </AlertDescription>
+            </Alert>
+          )}
+          {data?.length === 0 && (
             <div className="flex h-[300px] w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed">
               <FileEditIcon className="h-16 w-16 text-muted-foreground/60 dark:text-muted" />
               <h2 className="text-xl font-bold">
@@ -36,8 +46,8 @@ const PastExams = () => {
               </p>
             </div>
           )}
-          {getPastExams.data &&
-            getPastExams.data.map((exam) => (
+          {data &&
+            data.map((exam) => (
               <QuizCard
                 title={cleanEnum(exam.topic)}
                 key={exam.id}
