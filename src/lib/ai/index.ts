@@ -5,7 +5,19 @@ import {
   StructuredOutputParser,
 } from "langchain/output_parsers";
 import { OpenAIModerationChain } from "langchain/chains";
+import { Client } from "langsmith";
+import { LangChainTracer } from "langchain/callbacks";
 import { z } from "zod";
+
+const client = new Client({
+  apiUrl: env.LANGCHAIN_ENDPOINT,
+  apiKey: env.LANGCHAIN_API_KEY,
+});
+
+const tracer = new LangChainTracer({
+  projectName: env.LANGCHAIN_PROJECT,
+  client,
+});
 
 export const gpt4 = new OpenAI({
   openAIApiKey: env.OPEN_API_KEY,
@@ -13,6 +25,7 @@ export const gpt4 = new OpenAI({
   modelName: "gpt-4",
   maxRetries: 2,
   maxTokens: 2500,
+  callbacks: [tracer],
   verbose: env.NODE_ENV != "production",
 });
 
@@ -22,6 +35,7 @@ export const gpt3 = new OpenAI({
   modelName: "gpt-3.5-turbo",
   maxRetries: 2,
   maxTokens: 2500,
+  callbacks: [tracer],
   verbose: env.NODE_ENV != "production",
 });
 

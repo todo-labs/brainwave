@@ -137,6 +137,9 @@ dependencies:
   langchain:
     specifier: ^0.0.78
     version: 0.0.78(@pinecone-database/pinecone@0.1.6)(pdf-parse@1.1.1)(puppeteer@20.9.0)
+  langsmith:
+    specifier: ^0.0.35
+    version: 0.0.35
   lucide-react:
     specifier: ^0.214.0
     version: 0.214.0(react@18.2.0)
@@ -2660,6 +2663,10 @@ packages:
 
   /@types/unist@3.0.0:
     resolution: {integrity: sha512-MFETx3tbTjE7Uk6vvnWINA/1iJ7LuMdO4fcq8UfF0pRbj01aGLduVvQcRyswuACJdpnHgg8E3rQLhaRdNEJS0w==}
+    dev: false
+
+  /@types/uuid@9.0.3:
+    resolution: {integrity: sha512-taHQQH/3ZyI3zP8M/puluDEIEvtQHVYcC6y3N8ijFtAd28+Ey/G4sg1u2gB01S8MwybLOKAp9/yCMu/uR5l3Ug==}
     dev: false
 
   /@types/yauzl@2.10.0:
@@ -5570,6 +5577,17 @@ packages:
     transitivePeerDependencies:
       - debug
       - encoding
+    dev: false
+
+  /langsmith@0.0.35:
+    resolution: {integrity: sha512-3EItwg4fPKE8xWl7TxbnjQgxiHT5WoffsvJYh06ml/otI7zrLoY1cZzdJJTN4bkiCRnPdd3uvV6UVjtZN9MMgA==}
+    hasBin: true
+    dependencies:
+      '@types/uuid': 9.0.3
+      commander: 10.0.1
+      p-queue: 6.6.2
+      p-retry: 4.6.2
+      uuid: 9.0.0
     dev: false
 
   /language-subtag-registry@0.3.22:

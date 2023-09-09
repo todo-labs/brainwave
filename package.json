@@ -58,6 +58,7 @@
     "emailjs": "^4.0.3",
     "i18next": "^22.5.1",
     "langchain": "^0.0.78",
+    "langsmith": "^0.0.35",
     "lucide-react": "^0.214.0",
     "micro": "^10.0.1",
     "next": "^13.4.19",
