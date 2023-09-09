@@ -10,12 +10,17 @@ export const metaRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      const topic = await ctx.prisma.metadata.findMany({
+      const subtopics = await ctx.prisma.metadata.findMany({
         where: {
           topic: input.topic,
         },
+        select: {
+          subtopics: true,
+        },
       });
-      return topic[0]?.subtopics ?? [];
+      return subtopics
+        .flatMap((meta) => meta.subtopics)
+        .sort((a, b) => a.localeCompare(b));
     }),
   addSubtopic: protectedProcedure
     .input(
