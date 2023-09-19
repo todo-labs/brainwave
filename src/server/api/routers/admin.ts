@@ -24,23 +24,32 @@ export const adminRouter = createTRPCRouter({
   allUsers: adminProcedure
     .input(paginationSchema)
     .query(async ({ ctx, input }) => {
-      const users = await ctx.prisma.user.findMany({
-        where: {
-          name: {
-            contains: input.query || "",
-            mode: "insensitive",
+      const [users, count] = await Promise.all([
+        ctx.prisma.user.findMany({
+          take: input.pageSize,
+          skip: input.pageIndex * input.pageSize,
+          where: {
+            OR: [
+              {
+                name: {
+                  contains: input.query || "",
+                  mode: "insensitive",
+                },
+              },
+              {
+                email: {
+                  contains: input.query || "",
+                  mode: "insensitive",
+                },
+              },
+            ],
           },
-        },
-        take: input.pageSize,
-        skip: input.pageIndex * input.pageSize,
-        include: {
-          quizzes: true,
-        },
-        orderBy: {
-          name: !input.sortAsc ? "asc" : "desc",
-        },
-      });
-      const count = (await ctx.prisma.user.count()) || 0;
+          include: {
+            quizzes: true,
+          },
+        }),
+        ctx.prisma.user.count() || 0,
+      ]);
       return { users, count };
     }),
   allQuizzes: adminProcedure
@@ -48,7 +57,7 @@ export const adminRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const quizzes = await ctx.prisma.quiz.findMany({
         take: input.pageSize,
-        skip: input.pageIndex  * input.pageSize,
+        skip: input.pageIndex * input.pageSize,
         include: {
           user: true,
           questions: true,
