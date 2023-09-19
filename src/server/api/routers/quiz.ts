@@ -200,7 +200,7 @@ export const quizRouter = createTRPCRouter({
         }
 
         const correctAnswers = result.filter((answer) => answer.correct);
-        const score = (correctAnswers.length / result.length) * 100;
+        const score = Math.floor((correctAnswers.length / result.length) * 100);
 
         const reviewNotes = await genReviewNotes(
           result,
