@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { ShareIcon } from "lucide-react";
 
 import {
   Card,
@@ -12,9 +13,20 @@ import { Skeleton } from "../ui/skeleton";
 import { QuizSkeleton } from "../loading-cards";
 
 import { api } from "@/lib/api";
+import { cn } from "@/lib/utils";
 
-const Title = ({ isLoading, title }: { isLoading: boolean; title: string }) => (
-  <CardTitle>{isLoading ? <Skeleton className="h-6 w-24" /> : title}</CardTitle>
+const Title = ({
+  isLoading,
+  title,
+  color,
+}: {
+  isLoading: boolean;
+  title: string;
+  color: string;
+}) => (
+  <CardTitle className={cn(color)}>
+    {isLoading ? <Skeleton className="h-6 w-24" /> : title}
+  </CardTitle>
 );
 
 type TotalScoreProps = {
@@ -70,16 +82,35 @@ const ScoreCard = ({ isLoading, amount, label }: ScoreCardProps) => (
 const PointsCard = () => {
   const { data, isLoading } = api.user.pointsBreakdown.useQuery();
 
-  if (!data) {
-    return <QuizSkeleton />;
-  }
+  const totalScore = data?.totalScore || 0;
+  const maxScore = 5000;
+  const scoreLevels = [
+    { title: "Beginner", score: 500, color: "" },
+    { title: "Novice", score: 1000, color: "text-orange-500" },
+    { title: "Intermediate", score: 2000, color: "text-primary-500" },
+    { title: "Advanced", score: 3500, color: "text-purple-500" },
+    { title: "Expert", score: 5000, color: "text-emerald-500" },
+  ];
 
-  const title = data?.averageScore > 50 ? "Good Job" : "Keep Trying";
+  const getTitles = useMemo(() => {
+    const score = Math.min(Math.max(totalScore, 0), maxScore);
+    const level = scoreLevels.findIndex((level) => score <= level.score);
+    return level >= 0
+      ? scoreLevels[level]
+      : scoreLevels[scoreLevels.length - 1];
+  }, [totalScore, maxScore, scoreLevels]);
+
+  if (!data) return <QuizSkeleton />;
 
   return (
     <Card className="w-[400px]">
-      <CardHeader>
-        <Title isLoading={isLoading} title={title} />
+      <CardHeader className="flex flex-row items-center justify-between">
+        <Title
+          isLoading={isLoading}
+          color={getTitles?.color || "text-muted-foreground"}
+          title={getTitles?.title || "Unclassified"}
+        />
+        {/* <ShareIcon className="h-4 w-4 text-muted-foreground" /> */}
       </CardHeader>
       <CardContent className="my-10 flex flex-col items-center justify-center text-center">
         <TotalScore totalScore={data.totalScore} />
