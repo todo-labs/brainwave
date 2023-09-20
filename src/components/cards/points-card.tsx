@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Card,
   CardContent,
@@ -7,69 +9,101 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
+import { QuizSkeleton } from "../loading-cards";
+
 import { api } from "@/lib/api";
 
 const Title = ({ isLoading, title }: { isLoading: boolean; title: string }) => (
   <CardTitle>{isLoading ? <Skeleton className="h-6 w-24" /> : title}</CardTitle>
 );
 
-const TotalScore = ({ totalScore }: { totalScore: number }) => (
-  <>
-    <h1 className="text-6xl font-semibold">{totalScore}</h1>
-    <p className="text-sm text-muted-foreground">points</p>
-  </>
-);
+type TotalScoreProps = {
+  totalScore: number;
+  duration?: number;
+};
 
-const ScoreFactor = ({
-  isLoading,
-  averageScore,
-  uniqueTopics,
-}: {
+const TotalScore = ({ totalScore, duration = 1000 }: TotalScoreProps) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const increment = Math.ceil(totalScore / (duration / 10));
+
+    const interval = setInterval(() => {
+      start += increment;
+      if (start >= totalScore) {
+        setCount(totalScore);
+        clearInterval(interval);
+      } else {
+        setCount(start);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [totalScore, duration]);
+
+  return (
+    <>
+      <h1 className="text-6xl font-bold">{count}</h1>
+      <p className="text-sm text-muted-foreground">points</p>
+    </>
+  );
+};
+
+type ScoreCardProps = {
   isLoading: boolean;
-  averageScore: number;
-  uniqueTopics: number;
-}) => (
-  <CardFooter className="flex flex-col">
-    <section className="grid w-full grid-cols-2 gap-4">
-      <Card className="p-3">
-        <CardTitle className="text-primary">
-          {isLoading ? <Skeleton className="h-6 w-24" /> : averageScore}
-        </CardTitle>
-        <CardDescription>Avg Score</CardDescription>
-      </Card>
-      <Card className="p-3">
-        <CardTitle className="text-primary">
-          {isLoading ? <Skeleton className="h-6 w-24" /> : uniqueTopics}
-        </CardTitle>
-        <CardDescription>Unique Topics</CardDescription>
-      </Card>
-    </section>
-  </CardFooter>
+  amount: number;
+  label: string;
+};
+
+const ScoreCard = ({ isLoading, amount, label }: ScoreCardProps) => (
+  <Card className="p-3">
+    <CardTitle className="mb-2 text-primary">
+      {isLoading ? 0 : amount}
+    </CardTitle>
+    <CardDescription>
+      {isLoading ? <Skeleton className="h-6 w-24" /> : label}
+    </CardDescription>
+  </Card>
 );
 
 const PointsCard = () => {
   const { data, isLoading } = api.user.pointsBreakdown.useQuery();
 
   if (!data) {
-    return "No Data";
+    return <QuizSkeleton />;
   }
 
   const title = data?.averageScore > 50 ? "Good Job" : "Keep Trying";
 
   return (
-    <Card>
+    <Card className="w-[400px]">
       <CardHeader>
         <Title isLoading={isLoading} title={title} />
-        <CardDescription>your score</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col items-center justify-center text-center">
+      <CardContent className="my-10 flex flex-col items-center justify-center text-center">
         <TotalScore totalScore={data.totalScore} />
       </CardContent>
-      <ScoreFactor
-        isLoading={isLoading}
-        averageScore={data.averageScore}
-        uniqueTopics={data.uniqueTopics}
-      />
+      <CardFooter className="flex flex-col">
+        <section className="grid w-full grid-cols-2 gap-4">
+          <ScoreCard
+            isLoading={isLoading}
+            amount={data.averageScore}
+            label="Avg Score"
+          />
+          <ScoreCard
+            isLoading={isLoading}
+            amount={data.uniqueTopics}
+            label="Unique Topics"
+          />
+          <ScoreCard
+            isLoading={isLoading}
+            amount={data.totalQuizzes}
+            label="Total Quizzes"
+          />
+          <ScoreCard isLoading amount={0} label="Coming Soon" />
+        </section>
+      </CardFooter>
     </Card>
   );
 };

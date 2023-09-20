@@ -62,6 +62,7 @@ export const userRouter = createTRPCRouter({
       totalScore: Math.floor(totalScore) || 0,
       averageScore: Math.floor(averageScore) || 0,
       uniqueTopics: uniqueTopics.length || 0,
+      totalQuizzes: quizzes.length || 0,
     };
   }),
   quizBreakdown: protectedProcedure.query(async ({ ctx }) => {

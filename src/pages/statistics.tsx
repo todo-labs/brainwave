@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useSession } from "next-auth/react";
 
 import { Separator } from "@/components/ui/separator";
 import SettingsLayout from "@/components/user/sidebar-nav";
@@ -21,9 +20,9 @@ const StatisticsPage: NextPage = () => {
           </p>
         </div>
         <Separator />
-        <section className="grid grid-cols-2 gap-4">
+        <section className="flex space-x-3">
           <PointsCard />
-          <QuizBreakdown queryFn={quizBreakdown} />
+          {/* <QuizBreakdown queryFn={quizBreakdown} /> */}
         </section>
       </div>
     </SettingsLayout>
