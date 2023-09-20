@@ -15,7 +15,7 @@ const Title = ({ isLoading, title }: { isLoading: boolean; title: string }) => (
 
 const TotalScore = ({ totalScore }: { totalScore: number }) => (
   <>
-    <h1 className="text-2xl font-semibold">{totalScore}</h1>
+    <h1 className="text-6xl font-semibold">{totalScore}</h1>
     <p className="text-sm text-muted-foreground">points</p>
   </>
 );
@@ -30,7 +30,7 @@ const ScoreFactor = ({
   uniqueTopics: number;
 }) => (
   <CardFooter className="flex flex-col">
-    <section className="grid grid-cols-2 gap-4">
+    <section className="grid w-full grid-cols-2 gap-4">
       <Card className="p-3">
         <CardTitle className="text-primary">
           {isLoading ? <Skeleton className="h-6 w-24" /> : averageScore}
@@ -62,7 +62,7 @@ const PointsCard = () => {
         <Title isLoading={isLoading} title={title} />
         <CardDescription>your score</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col items-center justify-center text-center">
         <TotalScore totalScore={data.totalScore} />
       </CardContent>
       <ScoreFactor

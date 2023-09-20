@@ -10,9 +10,6 @@ import { api } from "@/lib/api";
 
 const StatisticsPage: NextPage = () => {
   const quizBreakdown = api.user.quizBreakdown.useQuery();
-  const { data } = api.meta.leaderboard.useQuery();
-
-  console.log(data);
 
   return (
     <SettingsLayout>
