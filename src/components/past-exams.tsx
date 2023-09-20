@@ -1,6 +1,6 @@
 import { api } from "@/lib/api";
 import { QuizSkeleton } from "./loading-cards";
-import QuizCard from "./topic-card";
+import QuizCard from "./cards/topic-card";
 import Section from "./section";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -26,7 +26,7 @@ const PastExamCard = (props: Quiz) => {
 
   return (
     <Card
-      className="h-[200px] max-w-[500px] min-w-[250px] cursor-pointer justify-center rounded-xl border-2 p-2 shadow-none transition-shadow hover:border-primary hover:border-primary hover:shadow-lg"
+      className="h-[200px] min-w-[250px] max-w-[500px] cursor-pointer justify-center rounded-xl border-2 p-2 shadow-none transition-shadow hover:border-primary hover:border-primary hover:shadow-lg"
       onClick={() => {
         setCurrentQuiz({ ...props, questions: [] });
         setCurrentStep("result");

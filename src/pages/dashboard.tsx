@@ -17,11 +17,12 @@ import { BarChart2Icon, BugIcon, GraduationCapIcon, User2Icon } from "lucide-rea
 import ReportTable from "@/components/dashboard/report-table";
 
 export default function DashboardPage() {
-  // POWER CARDS
   const totalUsers = api.admin.totalUsers.useQuery();
   const totalQuizzes = api.admin.totalQuizzes.useQuery();
   const averageScore = api.admin.averageScore.useQuery();
   const totalReports = api.admin.totalReports.useQuery();
+
+  const quizBreakdown = api.admin.quizBreakdown.useQuery();
 
   const { setDashboardTab, dashboardTab } = useStore();
 
@@ -81,7 +82,7 @@ export default function DashboardPage() {
                     icon={BugIcon}
                     />
                 </div>
-                <QuizBreakdown />
+                <QuizBreakdown queryFn={quizBreakdown} />
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                   {/* <StudyGuideBacklog /> */}
                 </div>

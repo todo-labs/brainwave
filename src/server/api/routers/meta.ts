@@ -46,4 +46,18 @@ export const metaRouter = createTRPCRouter({
         },
       });
     }),
+  leaderboard: protectedProcedure.query(async ({ ctx }) => {
+    const rankedStudents = await ctx.prisma.quiz.groupBy({
+      by: ["email"],
+      _avg: {
+        score: true,
+      },
+      orderBy: [{ _avg: { score: "desc" } }],
+    });
+
+    return rankedStudents.map((student) => ({
+      email: student.email,
+      score: student._avg.score,
+    }));
+  }),
 });
