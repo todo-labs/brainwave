@@ -1,4 +1,4 @@
-import type { InferGetStaticPropsType, InferGetServerSidePropsType, GetServerSideProps } from "next";
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
@@ -12,6 +12,7 @@ import PastExams from "@/components/past-exams";
 import Exam from "@/components/exam";
 
 import useStore from "@/hooks/useStore";
+import { useSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {

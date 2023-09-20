@@ -4,14 +4,16 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
+import { render } from "@react-email/render";
 import EmailProvider from "next-auth/providers/email";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "@/env.mjs";
-import { prisma } from "@/server/db";
 import type { Role } from "@prisma/client";
 import { createTransport } from "nodemailer";
+
+import { env } from "@/env.mjs";
+import { prisma } from "@/server/db";
+import { Languages } from "@/lib/utils";
 import { MagicLinkEmail } from "@/emails/magic-link";
-import { render } from "@react-email/render";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -24,6 +26,7 @@ declare module "next-auth" {
     user: {
       id: string;
       role: Role;
+      lang: Languages;
     } & DefaultSession["user"];
   }
 }
@@ -43,11 +46,12 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token }) {
       const dbUser = await prisma.user.findUnique({
         where: { email: token.email as string },
-        select: { role: true, id: true },
+        select: { role: true, id: true, lang: true },
       });
       if (dbUser) {
         token.role = dbUser.role;
         token.id = dbUser.id;
+        token.lang = dbUser.lang as Languages;
       }
       return token;
     },
@@ -88,7 +92,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   jwt: {
-    maxAge: 7 * 24 * 60 * 60, // 1 week
+    maxAge: 7 * 24 * 60 * 60,
   },
   secret: env.NEXTAUTH_SECRET,
   pages: {
