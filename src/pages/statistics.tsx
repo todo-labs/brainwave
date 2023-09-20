@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import SettingsLayout from "@/components/user/sidebar-nav";
 import PointsCard from "@/components/cards/points-card";
 import QuizBreakdown from "@/components/dashboard/quiz-breakdown";
+import { LeaderboardTable } from "@/components/leaderboard-table";
 
 import { api } from "@/lib/api";
 
@@ -33,13 +34,7 @@ const StatisticsPage: NextPage = (
         <Separator />
         <section className="flex space-x-3">
           <PointsCard />
-          <div className="flex w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed">
-            <AwardIcon className="h-16 w-16 text-muted-foreground/60 dark:text-muted" />
-            <h2 className="text-xl font-bold">Coming soon: Leader board</h2>
-            <p className="max-w-sm text-center text-base text-muted-foreground">
-              See how you compare to other users on the platform.
-            </p>
-          </div>
+          <LeaderboardTable />
         </section>
         <QuizBreakdown queryFn={quizBreakdown} />
       </div>

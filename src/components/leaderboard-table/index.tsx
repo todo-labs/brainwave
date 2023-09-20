@@ -1,144 +1,63 @@
+import { AwardIcon } from "lucide-react";
 import {
-  useReactTable,
-  type ColumnDef,
-  VisibilityState,
-  ColumnFiltersState,
-  SortingState,
-  PaginationState,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-} from "@tanstack/react-table";
-import { Role, type Quiz, type User } from "@prisma/client";
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-import { DataTable } from "@/components/query-table/data-table";
-import { DataTableColumnHeader } from "@/components/query-table/header";
-import { Badge } from "@/components/ui/badge";
-import Default from "@/components/default";
-import { useMemo, useState } from "react";
-import { Loader2Icon } from "lucide-react";
 import { api } from "@/lib/api";
+import { cleanEnum } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
-type Column = User & {
-  quizzes?: Quiz[];
-};
+export function LeaderboardTable() {
+  const { data } = api.meta.leaderboard.useQuery();
 
-const columns: ColumnDef<Column>[] = [
-  {
-    accessorKey: "name",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
-    ),
-    cell: ({ row }) => {
-      const isAdmin = row.original.role === Role.ADMIN;
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("name") || "Anonymous"}
-            {isAdmin && (
-              <Badge variant="outline" className="ml-4">
-                Admin
-              </Badge>
-            )}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "quizzes",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="# of Quizzes" />
-    ),
-    cell: ({ row }) => {
-      const quizzes: Quiz[] = row.getValue("quizzes");
+  const indexToIcon = (index: number) => {
+    switch (index) {
+      case 0:
+        return <AwardIcon className="h-6 w-6 border-none fill-primary" />;
+      case 1:
+        return <AwardIcon className="h-6 w-6 fill-yellow-400" />;
+      case 2:
+        return <AwardIcon className="h-6 w-6 text-muted-foreground" />;
+      default:
+        return null;
+    }
+  };
 
-      if (!quizzes || (Array.isArray(quizzes) && quizzes.length === 0)) {
-        return <h3 className="font-medium text-destructive">0</h3>;
-      } else if (Array.isArray(quizzes) && quizzes.length > 0) {
-        return (
-          <div className="flex w-[100px] flex-row-reverse">
-            {quizzes.length}
-          </div>
-        );
-      }
-    },
-  },
-];
-
-export const UserTable = () => {
-  const [rowSelection, setRowSelection] = useState({});
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const defaultData = useMemo(() => [], []);
-
-  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
-    pageIndex: 1,
-    pageSize: 10,
-  });
-
-  const pagination = useMemo(
-    () => ({
-      pageIndex,
-      pageSize,
-    }),
-    [pageIndex, pageSize]
+  return (
+    <Table>
+      <TableCaption>
+        Top 5 users who scored the highest on their quizzes in the last 30 days.
+      </TableCaption>
+      <TableHeader>
+        <h1 className="pb-4 text-2xl font-medium">Leaderboard</h1>
+        <TableRow>
+          <TableHead className="text-left">User</TableHead>
+          <TableHead>Topic</TableHead>
+          <TableHead>SubTopic</TableHead>
+          <TableHead className="text-right">Score</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {data?.map((item, index) => (
+          <TableRow key={item.name}>
+            <TableCell className="flex items-center font-medium">
+              {indexToIcon(index)}
+              {item.name}
+            </TableCell>
+            <TableCell>
+              <Badge>{cleanEnum(item.topic)}</Badge>
+            </TableCell>
+            <TableCell>{item.subtopic}</TableCell>
+            <TableCell className="text-right">{item.score}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
-
-  const { data, isLoading } = api.admin.allUsers.useQuery({
-    pageIndex,
-    pageSize,
-    sortAsc: sorting[0]?.desc,
-    query: searchQuery,
-  });
-
-  const table = useReactTable({
-    data: data?.users ?? defaultData,
-    columns,
-    pageCount: Math.ceil((data?.count || 0) / pageSize),
-    state: {
-      sorting,
-      columnVisibility,
-      rowSelection,
-      columnFilters,
-      pagination,
-    },
-    manualPagination: true,
-    enableRowSelection: true,
-    debugTable: true,
-    onPaginationChange: setPagination,
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-  });
-
-  return isLoading ? (
-    <Default
-      title="Loading user data"
-      description="Please wait while we load the user data."
-      icon={Loader2Icon}
-      iconClassName="animate-spin"
-    />
-  ) : (
-    <DataTable<Column>
-      columns={columns}
-      emptyDesc="Users are not available at the moment."
-      empty="No users found"
-      table={table}
-    />
-  );
-};
-
-export default UserTable;
+}
