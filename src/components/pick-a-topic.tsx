@@ -1,5 +1,5 @@
-import useStore from "@/hooks/useStore";
-import { api } from "@/lib/api";
+import { ExclamationTriangleIcon, RocketIcon } from "@radix-ui/react-icons";
+import { useTranslation } from "next-i18next";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import QuizCard from "./cards/topic-card";
 import React from "react";
@@ -7,7 +7,9 @@ import Section from "./section";
 import { TopicSkeleton } from "./loading-cards";
 import { Button } from "./ui/button";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { ExclamationTriangleIcon, RocketIcon } from "@radix-ui/react-icons";
+
+import useStore from "@/hooks/useStore";
+import { api } from "@/lib/api";
 
 const PickATopic = () => {
   const {
@@ -26,10 +28,12 @@ const PickATopic = () => {
 
   const cleanTopic = topic.replace(/_/g, " ").toLocaleLowerCase();
 
+  const { t } = useTranslation(["common"]);
+
   return (
     <Section
-      title={`Choose your ${cleanTopic} Exam`}
-      description="Select a subtopic to start your exam."
+      title={t("home.pickAnExam.title", { topic: cleanTopic })}
+      description={t("home.pickAnExam.desc")}
     >
       <ScrollArea>
         <div className="flex space-x-4 pb-4">
@@ -38,19 +42,18 @@ const PickATopic = () => {
           {isError && (
             <Alert variant="destructive">
               <ExclamationTriangleIcon className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
+              <AlertTitle>{t("home.pickAnExam.error.title")}</AlertTitle>
               <AlertDescription>
-                There was an error fetching our topics. Please try again
+                {t("home.pickAnExam.error.message")}
               </AlertDescription>
             </Alert>
           )}
           {data && data.length === 0 && (
             <Alert className="w-fit">
               <RocketIcon className="h-4 w-4" />
-              <AlertTitle>Heads up!</AlertTitle>
+              <AlertTitle>{t("home.pickAnExam.comingSoon.title")}</AlertTitle>
               <AlertDescription>
-                We are still working on adding more topics. Please check back in
-                a few days.
+                {t("home.pickAnExam.comingSoon.message")}
               </AlertDescription>
             </Alert>
           )}
@@ -72,7 +75,7 @@ const PickATopic = () => {
         disabled={!currentSubTopic}
         onClick={() => setCurrentStep("config")}
       >
-        Continue
+        {t("continue")}
       </Button>
     </Section>
   );

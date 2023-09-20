@@ -1,3 +1,5 @@
+// next-i18next.config.js
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
 
 module.exports = {
@@ -5,16 +7,13 @@ module.exports = {
     defaultLocale: "en",
     locales: ["en", "es", "fr", "de"],
   },
+  ns: ["common"],
+  pages: {
+    "*": ["common"],
+  },
   localePath: path.resolve("./public/locales"),
+  defaultNS: "common",
   react: {
-    useSuspense: false,
-  },
-  interpolation: {
-    escapeValue: false,
-  },
-  resources: {
-    en: {
-      common: require("./public/locales/en/common.json"),
-    },
+    useSuspense: true,
   },
 };

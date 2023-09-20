@@ -1,43 +1,157 @@
 {
-  "defaultHome": {
-    "loading": {
-      "title": "Loading Reminders...",
-      "message": "We're fetching your reminders now. This should only take a few seconds."
+  "appName": "Brainwave",
+  "landing": {
+    "devtagline": {
+      "pre": "Ignite your",
+      "post": "Intelligence"
     },
-    "error": {
-      "title": "Whoops!",
-      "message": "It looks like something went wrong while trying to fetch your reminders. Don't worry, we got this.",
-      "btn": "Go Back"
+    "title": "AI SAT Prep",
+    "desc": "Introducing Brainwave: the ultimate quiz platform for learners. Take quizzes on your favorite subjects, at your desired difficulty level. Build your knowledge and earn badges to showcase your skills. Brainwave is the perfect tool for studying for the SAT.",
+    "getStarted": "Get Started",
+    "howItWorks": "How It Works"
+  },
+  "login": {
+    "title": "Sign in to your account",
+    "subheading": "Enter your email below to create your account",
+    "description": " By clicking continue, you agree to our",
+    "and": "and",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
+  },
+  "verifyEmail": {
+    "title": "Check Your Email",
+    "desc": "We've sent a verification link to your email address. Please click the link to complete your account setup.",
+    "resend": "Resend Email",
+    "goBack": "Go Back"
+  },
+  "home": {
+    "tabs": {
+      "pickAnExam": "Pick an exam",
+      "config": "Config",
+      "quiz": "Quiz",
+      "results": "Results"
     },
-    "empty": {
-      "title": "No Reminders Available",
-      "message": "You don't have any reminders available. Create one now!",
-      "btn": "Create Reminder"
+    "sidebar": {
+      "math": "Math",
+      "history": "History",
+      "science": "Science"
+    },
+    "pickAnExam": {
+      "error": {
+        "title": "Error",
+        "message": "There was an error fetching our topics. Please try again"
+      },
+      "comingSoon": {
+        "title": "Coming Soon",
+        "message": "We are still working on adding more topics. Please check back in a few days."
+      },
+      "title": "Choose your {{topic}} topic",
+      "desc": "Select a subtopic to start your exam."
+    },
+    "config": {
+      "title": "Lets build your exam",
+      "desc": "What area are you having problems with?",
+      "difficulty": "Difficulty",
+      "questions": "Questions",
+      "questionDesc": "How many questions would you like to solve in this session.",
+      "notes": "Notes",
+      "subtopic": "Subtopic",
+      "notesDesc": "We will use these notes in our prompt to build your exam.",
+      "generating": "Generating Exam",
+      "submit": "Submit {{num}} credits"
+    },
+    "pastExams": {
+      "title": "Past Exams",
+      "error": {
+        "title": "Error",
+        "message": "There was an error fetching your past exams. Please try again"
+      },
+      "empty": {
+        "title": {
+          "pre": "You have not taken any",
+          "post": "exams"
+        },
+        "message": "You have not taken any exams for this topic. Kinda weird, but to each their own."
+      }
+    },
+    "exam": {
+      "grade": "Grading Exam",
+      "submit": "Submit"
+    },
+    "results": {
+      "loading": {
+        "title": "Loading Results",
+        "message": "We are fetching your results. Please wait."
+      },
+      "error": {
+        "title": "Error",
+        "message": "There was an error fetching your results. Please try again",
+        "btn": "Retry"
+      }
     }
   },
-  "footer": {
-    "copyright": "© {{year}} Notification Reminder Startup. All rights reserved.",
-    "address": "1234 Street Name, City, Country",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service",
-    "contactUs": "Contact Us"
-  },
-  "credits": "credits",
-  "about": {
-    "title": "About Us",
-    "description": "FutureText helps you stay connected with friends, family, and customers by providing an innovative scheduling platform that allows you to set up text messages to be sent in the future. Our clean and simple user interface makes scheduling texts easy for everyone. Join us today and never forget an important occasion or deadline again!",
-    "personalizationTitle": "Personalization",
-    "personalizationDescription": "We believe that every message counts and that's why we're here to help you send them. So why not join us and start scheduling your texts today?",
-    "securityTitle": "Security",
-    "securityDescription": "We take security seriously and have implemented a number of measures to ensure that your data is safe with us.",
-    "privacyTitle": "Privacy",
-    "privacyDescription": "We take privacy seriously and have implemented a number of measures to ensure that your data is safe with us."
-  },
   "userNav": {
-    "profile": "profile",
-    "settings": "settings",
-    "logout": "logout",
-    "addCredits": "add credits",
-    "dashboard": "dashboard"
+    "logout": {
+      "btn": "Logout",
+      "title": "Are you sure you want to logout?",
+      "message": "You will be logged out of your account and will not be able to access your account until you login again."
+    },
+    "profile": "Profile",
+    "settings": "Settings",
+    "dashboard": "Dashboard",
+    "credits": "Credits",
+    "statistics": "Statistics"
+  },
+  "continue": "Continue",
+  "cancel": "Cancel",
+  "profile": {
+    "title": "Profile",
+    "message": "Update your profile information",
+    "name": {
+      "title": "Name",
+      "placeholder": "Enter your name",
+      "desc": "Your name will be used to personalize your experience"
+    },
+    "language": {
+      "title": "Language",
+      "desc": "Select your preferred language",
+      "empty": "No languages available"
+    },
+    "update": "Update Profile"
+  },
+  "settings": {
+    "title": "Settings",
+    "message": "Update your account settings",
+    "theme": {
+      "title": "Theme",
+      "desc": "Select your preferred theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "update": "Update Settings"
+  },
+  "statistics": {
+    "title": "Statistics",
+    "message": "View your exam statistics",
+    "levels": {
+      "beginner": "Beginner",
+      "novice": "Novice",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert",
+      "unclassified": "Unclassified"
+    },
+    "points": "Points",
+    "avgScore": "Average Score",
+    "uniqueTopics": "Unique Topics",
+    "totalExams": "Total Exams"
+  },
+  "quizBreakdown": "Quiz Breakdown",
+  "userSidebar": {
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "statistics": "Statistics",
+    "Dashboard": "Dashboard"
   }
 }

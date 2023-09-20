@@ -41,6 +41,7 @@ import type { QuizWithQuestions } from "types";
 import { useToast } from "@/hooks/useToast";
 import { env } from "@/env.mjs";
 import { useSession } from "next-auth/react";
+import { useTranslation } from "next-i18next";
 
 export function CreateConfig() {
   const { currentTopic, setCurrentQuiz, currentSubTopic, setCurrentStep } =
@@ -83,17 +84,15 @@ export function CreateConfig() {
     }
   }
 
-  console.log(env.NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ);
+  const { t } = useTranslation(["common"]);
 
   return (
     <div className="flex  shrink-0 items-center justify-center rounded-md border border-dashed">
       <ScrollArea className="h-fit w-full">
         <Card>
           <CardHeader>
-            <CardTitle>Lets build your exam</CardTitle>
-            <CardDescription>
-              What area are you having problems with?
-            </CardDescription>
+            <CardTitle>{t("home.config.title")}</CardTitle>
+            <CardDescription>{t("home.config.desc")}</CardDescription>
           </CardHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -104,7 +103,7 @@ export function CreateConfig() {
                     name="difficulty"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Quiz Difficulty</FormLabel>
+                        <FormLabel>{t("home.config.difficulty")}</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -135,7 +134,7 @@ export function CreateConfig() {
                     name="subtopic"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Subtopic</FormLabel>
+                        <FormLabel>{t("home.config.subtopic")}</FormLabel>
                         <Input {...field} disabled={!!currentSubTopic} />
                         <FormMessage />
                       </FormItem>
@@ -147,14 +146,13 @@ export function CreateConfig() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel>
-                        Questions
+                        {t("home.config.questions")}
                         <span className="text-gray-500">
                           {`   (${field.value} questions)`}
                         </span>
                       </FormLabel>
                       <FormDescription>
-                        How many questions would you like to solve in this
-                        session.
+                        {t("home.config.questionDesc")}
                       </FormDescription>
                       <FormControl>
                         <Slider
@@ -174,7 +172,7 @@ export function CreateConfig() {
                   name="notes"
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
-                      <FormLabel>Notes</FormLabel>
+                      <FormLabel>{t("home.config.notes")}</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Enter your notes here"
@@ -183,8 +181,7 @@ export function CreateConfig() {
                         />
                       </FormControl>
                       <FormDescription>
-                        We will use these notes in our prompt to build your
-                        exam.
+                        {t("home.config.notesDesc")}
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -201,14 +198,17 @@ export function CreateConfig() {
                   {createQuizMutation.isLoading ? (
                     <>
                       <Loader2Icon className="animate-spin" />
-                      <span className="ml-2">Generating</span>
+                      <span className="ml-2">
+                        {t("home.config.generating")}
+                      </span>
                     </>
                   ) : (
-                    `Submit ${
-                      session?.user.role != Role.ADMIN
-                        ? `(${env.NEXT_PUBLIC_CREDITS_PER_QUIZ} credits)`
-                        : ""
-                    }`
+                    t("home.config.submit", {
+                      num:
+                        session?.user.role === Role.ADMIN
+                          ? 0
+                          : env.NEXT_PUBLIC_CREDITS_PER_QUIZ,
+                    })
                   )}
                 </Button>
               </CardFooter>

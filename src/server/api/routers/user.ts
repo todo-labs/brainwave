@@ -12,6 +12,7 @@ export const userRouter = createTRPCRouter({
       select: {
         name: true,
         credits: true,
+        lang: true,
       },
     });
   }),
@@ -25,6 +26,7 @@ export const userRouter = createTRPCRouter({
           },
           data: {
             name: input.name,
+            lang: input.language || "en",
           },
         });
 

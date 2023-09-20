@@ -4,13 +4,12 @@
  */
 await import("./src/env.mjs");
 
+import nexti18nConfig from "./next-i18next.config.js";
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  i18n: {
-    defaultLocale: "en",
-    locales: ["en", "es", "fr", "de"],
-  },
+  i18n: nexti18nConfig.i18n,
   experimental: {
     esmExternals: false,
   },

@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-wrapper";
 import { Toaster } from "@/components/ui/toaster"
 
+import nextI18NextConfig from "../../next-i18next.config.js";
 
 import "@/styles/globals.css";
 import "src/styles/verify-request.css";
@@ -35,4 +36,4 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-export default api.withTRPC(appWithTranslation(MyApp));
+export default api.withTRPC(appWithTranslation(MyApp, nextI18NextConfig));

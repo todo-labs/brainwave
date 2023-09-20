@@ -53,6 +53,17 @@ Introducing Brainwave, an innovative quiz platform that harnesses the capabiliti
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## 🌎 New Languages Supported
+
+We're excited to announce that we now support multiple languages! Thanks to the power of [next-i18next](https://www.npmjs.com/package/next-i18next) & [Open Ai](https://openai.com/), we've added support for the following languages:
+
+- 🇺🇸 English (default)
+- 🇩🇪 German
+- 🇫🇷 French
+- 🇪🇸 Spanish
+
+To switch to a different language, simply click on the language selector on the profile page and choose your preferred language. We hope this new feature makes Brainwave more accessible and user-friendly for everyone!
+
 ### Built With
 
 - [![Next][Next.js]][Next-url]
@@ -118,7 +129,7 @@ To get started with Brainwave, you will need to set up your development environm
 - [ ] Setup the vector database
 - [ ] Enhance the quiz generation procedure
 - [ ] Enhance results breakdown UI and functionality
-- [ ] Add a leaderboard and ranking system
+- [ ] Add a leader board and ranking system
 - [ ] Enhance the mobile experience
 
 See the [open issues](https://github.com/todo-labs/brainwave/issues) for a full list of proposed features (and known issues).

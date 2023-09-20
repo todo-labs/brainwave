@@ -24,7 +24,7 @@ export default class PromptBuilder {
    *   .setInstructions("Review the following comment: {comment}.")
    *   .build();
    * ```
-   * 
+   *
    * @default "You are a {subject} teacher with more than 25 years of teaching experience."
    */
   public setContext(context?: string): this {
@@ -59,7 +59,7 @@ export default class PromptBuilder {
   public setPersonalization(personalization: Record<string, string>): this {
     this.content.push(
       `Personalization: ${Object.entries(personalization)
-        .map(([key, value]) => `${key}: ${value}`)
+        .map(([key, value]) => `${key.toUpperCase()}: ${value}`)
         .join("\n")}`
     );
     return this;

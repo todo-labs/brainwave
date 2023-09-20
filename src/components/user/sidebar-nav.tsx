@@ -2,13 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { Metadata } from "next";
 import { Role } from "@prisma/client";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import {
   BarChart2Icon,
   CogIcon,
@@ -16,6 +11,11 @@ import {
   LayoutDashboardIcon,
   User2Icon,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useTranslation } from "next-i18next";
+
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
@@ -28,6 +28,8 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
 
 export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   const pathname = usePathname();
+
+  const { t } = useTranslation(["common"]);
 
   return (
     <nav
@@ -53,18 +55,13 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
             {item.icon && (
               <span className="mr-2 flex-shrink-0">{item.icon}</span>
             )}
-            {item.title}
+            {t(item.title)}
           </Link>
         )
       )}
     </nav>
   );
 }
-
-export const metadata: Metadata = {
-  title: "Forms",
-  description: "Advanced form example using react-hook-form and Zod.",
-};
 
 interface SettingsLayoutProps {
   children: React.ReactNode;
@@ -76,35 +73,36 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   const sidebarNavItems = [
     {
       icon: <HomeIcon />,
-      title: "Home",
-      href: "/",
+      title: "userSidebar.home",
+      href: "/home",
       enabled: true,
     },
     {
       icon: <User2Icon />,
-      title: "Profile",
+      title: "userSidebar.profile",
       href: "/profile",
       enabled: true,
     },
     {
       icon: <CogIcon />,
-      title: "Settings",
+      title: "userSidebar.settings",
       href: "/settings",
       enabled: true,
     },
     {
       icon: <BarChart2Icon />,
-      title: "Statistics",
+      title: "userSidebar.statistics",
       href: "/statistics",
       enabled: true,
     },
     {
       icon: <LayoutDashboardIcon />,
-      title: "Dashboard",
+      title: "userSidebar.dashboard",
       href: "/dashboard",
       enabled: session?.user?.role === Role.ADMIN,
     },
   ];
+
   return (
     <>
       <div className="md:hidden">
