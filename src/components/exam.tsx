@@ -34,6 +34,7 @@ const Exam = () => {
         description: error.message,
       });
     },
+    retry: 2
   });
 
   const submitQuiz = async () => {
