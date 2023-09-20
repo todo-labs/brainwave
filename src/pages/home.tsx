@@ -1,6 +1,6 @@
-import type { Metadata, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Image from "next/image";
+import { useTranslation } from "next-i18next";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserNav } from "@/components/user/nav";
@@ -25,6 +25,7 @@ export default function Home(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const { currentStep } = useStore();
+  const { t } = useTranslation(["common"]);
 
   return (
     <>
@@ -43,11 +44,17 @@ export default function Home(
                     <div className="space-between flex items-center">
                       <TabsList defaultValue="choice">
                         <TabsTrigger value="choice" className="relative">
-                          Pick an Exam
+                          {t("home.tabs.pickAnExam")}
                         </TabsTrigger>
-                        <TabsTrigger value="config">Config</TabsTrigger>
-                        <TabsTrigger value="exam">Quiz</TabsTrigger>
-                        <TabsTrigger value="result">Results</TabsTrigger>
+                        <TabsTrigger value="config">
+                          {t("home.tabs.config")}
+                        </TabsTrigger>
+                        <TabsTrigger value="exam">
+                          {t("home.tabs.quiz")}
+                        </TabsTrigger>
+                        <TabsTrigger value="result">
+                          {t("home.tabs.results")}
+                        </TabsTrigger>
                       </TabsList>
                       <div className="ml-auto mr-4">
                         <UserNav />

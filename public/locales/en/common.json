@@ -17,5 +17,24 @@
     "and": "and",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy"
-  }
+  },
+  "home": {
+    "tabs": {
+      "pickAnExam": "Pick an exam",
+      "config": "Config",
+      "quiz": "Quiz",
+      "results": "Results"
+    },
+    "pickAnExam": {
+      "error": {
+        "title": "Error",
+        "message": "There was an error fetching our topics. Please try again"
+      },
+      "comingSoon": {
+        "title": "Coming Soon",
+        "message": "We are still working on adding more topics. Please check back in a few days."
+      }
+    }
+  },
+  "continue": "Continue",
 }
