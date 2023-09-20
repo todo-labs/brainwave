@@ -1,7 +1,7 @@
 import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import QuizCard from "./topic-card";
+import QuizCard from "./cards/topic-card";
 import React from "react";
 import Section from "./section";
 import { TopicSkeleton } from "./loading-cards";

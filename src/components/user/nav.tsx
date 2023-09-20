@@ -1,4 +1,4 @@
-import { InfinityIcon, LayoutDashboardIcon, LogOut, PlusCircle, Settings, User } from "lucide-react";
+import { BarChart2Icon, InfinityIcon, LayoutDashboardIcon, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import router from "next/router";
 
@@ -102,6 +102,10 @@ export function UserNav() {
             <DropdownMenuItem onClick={() => void router.push(`/settings`)}>
               <Settings className="mr-2 h-4 w-4" />
               <p className="capitalize">Settings</p>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => void router.push(`/statistics`)}>
+              <BarChart2Icon className="mr-2 h-4 w-4" />
+              <p className="capitalize">Statistics</p>
             </DropdownMenuItem>
             {session.user.role === Role.ADMIN && (
               <DropdownMenuItem onClick={() => void router.push(`/dashboard`)}>

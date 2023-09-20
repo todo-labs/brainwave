@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
+  BarChart2Icon,
   CogIcon,
   HomeIcon,
   LayoutDashboardIcon,
@@ -89,6 +90,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       icon: <CogIcon />,
       title: "Settings",
       href: "/settings",
+      enabled: true,
+    },
+    {
+      icon: <BarChart2Icon />,
+      title: "Statistics",
+      href: "/statistics",
       enabled: true,
     },
     {
