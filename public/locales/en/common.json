@@ -1,0 +1,21 @@
+{
+  "appName": "Brainwave",
+  "landing": {
+    "devtagline": {
+      "pre": "Ignite your",
+      "post": "Intelligence"
+    },
+    "title": "AI SAT Prep",
+    "desc": "Introducing Brainwave: the ultimate quiz platform for learners. Take quizzes on your favorite subjects, at your desired difficulty level. Build your knowledge and earn badges to showcase your skills. Brainwave is the perfect tool for studying for the SAT.",
+    "getStarted": "Get Started",
+    "howItWorks": "How It Works"
+  },
+  "login": {
+    "title": "Sign in to your account",
+    "subheading": "Enter your email below to create your account",
+    "description": " By clicking continue, you agree to our",
+    "and": "and",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
+  }
+}
