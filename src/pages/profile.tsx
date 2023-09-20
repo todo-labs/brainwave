@@ -80,6 +80,7 @@ const ProfilePage: NextPage = (
         user: {
           ...session?.user,
           name: variables.name,
+          languages: variables.language,
         },
       });
     },
