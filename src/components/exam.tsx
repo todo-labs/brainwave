@@ -1,7 +1,7 @@
 import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
 
-import QuestionCard from "./question-card";
+import QuestionCard from "./cards/question-card";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { ScrollArea } from "./ui/scroll-area";

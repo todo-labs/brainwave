@@ -97,7 +97,6 @@ export const adminRouter = createTRPCRouter({
       };
     }),
   quizBreakdown: adminProcedure.query(async ({ ctx }) => {
-    // TODO: return a count of quizzes by their topic
     const results = await ctx.prisma.quiz.groupBy({
       by: ["topic"],
       _count: {

@@ -1,21 +1,32 @@
-import { api } from "@/lib/api";
+import { QueryObserverBaseResult } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { BarChartComponent } from "./charts";
+import { Skeleton } from "../ui/skeleton";
 
-const QuizBreakdown = () => {
+interface QuizBreakdownProps {
+  queryFn: QueryObserverBaseResult<
+    Array<{
+      label: string;
+      amount: number;
+    }>
+  >;
+}
 
-  const quizBreakdown = api.admin.quizBreakdown.useQuery();
+function QuizBreakdown({ queryFn }: QuizBreakdownProps) {
+  const { isLoading, data } = queryFn || {};
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Quiz Breakdown</CardTitle>
+        <CardTitle>
+          {isLoading ? <Skeleton className="h-6 w-24" /> : "Quiz Breakdown"}
+        </CardTitle>
       </CardHeader>
       <CardContent className="pl-2">
-        <BarChartComponent data={quizBreakdown.data} />
+        <BarChartComponent data={data} />
       </CardContent>
     </Card>
   );
-};
+}
 
 export default QuizBreakdown;
