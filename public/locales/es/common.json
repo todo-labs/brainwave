@@ -45,7 +45,7 @@
           "title": "Próximamente",
           "message": "Todavía estamos trabajando en agregar más temas. Por favor, vuelve en unos días."
         },
-        "title": "Elige tu tema {topic}",
+        "title": "Elige tu tema {{topic}}",
         "desc": "Selecciona un subtema para comenzar tu examen."
       },
       "config": {
