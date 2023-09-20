@@ -1,4 +1,5 @@
 import { BatteryWarningIcon, Loader2Icon } from "lucide-react";
+import { useTranslation } from "next-i18next";
 
 import Markdown from "./ui/markdown";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
@@ -12,21 +13,19 @@ const Results = () => {
   const { currentQuiz } = useStore();
 
   const { data, isLoading, isError, refetch } = api.quiz.getQuiz.useQuery(
-    {
-      quizId: currentQuiz?.id ?? "",
-    },
-    {
-      enabled: !!currentQuiz?.id,
-    }
+    { quizId: currentQuiz?.id ?? "" },
+    { enabled: !!currentQuiz?.id }
   );
+
+  const { t } = useTranslation(["common"]);
 
   if (isLoading) {
     return (
       <DefaultState
         icon={Loader2Icon}
         iconClassName="animate-spin"
-        title="Loading Results"
-        description="Please wait while we load your exam results"
+        title={t("home.results.loading.title")}
+        description={t("home.results.loading.message")}
       />
     );
   }
@@ -35,16 +34,16 @@ const Results = () => {
     return (
       <DefaultState
         icon={BatteryWarningIcon}
-        title="uh oh!"
-        description="Something went wrong while loading your results."
-        btnText="Retry"
+        title={t("home.results.error.title")}
+        description={t("home.results.error.message")}
+        btnText={t("home.results.error.btn")}
         onClick={void refetch()}
       />
     );
   }
 
   return (
-    <ScrollArea className="mx-auto flex xl:h-[1000px] flex-col md:h-[800px]">
+    <ScrollArea className="mx-auto flex flex-col md:h-[800px] xl:h-[1000px]">
       <div className="flex text-sm capitalize text-primary">
         <h3>
           {cleanEnum(data.topic).toLowerCase()} / {data.subtopic} /{" "}

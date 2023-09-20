@@ -1,8 +1,10 @@
 import { z } from "zod";
+import sentiment from "sentiment";
 import { Role, Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { createQuizSchema, gradeQuizSchema } from "@/server/schemas";
 import { TRPCError } from "@trpc/server";
+
 import {
   genQuiz,
   genReviewNotes,
@@ -10,7 +12,7 @@ import {
   reviewComment,
 } from "@/lib/ai/quiz";
 import { env } from "@/env.mjs";
-import sentiment from "sentiment";
+import { Languages } from "@/lib/utils";
 
 export const quizRouter = createTRPCRouter({
   getPastExams: protectedProcedure
@@ -84,7 +86,7 @@ export const quizRouter = createTRPCRouter({
           }
         }
 
-        const quiz = await genQuiz(input);
+        const quiz = await genQuiz({ ...input, lang: ctx.session.user.lang });
 
         if (!quiz) {
           throw new TRPCError({
@@ -99,6 +101,7 @@ export const quizRouter = createTRPCRouter({
               topic: input.subject,
               difficulty: input.difficulty,
               subtopic: input.subtopic,
+              language: ctx.session.user.lang,
               questions: {
                 createMany: {
                   data: quiz.map((q) => ({
@@ -189,7 +192,8 @@ export const quizRouter = createTRPCRouter({
           quiz.questions.map((q, index) => ({
             ...q,
             answer: input.answers[index] ?? "[NOT_SUPPLIED]",
-          }))
+          })),
+          (quiz.language as Languages) || "en"
         );
 
         if (!result) {
@@ -210,7 +214,8 @@ export const quizRouter = createTRPCRouter({
             difficulty: quiz.difficulty,
             score,
           },
-          ctx.session.user.name || "[NOT_SUPPLIED]"
+          ctx.session.user.name || "[NOT_SUPPLIED]",
+          ctx.session.user.lang || "en"
         );
 
         await ctx.prisma.quiz.update({

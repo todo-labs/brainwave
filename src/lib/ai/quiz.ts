@@ -6,6 +6,7 @@ import { StructuredOutputParser } from "langchain/output_parsers";
 import type { CreateQuizRequestType } from "@/server/schemas";
 import PromptBuilder from "./prompt";
 import { callOpenAi } from ".";
+import { Languages } from "../utils";
 
 // ------------------------------------ [Schemas] ------------------------------------
 const quizParser = StructuredOutputParser.fromZodSchema(
@@ -65,7 +66,7 @@ type ContextDocument = {
 // ------------------------------------ [Functions] ------------------------------------
 
 export async function genQuiz(
-  config: CreateQuizRequestType
+  config: CreateQuizRequestType & { lang: Languages }
 ): Promise<QuizResponseType | undefined> {
   try {
     const prompt = new PromptBuilder()
@@ -82,6 +83,7 @@ export async function genQuiz(
         "Multiple Choice Questions (MCQ), Short Answer Questions (SA).",
         "And should have a {difficulty} difficulty level"
       )
+      .setPersonalization({ language: config.lang })
       .setRequirements();
 
     const format = quizParser.getFormatInstructions();
@@ -112,7 +114,8 @@ export async function genQuiz(
 export async function gradeQuiz(
   subject: string,
   difficulty: QuizDifficulty,
-  data: Questions[]
+  data: Questions[],
+  lang: Languages
 ): Promise<GradeQuizResponseType | undefined> {
   try {
     const prompt = new PromptBuilder()
@@ -120,6 +123,7 @@ export async function gradeQuiz(
       .setInstructions(
         "Grade the following quiz. Determine whether the student got each question correct."
       )
+      .setPersonalization({ language: lang })
       .setRelevance(
         "The student has just completed a quiz with a {difficulty} difficulty rating. Here are their results: {results}"
       )
@@ -173,7 +177,8 @@ export async function genReviewNotes(
     difficulty: QuizDifficulty;
     score: number;
   },
-  name: string
+  name: string,
+  lang: Languages
 ): Promise<string | undefined> {
   try {
     const prompt = new PromptBuilder()
@@ -191,11 +196,10 @@ export async function genReviewNotes(
         "The review notes MUST be written in markdown format including latex math expressions if applicable."
       )
       .setRequirements("Should contain no more than 500 words.")
-      .setPersonalization({ name, teacher: "Brainwave" })
-      .build();
+      .setPersonalization({ name, teacher: "Brainwave", language: lang });
 
     const promptTemplate = new PromptTemplate({
-      template: prompt,
+      template: prompt.build(),
       inputVariables: ["subject", "subtopic", "difficulty", "score", "results"],
     });
 

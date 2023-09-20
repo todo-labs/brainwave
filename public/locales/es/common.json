@@ -1,56 +1,157 @@
 {
-  "defaultHome": {
-    "loading": {
-      "title": "Cargando Recordatorios...",
-      "message": "Estamos buscando tus recordatorios ahora. Esto solo debería tomar unos segundos."
+  "appName": "Brainwave",
+  "landing": {
+    "devtagline": {
+      "pre": "Enciende tu",
+      "post": "Inteligencia"
     },
-    "error": {
-      "title": "¡Vaya!",
-      "message": "Parece que algo salió mal al intentar buscar tus recordatorios. No te preocupes, lo solucionaremos.",
-      "btn": "Volver atrás"
+    "title": "Preparación SAT de IA",
+    "desc": "Presentamos Brainwave: la plataforma de cuestionarios definitiva para estudiantes. Realiza cuestionarios sobre tus materias favoritas, a tu nivel de dificultad deseado. Construye tu conocimiento y gana insignias para mostrar tus habilidades. Brainwave es la herramienta perfecta para estudiar para el SAT.",
+    "getStarted": "Empezar",
+    "howItWorks": "Cómo Funciona"
+  },
+  "login": {
+    "title": "Inicia sesión en tu cuenta",
+    "subheading": "Ingresa tu correo electrónico a continuación para crear tu cuenta",
+    "description": "Al hacer clic en continuar, aceptas nuestros",
+    "and": "y",
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad"
+  },
+  "verifyEmail": {
+    "title": "Verifica tu Correo Electrónico",
+    "desc": "Hemos enviado un enlace de verificación a tu dirección de correo electrónico. Por favor, haz clic en el enlace para completar la configuración de tu cuenta.",
+    "resend": "Reenviar Correo Electrónico",
+    "goBack": "Volver"
+  },
+  "home": {
+    "tabs": {
+      "pickAnExam": "Elige un examen",
+      "config": "Configuración",
+      "quiz": "Cuestionario",
+      "results": "Resultados"
     },
-    "empty": {
-      "title": "No hay recordatorios disponibles",
-      "message": "No tienes recordatorios disponibles. ¡Crea uno ahora!",
-      "btn": "Crear recordatorio"
+    "sidebar": {
+      "math": "Matemáticas",
+      "history": "Historia",
+      "science": "Ciencias"
+    },
+    "pickAnExam": {
+      "error": {
+        "title": "Error",
+        "message": "Hubo un error al obtener nuestros temas. Por favor, inténtalo de nuevo"
+      },
+      "comingSoon": {
+        "title": "Próximamente",
+        "message": "Todavía estamos trabajando en agregar más temas. Por favor, vuelve en unos días."
+      },
+      "title": "Elige tu tema {{topic}}",
+      "desc": "Selecciona un subtema para comenzar tu examen."
+    },
+    "config": {
+      "title": "Creemos tu examen",
+      "desc": "¿En qué área tienes problemas?",
+      "difficulty": "Dificultad",
+      "questions": "Preguntas",
+      "questionDesc": "¿Cuántas preguntas te gustaría resolver en esta sesión?",
+      "notes": "Notas",
+      "subtopics": "Subtemas",
+      "notesDesc": "Utilizaremos estas notas en nuestra solicitud para crear tu examen.",
+      "generating": "Generando Examen",
+      "submit": "Enviar {{num}} créditos"
+    },
+    "pastExams": {
+      "title": "Exámenes Anteriores",
+      "error": {
+        "title": "Error",
+        "message": "Hubo un error al obtener tus exámenes anteriores. Por favor, inténtalo de nuevo"
+      },
+      "empty": {
+        "title": {
+          "pre": "No has tomado ningún",
+          "post": "examen"
+        },
+        "message": "No has tomado ningún examen sobre este tema. Un poco extraño, pero cada uno con sus gustos."
+      }
+    },
+    "exam": {
+      "grade": "Calificando Examen",
+      "submit": "Enviar"
+    },
+    "results": {
+      "loading": {
+        "title": "Cargando Resultados",
+        "message": "Estamos obteniendo tus resultados. Por favor, espera."
+      },
+      "error": {
+        "title": "Error",
+        "message": "Hubo un error al obtener tus resultados. Por favor, inténtalo de nuevo",
+        "btn": "Reintentar"
+      }
     }
   },
-  "event": "Evento",
-  "filter": "Filtrar",
-  "newEvent": "Nuevo evento",
-  "login": "Iniciar sesión",
-  "welcomeBack": "¡Bienvenido de nuevo, {name}!",
-  "createReminder": "Crear recordatorio",
-  "nav": {
-    "features": "Características",
-    "pricing": "Precios",
-    "blog": "Blog",
-    "contact": "Contacto",
-    "login": "Iniciar sesión"
+  "userNav": {
+    "logout": {
+      "btn": "Cerrar Sesión",
+      "title": "¿Estás seguro de que quieres cerrar sesión?",
+      "message": "Cerrarás tu cuenta y no podrás acceder a ella hasta que vuelvas a iniciar sesión."
+    },
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "dashboard": "Tablero",
+    "credits": "Créditos",
+    "statistics": "Estadísticas"
   },
-  "hero": {
-    "introducing": "Presentamos",
-    "title": "Startup de recordatorios de notificación",
-    "description": "Nuestra plataforma permite a los usuarios crear recordatorios de notificación personalizados para todas sus tareas importantes, asegurando que nunca se pierdan un plazo límite."
+  "continue": "Continuar",
+  "cancel": "Cancelar",
+  "profile": {
+    "title": "Perfil",
+    "message": "Actualiza tu información de perfil",
+    "name": {
+      "title": "Nombre",
+      "placeholder": "Ingresa tu nombre",
+      "desc": "Tu nombre se usará para personalizar tu experiencia"
+    },
+    "language": {
+      "title": "Idioma",
+      "desc": "Selecciona tu idioma preferido",
+      "empty": "No hay idiomas disponibles"
+    },
+    "update": "Actualizar Perfil"
   },
-  "features": {
-    "title": "Características",
-    "easyToUseInterface": "Interfaz fácil de usar",
-    "easyToUseInterfaceDescription": "Nuestra plataforma está diseñada para ser intuitiva y fácil de usar, lo que permite a los usuarios crear recordatorios en segundos.",
-    "customizableReminderSettings": "Configuración de recordatorios personalizables",
-    "customizableReminderSettingsDescription": "Los usuarios pueden personalizar la configuración de sus recordatorios para adaptarse a sus necesidades, incluida la posibilidad de establecer la frecuencia de recordatorio y el tipo de notificación.",
-    "calendarIntegration": "Integración con el calendario",
-    "calendarIntegrationDescription": "Los usuarios pueden integrar su calendario con nuestra plataforma, lo que les permite crear recordatorios para sus eventos de calendario.",
-    "realTimeNotifications": "Notificaciones en tiempo real",
-    "realTimeNotificationsDescription": "Los usuarios recibirán notificaciones en tiempo real para sus recordatorios, asegurando que nunca se pierdan un plazo límite.",
-    "secureAndPrivate": "Seguro y privado",
-    "secureAndPrivateDescription": "Nuestra plataforma es segura y privada, lo que garantiza que todos los datos del usuario estén protegidos en todo momento."
+  "settings": {
+    "title": "Configuración",
+    "message": "Actualiza la configuración de tu cuenta",
+    "theme": {
+      "title": "Tema",
+      "desc": "Selecciona tu tema preferido",
+      "light": "Claro",
+      "dark": "Oscuro"
+    },
+    "update": "Actualizar Configuración"
   },
-  "footer": {
-    "copyright": "© {year} Startup de recordatorios de notificación. Todos los derechos reservados.",
-    "address": "1234 Nombre de la calle, Ciudad, País",
-    "privacyPolicy": "Política de privacidad",
-    "termsOfService": "Términos de servicio",
-    "contactUs": "Contáctenos"
+  "statistics": {
+    "title": "Estadísticas",
+    "message": "Consulta tus estadísticas de exámenes",
+    "levels": {
+      "beginner": "Principiante",
+      "novice": "Novato",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado",
+      "expert": "Experto",
+      "unclassified": "Sin Clasificar"
+    },
+    "points": "Puntos",
+    "avgScore": "Puntuación Promedio",
+    "uniqueTopics": "Temas Únicos",
+    "totalExams": "Total de Exámenes"
+  },
+  "quizBreakdown": "Desglose del Cuestionario",
+  "userSidebar": {
+    "home": "Inicio",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "statistics": "Estadísticas",
+    "Dashboard": "Tablero"
   }
 }

@@ -1,8 +1,14 @@
-import type { NextPage } from "next";
+import type {
+  NextPage,
+  InferGetServerSidePropsType,
+  GetServerSideProps,
+} from "next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useTheme } from "next-themes";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 import {
   Form,
@@ -23,7 +29,9 @@ import { toast } from "@/hooks/useToast";
 
 type Theme = "light" | "dark";
 
-const SettingsPage: NextPage = (props) => {
+const SettingsPage: NextPage = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const { setTheme, theme: currentTheme } = useTheme();
   const appearanceFormSchema = z.object({
     theme: z.enum(["light", "dark"], {
@@ -49,14 +57,15 @@ const SettingsPage: NextPage = (props) => {
     });
   }
 
+  const { t } = useTranslation(["common"]);
+
   return (
     <SettingsLayout>
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium">Settings</h3>
+          <h3 className="text-lg font-medium">{t("settings.title")}</h3>
           <p className="text-sm text-muted-foreground">
-            Update your account settings. Set your preferred language and
-            timezone.
+            {t("settings.message")}
           </p>
         </div>
         <Separator />
@@ -67,9 +76,9 @@ const SettingsPage: NextPage = (props) => {
               name="theme"
               render={({ field }) => (
                 <FormItem className="space-y-1">
-                  <FormLabel>Theme</FormLabel>
+                  <FormLabel>{t("settings.theme.title")}</FormLabel>
                   <FormDescription>
-                    Select the theme for the dashboard.
+                    {t("settings.theme.message")}
                   </FormDescription>
                   <FormMessage />
                   <RadioGroup
@@ -99,7 +108,7 @@ const SettingsPage: NextPage = (props) => {
                           </div>
                         </div>
                         <span className="block w-full p-2 text-center font-normal">
-                          Light
+                          {t("settings.theme.light")}
                         </span>
                       </FormLabel>
                     </FormItem>
@@ -125,7 +134,7 @@ const SettingsPage: NextPage = (props) => {
                           </div>
                         </div>
                         <span className="block w-full p-2 text-center font-normal">
-                          Dark
+                          {t("settings.theme.dark")}
                         </span>
                       </FormLabel>
                     </FormItem>
@@ -133,12 +142,20 @@ const SettingsPage: NextPage = (props) => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Update preferences</Button>
+            <Button type="submit">{t("settings.update")}</Button>
           </form>
         </Form>
       </div>
     </SettingsLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale || "en", ["common"])),
+    },
+  };
 };
 
 export default SettingsPage;

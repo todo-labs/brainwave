@@ -1,25 +1,25 @@
-import { api } from "@/lib/api";
+import { FileEditIcon } from "lucide-react";
+import { Quiz } from "@prisma/client";
+import { useTranslation } from "next-i18next";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+
 import { QuizSkeleton } from "./loading-cards";
-import QuizCard from "./cards/topic-card";
 import Section from "./section";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import useStore from "@/hooks/useStore";
-import { cleanEnum } from "@/lib/utils";
-import { format } from "date-fns";
-import { FileEditIcon } from "lucide-react";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Quiz } from "@prisma/client";
 import { Progress } from "./ui/progress";
+
+import { api } from "@/lib/api";
+import { cleanEnum } from "@/lib/utils";
+import useStore from "@/hooks/useStore";
 
 const PastExamCard = (props: Quiz) => {
   const { setCurrentQuiz, setCurrentStep } = useStore();
@@ -44,9 +44,6 @@ const PastExamCard = (props: Quiz) => {
         <CardDescription className="text-clip text-sm">
           <Progress value={props.score} max={100} />
         </CardDescription>
-        {/* <CardFooter className="float-right text-muted">
-          {format(props.createdAt, "dd MMM yyyy")}
-        </CardFooter> */}
       </CardContent>
     </Card>
   );
@@ -59,8 +56,10 @@ const PastExams = () => {
     topic: currentTopic,
   });
 
+  const { t } = useTranslation(["common"]);
+
   return (
-    <Section title="Past Exams" description="">
+    <Section title={t("home.pastExams.title")} description="">
       <ScrollArea>
         <div className="flex space-x-4 pb-4">
           {isLoading &&
@@ -68,9 +67,9 @@ const PastExams = () => {
           {isError && (
             <Alert variant="destructive">
               <ExclamationTriangleIcon className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
+              <AlertTitle>{t("home.pastExams.error.title")}</AlertTitle>
               <AlertDescription>
-                There was an error fetching your past exams. Please try again
+                {t("home.pastExams.error.message")}
               </AlertDescription>
             </Alert>
           )}
@@ -78,13 +77,12 @@ const PastExams = () => {
             <div className="flex h-[300px] w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed">
               <FileEditIcon className="h-16 w-16 text-muted-foreground/60 dark:text-muted" />
               <h2 className="text-xl font-bold">
-                There are no previous{" "}
+                {t("home.pastExams.empty.title.pre")}{" "}
                 <span className="text-primary">{cleanEnum(currentTopic)}</span>{" "}
-                exams
+                {t("home.pastExams.empty.title.post")}
               </h2>
               <p className="max-w-sm text-center text-base text-muted-foreground">
-                You have not taken any exams for this topic. Kinda weird, but to
-                each their own.
+                {t("home.pastExams.empty.message")}
               </p>
             </div>
           )}

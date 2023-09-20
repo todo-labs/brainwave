@@ -50,6 +50,7 @@ model User {
   credits       Int       @default(15)
   quizzes       Quiz[]
   Report        Report[]
+  lang          String    @default("en")
 }
 
 enum QuestionType {
@@ -99,6 +100,7 @@ model Quiz {
   score       Int            @default(0)
   reviewNotes String         @default("")
   approved    Boolean        @default(false)
+  language    String         @default("en")
 }
 
 enum DocumentType {
