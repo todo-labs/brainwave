@@ -148,7 +148,7 @@ export const quizRouter = createTRPCRouter({
           }),
         };
       } catch (e) {
-        console.log(e);
+        console.error(e);
         if (e instanceof TRPCError) throw e;
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -218,7 +218,7 @@ export const quizRouter = createTRPCRouter({
           data: { score, reviewNotes },
         });
       } catch (e) {
-        console.log(e);
+        console.error(e);
         if (e instanceof TRPCError) throw e;
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -248,7 +248,7 @@ export const quizRouter = createTRPCRouter({
 
         return quiz;
       } catch (e) {
-        console.log(e);
+        console.error(e);
         if (e instanceof TRPCError) throw e;
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
