@@ -117,5 +117,33 @@
       "empty": "No languages available"
     },
     "update": "Update Profile"
-  }
+  },
+  "settings": {
+    "title": "Settings",
+    "message": "Update your account settings",
+    "theme": {
+      "title": "Theme",
+      "desc": "Select your preferred theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "update": "Update Settings"
+  },
+  "statistics": {
+    "title": "Statistics",
+    "message": "View your exam statistics",
+    "levels": {
+      "beginner": "Beginner",
+      "novice": "Novice",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert",
+      "unclassified": "Unclassified"
+    },
+    "points": "Points",
+    "avgScore": "Average Score",
+    "uniqueTopics": "Unique Topics",
+    "totalExams": "Total Exams"
+  },
+  "quizBreakdown": "Quiz Breakdown"
 }
