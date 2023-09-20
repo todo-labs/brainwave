@@ -32,8 +32,8 @@ const PickATopic = () => {
 
   return (
     <Section
-      title={`Choose your ${cleanTopic} Exam`}
-      description="Select a subtopic to start your exam."
+      title={t("home.pickAnExam.title", { topic: cleanTopic })}
+      description={t("home.pickAnExam.desc")}
     >
       <ScrollArea>
         <div className="flex space-x-4 pb-4">

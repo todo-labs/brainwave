@@ -1,6 +1,15 @@
-import { BarChart2Icon, InfinityIcon, LayoutDashboardIcon, LogOut, PlusCircle, Settings, User } from "lucide-react";
+import {
+  BarChart2Icon,
+  InfinityIcon,
+  LayoutDashboardIcon,
+  LogOut,
+  PlusCircle,
+  Settings,
+  User,
+} from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import router from "next/router";
+import { useTranslation } from "next-i18next";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -53,6 +62,8 @@ export function UserNav() {
     await signOut();
   };
 
+  const { t } = useTranslation(["common"]);
+
   if (!session) return null;
 
   return (
@@ -79,7 +90,7 @@ export function UserNav() {
                   <Paragraph className="font-bold text-primary">
                     <InfinityIcon className="h-4 w-4" />
                   </Paragraph>
-                  <Paragraph tx="credits" className="capitalize" />
+                  <Paragraph className="capitalize">{t("userNav.credits")}</Paragraph>
                 </div>
               ) : (
                 profileQuery.data?.credits && (
@@ -87,7 +98,9 @@ export function UserNav() {
                     <div className="font-bold text-primary">
                       <Paragraph>{profileQuery.data?.credits}</Paragraph>
                     </div>
-                    <Paragraph tx="credits" className="capitalize" />
+                    <Paragraph className="capitalize">
+                      {t("userNav.credits")}
+                    </Paragraph>
                   </div>
                 )
               )}
@@ -97,20 +110,20 @@ export function UserNav() {
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => void router.push(`/profile`)}>
               <User className="mr-2 h-4 w-4" />
-              <p className="capitalize">Profile</p>
+              <p className="capitalize">{t("userNav.profile")}</p>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => void router.push(`/settings`)}>
               <Settings className="mr-2 h-4 w-4" />
-              <p className="capitalize">Settings</p>
+              <p className="capitalize">{t("userNav.settings")}</p>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => void router.push(`/statistics`)}>
               <BarChart2Icon className="mr-2 h-4 w-4" />
-              <p className="capitalize">Statistics</p>
+              <p className="capitalize">{t("userNav.statistics")}</p>
             </DropdownMenuItem>
             {session.user.role === Role.ADMIN && (
               <DropdownMenuItem onClick={() => void router.push(`/dashboard`)}>
                 <LayoutDashboardIcon className="mr-2 h-4 w-4" />
-                <p className="capitalize">Dashboard</p>
+                <p className="capitalize">{t("userNav.dashboard")}</p>
               </DropdownMenuItem>
             )}
           </DropdownMenuGroup>
@@ -119,23 +132,22 @@ export function UserNav() {
             <AlertDialogTrigger asChild>
               <Button variant="link">
                 <LogOut className="mr-2 h-4 w-4" />
-                Logout
+                {t("userNav.logout.btn")}
               </Button>
             </AlertDialogTrigger>
           </DropdownMenuItem>
         </DropdownMenuContent>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("userNav.logout.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              {t("userNav.logout.message")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
             <AlertDialogAction onClick={handleSignOut}>
-              Continue
+              {t("continue")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

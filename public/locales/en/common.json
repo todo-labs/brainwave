@@ -31,6 +31,11 @@
       "quiz": "Quiz",
       "results": "Results"
     },
+    "sidebar": {
+      "math": "Math",
+      "history": "History",
+      "science": "Science"
+    },
     "pickAnExam": {
       "error": {
         "title": "Error",
@@ -39,8 +44,63 @@
       "comingSoon": {
         "title": "Coming Soon",
         "message": "We are still working on adding more topics. Please check back in a few days."
+      },
+      "title": "Choose your {topic} topic",
+      "desc": "Select a subtopic to start your exam."
+    },
+    "config": {
+      "title": "Lets build your exam",
+      "desc": "What area are you having problems with?",
+      "difficulty": "Difficulty",
+      "questions": "Questions",
+      "questionDesc": "How many questions would you like to solve in this session.",
+      "notes": "Notes",
+      "notesDesc": "We will use these notes in our prompt to build your exam.",
+      "generating": "Generating Exam",
+      "submit": "Submit {num} credits"
+    },
+    "pastExams": {
+      "title": "Past Exams",
+      "error": {
+        "title": "Error",
+        "message": "There was an error fetching your past exams. Please try again"
+      },
+      "empty": {
+        "title": {
+          "pre": "You have not taken any",
+          "post": "exams"
+        },
+        "message": "You have not taken any exams for this topic. Kinda weird, but to each their own."
+      }
+    },
+    "exam": {
+      "grade": "Grading Exam",
+      "submit": "Submit"
+    },
+    "results": {
+      "loading": {
+        "title": "Loading Results",
+        "message": "We are fetching your results. Please wait."
+      },
+      "error": {
+        "title": "Error",
+        "message": "There was an error fetching your results. Please try again",
+        "btn": "Retry"
       }
     }
   },
+  "userNav": {
+    "logout": {
+      "btn": "Logout",
+      "title": "Are you sure you want to logout?",
+      "message": "You will be logged out of your account and will not be able to access your account until you login again."
+    },
+    "profile": "Profile",
+    "settings": "Settings",
+    "dashboard": "Dashboard",
+    "credits": "Credits",
+    "statistics": "Statistics"
+  },
   "continue": "Continue",
+  "cancel": "Cancel",
 }

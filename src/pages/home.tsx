@@ -1,4 +1,4 @@
-import type { InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType, InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
@@ -13,16 +13,16 @@ import Exam from "@/components/exam";
 
 import useStore from "@/hooks/useStore";
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(context.locale || "en", ["common"])),
     },
   };
-}
+};
 
 export default function Home(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const { currentStep } = useStore();
   const { t } = useTranslation(["common"]);
