@@ -35,6 +35,7 @@ export function LeaderboardTable() {
         Top 5 users who scored the highest on their quizzes in the last 30 days.
       </TableCaption>
       <TableHeader>
+        <h1 className="pb-4 text-2xl font-medium">Leaderboard</h1>
         <TableRow>
           <TableHead className="text-left">User</TableHead>
           <TableHead>Topic</TableHead>
