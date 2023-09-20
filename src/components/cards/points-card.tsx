@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ShareIcon } from "lucide-react";
+import { useTranslation } from "next-i18next";
 
 import {
   Card,
@@ -14,7 +15,6 @@ import { QuizSkeleton } from "../loading-cards";
 
 import { api } from "@/lib/api";
 import { cn } from "@/lib/utils";
-import { useTranslation } from "next-i18next";
 
 type TotalScoreProps = {
   totalScore: number;

@@ -146,5 +146,12 @@
     "uniqueTopics": "Unique Topics",
     "totalExams": "Total Exams"
   },
-  "quizBreakdown": "Quiz Breakdown"
+  "quizBreakdown": "Quiz Breakdown",
+  "userSidebar": {
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "statistics": "Statistics",
+    "Dashboard": "Dashboard"
+  }
 }

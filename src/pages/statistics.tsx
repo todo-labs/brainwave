@@ -1,4 +1,11 @@
-import type { NextPage } from "next";
+import type {
+  GetServerSideProps,
+  NextPage,
+  InferGetServerSidePropsType,
+} from "next";
+import { AwardIcon } from "lucide-react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 import { Separator } from "@/components/ui/separator";
 import SettingsLayout from "@/components/user/sidebar-nav";
@@ -6,19 +13,21 @@ import PointsCard from "@/components/cards/points-card";
 import QuizBreakdown from "@/components/dashboard/quiz-breakdown";
 
 import { api } from "@/lib/api";
-import { AwardIcon, FileEditIcon } from "lucide-react";
-import { cleanEnum } from "@/lib/utils";
 
-const StatisticsPage: NextPage = (props) => {
+const StatisticsPage: NextPage = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const quizBreakdown = api.user.quizBreakdown.useQuery();
+
+  const { t } = useTranslation(["common"]);
 
   return (
     <SettingsLayout>
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium">Statistics</h3>
+          <h3 className="text-lg font-medium">{t("statistics.title")}</h3>
           <p className="text-sm text-muted-foreground">
-            View your statistics and how you compare to other users.
+            {t("statistics.message")}
           </p>
         </div>
         <Separator />
@@ -36,6 +45,14 @@ const StatisticsPage: NextPage = (props) => {
       </div>
     </SettingsLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale || "en", ["common"])),
+    },
+  };
 };
 
 export default StatisticsPage;

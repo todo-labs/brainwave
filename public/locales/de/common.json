@@ -45,7 +45,7 @@
         "title": "Demnächst",
         "message": "Wir arbeiten noch daran, weitere Themen hinzuzufügen. Bitte schauen Sie in ein paar Tagen wieder vorbei."
       },
-      "title": "Wählen Sie Ihr {topic}-Thema aus",
+      "title": "Wählen Sie Ihr {{topic}}-Thema aus",
       "desc": "Wählen Sie ein Unterthema aus, um Ihre Prüfung zu beginnen."
     },
     "config": {
@@ -58,7 +58,7 @@
       "notes": "Notizen",
       "notesDesc": "Wir werden diese Notizen in unserer Anfrage verwenden, um Ihre Prüfung zu erstellen.",
       "generating": "Prüfung wird erstellt",
-      "submit": "{num} Credits übermitteln"
+      "submit": "{{num}} Credits übermitteln"
     },
     "pastExams": {
       "title": "Vergangene Prüfungen",
@@ -146,5 +146,12 @@
     "uniqueTopics": "Einzigartige Themen",
     "totalExams": "Gesamtexamen"
   },
-  "quizBreakdown": "Quiz-Aufschlüsselung"
+  "quizBreakdown": "Quiz-Aufschlüsselung",
+  "userSidebar": {
+    "home": "Home",
+    "profile": "Profil",
+    "settings": "Einstellungen",
+    "statistics": "Statistiken",
+    "Dashboard": "Dashboard"
+  },
 }

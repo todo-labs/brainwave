@@ -58,7 +58,7 @@ const Exam = () => {
         <Timer completed={completed} />
       </div>
       <Separator className="my-4" />
-      <ScrollArea className="sm:h-[300px] md:h-[500px] xl:h-[800px]">
+      <ScrollArea className="h-[300px] md:h-[500px] xxl:h-[800px]">
         <div className="flex-col space-y-4">
           {!!currentQuiz &&
             currentQuiz.questions?.map((q, index) => (

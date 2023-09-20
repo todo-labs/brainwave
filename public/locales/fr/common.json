@@ -45,7 +45,7 @@
         "title": "Prochainement",
         "message": "Nous travaillons encore sur l'ajout de plus de sujets. Revenez dans quelques jours."
       },
-      "title": "Choisissez votre sujet {topic}",
+      "title": "Choisissez votre sujet {{topic}}",
       "desc": "Sélectionnez un sous-sujet pour commencer votre examen."
     },
     "config": {
@@ -58,7 +58,7 @@
       "subtopics": "Sous-sujets",
       "notesDesc": "Nous utiliserons ces notes dans notre demande pour créer votre examen.",
       "generating": "Génération de l'examen",
-      "submit": "Soumettre {num} crédits"
+      "submit": "Soumettre {{num}} crédits"
     },
     "pastExams": {
       "title": "Examens passés",
@@ -146,5 +146,12 @@
     "uniqueTopics": "Sujets Uniques",
     "totalExams": "Total des Examens"
   },
-  "quizBreakdown": "Détail du Quiz"
+  "quizBreakdown": "Détail du Quiz",
+  "userSidebar": {
+    "home": "Accueil",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "statistics": "Statistiques",
+    "Dashboard": "Tableau de bord"
+  }
 }

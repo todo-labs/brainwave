@@ -91,8 +91,8 @@ export function CreateConfig() {
       <ScrollArea className="h-fit w-full">
         <Card>
           <CardHeader>
-            <CardTitle>{t("config.title")}</CardTitle>
-            <CardDescription>{t("config.desc")}</CardDescription>
+            <CardTitle>{t("home.config.title")}</CardTitle>
+            <CardDescription>{t("home.config.desc")}</CardDescription>
           </CardHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -103,7 +103,7 @@ export function CreateConfig() {
                     name="difficulty"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("config.difficulty")}</FormLabel>
+                        <FormLabel>{t("home.config.difficulty")}</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -134,7 +134,7 @@ export function CreateConfig() {
                     name="subtopic"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("config.subtopic")}</FormLabel>
+                        <FormLabel>{t("home.config.subtopic")}</FormLabel>
                         <Input {...field} disabled={!!currentSubTopic} />
                         <FormMessage />
                       </FormItem>
@@ -146,13 +146,13 @@ export function CreateConfig() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel>
-                        {t("config.questions")}
+                        {t("home.config.questions")}
                         <span className="text-gray-500">
                           {`   (${field.value} questions)`}
                         </span>
                       </FormLabel>
                       <FormDescription>
-                        {t("config.questionsDesc")}
+                        {t("home.config.questionDesc")}
                       </FormDescription>
                       <FormControl>
                         <Slider
@@ -172,7 +172,7 @@ export function CreateConfig() {
                   name="notes"
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
-                      <FormLabel>{t("config.notes")}</FormLabel>
+                      <FormLabel>{t("home.config.notes")}</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Enter your notes here"
@@ -180,7 +180,9 @@ export function CreateConfig() {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>{t("config.notesDesc")}</FormDescription>
+                      <FormDescription>
+                        {t("home.config.notesDesc")}
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -196,10 +198,12 @@ export function CreateConfig() {
                   {createQuizMutation.isLoading ? (
                     <>
                       <Loader2Icon className="animate-spin" />
-                      <span className="ml-2">{t("config.generating")}</span>
+                      <span className="ml-2">
+                        {t("home.config.generating")}
+                      </span>
                     </>
                   ) : (
-                    t("config.submit", {
+                    t("home.config.submit", {
                       num:
                         session?.user.role === Role.ADMIN
                           ? 0

@@ -1,151 +1,157 @@
 {
-    "appName": "Brainwave",
-    "landing": {
-      "devtagline": {
-        "pre": "Enciende tu",
-        "post": "Inteligencia"
-      },
-      "title": "Preparación SAT de IA",
-      "desc": "Presentamos Brainwave: la plataforma de cuestionarios definitiva para estudiantes. Realiza cuestionarios sobre tus materias favoritas, a tu nivel de dificultad deseado. Construye tu conocimiento y gana insignias para mostrar tus habilidades. Brainwave es la herramienta perfecta para estudiar para el SAT.",
-      "getStarted": "Empezar",
-      "howItWorks": "Cómo Funciona"
+  "appName": "Brainwave",
+  "landing": {
+    "devtagline": {
+      "pre": "Enciende tu",
+      "post": "Inteligencia"
     },
-    "login": {
-      "title": "Inicia sesión en tu cuenta",
-      "subheading": "Ingresa tu correo electrónico a continuación para crear tu cuenta",
-      "description": "Al hacer clic en continuar, aceptas nuestros",
-      "and": "y",
-      "terms": "Términos de Servicio",
-      "privacy": "Política de Privacidad"
+    "title": "Preparación SAT de IA",
+    "desc": "Presentamos Brainwave: la plataforma de cuestionarios definitiva para estudiantes. Realiza cuestionarios sobre tus materias favoritas, a tu nivel de dificultad deseado. Construye tu conocimiento y gana insignias para mostrar tus habilidades. Brainwave es la herramienta perfecta para estudiar para el SAT.",
+    "getStarted": "Empezar",
+    "howItWorks": "Cómo Funciona"
+  },
+  "login": {
+    "title": "Inicia sesión en tu cuenta",
+    "subheading": "Ingresa tu correo electrónico a continuación para crear tu cuenta",
+    "description": "Al hacer clic en continuar, aceptas nuestros",
+    "and": "y",
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad"
+  },
+  "verifyEmail": {
+    "title": "Verifica tu Correo Electrónico",
+    "desc": "Hemos enviado un enlace de verificación a tu dirección de correo electrónico. Por favor, haz clic en el enlace para completar la configuración de tu cuenta.",
+    "resend": "Reenviar Correo Electrónico",
+    "goBack": "Volver"
+  },
+  "home": {
+    "tabs": {
+      "pickAnExam": "Elige un examen",
+      "config": "Configuración",
+      "quiz": "Cuestionario",
+      "results": "Resultados"
     },
-    "verifyEmail": {
-      "title": "Verifica tu Correo Electrónico",
-      "desc": "Hemos enviado un enlace de verificación a tu dirección de correo electrónico. Por favor, haz clic en el enlace para completar la configuración de tu cuenta.",
-      "resend": "Reenviar Correo Electrónico",
-      "goBack": "Volver"
+    "sidebar": {
+      "math": "Matemáticas",
+      "history": "Historia",
+      "science": "Ciencias"
     },
-    "home": {
-      "tabs": {
-        "pickAnExam": "Elige un examen",
-        "config": "Configuración",
-        "quiz": "Cuestionario",
-        "results": "Resultados"
+    "pickAnExam": {
+      "error": {
+        "title": "Error",
+        "message": "Hubo un error al obtener nuestros temas. Por favor, inténtalo de nuevo"
       },
-      "sidebar": {
-        "math": "Matemáticas",
-        "history": "Historia",
-        "science": "Ciencias"
+      "comingSoon": {
+        "title": "Próximamente",
+        "message": "Todavía estamos trabajando en agregar más temas. Por favor, vuelve en unos días."
       },
-      "pickAnExam": {
-        "error": {
-          "title": "Error",
-          "message": "Hubo un error al obtener nuestros temas. Por favor, inténtalo de nuevo"
+      "title": "Elige tu tema {{topic}}",
+      "desc": "Selecciona un subtema para comenzar tu examen."
+    },
+    "config": {
+      "title": "Creemos tu examen",
+      "desc": "¿En qué área tienes problemas?",
+      "difficulty": "Dificultad",
+      "questions": "Preguntas",
+      "questionDesc": "¿Cuántas preguntas te gustaría resolver en esta sesión?",
+      "notes": "Notas",
+      "subtopics": "Subtemas",
+      "notesDesc": "Utilizaremos estas notas en nuestra solicitud para crear tu examen.",
+      "generating": "Generando Examen",
+      "submit": "Enviar {{num}} créditos"
+    },
+    "pastExams": {
+      "title": "Exámenes Anteriores",
+      "error": {
+        "title": "Error",
+        "message": "Hubo un error al obtener tus exámenes anteriores. Por favor, inténtalo de nuevo"
+      },
+      "empty": {
+        "title": {
+          "pre": "No has tomado ningún",
+          "post": "examen"
         },
-        "comingSoon": {
-          "title": "Próximamente",
-          "message": "Todavía estamos trabajando en agregar más temas. Por favor, vuelve en unos días."
-        },
-        "title": "Elige tu tema {{topic}}",
-        "desc": "Selecciona un subtema para comenzar tu examen."
-      },
-      "config": {
-        "title": "Creemos tu examen",
-        "desc": "¿En qué área tienes problemas?",
-        "difficulty": "Dificultad",
-        "questions": "Preguntas",
-        "questionDesc": "¿Cuántas preguntas te gustaría resolver en esta sesión?",
-        "notes": "Notas",
-        "subtopics": "Subtemas",
-        "notesDesc": "Utilizaremos estas notas en nuestra solicitud para crear tu examen.",
-        "generating": "Generando Examen",
-        "submit": "Enviar {num} créditos"
-      },
-      "pastExams": {
-        "title": "Exámenes Anteriores",
-        "error": {
-          "title": "Error",
-          "message": "Hubo un error al obtener tus exámenes anteriores. Por favor, inténtalo de nuevo"
-        },
-        "empty": {
-          "title": {
-            "pre": "No has tomado ningún",
-            "post": "examen"
-          },
-          "message": "No has tomado ningún examen sobre este tema. Un poco extraño, pero cada uno con sus gustos."
-        }
-      },
-      "exam": {
-        "grade": "Calificando Examen",
-        "submit": "Enviar"
-      },
-      "results": {
-        "loading": {
-          "title": "Cargando Resultados",
-          "message": "Estamos obteniendo tus resultados. Por favor, espera."
-        },
-        "error": {
-          "title": "Error",
-          "message": "Hubo un error al obtener tus resultados. Por favor, inténtalo de nuevo",
-          "btn": "Reintentar"
-        }
+        "message": "No has tomado ningún examen sobre este tema. Un poco extraño, pero cada uno con sus gustos."
       }
     },
-    "userNav": {
-      "logout": {
-        "btn": "Cerrar Sesión",
-        "title": "¿Estás seguro de que quieres cerrar sesión?",
-        "message": "Cerrarás tu cuenta y no podrás acceder a ella hasta que vuelvas a iniciar sesión."
-      },
-      "profile": "Perfil",
-      "settings": "Configuración",
-      "dashboard": "Tablero",
-      "credits": "Créditos",
-      "statistics": "Estadísticas"
+    "exam": {
+      "grade": "Calificando Examen",
+      "submit": "Enviar"
     },
-    "continue": "Continuar",
-    "cancel": "Cancelar",
-    "profile": {
-      "title": "Perfil",
-      "message": "Actualiza tu información de perfil",
-      "name": {
-        "title": "Nombre",
-        "placeholder": "Ingresa tu nombre",
-        "desc": "Tu nombre se usará para personalizar tu experiencia"
+    "results": {
+      "loading": {
+        "title": "Cargando Resultados",
+        "message": "Estamos obteniendo tus resultados. Por favor, espera."
       },
-      "language": {
-        "title": "Idioma",
-        "desc": "Selecciona tu idioma preferido",
-        "empty": "No hay idiomas disponibles"
-      },
-      "update": "Actualizar Perfil"
+      "error": {
+        "title": "Error",
+        "message": "Hubo un error al obtener tus resultados. Por favor, inténtalo de nuevo",
+        "btn": "Reintentar"
+      }
+    }
+  },
+  "userNav": {
+    "logout": {
+      "btn": "Cerrar Sesión",
+      "title": "¿Estás seguro de que quieres cerrar sesión?",
+      "message": "Cerrarás tu cuenta y no podrás acceder a ella hasta que vuelvas a iniciar sesión."
     },
-    "settings": {
-      "title": "Configuración",
-      "message": "Actualiza la configuración de tu cuenta",
-      "theme": {
-        "title": "Tema",
-        "desc": "Selecciona tu tema preferido",
-        "light": "Claro",
-        "dark": "Oscuro"
-      },
-      "update": "Actualizar Configuración"
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "dashboard": "Tablero",
+    "credits": "Créditos",
+    "statistics": "Estadísticas"
+  },
+  "continue": "Continuar",
+  "cancel": "Cancelar",
+  "profile": {
+    "title": "Perfil",
+    "message": "Actualiza tu información de perfil",
+    "name": {
+      "title": "Nombre",
+      "placeholder": "Ingresa tu nombre",
+      "desc": "Tu nombre se usará para personalizar tu experiencia"
     },
-    "statistics": {
-      "title": "Estadísticas",
-      "message": "Consulta tus estadísticas de exámenes",
-      "levels": {
-        "beginner": "Principiante",
-        "novice": "Novato",
-        "intermediate": "Intermedio",
-        "advanced": "Avanzado",
-        "expert": "Experto",
-        "unclassified": "Sin Clasificar"
-      },
-      "points": "Puntos",
-      "avgScore": "Puntuación Promedio",
-      "uniqueTopics": "Temas Únicos",
-      "totalExams": "Total de Exámenes"
+    "language": {
+      "title": "Idioma",
+      "desc": "Selecciona tu idioma preferido",
+      "empty": "No hay idiomas disponibles"
     },
-    "quizBreakdown": "Desglose del Cuestionario"
+    "update": "Actualizar Perfil"
+  },
+  "settings": {
+    "title": "Configuración",
+    "message": "Actualiza la configuración de tu cuenta",
+    "theme": {
+      "title": "Tema",
+      "desc": "Selecciona tu tema preferido",
+      "light": "Claro",
+      "dark": "Oscuro"
+    },
+    "update": "Actualizar Configuración"
+  },
+  "statistics": {
+    "title": "Estadísticas",
+    "message": "Consulta tus estadísticas de exámenes",
+    "levels": {
+      "beginner": "Principiante",
+      "novice": "Novato",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado",
+      "expert": "Experto",
+      "unclassified": "Sin Clasificar"
+    },
+    "points": "Puntos",
+    "avgScore": "Puntuación Promedio",
+    "uniqueTopics": "Temas Únicos",
+    "totalExams": "Total de Exámenes"
+  },
+  "quizBreakdown": "Desglose del Cuestionario",
+  "userSidebar": {
+    "home": "Inicio",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "statistics": "Estadísticas",
+    "Dashboard": "Tablero"
   }
-  
+}

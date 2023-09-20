@@ -90,14 +90,16 @@ export function UserNav() {
                   <Paragraph className="font-bold text-primary">
                     <InfinityIcon className="h-4 w-4" />
                   </Paragraph>
-                  <Paragraph className="capitalize">{t("userNav.credits")}</Paragraph>
+                  <Paragraph className="capitalize">
+                    {t("userNav.credits")}
+                  </Paragraph>
                 </div>
               ) : (
                 profileQuery.data?.credits && (
                   <div className="flex items-center space-x-2">
-                    <div className="font-bold text-primary">
-                      <Paragraph>{profileQuery.data?.credits}</Paragraph>
-                    </div>
+                    <Paragraph className="font-bold text-primary">
+                      {profileQuery.data?.credits}
+                    </Paragraph>
                     <Paragraph className="capitalize">
                       {t("userNav.credits")}
                     </Paragraph>
