@@ -103,7 +103,7 @@ const PointsCard = () => {
   if (!data) return <QuizSkeleton />;
 
   return (
-    <Card className="w-[400px]">
+    <Card className="xl:w-[600px] w-[400px]">
       <CardHeader className="flex flex-row items-center justify-between">
         <Title
           isLoading={isLoading}
