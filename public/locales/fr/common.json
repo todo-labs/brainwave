@@ -1,107 +1,149 @@
 {
-    "appName": "Brainwave",
-    "landing": {
-      "devtagline": {
-        "pre": "Allumez votre",
-        "post": "Intelligence"
-      },
-      "title": "Préparation au SAT par l'IA",
-      "desc": "Découvrez Brainwave : la plateforme de quiz ultime pour les apprenants. Faites des quiz sur vos matières préférées, à votre niveau de difficulté souhaité. Acquérez des connaissances et gagnez des badges pour mettre en valeur vos compétences. Brainwave est l'outil parfait pour étudier pour le SAT.",
-      "getStarted": "Commencer",
-      "howItWorks": "Comment ça marche"
+  "appName": "Brainwave",
+  "landing": {
+    "devtagline": {
+      "pre": "Allumez votre",
+      "post": "Intelligence"
     },
-    "login": {
-      "title": "Connectez-vous à votre compte",
-      "subheading": "Entrez votre adresse e-mail ci-dessous pour créer votre compte",
-      "description": "En cliquant sur continuer, vous acceptez nos",
-      "and": "et",
-      "terms": "Conditions d'utilisation",
-      "privacy": "Politique de confidentialité"
+    "title": "Préparation au SAT par l'IA",
+    "desc": "Découvrez Brainwave : la plateforme de quiz ultime pour les apprenants. Faites des quiz sur vos matières préférées, à votre niveau de difficulté souhaité. Acquérez des connaissances et gagnez des badges pour mettre en valeur vos compétences. Brainwave est l'outil parfait pour étudier pour le SAT.",
+    "getStarted": "Commencer",
+    "howItWorks": "Comment ça marche"
+  },
+  "login": {
+    "title": "Connectez-vous à votre compte",
+    "subheading": "Entrez votre adresse e-mail ci-dessous pour créer votre compte",
+    "description": "En cliquant sur continuer, vous acceptez nos",
+    "and": "et",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité"
+  },
+  "verifyEmail": {
+    "title": "Vérifiez votre e-mail",
+    "desc": "Nous avons envoyé un lien de vérification à votre adresse e-mail. Veuillez cliquer sur le lien pour finaliser la configuration de votre compte.",
+    "resend": "Renvoyer l'e-mail",
+    "goBack": "Retour"
+  },
+  "home": {
+    "tabs": {
+      "pickAnExam": "Choisissez un examen",
+      "config": "Configuration",
+      "quiz": "Quiz",
+      "results": "Résultats"
     },
-    "verifyEmail": {
-      "title": "Vérifiez votre e-mail",
-      "desc": "Nous avons envoyé un lien de vérification à votre adresse e-mail. Veuillez cliquer sur le lien pour finaliser la configuration de votre compte.",
-      "resend": "Renvoyer l'e-mail",
-      "goBack": "Retour"
+    "sidebar": {
+      "math": "Mathématiques",
+      "history": "Histoire",
+      "science": "Science"
     },
-    "home": {
-      "tabs": {
-        "pickAnExam": "Choisissez un examen",
-        "config": "Configuration",
-        "quiz": "Quiz",
-        "results": "Résultats"
+    "pickAnExam": {
+      "error": {
+        "title": "Erreur",
+        "message": "Une erreur s'est produite lors de la récupération de nos sujets. Veuillez réessayer"
       },
-      "sidebar": {
-        "math": "Mathématiques",
-        "history": "Histoire",
-        "science": "Science"
+      "comingSoon": {
+        "title": "Prochainement",
+        "message": "Nous travaillons encore sur l'ajout de plus de sujets. Revenez dans quelques jours."
       },
-      "pickAnExam": {
-        "error": {
-          "title": "Erreur",
-          "message": "Une erreur s'est produite lors de la récupération de nos sujets. Veuillez réessayer"
+      "title": "Choisissez votre sujet {topic}",
+      "desc": "Sélectionnez un sous-sujet pour commencer votre examen."
+    },
+    "config": {
+      "title": "Créons votre examen",
+      "desc": "Dans quelle domaine avez-vous des problèmes ?",
+      "difficulty": "Difficulté",
+      "questions": "Questions",
+      "questionDesc": "Combien de questions souhaitez-vous résoudre lors de cette session ?",
+      "notes": "Notes",
+      "notesDesc": "Nous utiliserons ces notes dans notre demande pour créer votre examen.",
+      "generating": "Génération de l'examen",
+      "submit": "Soumettre {num} crédits"
+    },
+    "pastExams": {
+      "title": "Examens passés",
+      "error": {
+        "title": "Erreur",
+        "message": "Une erreur s'est produite lors de la récupération de vos examens passés. Veuillez réessayer"
+      },
+      "empty": {
+        "title": {
+          "pre": "Vous n'avez pas passé d'",
+          "post": "examen"
         },
-        "comingSoon": {
-          "title": "Prochainement",
-          "message": "Nous travaillons encore sur l'ajout de plus de sujets. Revenez dans quelques jours."
-        },
-        "title": "Choisissez votre sujet {topic}",
-        "desc": "Sélectionnez un sous-sujet pour commencer votre examen."
-      },
-      "config": {
-        "title": "Créons votre examen",
-        "desc": "Dans quelle domaine avez-vous des problèmes ?",
-        "difficulty": "Difficulté",
-        "questions": "Questions",
-        "questionDesc": "Combien de questions souhaitez-vous résoudre lors de cette session ?",
-        "notes": "Notes",
-        "notesDesc": "Nous utiliserons ces notes dans notre demande pour créer votre examen.",
-        "generating": "Génération de l'examen",
-        "submit": "Soumettre {num} crédits"
-      },
-      "pastExams": {
-        "title": "Examens passés",
-        "error": {
-          "title": "Erreur",
-          "message": "Une erreur s'est produite lors de la récupération de vos examens passés. Veuillez réessayer"
-        },
-        "empty": {
-          "title": {
-            "pre": "Vous n'avez pas passé d'",
-            "post": "examen"
-          },
-          "message": "Vous n'avez pas passé d'examen sur ce sujet. Un peu étrange, mais chacun ses goûts."
-        }
-      },
-      "exam": {
-        "grade": "Correction de l'examen",
-        "submit": "Soumettre"
-      },
-      "results": {
-        "loading": {
-          "title": "Chargement des résultats",
-          "message": "Nous récupérons vos résultats. Veuillez patienter."
-        },
-        "error": {
-          "title": "Erreur",
-          "message": "Une erreur s'est produite lors de la récupération de vos résultats. Veuillez réessayer",
-          "btn": "Réessayer"
-        }
+        "message": "Vous n'avez pas passé d'examen sur ce sujet. Un peu étrange, mais chacun ses goûts."
       }
     },
-    "userNav": {
-      "logout": {
-        "btn": "Déconnexion",
-        "title": "Êtes-vous sûr de vouloir vous déconnecter ?",
-        "message": "Vous serez déconnecté de votre compte et ne pourrez pas y accéder tant que vous ne vous reconnecterez pas."
-      },
-      "profile": "Profil",
-      "settings": "Paramètres",
-      "dashboard": "Tableau de bord",
-      "credits": "Crédits",
-      "statistics": "Statistiques"
+    "exam": {
+      "grade": "Correction de l'examen",
+      "submit": "Soumettre"
     },
-    "continue": "Continuer",
-    "cancel": "Annuler"
-  }
-  
+    "results": {
+      "loading": {
+        "title": "Chargement des résultats",
+        "message": "Nous récupérons vos résultats. Veuillez patienter."
+      },
+      "error": {
+        "title": "Erreur",
+        "message": "Une erreur s'est produite lors de la récupération de vos résultats. Veuillez réessayer",
+        "btn": "Réessayer"
+      }
+    }
+  },
+  "userNav": {
+    "logout": {
+      "btn": "Déconnexion",
+      "title": "Êtes-vous sûr de vouloir vous déconnecter ?",
+      "message": "Vous serez déconnecté de votre compte et ne pourrez pas y accéder tant que vous ne vous reconnecterez pas."
+    },
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "dashboard": "Tableau de bord",
+    "credits": "Crédits",
+    "statistics": "Statistiques"
+  },
+  "continue": "Continuer",
+  "cancel": "Annuler",
+  "profile": {
+    "title": "Profil",
+    "message": "Mettez à jour vos informations de profil",
+    "name": {
+      "title": "Nom",
+      "placeholder": "Entrez votre nom",
+      "desc": "Votre nom sera utilisé pour personnaliser votre expérience"
+    },
+    "language": {
+      "title": "Langue",
+      "desc": "Sélectionnez votre langue préférée",
+      "empty": "Aucune langue disponible"
+    },
+    "update": "Mettre à jour le Profil"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "message": "Mettez à jour les paramètres de votre compte",
+    "theme": {
+      "title": "Thème",
+      "desc": "Sélectionnez votre thème préféré",
+      "light": "Clair",
+      "dark": "Sombre"
+    },
+    "update": "Mettre à jour les Paramètres"
+  },
+  "statistics": {
+    "title": "Statistiques",
+    "message": "Consultez vos statistiques d'examen",
+    "levels": {
+      "beginner": "Débutant",
+      "novice": "Novice",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé",
+      "expert": "Expert",
+      "unclassified": "Non classé"
+    },
+    "points": "Points",
+    "avgScore": "Score Moyen",
+    "uniqueTopics": "Sujets Uniques",
+    "totalExams": "Total des Examens"
+  },
+  "quizBreakdown": "Détail du Quiz"
+}

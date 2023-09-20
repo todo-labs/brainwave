@@ -102,6 +102,49 @@
       "statistics": "Estadísticas"
     },
     "continue": "Continuar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "profile": {
+      "title": "Perfil",
+      "message": "Actualiza tu información de perfil",
+      "name": {
+        "title": "Nombre",
+        "placeholder": "Ingresa tu nombre",
+        "desc": "Tu nombre se usará para personalizar tu experiencia"
+      },
+      "language": {
+        "title": "Idioma",
+        "desc": "Selecciona tu idioma preferido",
+        "empty": "No hay idiomas disponibles"
+      },
+      "update": "Actualizar Perfil"
+    },
+    "settings": {
+      "title": "Configuración",
+      "message": "Actualiza la configuración de tu cuenta",
+      "theme": {
+        "title": "Tema",
+        "desc": "Selecciona tu tema preferido",
+        "light": "Claro",
+        "dark": "Oscuro"
+      },
+      "update": "Actualizar Configuración"
+    },
+    "statistics": {
+      "title": "Estadísticas",
+      "message": "Consulta tus estadísticas de exámenes",
+      "levels": {
+        "beginner": "Principiante",
+        "novice": "Novato",
+        "intermediate": "Intermedio",
+        "advanced": "Avanzado",
+        "expert": "Experto",
+        "unclassified": "Sin Clasificar"
+      },
+      "points": "Puntos",
+      "avgScore": "Puntuación Promedio",
+      "uniqueTopics": "Temas Únicos",
+      "totalExams": "Total de Exámenes"
+    },
+    "quizBreakdown": "Desglose del Cuestionario"
   }
   
