@@ -81,3 +81,5 @@ export const statusToColor = (status: ReportStatus) => {
       return "text-red-500";
   }
 };
+
+export type Languages = "en" | "es" | "fr" | "de";

@@ -45,7 +45,7 @@
         "title": "Coming Soon",
         "message": "We are still working on adding more topics. Please check back in a few days."
       },
-      "title": "Choose your {topic} topic",
+      "title": "Choose your {{topic}} topic",
       "desc": "Select a subtopic to start your exam."
     },
     "config": {
@@ -57,7 +57,7 @@
       "notes": "Notes",
       "notesDesc": "We will use these notes in our prompt to build your exam.",
       "generating": "Generating Exam",
-      "submit": "Submit {num} credits"
+      "submit": "Submit {{num}} credits"
     },
     "pastExams": {
       "title": "Past Exams",
@@ -103,4 +103,19 @@
   },
   "continue": "Continue",
   "cancel": "Cancel",
+  "profile": {
+    "title": "Profile",
+    "message": "Update your profile information",
+    "name": {
+      "title": "Name",
+      "placeholder": "Enter your name",
+      "desc": "Your name will be used to personalize your experience"
+    },
+    "language": {
+      "title": "Language",
+      "desc": "Select your preferred language",
+      "empty": "No languages available"
+    },
+    "update": "Update Profile"
+  }
 }

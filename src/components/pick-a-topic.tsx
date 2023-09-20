@@ -53,7 +53,7 @@ const PickATopic = () => {
               <RocketIcon className="h-4 w-4" />
               <AlertTitle>{t("home.pickAnExam.comingSoon.title")}</AlertTitle>
               <AlertDescription>
-                {t("home.pickAnExam.comingSoon.title")}
+                {t("home.pickAnExam.comingSoon.message")}
               </AlertDescription>
             </Alert>
           )}

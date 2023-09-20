@@ -50,6 +50,7 @@ model User {
   credits       Int       @default(15)
   quizzes       Quiz[]
   Report        Report[]
+  lang          String    @default("en")
 }
 
 enum QuestionType {
