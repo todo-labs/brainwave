@@ -1,0 +1,107 @@
+{
+    "appName": "Brainwave",
+    "landing": {
+      "devtagline": {
+        "pre": "Enciende tu",
+        "post": "Inteligencia"
+      },
+      "title": "Preparación SAT de IA",
+      "desc": "Presentamos Brainwave: la plataforma de cuestionarios definitiva para estudiantes. Realiza cuestionarios sobre tus materias favoritas, a tu nivel de dificultad deseado. Construye tu conocimiento y gana insignias para mostrar tus habilidades. Brainwave es la herramienta perfecta para estudiar para el SAT.",
+      "getStarted": "Empezar",
+      "howItWorks": "Cómo Funciona"
+    },
+    "login": {
+      "title": "Inicia sesión en tu cuenta",
+      "subheading": "Ingresa tu correo electrónico a continuación para crear tu cuenta",
+      "description": "Al hacer clic en continuar, aceptas nuestros",
+      "and": "y",
+      "terms": "Términos de Servicio",
+      "privacy": "Política de Privacidad"
+    },
+    "verifyEmail": {
+      "title": "Verifica tu Correo Electrónico",
+      "desc": "Hemos enviado un enlace de verificación a tu dirección de correo electrónico. Por favor, haz clic en el enlace para completar la configuración de tu cuenta.",
+      "resend": "Reenviar Correo Electrónico",
+      "goBack": "Volver"
+    },
+    "home": {
+      "tabs": {
+        "pickAnExam": "Elige un examen",
+        "config": "Configuración",
+        "quiz": "Cuestionario",
+        "results": "Resultados"
+      },
+      "sidebar": {
+        "math": "Matemáticas",
+        "history": "Historia",
+        "science": "Ciencias"
+      },
+      "pickAnExam": {
+        "error": {
+          "title": "Error",
+          "message": "Hubo un error al obtener nuestros temas. Por favor, inténtalo de nuevo"
+        },
+        "comingSoon": {
+          "title": "Próximamente",
+          "message": "Todavía estamos trabajando en agregar más temas. Por favor, vuelve en unos días."
+        },
+        "title": "Elige tu tema {topic}",
+        "desc": "Selecciona un subtema para comenzar tu examen."
+      },
+      "config": {
+        "title": "Creemos tu examen",
+        "desc": "¿En qué área tienes problemas?",
+        "difficulty": "Dificultad",
+        "questions": "Preguntas",
+        "questionDesc": "¿Cuántas preguntas te gustaría resolver en esta sesión?",
+        "notes": "Notas",
+        "notesDesc": "Utilizaremos estas notas en nuestra solicitud para crear tu examen.",
+        "generating": "Generando Examen",
+        "submit": "Enviar {num} créditos"
+      },
+      "pastExams": {
+        "title": "Exámenes Anteriores",
+        "error": {
+          "title": "Error",
+          "message": "Hubo un error al obtener tus exámenes anteriores. Por favor, inténtalo de nuevo"
+        },
+        "empty": {
+          "title": {
+            "pre": "No has tomado ningún",
+            "post": "examen"
+          },
+          "message": "No has tomado ningún examen sobre este tema. Un poco extraño, pero cada uno con sus gustos."
+        }
+      },
+      "exam": {
+        "grade": "Calificando Examen",
+        "submit": "Enviar"
+      },
+      "results": {
+        "loading": {
+          "title": "Cargando Resultados",
+          "message": "Estamos obteniendo tus resultados. Por favor, espera."
+        },
+        "error": {
+          "title": "Error",
+          "message": "Hubo un error al obtener tus resultados. Por favor, inténtalo de nuevo",
+          "btn": "Reintentar"
+        }
+      }
+    },
+    "userNav": {
+      "logout": {
+        "btn": "Cerrar Sesión",
+        "title": "¿Estás seguro de que quieres cerrar sesión?",
+        "message": "Cerrarás tu cuenta y no podrás acceder a ella hasta que vuelvas a iniciar sesión."
+      },
+      "profile": "Perfil",
+      "settings": "Configuración",
+      "dashboard": "Tablero",
+      "credits": "Créditos",
+      "statistics": "Estadísticas"
+    },
+    "continue": "Continuar",
+    "cancel": "Cancelar"
+  }
+  

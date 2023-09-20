@@ -1,0 +1,107 @@
+{
+    "appName": "Brainwave",
+    "landing": {
+      "devtagline": {
+        "pre": "Entfache deine",
+        "post": "Intelligenz"
+      },
+      "title": "Künstliche Intelligenz SAT-Vorbereitung",
+      "desc": "Vorstellung von Brainwave: die ultimative Quizplattform für Lernende. Absolvieren Sie Quizfragen zu Ihren Lieblingsfächern und wählen Sie Ihr gewünschtes Schwierigkeitsniveau aus. Erweitern Sie Ihr Wissen und verdienen Sie Abzeichen, um Ihre Fähigkeiten zu präsentieren. Brainwave ist das perfekte Werkzeug zur Vorbereitung auf den SAT.",
+      "getStarted": "Loslegen",
+      "howItWorks": "Wie es funktioniert"
+    },
+    "login": {
+      "title": "Melden Sie sich bei Ihrem Konto an",
+      "subheading": "Geben Sie Ihre E-Mail-Adresse unten ein, um Ihr Konto zu erstellen",
+      "description": "Durch Klicken auf Weiter stimmen Sie unseren",
+      "and": "und",
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutzrichtlinien"
+    },
+    "verifyEmail": {
+      "title": "Überprüfen Sie Ihre E-Mail",
+      "desc": "Wir haben einen Bestätigungslink an Ihre E-Mail-Adresse gesendet. Bitte klicken Sie auf den Link, um die Einrichtung Ihres Kontos abzuschließen.",
+      "resend": "E-Mail erneut senden",
+      "goBack": "Zurück"
+    },
+    "home": {
+      "tabs": {
+        "pickAnExam": "Wählen Sie eine Prüfung aus",
+        "config": "Konfiguration",
+        "quiz": "Quiz",
+        "results": "Ergebnisse"
+      },
+      "sidebar": {
+        "math": "Mathematik",
+        "history": "Geschichte",
+        "science": "Naturwissenschaften"
+      },
+      "pickAnExam": {
+        "error": {
+          "title": "Fehler",
+          "message": "Beim Abrufen unserer Themen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut"
+        },
+        "comingSoon": {
+          "title": "Demnächst",
+          "message": "Wir arbeiten noch daran, weitere Themen hinzuzufügen. Bitte schauen Sie in ein paar Tagen wieder vorbei."
+        },
+        "title": "Wählen Sie Ihr {topic}-Thema aus",
+        "desc": "Wählen Sie ein Unterthema aus, um Ihre Prüfung zu beginnen."
+      },
+      "config": {
+        "title": "Lassen Sie uns Ihre Prüfung erstellen",
+        "desc": "In welchem Bereich haben Sie Probleme?",
+        "difficulty": "Schwierigkeitsgrad",
+        "questions": "Fragen",
+        "questionDesc": "Wie viele Fragen möchten Sie in dieser Sitzung lösen?",
+        "notes": "Notizen",
+        "notesDesc": "Wir werden diese Notizen in unserer Anfrage verwenden, um Ihre Prüfung zu erstellen.",
+        "generating": "Prüfung wird erstellt",
+        "submit": "{num} Credits übermitteln"
+      },
+      "pastExams": {
+        "title": "Vergangene Prüfungen",
+        "error": {
+          "title": "Fehler",
+          "message": "Beim Abrufen Ihrer vergangenen Prüfungen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut"
+        },
+        "empty": {
+          "title": {
+            "pre": "Sie haben keine",
+            "post": "Prüfungen abgelegt"
+          },
+          "message": "Sie haben zu diesem Thema keine Prüfungen abgelegt. Ziemlich seltsam, aber jeder wie er mag."
+        }
+      },
+      "exam": {
+        "grade": "Prüfung wird benotet",
+        "submit": "Einreichen"
+      },
+      "results": {
+        "loading": {
+          "title": "Ergebnisse werden geladen",
+          "message": "Wir holen Ihre Ergebnisse ab. Bitte warten Sie."
+        },
+        "error": {
+          "title": "Fehler",
+          "message": "Beim Abrufen Ihrer Ergebnisse ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut",
+          "btn": "Erneut versuchen"
+        }
+      }
+    },
+    "userNav": {
+      "logout": {
+        "btn": "Abmelden",
+        "title": "Sind Sie sicher, dass Sie sich abmelden möchten?",
+        "message": "Sie werden von Ihrem Konto abgemeldet und können nicht auf Ihr Konto zugreifen, bis Sie sich erneut anmelden."
+      },
+      "profile": "Profil",
+      "settings": "Einstellungen",
+      "dashboard": "Dashboard",
+      "credits": "Guthaben",
+      "statistics": "Statistiken"
+    },
+    "continue": "Weiter",
+    "cancel": "Abbrechen"
+  }
+  
