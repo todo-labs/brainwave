@@ -54,6 +54,7 @@
       "difficulty": "Schwierigkeitsgrad",
       "questions": "Fragen",
       "questionDesc": "Wie viele Fragen möchten Sie in dieser Sitzung lösen?",
+      "subtopic": "Unterthemen",
       "notes": "Notizen",
       "notesDesc": "Wir werden diese Notizen in unserer Anfrage verwenden, um Ihre Prüfung zu erstellen.",
       "generating": "Prüfung wird erstellt",

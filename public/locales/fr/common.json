@@ -55,6 +55,7 @@
       "questions": "Questions",
       "questionDesc": "Combien de questions souhaitez-vous résoudre lors de cette session ?",
       "notes": "Notes",
+      "subtopics": "Sous-sujets",
       "notesDesc": "Nous utiliserons ces notes dans notre demande pour créer votre examen.",
       "generating": "Génération de l'examen",
       "submit": "Soumettre {num} crédits"

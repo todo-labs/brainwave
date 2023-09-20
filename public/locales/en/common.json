@@ -55,6 +55,7 @@
       "questions": "Questions",
       "questionDesc": "How many questions would you like to solve in this session.",
       "notes": "Notes",
+      "subtopic": "Subtopic",
       "notesDesc": "We will use these notes in our prompt to build your exam.",
       "generating": "Generating Exam",
       "submit": "Submit {{num}} credits"
