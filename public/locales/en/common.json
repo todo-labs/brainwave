@@ -18,6 +18,12 @@
     "terms": "Terms of Service",
     "privacy": "Privacy Policy"
   },
+  "verifyEmail": {
+    "title": "Check Your Email",
+    "desc": "We've sent a verification link to your email address. Please click the link to complete your account setup.",
+    "resend": "Resend Email",
+    "goBack": "Go Back"
+  },
   "home": {
     "tabs": {
       "pickAnExam": "Pick an exam",

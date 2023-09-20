@@ -1,9 +1,15 @@
 import React from "react";
-import type { GetServerSideProps, NextPage } from "next";
+import type {
+  GetServerSideProps,
+  NextPage,
+  InferGetServerSidePropsType,
+} from "next";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 import { getServerAuthSession } from "@/server/auth";
 import { Button } from "@/components/ui/button";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerAuthSession(context);
@@ -17,27 +23,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(context.locale || "en", ["common"])),
+    },
   };
 };
 
-const VerifyRequestPage: NextPage = () => {
+const VerifyRequestPage: NextPage = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const router = useRouter();
+  const { t } = useTranslation(["common"]);
 
   return (
     <section className="body-font mx-auto flex h-screen flex-col items-center justify-center space-y-4 px-5 py-24">
       <div className="w-full text-center lg:w-2/3">
         <h1 className="title-font mb-4 text-3xl font-medium  sm:text-4xl">
-          Check Your Email
+          {t("verifyEmail.title")}
         </h1>
         <p className="mb-8 leading-relaxed text-muted-foreground">
-          We&apos;ve sent a verification link to your email address. Please
-          click the link to complete your account setup.
+          {t("verifyEmail.desc")}
         </p>
         <div className="flex justify-center space-x-5">
-          <Button>Resend</Button>
+          <Button>{t("verifyEmail.resendEmail")}</Button>
           <Button onClick={() => router.back()} variant="secondary">
-            Go Back
+            {t("verifyEmail.goBack")}
           </Button>
         </div>
       </div>
