@@ -193,7 +193,7 @@ export const quizRouter = createTRPCRouter({
             ...q,
             answer: input.answers[index] ?? "[NOT_SUPPLIED]",
           })),
-          quiz.language as Languages
+          (quiz.language as Languages) || "en"
         );
 
         if (!result) {
@@ -215,7 +215,7 @@ export const quizRouter = createTRPCRouter({
             score,
           },
           ctx.session.user.name || "[NOT_SUPPLIED]",
-          ctx.session.user.lang
+          ctx.session.user.lang || "en"
         );
 
         await ctx.prisma.quiz.update({

@@ -41,6 +41,7 @@ export const authOptions: NextAuthOptions = {
     session({ session, token }) {
       session.user.role = token.role as Role;
       session.user.id = token.id as string;
+      session.user.lang = token.lang as Languages;
       return session;
     },
     async jwt({ token }) {
