@@ -82,7 +82,7 @@ const columns: ColumnDef<Column>[] = [
       const user: User = row.getValue("user");
 
       if (user) {
-        return <div className="w-[100px]">{user.name}</div>;
+        return <div className="w-[100px]">{user.name || user.email}</div>;
       }
     },
   },
