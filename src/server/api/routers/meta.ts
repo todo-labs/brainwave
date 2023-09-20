@@ -1,5 +1,6 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { Topics } from "@prisma/client";
+import { subMonths } from "date-fns";
 import * as z from "zod";
 
 export const metaRouter = createTRPCRouter({
@@ -47,17 +48,30 @@ export const metaRouter = createTRPCRouter({
       });
     }),
   leaderboard: protectedProcedure.query(async ({ ctx }) => {
-    const rankedStudents = await ctx.prisma.quiz.groupBy({
-      by: ["email"],
-      _avg: {
+    // top 10 users with the highest score in the past 30 days
+    const leaderboard = await ctx.prisma.quiz.findMany({
+      select: {
+        user: true,
         score: true,
+        subtopic: true,
+        topic: true,
       },
-      orderBy: [{ _avg: { score: "desc" } }],
+      where: {
+        createdAt: {
+          gt: subMonths(new Date(), 1),
+        },
+      },
+      orderBy: {
+        score: "desc",
+      },
+      take: 5,
     });
 
-    return rankedStudents.map((student) => ({
-      email: student.email,
-      score: student._avg.score,
+    return leaderboard.map((quiz, index) => ({
+      name: quiz.user.name ?? `Anonymous #${index + 1}`,
+      topic: quiz.topic,
+      subtopic: quiz.subtopic,
+      score: quiz.score,
     }));
   }),
 });
