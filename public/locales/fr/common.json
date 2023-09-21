@@ -132,7 +132,7 @@
   },
   "statistics": {
     "title": "Statistiques",
-    "message": "Consultez vos statistiques d'examen",
+    "message": "Voir les statistiques de votre examen",
     "levels": {
       "beginner": "Débutant",
       "novice": "Novice",
@@ -141,10 +141,19 @@
       "expert": "Expert",
       "unclassified": "Non classé"
     },
+    "leaderboard": {
+      "title": "Classement",
+      "empty": "Personne n'a encore passé cet examen. Soyez le premier !",
+      "description": "Les 10 meilleurs scores pour cet examen",
+      "user": "Utilisateur",
+      "score": "Score",
+      "topic": "Sujet",
+      "subtopic": "Sous-sujet"
+    },
     "points": "Points",
-    "avgScore": "Score Moyen",
-    "uniqueTopics": "Sujets Uniques",
-    "totalExams": "Total des Examens"
+    "avgScore": "Score moyen",
+    "uniqueTopics": "Sujets uniques",
+    "totalExams": "Total des examens"
   },
   "quizBreakdown": "Détail du Quiz",
   "userSidebar": {

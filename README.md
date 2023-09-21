@@ -128,8 +128,8 @@ To get started with Brainwave, you will need to set up your development environm
 
 - [ ] Setup the vector database
 - [ ] Enhance the quiz generation procedure
-- [ ] Enhance results breakdown UI and functionality
-- [ ] Add a leader board and ranking system
+- [x] Enhance results breakdown UI and functionality
+- [x] Add a leader board and ranking system
 - [ ] Enhance the mobile experience
 
 See the [open issues](https://github.com/todo-labs/brainwave/issues) for a full list of proposed features (and known issues).
