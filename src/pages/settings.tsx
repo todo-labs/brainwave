@@ -77,9 +77,7 @@ const SettingsPage: NextPage = (
               render={({ field }) => (
                 <FormItem className="space-y-1">
                   <FormLabel>{t("settings.theme.title")}</FormLabel>
-                  <FormDescription>
-                    {t("settings.theme.message")}
-                  </FormDescription>
+                  <FormDescription>{t("settings.theme.desc")}</FormDescription>
                   <FormMessage />
                   <RadioGroup
                     onValueChange={field.onChange}

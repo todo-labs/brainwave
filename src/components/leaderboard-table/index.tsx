@@ -1,4 +1,6 @@
 import { AwardIcon } from "lucide-react";
+import { useTranslation } from "next-i18next";
+
 import {
   Table,
   TableBody,
@@ -9,12 +11,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { Badge } from "../ui/badge";
+import { Skeleton } from "../ui/skeleton";
+
 import { api } from "@/lib/api";
 import { cleanEnum } from "@/lib/utils";
-import { Badge } from "../ui/badge";
 
 export function LeaderboardTable() {
-  const { data } = api.meta.leaderboard.useQuery();
+  const { data, isLoading } = api.meta.leaderboard.useQuery();
 
   const indexToIcon = (index: number) => {
     switch (index) {
@@ -29,21 +33,45 @@ export function LeaderboardTable() {
     }
   };
 
+  const { t } = useTranslation(["common"]);
+
+  const loading = new Array(5).fill(0).map((_, index) => (
+    <TableRow key={index}>
+      <TableCell className="flex items-center font-medium">
+        <Skeleton className="h-6 w-6 rounded-full" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-20" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-20" />
+      </TableCell>
+      <TableCell className="text-right">
+        <Skeleton className="h-4 w-10" />
+      </TableCell>
+    </TableRow>
+  ));
+
   return (
     <Table>
-      <TableCaption>
-        Top 5 users who scored the highest on their quizzes in the last 30 days.
-      </TableCaption>
+      <TableCaption>{t("statistics.leaderboard.description")}</TableCaption>
       <TableHeader>
-        <h1 className="pb-4 text-2xl font-medium">Leaderboard</h1>
+        <h1 className="pb-4 text-2xl font-medium">
+          {t("statistics.leaderboard.title")}
+        </h1>
         <TableRow>
-          <TableHead className="text-left">User</TableHead>
-          <TableHead>Topic</TableHead>
-          <TableHead>SubTopic</TableHead>
-          <TableHead className="text-right">Score</TableHead>
+          <TableHead className="text-left">
+            {t("statistics.leaderboard.user")}
+          </TableHead>
+          <TableHead>{t("statistics.leaderboard.topic")}</TableHead>
+          <TableHead>{t("statistics.leaderboard.subtopic")}</TableHead>
+          <TableHead className="text-right">
+            {t("statistics.leaderboard.score")}
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
+        {isLoading && loading}
         {data?.map((item, index) => (
           <TableRow key={item.name}>
             <TableCell className="flex items-center font-medium">

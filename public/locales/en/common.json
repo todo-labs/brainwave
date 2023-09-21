@@ -100,7 +100,8 @@
     "settings": "Settings",
     "dashboard": "Dashboard",
     "credits": "Credits",
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "home": "Home"
   },
   "continue": "Continue",
   "cancel": "Cancel",
@@ -141,17 +142,19 @@
       "expert": "Expert",
       "unclassified": "Unclassified"
     },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "empty": "No one has taken this exam yet. Be the first!",
+      "description": "Top 10 scores for this exam",
+      "user": "User",
+      "score": "Score",
+      "topic": "Topic",
+      "subtopic": "Subtopic"
+    },
     "points": "Points",
     "avgScore": "Average Score",
     "uniqueTopics": "Unique Topics",
     "totalExams": "Total Exams"
   },
-  "quizBreakdown": "Quiz Breakdown",
-  "userSidebar": {
-    "home": "Home",
-    "profile": "Profile",
-    "settings": "Settings",
-    "statistics": "Statistics",
-    "Dashboard": "Dashboard"
-  }
+  "quizBreakdown": "Quiz Breakdown"
 }

@@ -1,22 +1,27 @@
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  BarChart2Icon,
+  BugIcon,
+  GraduationCapIcon,
+  User2Icon,
+} from "lucide-react";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SettingsLayout from "@/components/user/sidebar-nav";
 import UserTable from "@/components/dashboard/user-table";
 import PowerCard from "@/components/dashboard/power-card";
 import QuizTable from "@/components/dashboard/quiz-table";
+import QuizBreakdown from "@/components/dashboard/quiz-breakdown";
+import ReportTable from "@/components/dashboard/report-table";
 
 import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
-import QuizBreakdown from "@/components/dashboard/quiz-breakdown";
-import { BarChart2Icon, BugIcon, GraduationCapIcon, User2Icon } from "lucide-react";
-import ReportTable from "@/components/dashboard/report-table";
 
-export default function DashboardPage() {
+export default function DashboardPage(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   const totalUsers = api.admin.totalUsers.useQuery();
   const totalQuizzes = api.admin.totalQuizzes.useQuery();
   const averageScore = api.admin.averageScore.useQuery();
@@ -61,26 +66,26 @@ export default function DashboardPage() {
               </TabsList>
               <TabsContent value="overview" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  <PowerCard 
-                    query={totalUsers} 
-                    title="Users" 
+                  <PowerCard
+                    query={totalUsers}
+                    title="Users"
                     icon={User2Icon}
-                    />
-                  <PowerCard 
-                    query={totalQuizzes} 
-                    title="Quizzes" 
+                  />
+                  <PowerCard
+                    query={totalQuizzes}
+                    title="Quizzes"
                     icon={GraduationCapIcon}
-                    />
-                  <PowerCard 
-                    query={averageScore} 
-                    title="Avg Score" 
+                  />
+                  <PowerCard
+                    query={averageScore}
+                    title="Avg Score"
                     icon={BarChart2Icon}
                   />
-                  <PowerCard 
-                    query={totalReports} 
-                    title="Reports" 
+                  <PowerCard
+                    query={totalReports}
+                    title="Reports"
                     icon={BugIcon}
-                    />
+                  />
                 </div>
                 <QuizBreakdown queryFn={quizBreakdown} />
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
@@ -134,3 +139,11 @@ export default function DashboardPage() {
     </SettingsLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale || "en", ["common"])),
+    },
+  };
+};

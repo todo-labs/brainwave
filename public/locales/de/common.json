@@ -132,7 +132,7 @@
   },
   "statistics": {
     "title": "Statistiken",
-    "message": "Sehen Sie sich Ihre Prüfungsstatistiken an",
+    "message": "Zeigen Sie Ihre Prüfungsstatistiken an",
     "levels": {
       "beginner": "Anfänger",
       "novice": "Neuling",
@@ -141,10 +141,19 @@
       "expert": "Experte",
       "unclassified": "Nicht klassifiziert"
     },
+    "leaderboard": {
+      "title": "Bestenliste",
+      "empty": "Niemand hat diese Prüfung bisher abgelegt. Seien Sie der Erste!",
+      "description": "Top 10 Ergebnisse für diese Prüfung",
+      "user": "Benutzer",
+      "score": "Ergebnis",
+      "topic": "Thema",
+      "subtopic": "Unterthema"
+    },
     "points": "Punkte",
-    "avgScore": "Durchschnittsnote",
+    "avgScore": "Durchschnittsergebnis",
     "uniqueTopics": "Einzigartige Themen",
-    "totalExams": "Gesamtexamen"
+    "totalExams": "Gesamtzahl der Prüfungen"
   },
   "quizBreakdown": "Quiz-Aufschlüsselung",
   "userSidebar": {
@@ -153,5 +162,5 @@
     "settings": "Einstellungen",
     "statistics": "Statistiken",
     "Dashboard": "Dashboard"
-  },
+  }
 }

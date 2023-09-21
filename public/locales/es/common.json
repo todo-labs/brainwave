@@ -132,19 +132,28 @@
   },
   "statistics": {
     "title": "Estadísticas",
-    "message": "Consulta tus estadísticas de exámenes",
+    "message": "Ver estadísticas de su examen",
     "levels": {
       "beginner": "Principiante",
       "novice": "Novato",
       "intermediate": "Intermedio",
       "advanced": "Avanzado",
       "expert": "Experto",
-      "unclassified": "Sin Clasificar"
+      "unclassified": "No clasificado"
+    },
+    "leaderboard": {
+      "title": "Tabla de clasificación",
+      "empty": "Nadie ha tomado este examen todavía. ¡Sea el primero!",
+      "description": "Los 10 mejores puntajes para este examen",
+      "user": "Usuario",
+      "score": "Puntaje",
+      "topic": "Tema",
+      "subtopic": "Subtema"
     },
     "points": "Puntos",
-    "avgScore": "Puntuación Promedio",
-    "uniqueTopics": "Temas Únicos",
-    "totalExams": "Total de Exámenes"
+    "avgScore": "Puntaje promedio",
+    "uniqueTopics": "Temas únicos",
+    "totalExams": "Total de exámenes"
   },
   "quizBreakdown": "Desglose del Cuestionario",
   "userSidebar": {
