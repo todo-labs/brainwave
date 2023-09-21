@@ -55,7 +55,7 @@ const PointsCard = () => {
 
     useEffect(() => {
       let start = 0;
-      const increment = Math.ceil(totalScore / (duration / 10));
+      const increment = Math.ceil(totalScore / (duration / 50));
 
       const interval = setInterval(() => {
         start += increment;
