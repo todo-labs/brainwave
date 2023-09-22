@@ -16,9 +16,9 @@
   <p align="center">
     <a href="https://brainwave.quest">View Demo</a>
     ·
-    <a href="https://github.com/todo-labs/brainwave/issues">Report Bug</a>
+    <a href="https://github.com/todo-labs/brainwave/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=">Report Bug</a>
     ·
-    <a href="https://github.com/todo-labs/brainwave/issues">Request Feature</a>
+    <a href="https://github.com/todo-labs/brainwave/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=">Request Feature</a>
   </p>
 </div>
 
