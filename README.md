@@ -103,8 +103,8 @@ To switch to a different language, simply click on the language selector on the 
 
 To get started with Brainwave, you will need to set up your development environment. You will need the following tools:
 
-- [Node.js](https://nodejs.org/) (Recommended version: +18)
-- [Yarn](https://yarnpkg.com/) (Recommended version: 1.22.x)
+- [Node.js](https://nodejs.org/) (Recommended version: 18)
+- [Pnpm](https://pnpm.io/) (Recommended version: 6)
 - [Postgresql](https://www.postgresql.org/) (Recommended version: 15)
 
 ### Installation
@@ -116,15 +116,15 @@ To get started with Brainwave, you will need to set up your development environm
    ```
 3. Install NPM packages
    ```bash
-    yarn install
+    pnpm install
    ```
 4. Copy over your env file
    ```bash
-    cp .env.example  .env
+    cp .env.example .env
    ```
 5. Run the development server
    ```bash
-    yarn dev
+    pnpm dev
    ```
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -133,7 +133,11 @@ To get started with Brainwave, you will need to set up your development environm
 ## Roadmap
 
 - [ ] Setup the vector database
+  - [ ] Pre load a dataset of past SAT Practice Exams
+  - [ ] Setup a cron job to update the database with new exams
+  - [ ] Link vector db to quiz generation query
 - [ ] Enhance the quiz generation procedure
+  - [ ] Add support for different question types
 - [x] Enhance results breakdown UI and functionality
 - [x] Add a leader board and ranking system
 - [ ] Enhance the mobile experience
