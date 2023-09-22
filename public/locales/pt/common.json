@@ -1,0 +1,161 @@
+{
+    "appName": "Brainwave",
+    "landing": {
+      "devtagline": {
+        "pre": "Desperte sua",
+        "post": "Inteligência"
+      },
+      "title": "Preparação para o SAT com IA",
+      "desc": "Apresentamos o Brainwave: a plataforma definitiva de questionários para aprendizes. Faça questionários sobre seus assuntos favoritos, no nível de dificuldade desejado. Construa seu conhecimento e ganhe distintivos para mostrar suas habilidades. O Brainwave é a ferramenta perfeita para estudar para o SAT.",
+      "getStarted": "Comece Agora",
+      "howItWorks": "Como Funciona"
+    },
+    "login": {
+      "title": "Faça login na sua conta",
+      "subheading": "Insira seu e-mail abaixo para criar sua conta",
+      "description": "Ao clicar em continuar, você concorda com nossos",
+      "and": "e",
+      "terms": "Termos de Serviço",
+      "privacy": "Política de Privacidade"
+    },
+    "verifyEmail": {
+      "title": "Verifique seu E-mail",
+      "desc": "Enviamos um link de verificação para o seu endereço de e-mail. Clique no link para concluir a configuração da sua conta.",
+      "resend": "Reenviar E-mail",
+      "goBack": "Voltar"
+    },
+    "home": {
+      "tabs": {
+        "pickAnExam": "Escolha um exame",
+        "config": "Configuração",
+        "quiz": "Questionário",
+        "results": "Resultados"
+      },
+      "sidebar": {
+        "math": "Matemática",
+        "history": "História",
+        "science": "Ciência"
+      },
+      "pickAnExam": {
+        "error": {
+          "title": "Erro",
+          "message": "Houve um erro ao buscar nossos tópicos. Por favor, tente novamente"
+        },
+        "comingSoon": {
+          "title": "Em Breve",
+          "message": "Ainda estamos trabalhando na adição de mais tópicos. Por favor, verifique novamente em alguns dias."
+        },
+        "title": "Escolha o tópico {{topic}}",
+        "desc": "Selecione um subtópico para iniciar o seu exame."
+      },
+      "config": {
+        "title": "Vamos criar seu exame",
+        "desc": "Em que área você está tendo dificuldades?",
+        "difficulty": "Dificuldade",
+        "questions": "Perguntas",
+        "questionDesc": "Quantas perguntas você gostaria de resolver nesta sessão.",
+        "notes": "Notas",
+        "subtopic": "Subtópico",
+        "notesDesc": "Usaremos essas notas em nosso prompt para criar o seu exame.",
+        "generating": "Gerando Exame",
+        "submit": "Enviar {{num}} créditos"
+      },
+      "pastExams": {
+        "title": "Exames Anteriores",
+        "error": {
+          "title": "Erro",
+          "message": "Houve um erro ao buscar seus exames anteriores. Por favor, tente novamente"
+        },
+        "empty": {
+          "title": {
+            "pre": "Você não fez nenhum",
+            "post": "exames"
+          },
+          "message": "Você não fez nenhum exame deste tópico. Meio estranho, mas cada um com seus gostos."
+        }
+      },
+      "exam": {
+        "grade": "Corrigindo Exame",
+        "submit": "Enviar"
+      },
+      "results": {
+        "loading": {
+          "title": "Carregando Resultados",
+          "message": "Estamos buscando seus resultados. Por favor, aguarde."
+        },
+        "error": {
+          "title": "Erro",
+          "message": "Houve um erro ao buscar seus resultados. Por favor, tente novamente",
+          "btn": "Tentar Novamente"
+        }
+      }
+    },
+    "userNav": {
+      "logout": {
+        "btn": "Sair",
+        "title": "Você tem certeza de que deseja sair?",
+        "message": "Você será desconectado de sua conta e não poderá acessá-la até fazer login novamente."
+      },
+      "profile": "Perfil",
+      "settings": "Configurações",
+      "dashboard": "Painel",
+      "credits": "Créditos",
+      "statistics": "Estatísticas",
+      "home": "Início"
+    },
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "profile": {
+      "title": "Perfil",
+      "message": "Atualize suas informações de perfil",
+      "name": {
+        "title": "Nome",
+        "placeholder": "Digite seu nome",
+        "desc": "Seu nome será usado para personalizar sua experiência"
+      },
+      "language": {
+        "title": "Idioma",
+        "desc": "Selecione seu idioma preferido",
+        "empty": "Nenhum idioma disponível"
+      },
+      "update": "Atualizar Perfil"
+    },
+    "settings": {
+      "title": "Configurações",
+      "message": "Atualize suas configurações de conta",
+      "theme": {
+        "title": "Tema",
+        "desc": "Selecione seu tema preferido",
+        "light": "Claro",
+        "dark": "Escuro"
+      },
+      "update": "Atualizar Configurações"
+    },
+    "statistics": {
+      "title": "Estatísticas",
+      "message": "Veja suas estatísticas de exame",
+      "levels": {
+        "beginner": "Iniciante",
+        "novice": "Novato",
+        "intermediate": "Intermediário",
+        "advanced": "Avançado",
+        "expert": "Especialista",
+        "unclassified": "Não Classificado"
+      },
+      "leaderboard": {
+        "title": "Classificação",
+        "empty": "Ninguém fez este exame ainda. Seja o primeiro!",
+        "description": "Os 10 melhores pontuadores deste exame",
+        "user": "Usuário",
+        "score": "Pontuação",
+        "topic": "Tópico",
+        "subtopic": "Subtópico"
+      },
+      "points": "Pontos",
+      "avgScore": "Pontuação Média",
+      "uniqueTopics": "Tópicos Únicos",
+      "totalExams": "Exames Totais"
+    },
+    "quizBreakdown": "Detalhes do Questionário"
+  }
+  

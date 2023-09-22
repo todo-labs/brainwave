@@ -58,14 +58,14 @@ const Landing: NextPage = (
                 {t("landing.getStarted")}
               </Link>
               <Link
-                href="https://github.com/todo-labs/brainwave"
+                href="https://github.com/todo-labs/brainwave#about-the-project"
                 className={buttonVariants({
                   variant: "outline",
                   size: "lg",
                 })}
               >
                 <span>{t("landing.howItWorks")}</span>
-                <span aria-hidden="true">&rarr;</span>
+                <span className="ml-2" aria-hidden="true">&rarr;</span>
               </Link>
             </div>
           </div>
