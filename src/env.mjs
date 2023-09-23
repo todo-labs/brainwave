@@ -48,6 +48,8 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
     NEXT_PUBLIC_MAX_TIME_PER_QUIZ: z.coerce.number().default(5),
     NEXT_PUBLIC_CREDITS_PER_QUIZ: z.coerce.number().default(1),
+    NEXT_PUBLIC_MIXPANEL_TOKEN: z.string().min(1),
+    NEXT_PUBLIC_MIXPANEL_ENABLED: z.coerce.boolean().default(false),
   },
 
   /**
@@ -67,7 +69,8 @@ export const env = createEnv({
     EMAIL_FROM: process.env.EMAIL_FROM,
     PEXELS_API_KEY: process.env.PEXELS_API_KEY,
     MAX_QUESTIONS_PER_QUIZ: process.env.MAX_QUESTIONS_PER_QUIZ,
-    NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ: process.env.NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ,
+    NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ:
+      process.env.NEXT_PUBLIC_MAX_QUESTIONS_PER_QUIZ,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
@@ -81,6 +84,8 @@ export const env = createEnv({
     LANGCHAIN_TRACING_V2: process.env.LANGCHAIN_TRACING_V2,
     LANGCHAIN_ENDPOINT: process.env.LANGCHAIN_ENDPOINT,
     LANGCHAIN_API_KEY: process.env.LANGCHAIN_API_KEY,
-    LANGCHAIN_PROJECT: process.env.LANGCHAIN_PROJECT
+    LANGCHAIN_PROJECT: process.env.LANGCHAIN_PROJECT,
+    NEXT_PUBLIC_MIXPANEL_TOKEN: process.env.NEXT_PUBLIC_MIXPANEL_TOKEN,
+    NEXT_PUBLIC_MIXPANEL_ENABLED: process.env.NEXT_PUBLIC_MIXPANEL_ENABLED,
   },
 });
