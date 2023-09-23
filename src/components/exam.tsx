@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
 
@@ -10,13 +11,13 @@ import Timer from "./timer";
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
 import useStore from "@/hooks/useStore";
-import { useTranslation } from "next-i18next";
+import { useMixpanel } from "@/lib/mixpanel";
 
 const Exam = () => {
   const { currentQuiz, setCurrentStep, setShowConfetti } = useStore();
   const [answers, setAnswers] = useState(new Map<number, string>());
   const [completed, setCompleted] = useState(false);
-
+  const { trackEvent } = useMixpanel();
   const { toast } = useToast();
 
   const gradeQuiz = api.quiz.gradeExam.useMutation({
@@ -45,6 +46,14 @@ const Exam = () => {
         answers: Array.from(answers.values()),
       });
       setCompleted(true);
+      trackEvent("FormSubmission", {
+        label: "Exam",
+        value: currentQuiz?.id,
+        questions: currentQuiz?.questions?.length,
+        topic: currentQuiz?.topic,
+        subtopic: currentQuiz?.subtopic,
+        difficulty: currentQuiz?.difficulty,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +67,7 @@ const Exam = () => {
         <Timer completed={completed} />
       </div>
       <Separator className="my-4" />
-      <ScrollArea className="h-[300px] md:h-[500px] xxl:h-[800px]">
+      <ScrollArea className="xxl:h-[800px] h-[300px] md:h-[500px]">
         <div className="flex-col space-y-4">
           {!!currentQuiz &&
             currentQuiz.questions?.map((q, index) => (
