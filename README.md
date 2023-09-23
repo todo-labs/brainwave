@@ -64,6 +64,7 @@ We're excited to announce that we now support multiple languages! Thanks to the 
 - 🇩🇪 German
 - 🇮🇹 Italian
 - 🇯🇵 Japanese
+- 🇰🇷 Korean
 - 🇵🇹 Portuguese
 - 🇷🇺 Russian
 - 🇪🇸 Spanish
