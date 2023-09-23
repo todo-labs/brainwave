@@ -157,7 +157,9 @@ export function CreateConfig() {
                       <FormLabel>
                         {t("home.config.questions")}
                         <span className="text-gray-500">
-                          {`   (${field.value} questions)`}
+                          {t("home.config.questionsLabel", {
+                            num: field.value,
+                          })}
                         </span>
                       </FormLabel>
                       <FormDescription>
@@ -184,7 +186,9 @@ export function CreateConfig() {
                       <FormLabel>{t("home.config.notes")}</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Enter your notes here"
+                          placeholder={
+                            t("home.config.notesPlaceholder") as string
+                          }
                           className="resize-none"
                           {...field}
                         />
