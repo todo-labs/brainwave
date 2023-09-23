@@ -11,7 +11,6 @@ export const mixpanelEventConfig = {
   ButtonClick: "Button Click" as const,
   FormSubmission: "Form Submission" as const,
   ViewedModal: "Viewed Modal" as const,
-  Signup: "Signup" as const,
   Login: "Login" as const,
   Logout: "Logout" as const,
   Search: "Search" as const,
