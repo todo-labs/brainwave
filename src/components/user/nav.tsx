@@ -33,17 +33,19 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
+import { Paragraph } from "../ui/typography";
 
 import { useBuyCredits } from "@/hooks/useBuyCredits";
 import { api } from "@/lib/api";
-import { Paragraph } from "../ui/typography";
 import { Role } from "@prisma/client";
 import useStore from "@/hooks/useStore";
+import { useMixpanel } from "@/lib/mixpanel";
 
 export function UserNav() {
   const { data: session } = useSession();
   const { buyCredits } = useBuyCredits();
   const { reset } = useStore();
+  const { trackEvent } = useMixpanel();
 
   const profileQuery = api.user.get.useQuery(undefined, {
     enabled: !!session?.user,
@@ -59,10 +61,26 @@ export function UserNav() {
 
   const handleSignOut = async () => {
     reset();
+    trackEvent("Logout");
     await signOut();
   };
 
   const { t } = useTranslation(["common"]);
+
+  const handleNavigate = (path: string) => {
+    router.push(path);
+    trackEvent("ButtonClick", {
+      label: "UserNav",
+      value: path,
+    });
+  };
+
+  const handleCancel = () => {
+    trackEvent("ButtonClick", {
+      label: "UserNav",
+      value: "Cancel",
+    });
+  };
 
   if (!session) return null;
 
@@ -110,20 +128,20 @@ export function UserNav() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem onClick={() => void router.push(`/profile`)}>
+            <DropdownMenuItem onClick={() => handleNavigate(`/profile`)}>
               <User className="mr-2 h-4 w-4" />
               <p className="capitalize">{t("userNav.profile")}</p>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => void router.push(`/settings`)}>
+            <DropdownMenuItem onClick={() => handleNavigate(`/settings`)}>
               <Settings className="mr-2 h-4 w-4" />
               <p className="capitalize">{t("userNav.settings")}</p>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => void router.push(`/statistics`)}>
+            <DropdownMenuItem onClick={() => handleNavigate(`/statistics`)}>
               <BarChart2Icon className="mr-2 h-4 w-4" />
               <p className="capitalize">{t("userNav.statistics")}</p>
             </DropdownMenuItem>
             {session.user.role === Role.ADMIN && (
-              <DropdownMenuItem onClick={() => void router.push(`/dashboard`)}>
+              <DropdownMenuItem onClick={() => handleNavigate(`/dashboard`)}>
                 <LayoutDashboardIcon className="mr-2 h-4 w-4" />
                 <p className="capitalize">{t("userNav.dashboard")}</p>
               </DropdownMenuItem>
@@ -147,7 +165,9 @@ export function UserNav() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+            <AlertDialogCancel onClick={handleCancel}>
+              {t("cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction onClick={handleSignOut}>
               {t("continue")}
             </AlertDialogAction>
