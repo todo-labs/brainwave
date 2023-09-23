@@ -1,10 +1,8 @@
 import {
   Body,
   Container,
-  Head,
   Heading,
   Hr,
-  Html,
   Img,
   Link,
   Preview,
@@ -28,10 +26,7 @@ export function MagicLinkEmail(props: MagicLinkEmailProps) {
     <Tailwind config={theme}>
       <Preview>Log in with this magic link.</Preview>
       <Body className="bg-white font-sans">
-        <Container
-          className="mx-auto bg-cover bg-bottom bg-no-repeat px-4 py-8"
-          style={{ backgroundImage: `url(${baseUrl}/bg.png)` }}
-        >
+        <Container className="mx-auto bg-cover bg-bottom bg-no-repeat px-4 py-8">
           <Img
             src={`${baseUrl}/logo.svg`}
             width={48}
@@ -58,7 +53,7 @@ export function MagicLinkEmail(props: MagicLinkEmailProps) {
           </Text>
           <Hr className="my-8 border-gray-400" />
           <Img
-            src={`${baseUrl}/logo.png`}
+            src={`${baseUrl}/logo.svg`}
             width={32}
             height={32}
             className="mx-auto mb-4 grayscale filter"

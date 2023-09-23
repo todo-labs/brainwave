@@ -54,7 +54,7 @@ export function MixpanelProvider({ children }: { children: React.ReactNode }) {
     properties?: Partial<MixpanelPayload>
   ) {
     if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED) return;
-    Mixpanel.track(event, properties);
+    Mixpanel.track(mixpanelEventConfig[event], properties);
   }
 
   const contextValue = {

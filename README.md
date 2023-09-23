@@ -181,7 +181,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 David Ojo - [@conceptcodes](https://github.com/conceptcodes) - conceptcodes@gmail.com
 
-Project Link: [https://github.com/todo-labs/brainwave](https://github.com/todo-labs/brainwave)
+Project Link: [https://brainwave.quest](https://brainwave.quest)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
