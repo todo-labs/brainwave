@@ -82,4 +82,15 @@ export const statusToColor = (status: ReportStatus) => {
   }
 };
 
-export type Languages = "en" | "es" | "fr" | "de";
+export type Languages =
+  | "ar"
+  | "cn"
+  | "de"
+  | "en"
+  | "es"
+  | "fr"
+  | "it"
+  | "ja"
+  | "ko"
+  | "pt"
+  | "ru";

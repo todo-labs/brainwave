@@ -46,10 +46,18 @@ import { Languages, cn } from "@/lib/utils";
 import { useMixpanel } from "@/lib/mixpanel";
 
 const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
+  { label: "Arabic", value: "ar" },
+  { label: "Chinese", value: "cn" },
   { label: "German", value: "de" },
+  { label: "English", value: "en" },
   { label: "Spanish", value: "es" },
+  { label: "Spanish", value: "es" },
+  { label: "French", value: "fr" },
+  { label: "Italian", value: "it" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
 ] as const;
 
 const ProfilePage: NextPage = (
