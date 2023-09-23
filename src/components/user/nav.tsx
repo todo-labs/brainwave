@@ -82,13 +82,24 @@ export function UserNav() {
     });
   };
 
+  const handleAvatarClick = () => {
+    trackEvent("ButtonClick", {
+      label: "UserNav",
+      value: "Avatar",
+    });
+  };
+
   if (!session) return null;
 
   return (
     <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Button
+            variant="ghost"
+            className="relative h-8 w-8 rounded-full"
+            onClick={handleAvatarClick}
+          >
             <Avatar className="h-10 w-10">
               <AvatarImage
                 src={session?.user.image as string}
