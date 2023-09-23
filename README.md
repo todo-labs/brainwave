@@ -99,6 +99,15 @@ To switch to a different language, simply click on the language selector on the 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Integrations
+
+**Mixpanel**
+
+we prioritize data-driven decision-making to enhance the user experience and continuously improve our services.
+To achieve this, we have integrated Mixpanel, a powerful analytics and user engagement platform, into our application.
+
+**Sentry (Coming Soon)**
+
 ### Prerequisites
 
 To get started with Brainwave, you will need to set up your development environment. You will need the following tools:
