@@ -1,161 +1,167 @@
 {
-    "appName": "Brainwave",
-    "landing": {
-      "devtagline": {
-        "pre": "Accendi la tua",
-        "post": "Intelligenza"
-      },
-      "title": "Preparazione AI SAT",
-      "desc": "Presentiamo Brainwave: la piattaforma definitiva per i quiz per gli studenti. Fai quiz sui tuoi argomenti preferiti, al livello di difficoltà desiderato. Costruisci la tua conoscenza e guadagna distintivi per mostrare le tue competenze. Brainwave è lo strumento perfetto per studiare per il SAT.",
-      "getStarted": "Inizia",
-      "howItWorks": "Come Funziona"
+  "appName": "Brainwave",
+  "landing": {
+    "devtagline": {
+      "pre": "Accendi il tuo",
+      "post": "Intelligenza"
     },
-    "login": {
-      "title": "Accedi al tuo account",
-      "subheading": "Inserisci il tuo indirizzo email per creare il tuo account",
-      "description": "Cliccando su continua, accetti i nostri",
-      "and": "e",
-      "terms": "Termini di Servizio",
-      "privacy": "Informativa sulla Privacy"
+    "title": "Preparazione AI SAT",
+    "desc": "Presentiamo Brainwave: la piattaforma di quiz definitiva per gli studenti. Fai quiz sulle tue materie preferite, al livello di difficoltà desiderato. Costruisci la tua conoscenza e guadagna distintivi per mostrare le tue competenze. Brainwave è lo strumento perfetto per studiare per il SAT.",
+    "getStarted": "Inizia",
+    "howItWorks": "Come Funziona"
+  },
+  "login": {
+    "title": "Accedi al tuo account",
+    "subheading": "Inserisci la tua email qui sotto per creare il tuo account",
+    "description": "Cliccando su continua, accetti i nostri",
+    "and": "e",
+    "terms": "Termini di Servizio",
+    "privacy": "Politica sulla Privacy"
+  },
+  "verifyEmail": {
+    "title": "Controlla la tua email",
+    "desc": "Abbiamo inviato un link di verifica al tuo indirizzo email. Clicca sul link per completare la configurazione del tuo account.",
+    "resend": "Rispedisci Email",
+    "goBack": "Torna Indietro"
+  },
+  "home": {
+    "tabs": {
+      "pickAnExam": "Scegli un esame",
+      "config": "Configurazione",
+      "quiz": "Quiz",
+      "results": "Risultati"
     },
-    "verifyEmail": {
-      "title": "Controlla la tua email",
-      "desc": "Abbiamo inviato un link di verifica al tuo indirizzo email. Clicca sul link per completare la configurazione del tuo account.",
-      "resend": "Rispedisci Email",
-      "goBack": "Torna Indietro"
+    "sidebar": {
+      "math": "Matematica",
+      "history": "Storia",
+      "science": "Scienze"
     },
-    "home": {
-      "tabs": {
-        "pickAnExam": "Scegli un esame",
-        "config": "Configura",
-        "quiz": "Quiz",
-        "results": "Risultati"
+    "pickAnExam": {
+      "error": {
+        "title": "Errore",
+        "message": "Si è verificato un errore durante il recupero dei nostri argomenti. Riprova"
       },
-      "sidebar": {
-        "math": "Matematica",
-        "history": "Storia",
-        "science": "Scienze"
+      "comingSoon": {
+        "title": "Prossimamente",
+        "message": "Stiamo ancora lavorando per aggiungere più argomenti. Controlla di nuovo tra qualche giorno."
       },
-      "pickAnExam": {
-        "error": {
-          "title": "Errore",
-          "message": "Si è verificato un errore durante il recupero degli argomenti. Per favore, riprova."
+      "title": "Scegli il tuo argomento {{topic}}",
+      "desc": "Seleziona un sottoargomento per iniziare il tuo esame."
+    },
+    "config": {
+      "title": "Costruiamo il tuo esame",
+      "desc": "In quale area hai problemi?",
+      "difficulty": "Difficoltà",
+      "questions": "Domande",
+      "questionDesc": "Quante domande vorresti risolvere in questa sessione.",
+      "notes": "Note",
+      "questionsLabel": "({{num}} domande)",
+      "notesPlaceholder": "Inserisci eventuali note che desideri vedere nel tuo prompt dell'esame",
+      "subtopic": "Sottoargomento",
+      "notesDesc": "Utilizzeremo queste note nel nostro prompt per costruire il tuo esame.",
+      "generating": "Generazione Esame",
+      "submit": "Invia {{num}} crediti"
+    },
+    "pastExams": {
+      "title": "Esami Precedenti",
+      "error": {
+        "title": "Errore",
+        "message": "Si è verificato un errore durante il recupero dei tuoi esami precedenti. Riprova"
+      },
+      "empty": {
+        "title": {
+          "pre": "Non hai ancora svolto nessun",
+          "post": "esame"
         },
-        "comingSoon": {
-          "title": "Prossimamente",
-          "message": "Stiamo ancora lavorando per aggiungere altri argomenti. Per favore, controlla tra qualche giorno."
-        },
-        "title": "Scegli il tuo argomento {{topic}}",
-        "desc": "Seleziona una sotto-categoria per iniziare il tuo esame."
-      },
-      "config": {
-        "title": "Creiamo il tuo esame",
-        "desc": "In quale area stai riscontrando problemi?",
-        "difficulty": "Difficoltà",
-        "questions": "Domande",
-        "questionDesc": "Quante domande desideri risolvere in questa sessione.",
-        "notes": "Note",
-        "subtopic": "Sotto-categoria",
-        "notesDesc": "Utilizzeremo queste note nella nostra richiesta per creare il tuo esame.",
-        "generating": "Generazione dell'Esame",
-        "submit": "Invia {{num}} crediti"
-      },
-      "pastExams": {
-        "title": "Esami Passati",
-        "error": {
-          "title": "Errore",
-          "message": "Si è verificato un errore durante il recupero dei tuoi esami passati. Per favore, riprova."
-        },
-        "empty": {
-          "title": {
-            "pre": "Non hai sostenuto alcun",
-            "post": "esame"
-          },
-          "message": "Non hai sostenuto alcun esame su questo argomento. Un po' strano, ma ognuno ha i suoi gusti."
-        }
-      },
-      "exam": {
-        "grade": "Valutazione dell'Esame",
-        "submit": "Invia"
-      },
-      "results": {
-        "loading": {
-          "title": "Caricamento dei Risultati",
-          "message": "Stiamo recuperando i tuoi risultati. Per favore, attendi."
-        },
-        "error": {
-          "title": "Errore",
-          "message": "Si è verificato un errore durante il recupero dei risultati. Per favore, riprova",
-          "btn": "Riprova"
-        }
+        "message": "Non hai ancora svolto esami su questo argomento. Un po' strano, ma ognuno ha i propri gusti."
       }
     },
-    "userNav": {
-      "logout": {
-        "btn": "Esci",
-        "title": "Sei sicuro di voler uscire?",
-        "message": "Uscirai dal tuo account e non potrai accedere al tuo account fino a quando non effettuerai nuovamente l'accesso."
-      },
-      "profile": "Profilo",
-      "settings": "Impostazioni",
-      "dashboard": "Cruscotto",
-      "credits": "Crediti",
-      "statistics": "Statistiche",
-      "home": "Home"
+    "exam": {
+      "grade": "Valutazione Esame",
+      "submit": "Invia"
     },
-    "continue": "Continua",
-    "cancel": "Annulla",
-    "profile": {
-      "title": "Profilo",
-      "message": "Aggiorna le informazioni del tuo profilo",
-      "name": {
-        "title": "Nome",
-        "placeholder": "Inserisci il tuo nome",
-        "desc": "Il tuo nome verrà utilizzato per personalizzare la tua esperienza"
+    "results": {
+      "loading": {
+        "title": "Caricamento Risultati",
+        "message": "Stiamo recuperando i tuoi risultati. Attendere prego."
       },
-      "language": {
-        "title": "Lingua",
-        "desc": "Seleziona la lingua preferita",
-        "empty": "Nessuna lingua disponibile"
-      },
-      "update": "Aggiorna Profilo"
+      "error": {
+        "title": "Errore",
+        "message": "Si è verificato un errore durante il recupero dei tuoi risultati. Riprova",
+        "btn": "Riprova"
+      }
+    }
+  },
+  "userNav": {
+    "logout": {
+      "btn": "Logout",
+      "title": "Sei sicuro di voler effettuare il logout?",
+      "message": "Verrai disconnesso dal tuo account e non potrai accedere al tuo account fino a quando non effettui nuovamente il login."
     },
-    "settings": {
-      "title": "Impostazioni",
-      "message": "Aggiorna le impostazioni del tuo account",
-      "theme": {
-        "title": "Tema",
-        "desc": "Seleziona il tema preferito",
-        "light": "Chiaro",
-        "dark": "Scuro"
-      },
-      "update": "Aggiorna Impostazioni"
+    "profile": "Profilo",
+    "settings": "Impostazioni",
+    "dashboard": "Dashboard",
+    "credits": "Crediti",
+    "statistics": "Statistiche",
+    "home": "Home"
+  },
+  "continue": "Continua",
+  "cancel": "Annulla",
+  "profile": {
+    "title": "Profilo",
+    "message": "Aggiorna le informazioni del tuo profilo",
+    "name": {
+      "title": "Nome",
+      "placeholder": "Inserisci il tuo nome",
+      "desc": "Il tuo nome verrà utilizzato per personalizzare la tua esperienza"
     },
-    "statistics": {
-      "title": "Statistiche",
-      "message": "Visualizza le statistiche del tuo esame",
-      "levels": {
-        "beginner": "Principiante",
-        "novice": "Novizio",
-        "intermediate": "Intermedio",
-        "advanced": "Avanzato",
-        "expert": "Esperto",
-        "unclassified": "Non classificato"
-      },
-      "leaderboard": {
-        "title": "Classifica",
-        "empty": "Nessuno ha ancora sostenuto questo esame. Sii il primo!",
-        "description": "Le prime 10 valutazioni per questo esame",
-        "user": "Utente",
-        "score": "Punteggio",
-        "topic": "Argomento",
-        "subtopic": "Sotto-categoria"
-      },
-      "points": "Punti",
-      "avgScore": "Punteggio Medio",
-      "uniqueTopics": "Argomenti Unici",
-      "totalExams": "Esami Totali"
+    "language": {
+      "title": "Lingua",
+      "desc": "Seleziona la tua lingua preferita",
+      "empty": "Nessuna lingua disponibile"
     },
-    "quizBreakdown": "Scomposizione del Quiz"
+    "update": "Aggiorna Profilo"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "message": "Aggiorna le impostazioni del tuo account",
+    "theme": {
+      "title": "Tema",
+      "desc": "Seleziona il tuo tema preferito",
+      "light": "Chiaro",
+      "dark": "Scuro"
+    },
+    "update": "Aggiorna Impostazioni"
+  },
+  "statistics": {
+    "title": "Statistiche",
+    "message": "Visualizza le tue statistiche degli esami",
+    "levels": {
+      "beginner": "Principiante",
+      "novice": "Novizio",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzato",
+      "expert": "Esperto",
+      "unclassified": "Non Classificato"
+    },
+    "leaderboard": {
+      "title": "Classifica",
+      "empty": "Ancora nessuno ha svolto questo esame. Sii il primo!",
+      "description": "Primi 10 punteggi per questo esame",
+      "user": "Utente",
+      "score": "Punteggio",
+      "topic": "Argomento",
+      "subtopic": "Sottoargomento"
+    },
+    "points": "Punti",
+    "avgScore": "Punteggio Medio",
+    "uniqueTopics": "Argomenti Unici",
+    "totalExams": "Esami Totali"
+  },
+  "quizBreakdown": "Suddivisione del Quiz",
+  "sidebar": {
+    "history": "Storia",
+    "science": "Scienze",
+    "math": "Matematica"
   }
-  
+}

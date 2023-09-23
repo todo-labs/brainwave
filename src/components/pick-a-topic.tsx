@@ -10,6 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";
+import { useMixpanel } from "@/lib/mixpanel";
 
 const PickATopic = () => {
   const {
@@ -26,9 +27,27 @@ const PickATopic = () => {
     }
   );
 
+  const { trackEvent } = useMixpanel();
+
   const cleanTopic = topic.replace(/_/g, " ").toLocaleLowerCase();
 
   const { t } = useTranslation(["common"]);
+
+  const handleCardClick = (subtopic: string) => {
+    setCurrentSubTopic(subtopic);
+    trackEvent("ButtonClick", {
+      topic,
+      subtopic,
+    });
+  };
+
+  const handleContinueClick = () => {
+    setCurrentStep("config");
+    trackEvent("ButtonClick", {
+      topic,
+      subtopic: currentSubTopic,
+    });
+  };
 
   return (
     <Section
@@ -63,18 +82,13 @@ const PickATopic = () => {
                 key={subtopic}
                 title={subtopic}
                 selected={subtopic === currentSubTopic}
-                onClick={() => {
-                  setCurrentSubTopic(subtopic);
-                }}
+                onClick={() => handleCardClick(subtopic)}
               />
             ))}
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
-      <Button
-        disabled={!currentSubTopic}
-        onClick={() => setCurrentStep("config")}
-      >
+      <Button disabled={!currentSubTopic} onClick={handleContinueClick}>
         {t("continue")}
       </Button>
     </Section>

@@ -16,9 +16,9 @@
   <p align="center">
     <a href="https://brainwave.quest">View Demo</a>
     ·
-    <a href="https://github.com/todo-labs/brainwave/issues">Report Bug</a>
+    <a href="https://github.com/todo-labs/brainwave/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=">Report Bug</a>
     ·
-    <a href="https://github.com/todo-labs/brainwave/issues">Request Feature</a>
+    <a href="https://github.com/todo-labs/brainwave/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=">Request Feature</a>
   </p>
 </div>
 
@@ -98,6 +98,15 @@ To switch to a different language, simply click on the language selector on the 
 - How to setup an embedding vector database
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Integrations
+
+**Mixpanel**
+
+we prioritize data-driven decision-making to enhance the user experience and continuously improve our services.
+To achieve this, we have integrated Mixpanel, a powerful analytics and user engagement platform, into our application.
+
+**Sentry (Coming Soon)**
 
 ### Prerequisites
 
