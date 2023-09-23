@@ -55,6 +55,8 @@
       "questions": "Questions",
       "questionDesc": "How many questions would you like to solve in this session.",
       "notes": "Notes",
+      "questionsLabel": "({{num}} questions)",
+      "notesPlaceholder": "Enter any notes you would like to see in your exam prompt",
       "subtopic": "Subtopic",
       "notesDesc": "We will use these notes in our prompt to build your exam.",
       "generating": "Generating Exam",
@@ -156,5 +158,10 @@
     "uniqueTopics": "Unique Topics",
     "totalExams": "Total Exams"
   },
-  "quizBreakdown": "Quiz Breakdown"
+  "quizBreakdown": "Quiz Breakdown",
+  "sidebar": {
+    "history": "History",
+    "science": "Science",
+    "math": "Math"
+  }
 }

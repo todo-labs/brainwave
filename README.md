@@ -64,6 +64,7 @@ We're excited to announce that we now support multiple languages! Thanks to the 
 - 🇩🇪 German
 - 🇮🇹 Italian
 - 🇯🇵 Japanese
+- 🇰🇷 Korean
 - 🇵🇹 Portuguese
 - 🇷🇺 Russian
 - 🇪🇸 Spanish
@@ -98,6 +99,15 @@ To switch to a different language, simply click on the language selector on the 
 - How to setup an embedding vector database
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Integrations
+
+**Mixpanel**
+
+we prioritize data-driven decision-making to enhance the user experience and continuously improve our services.
+To achieve this, we have integrated Mixpanel, a powerful analytics and user engagement platform, into our application.
+
+**Sentry (Coming Soon)**
 
 ### Prerequisites
 

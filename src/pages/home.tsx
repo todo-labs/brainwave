@@ -12,7 +12,6 @@ import PastExams from "@/components/past-exams";
 import Exam from "@/components/exam";
 
 import useStore from "@/hooks/useStore";
-import { useSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {

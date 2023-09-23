@@ -2,12 +2,12 @@
   "appName": "Brainwave",
   "landing": {
     "devtagline": {
-      "pre": "Enciende tu",
+      "pre": "Despierta tu",
       "post": "Inteligencia"
     },
-    "title": "Preparación SAT de IA",
-    "desc": "Presentamos Brainwave: la plataforma de cuestionarios definitiva para estudiantes. Realiza cuestionarios sobre tus materias favoritas, a tu nivel de dificultad deseado. Construye tu conocimiento y gana insignias para mostrar tus habilidades. Brainwave es la herramienta perfecta para estudiar para el SAT.",
-    "getStarted": "Empezar",
+    "title": "Preparación AI SAT",
+    "desc": "Presentamos Brainwave: la plataforma de cuestionarios definitiva para los estudiantes. Realiza cuestionarios sobre tus temas favoritos, en el nivel de dificultad que desees. Construye tu conocimiento y obtén insignias para mostrar tus habilidades. Brainwave es la herramienta perfecta para estudiar para el SAT.",
+    "getStarted": "Comenzar",
     "howItWorks": "Cómo Funciona"
   },
   "login": {
@@ -19,8 +19,8 @@
     "privacy": "Política de Privacidad"
   },
   "verifyEmail": {
-    "title": "Verifica tu Correo Electrónico",
-    "desc": "Hemos enviado un enlace de verificación a tu dirección de correo electrónico. Por favor, haz clic en el enlace para completar la configuración de tu cuenta.",
+    "title": "Verifica tu correo electrónico",
+    "desc": "Hemos enviado un enlace de verificación a tu dirección de correo electrónico. Haz clic en el enlace para completar la configuración de tu cuenta.",
     "resend": "Reenviar Correo Electrónico",
     "goBack": "Volver"
   },
@@ -34,7 +34,7 @@
     "sidebar": {
       "math": "Matemáticas",
       "history": "Historia",
-      "science": "Ciencias"
+      "science": "Ciencia"
     },
     "pickAnExam": {
       "error": {
@@ -45,18 +45,20 @@
         "title": "Próximamente",
         "message": "Todavía estamos trabajando en agregar más temas. Por favor, vuelve en unos días."
       },
-      "title": "Elige tu tema {{topic}}",
+      "title": "Elige tu tema de {{topic}}",
       "desc": "Selecciona un subtema para comenzar tu examen."
     },
     "config": {
-      "title": "Creemos tu examen",
+      "title": "Construye tu examen",
       "desc": "¿En qué área tienes problemas?",
       "difficulty": "Dificultad",
       "questions": "Preguntas",
       "questionDesc": "¿Cuántas preguntas te gustaría resolver en esta sesión?",
       "notes": "Notas",
-      "subtopics": "Subtemas",
-      "notesDesc": "Utilizaremos estas notas en nuestra solicitud para crear tu examen.",
+      "questionsLabel": "({{num}} preguntas)",
+      "notesPlaceholder": "Ingresa cualquier nota que te gustaría ver en tu enunciado de examen",
+      "subtopic": "Subtema",
+      "notesDesc": "Utilizaremos estas notas en nuestro enunciado para construir tu examen.",
       "generating": "Generando Examen",
       "submit": "Enviar {{num}} créditos"
     },
@@ -68,10 +70,10 @@
       },
       "empty": {
         "title": {
-          "pre": "No has tomado ningún",
+          "pre": "No has realizado ningún",
           "post": "examen"
         },
-        "message": "No has tomado ningún examen sobre este tema. Un poco extraño, pero cada uno con sus gustos."
+        "message": "No has realizado ningún examen sobre este tema. Un poco extraño, pero cada quien con sus gustos."
       }
     },
     "exam": {
@@ -94,23 +96,24 @@
     "logout": {
       "btn": "Cerrar Sesión",
       "title": "¿Estás seguro de que quieres cerrar sesión?",
-      "message": "Cerrarás tu cuenta y no podrás acceder a ella hasta que vuelvas a iniciar sesión."
+      "message": "Cerrarás sesión de tu cuenta y no podrás acceder a ella hasta que vuelvas a iniciar sesión."
     },
     "profile": "Perfil",
     "settings": "Configuración",
     "dashboard": "Tablero",
     "credits": "Créditos",
-    "statistics": "Estadísticas"
+    "statistics": "Estadísticas",
+    "home": "Inicio"
   },
   "continue": "Continuar",
   "cancel": "Cancelar",
   "profile": {
     "title": "Perfil",
-    "message": "Actualiza tu información de perfil",
+    "message": "Actualiza la información de tu perfil",
     "name": {
       "title": "Nombre",
       "placeholder": "Ingresa tu nombre",
-      "desc": "Tu nombre se usará para personalizar tu experiencia"
+      "desc": "Tu nombre se utilizará para personalizar tu experiencia"
     },
     "language": {
       "title": "Idioma",
@@ -132,35 +135,33 @@
   },
   "statistics": {
     "title": "Estadísticas",
-    "message": "Ver estadísticas de su examen",
+    "message": "Ver tus estadísticas de examen",
     "levels": {
       "beginner": "Principiante",
       "novice": "Novato",
       "intermediate": "Intermedio",
       "advanced": "Avanzado",
       "expert": "Experto",
-      "unclassified": "No clasificado"
+      "unclassified": "Sin Clasificar"
     },
     "leaderboard": {
-      "title": "Tabla de clasificación",
-      "empty": "Nadie ha tomado este examen todavía. ¡Sea el primero!",
-      "description": "Los 10 mejores puntajes para este examen",
+      "title": "Tabla de Posiciones",
+      "empty": "Nadie ha realizado este examen aún. ¡Sé el primero!",
+      "description": "Las 10 mejores puntuaciones para este examen",
       "user": "Usuario",
-      "score": "Puntaje",
+      "score": "Puntuación",
       "topic": "Tema",
       "subtopic": "Subtema"
     },
     "points": "Puntos",
-    "avgScore": "Puntaje promedio",
-    "uniqueTopics": "Temas únicos",
-    "totalExams": "Total de exámenes"
+    "avgScore": "Puntuación Promedio",
+    "uniqueTopics": "Temas Únicos",
+    "totalExams": "Total de Exámenes"
   },
   "quizBreakdown": "Desglose del Cuestionario",
-  "userSidebar": {
-    "home": "Inicio",
-    "profile": "Perfil",
-    "settings": "Configuración",
-    "statistics": "Estadísticas",
-    "Dashboard": "Tablero"
+  "sidebar": {
+    "history": "Historia",
+    "science": "Ciencia",
+    "math": "Matemáticas"
   }
 }

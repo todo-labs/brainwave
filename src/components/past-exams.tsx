@@ -20,17 +20,28 @@ import { Progress } from "./ui/progress";
 import { api } from "@/lib/api";
 import { cleanEnum } from "@/lib/utils";
 import useStore from "@/hooks/useStore";
+import { useMixpanel } from "@/lib/mixpanel";
 
 const PastExamCard = (props: Quiz) => {
   const { setCurrentQuiz, setCurrentStep } = useStore();
+  const { trackEvent } = useMixpanel();
+
+  const handleCardClick = () => {
+    setCurrentQuiz({ ...props, questions: [] });
+    setCurrentStep("result");
+    trackEvent("ButtonClick", {
+      label: "PastExamCard",
+      id: props.id,
+      topic: props.topic,
+      subtopic: props.subtopic,
+      difficulty: props.difficulty,
+    });
+  };
 
   return (
     <Card
       className="h-[200px] min-w-[250px] max-w-[500px] cursor-pointer justify-center rounded-xl border-2 p-2 shadow-none transition-shadow hover:border-primary hover:border-primary hover:shadow-lg"
-      onClick={() => {
-        setCurrentQuiz({ ...props, questions: [] });
-        setCurrentStep("result");
-      }}
+      onClick={handleCardClick}
     >
       <CardHeader className="mt-2">
         <Badge className="w-fit rounded-md">

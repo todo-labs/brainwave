@@ -17,14 +17,14 @@ type TopicList = {
 
 export const topics: TopicList[] = [
   {
-    name: "Math",
+    name: "sidebar.math",
     children: [
       { name: "Math I", emoji: "🔢", topic: Topics.MATH_I },
       { name: "Math II", emoji: "📈", topic: Topics.MATH_II },
     ],
   },
   {
-    name: "History",
+    name: "sidebar.history",
     children: [
       {
         name: "World History",
@@ -39,7 +39,7 @@ export const topics: TopicList[] = [
     ],
   },
   {
-    name: "Science",
+    name: "sidebar.science",
     children: [
       {
         name: "Chemistry",
@@ -82,4 +82,15 @@ export const statusToColor = (status: ReportStatus) => {
   }
 };
 
-export type Languages = "en" | "es" | "fr" | "de";
+export type Languages =
+  | "ar"
+  | "cn"
+  | "de"
+  | "en"
+  | "es"
+  | "fr"
+  | "it"
+  | "ja"
+  | "ko"
+  | "pt"
+  | "ru";

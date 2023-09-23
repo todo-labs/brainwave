@@ -9,6 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useSession } from "next-auth/react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { Loader2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,14 +43,21 @@ import {
 
 import { api } from "@/lib/api";
 import { Languages, cn } from "@/lib/utils";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Loader2Icon } from "lucide-react";
+import { useMixpanel } from "@/lib/mixpanel";
 
 const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
+  { label: "Arabic", value: "ar" },
+  { label: "Chinese", value: "cn" },
   { label: "German", value: "de" },
+  { label: "English", value: "en" },
   { label: "Spanish", value: "es" },
+  { label: "Spanish", value: "es" },
+  { label: "French", value: "fr" },
+  { label: "Italian", value: "it" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
 ] as const;
 
 const ProfilePage: NextPage = (
@@ -58,14 +67,15 @@ const ProfilePage: NextPage = (
   const router = useRouter();
   const { toast } = useToast();
   const { t, i18n } = useTranslation("common");
+  const { trackEvent } = useMixpanel();
 
   const { data: profile } = api.user.get.useQuery();
 
   const form = useForm<ProfileRequestType>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: session?.user?.name ?? "",
-      language: (profile?.lang as Languages) || "en",
+      name: session?.user?.name || profile?.name || "",
+      language: session?.user.lang || (profile?.lang as Languages) || "en",
     },
   });
 
@@ -80,7 +90,7 @@ const ProfilePage: NextPage = (
         user: {
           ...session?.user,
           name: variables.name,
-          languages: variables.language,
+          lang: variables.language,
         },
       });
     },
@@ -91,16 +101,16 @@ const ProfilePage: NextPage = (
       });
     },
   });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const clientSideLanguageChange = (newLocale: string) => {
-    i18n.changeLanguage(newLocale);
-  };
 
   async function onSubmit(data: ProfileRequestType) {
     try {
       await updateProfileMutation.mutateAsync(data);
-      clientSideLanguageChange(data.language ?? "en");
+      i18n.changeLanguage(data.language ?? "en");
       onToggleLanguageClick(data.language ?? "en");
+      trackEvent("FormSubmission", {
+        label: "Profile",
+        ...data,
+      });
     } catch (error) {
       console.error(error);
     }

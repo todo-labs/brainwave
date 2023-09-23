@@ -19,20 +19,19 @@ import {
   FormDescription,
   FormMessage,
 } from "@/components/ui/form";
-
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SettingsLayout from "@/components/user/sidebar-nav";
 import { Separator } from "@/components/ui/separator";
 
 import { toast } from "@/hooks/useToast";
+import { useMixpanel } from "@/lib/mixpanel";
 
 type Theme = "light" | "dark";
 
-const SettingsPage: NextPage = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const SettingsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { setTheme, theme: currentTheme } = useTheme();
+  const { trackEvent } = useMixpanel();
   const appearanceFormSchema = z.object({
     theme: z.enum(["light", "dark"], {
       required_error: "Please select a theme.",
@@ -42,7 +41,7 @@ const SettingsPage: NextPage = (
   type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
 
   const defaultValues: Partial<AppearanceFormValues> = {
-    theme: (currentTheme as Theme) ?? "light",
+    theme: (currentTheme as Theme) || "light",
   };
 
   const form = useForm<AppearanceFormValues>({
@@ -54,6 +53,10 @@ const SettingsPage: NextPage = (
     setTheme(data.theme);
     toast({
       title: "Your Appearance has been updated",
+    });
+    trackEvent("FormSubmission", {
+      label: "Appearance",
+      value: data.theme,
     });
   }
 
