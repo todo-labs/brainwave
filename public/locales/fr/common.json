@@ -2,18 +2,18 @@
   "appName": "Brainwave",
   "landing": {
     "devtagline": {
-      "pre": "Allumez votre",
+      "pre": "Stimulez votre",
       "post": "Intelligence"
     },
-    "title": "Préparation au SAT par l'IA",
-    "desc": "Découvrez Brainwave : la plateforme de quiz ultime pour les apprenants. Faites des quiz sur vos matières préférées, à votre niveau de difficulté souhaité. Acquérez des connaissances et gagnez des badges pour mettre en valeur vos compétences. Brainwave est l'outil parfait pour étudier pour le SAT.",
+    "title": "Préparation AI SAT",
+    "desc": "Découvrez Brainwave : la plateforme de quiz ultime pour les apprenants. Faites des quiz sur vos sujets préférés, au niveau de difficulté souhaité. Développez vos connaissances et obtenez des badges pour mettre en valeur vos compétences. Brainwave est l'outil parfait pour étudier pour le SAT.",
     "getStarted": "Commencer",
     "howItWorks": "Comment ça marche"
   },
   "login": {
     "title": "Connectez-vous à votre compte",
     "subheading": "Entrez votre adresse e-mail ci-dessous pour créer votre compte",
-    "description": "En cliquant sur continuer, vous acceptez nos",
+    "description": "En cliquant sur Continuer, vous acceptez nos",
     "and": "et",
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité"
@@ -42,21 +42,23 @@
         "message": "Une erreur s'est produite lors de la récupération de nos sujets. Veuillez réessayer"
       },
       "comingSoon": {
-        "title": "Prochainement",
-        "message": "Nous travaillons encore sur l'ajout de plus de sujets. Revenez dans quelques jours."
+        "title": "Bientôt disponible",
+        "message": "Nous travaillons encore sur l'ajout de plus de sujets. Veuillez revenir dans quelques jours."
       },
       "title": "Choisissez votre sujet {{topic}}",
       "desc": "Sélectionnez un sous-sujet pour commencer votre examen."
     },
     "config": {
-      "title": "Créons votre examen",
-      "desc": "Dans quelle domaine avez-vous des problèmes ?",
+      "title": "Construisons votre examen",
+      "desc": "Quel domaine pose problème ?",
       "difficulty": "Difficulté",
       "questions": "Questions",
-      "questionDesc": "Combien de questions souhaitez-vous résoudre lors de cette session ?",
+      "questionDesc": "Combien de questions souhaitez-vous résoudre lors de cette session.",
       "notes": "Notes",
-      "subtopics": "Sous-sujets",
-      "notesDesc": "Nous utiliserons ces notes dans notre demande pour créer votre examen.",
+      "questionsLabel": "({{num}} questions)",
+      "notesPlaceholder": "Entrez toutes les notes que vous souhaitez voir dans votre énoncé d'examen",
+      "subtopic": "Sous-sujet",
+      "notesDesc": "Nous utiliserons ces notes dans notre énoncé pour construire votre examen.",
       "generating": "Génération de l'examen",
       "submit": "Soumettre {{num}} crédits"
     },
@@ -69,13 +71,13 @@
       "empty": {
         "title": {
           "pre": "Vous n'avez pas passé d'",
-          "post": "examen"
+          "post": "examens"
         },
-        "message": "Vous n'avez pas passé d'examen sur ce sujet. Un peu étrange, mais chacun ses goûts."
+        "message": "Vous n'avez passé aucun examen sur ce sujet. Un peu étrange, mais chacun ses goûts."
       }
     },
     "exam": {
-      "grade": "Correction de l'examen",
+      "grade": "Évaluation de l'examen",
       "submit": "Soumettre"
     },
     "results": {
@@ -94,13 +96,14 @@
     "logout": {
       "btn": "Déconnexion",
       "title": "Êtes-vous sûr de vouloir vous déconnecter ?",
-      "message": "Vous serez déconnecté de votre compte et ne pourrez pas y accéder tant que vous ne vous reconnecterez pas."
+      "message": "Vous serez déconnecté de votre compte et ne pourrez pas y accéder tant que vous ne vous serez pas reconnecté."
     },
     "profile": "Profil",
     "settings": "Paramètres",
     "dashboard": "Tableau de bord",
     "credits": "Crédits",
-    "statistics": "Statistiques"
+    "statistics": "Statistiques",
+    "home": "Accueil"
   },
   "continue": "Continuer",
   "cancel": "Annuler",
@@ -117,7 +120,7 @@
       "desc": "Sélectionnez votre langue préférée",
       "empty": "Aucune langue disponible"
     },
-    "update": "Mettre à jour le Profil"
+    "update": "Mettre à jour le profil"
   },
   "settings": {
     "title": "Paramètres",
@@ -128,23 +131,23 @@
       "light": "Clair",
       "dark": "Sombre"
     },
-    "update": "Mettre à jour les Paramètres"
+    "update": "Mettre à jour les paramètres"
   },
   "statistics": {
     "title": "Statistiques",
-    "message": "Voir les statistiques de votre examen",
+    "message": "Consultez vos statistiques d'examen",
     "levels": {
       "beginner": "Débutant",
       "novice": "Novice",
       "intermediate": "Intermédiaire",
       "advanced": "Avancé",
       "expert": "Expert",
-      "unclassified": "Non classé"
+      "unclassified": "Non classifié"
     },
     "leaderboard": {
       "title": "Classement",
       "empty": "Personne n'a encore passé cet examen. Soyez le premier !",
-      "description": "Les 10 meilleurs scores pour cet examen",
+      "description": "Top 10 des scores pour cet examen",
       "user": "Utilisateur",
       "score": "Score",
       "topic": "Sujet",
@@ -155,12 +158,10 @@
     "uniqueTopics": "Sujets uniques",
     "totalExams": "Total des examens"
   },
-  "quizBreakdown": "Détail du Quiz",
-  "userSidebar": {
-    "home": "Accueil",
-    "profile": "Profil",
-    "settings": "Paramètres",
-    "statistics": "Statistiques",
-    "Dashboard": "Tableau de bord"
+  "quizBreakdown": "Répartition du quiz",
+  "sidebar": {
+    "history": "Histoire",
+    "science": "Science",
+    "math": "Mathématiques"
   }
 }
