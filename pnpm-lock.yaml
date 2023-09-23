@@ -116,9 +116,15 @@ dependencies:
   async:
     specifier: ^3.2.4
     version: 3.2.4
+  chalk:
+    specifier: ^5.3.0
+    version: 5.3.0
   class-variance-authority:
     specifier: ^0.6.1
     version: 0.6.1
+  cli-progress:
+    specifier: ^3.12.0
+    version: 3.12.0
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
@@ -146,6 +152,9 @@ dependencies:
   micro:
     specifier: ^10.0.1
     version: 10.0.1
+  mixpanel-browser:
+    specifier: ^2.47.0
+    version: 2.47.0
   next:
     specifier: ^13.4.19
     version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
@@ -247,12 +256,21 @@ devDependencies:
   '@types/async':
     specifier: ^3.2.20
     version: 3.2.20
+  '@types/chalk':
+    specifier: ^2.2.0
+    version: 2.2.0
+  '@types/cli-progress':
+    specifier: ^3.11.2
+    version: 3.11.2
   '@types/eslint':
     specifier: ^8.44.2
     version: 8.44.2
   '@types/lodash.partition':
     specifier: ^4.6.7
     version: 4.6.7
+  '@types/mixpanel-browser':
+    specifier: ^2.47.1
+    version: 2.47.1
   '@types/node':
     specifier: ^18.17.14
     version: 18.17.14
@@ -2478,6 +2496,19 @@ packages:
     resolution: {integrity: sha512-6jSBQQugzyX1aWto0CbvOnmxrU9tMoXfA9gc4IrLEtvr3dTwSg5GLGoWiZnGLI6UG/kqpB3JOQKQrqnhUWGKQA==}
     dev: true
 
+  /@types/chalk@2.2.0:
+    resolution: {integrity: sha512-1zzPV9FDe1I/WHhRkf9SNgqtRJWZqrBWgu7JGveuHmmyR9CnAPCie2N/x+iHrgnpYBIcCJWHBoMRv2TRWktsvw==}
+    deprecated: This is a stub types definition for chalk (https://github.com/chalk/chalk). chalk provides its own type definitions, so you don't need @types/chalk installed!
+    dependencies:
+      chalk: 5.3.0
+    dev: true
+
+  /@types/cli-progress@3.11.2:
+    resolution: {integrity: sha512-Yt/8rEJalfa9ve2SbfQnwFHrc9QF52JIZYHW3FDaTMpkCvnns26ueKiPHDxyJ0CS//IqjMINTx7R5Xa7k7uFHQ==}
+    dependencies:
+      '@types/node': 18.17.14
+    dev: true
+
   /@types/d3-array@3.0.7:
     resolution: {integrity: sha512-4/Q0FckQ8TBjsB0VdGFemJOG8BLXUB2KKlL0VmZ+eOYeOnTb/wDRQqYWpBmQ6IlvWkXwkYiot+n9Px2aTJ7zGQ==}
     dev: false
@@ -2597,6 +2628,10 @@ packages:
     dependencies:
       '@types/unist': 3.0.0
     dev: false
+
+  /@types/mixpanel-browser@2.47.1:
+    resolution: {integrity: sha512-4Oif1hbjmStA6KI1OLer19rbKjlPd67ujp5Wipfa7rIskA/lOFZbp6kYsPjXD0f5AiiCQTbf0R/SnnzgOaKrbA==}
+    dev: true
 
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
@@ -3268,6 +3303,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
+  /chalk@5.3.0:
+    resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
   /character-entities-legacy@3.0.0:
     resolution: {integrity: sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ==}
     dev: false
@@ -3318,6 +3357,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       restore-cursor: 3.1.0
+    dev: false
+
+  /cli-progress@3.12.0:
+    resolution: {integrity: sha512-tRkV3HJ1ASwm19THiiLIXLO7Im7wlTuKnvkYaTkyoAPefqjNg7W7DHKUlGRxy9vxDvbyCYQkQozvptuMkGCg8A==}
+    engines: {node: '>=4'}
+    dependencies:
+      string-width: 4.2.3
     dev: false
 
   /cli-spinners@2.9.0:
@@ -6202,6 +6248,10 @@ packages:
 
   /mitt@3.0.0:
     resolution: {integrity: sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==}
+    dev: false
+
+  /mixpanel-browser@2.47.0:
+    resolution: {integrity: sha512-Ldrva0fRBEIFWmEibBQO1PulfpJVF3pf28Guk09lDirDaSQqqU/xs9zQLwN2rL5VwVtsP1aD3JaCgaa98EjojQ==}
     dev: false
 
   /mkdirp-classic@0.5.3:
