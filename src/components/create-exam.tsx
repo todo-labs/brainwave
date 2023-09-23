@@ -42,6 +42,7 @@ import { useToast } from "@/hooks/useToast";
 import { env } from "@/env.mjs";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
+import { useMixpanel } from "@/lib/mixpanel";
 
 export function CreateConfig() {
   const { currentTopic, setCurrentQuiz, currentSubTopic, setCurrentStep } =
@@ -49,6 +50,7 @@ export function CreateConfig() {
 
   const { toast } = useToast();
   const { data: session } = useSession();
+  const { trackEvent } = useMixpanel();
 
   const createQuizMutation = api.quiz.createExam.useMutation({
     onSuccess: (data) => {
@@ -79,6 +81,13 @@ export function CreateConfig() {
     try {
       const quiz = await createQuizMutation.mutateAsync(values);
       setCurrentQuiz(quiz as QuizWithQuestions);
+      trackEvent("FormSubmission", {
+        label: "CreateQuiz",
+        topic: currentTopic,
+        subtopic: currentSubTopic,
+        difficulty: values.difficulty,
+        questions: values.questions,
+      });
     } catch (err) {
       console.log(err);
     }
