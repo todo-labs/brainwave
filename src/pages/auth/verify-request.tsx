@@ -45,7 +45,7 @@ const VerifyRequestPage: NextPage = (
           {t("verifyEmail.desc")}
         </p>
         <div className="flex justify-center space-x-5">
-          <Button>{t("verifyEmail.resendEmail")}</Button>
+          <Button>{t("verifyEmail.resend")}</Button>
           <Button onClick={() => router.back()} variant="secondary">
             {t("verifyEmail.goBack")}
           </Button>

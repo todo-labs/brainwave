@@ -44,6 +44,7 @@ import {
 import { api } from "@/lib/api";
 import { Languages, cn } from "@/lib/utils";
 import { useMixpanel } from "@/lib/mixpanel";
+import useLocale from "@/hooks/useLocale";
 
 const languages = [
   { label: "Arabic", value: "ar" },
@@ -68,6 +69,7 @@ const ProfilePage: NextPage = (
   const { toast } = useToast();
   const { t, i18n } = useTranslation("common");
   const { trackEvent } = useMixpanel();
+  const { changeLocale } = useLocale(session?.user.lang);
 
   const { data: profile } = api.user.get.useQuery();
 
@@ -105,8 +107,7 @@ const ProfilePage: NextPage = (
   async function onSubmit(data: ProfileRequestType) {
     try {
       await updateProfileMutation.mutateAsync(data);
-      i18n.changeLanguage(data.language ?? "en");
-      onToggleLanguageClick(data.language ?? "en");
+      changeLocale(data.language);
       trackEvent("FormSubmission", {
         label: "Profile",
         ...data,
@@ -115,11 +116,6 @@ const ProfilePage: NextPage = (
       console.error(error);
     }
   }
-
-  const onToggleLanguageClick = (newLocale: string) => {
-    const { pathname, asPath, query } = router;
-    router.push({ pathname, query }, asPath, { locale: newLocale });
-  };
 
   return (
     <SettingsLayout>

@@ -12,6 +12,10 @@ import PastExams from "@/components/past-exams";
 import Exam from "@/components/exam";
 
 import useStore from "@/hooks/useStore";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import useLocale from "@/hooks/useLocale";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -21,11 +25,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function Home(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) {
+export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { currentStep } = useStore();
-  const { t } = useTranslation(["common"]);
+  const { t, i18n } = useTranslation(["common"]);
+  const { data: session } = useSession();
+  const { changeLocale } = useLocale();
+
+  useEffect(() => {
+    const locale = session?.user?.lang;
+    if (locale !== i18n.language) {
+      changeLocale(locale);
+    }
+  }, [session, router]);
 
   return (
     <>

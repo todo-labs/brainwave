@@ -4,6 +4,8 @@ import { QuestionType, type Questions } from "@prisma/client";
 import { Heading } from "@/components/ui/typography";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import { cn } from "@/lib/utils";
 
@@ -20,22 +22,15 @@ const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
         {question.label}
       </Heading>
       {question.type === QuestionType.MCQ && (
-        <div>
-          {question.options?.map((option, index) => (
-            <div key={index} className="pb-4">
-              <label className="flex items-center space-x-2">
-                <Checkbox
-                  id={`option-${index}`}
-                  onCheckedChange={(e) => {
-                    onSubmit(option);
-                  }}
-                />
-                <span className="text-sm font-medium leading-none text-gray-500">
-                  {option}
-                </span>
-              </label>
-            </div>
-          ))}
+        <div className="pb-4">
+          <RadioGroup>
+            {question.options?.map((option, index) => (
+              <div className="flex items-center space-x-2" key={index}>
+                <RadioGroupItem value={option} id={`option-${index}`} />
+                <Label htmlFor={`option-${index}`}>{option}</Label>
+              </div>
+            ))}
+          </RadioGroup>
         </div>
       )}
       {question.type === QuestionType.SA && (

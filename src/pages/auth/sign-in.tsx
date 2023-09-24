@@ -36,7 +36,7 @@ export default function AuthenticationPage(
           <div
             className="absolute inset-0 bg-cover"
             style={{
-              backgroundImage: "url('/auth-bg.jpeg'), )",
+              backgroundImage: "url(/auth-bg.jpeg)",
             }}
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
