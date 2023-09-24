@@ -57,7 +57,6 @@ Introducing Brainwave, an innovative quiz platform that harnesses the capabiliti
 
 We're excited to announce that we now support multiple languages! Thanks to the power of [next-i18next](https://www.npmjs.com/package/next-i18next) & [Open Ai](https://openai.com/), we've added E2E support for the following languages:
 
-- 🇦🇪 Arabic
 - 🇨🇳 Chinese
 - 🇺🇸 English (default)
 - 🇫🇷 French
@@ -126,17 +125,21 @@ To get started with Brainwave, you will need to set up your development environm
    ```
 3. Install NPM packages
    ```bash
-    pnpm install
+    pnpm i
    ```
 4. Copy over your env file
    ```bash
     cp .env.example .env
    ```
-5. Run the development server
+5. Push the prisma schema to your database
+   ```bash
+    pnpm db:push
+   ```
+6. Run the development server
    ```bash
     pnpm dev
    ```
-6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+7. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
