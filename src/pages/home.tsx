@@ -56,16 +56,16 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
                     <div className="space-between flex items-center">
                       <TabsList defaultValue="choice">
                         <TabsTrigger value="choice" className="relative">
-                          {t("home.tabs.pickAnExam")}
+                          {t("home:tabs:pickAnExam")}
                         </TabsTrigger>
                         <TabsTrigger value="config">
-                          {t("home.tabs.config")}
+                          {t("home:tabs:config")}
                         </TabsTrigger>
                         <TabsTrigger value="exam">
-                          {t("home.tabs.quiz")}
+                          {t("home:tabs:quiz")}
                         </TabsTrigger>
                         <TabsTrigger value="result">
-                          {t("home.tabs.results")}
+                          {t("home:tabs:results")}
                         </TabsTrigger>
                       </TabsList>
                       <div className="ml-auto mr-4">

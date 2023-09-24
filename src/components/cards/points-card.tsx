@@ -74,7 +74,7 @@ const PointsCard = () => {
       <>
         <h1 className="text-6xl font-bold">{count}</h1>
         <p className="text-sm text-muted-foreground">
-          {t("statistics.points")}
+          {t("statistics:points")}
         </p>
       </>
     );
@@ -113,7 +113,7 @@ const PointsCard = () => {
         <Title
           isLoading={isLoading}
           color={getTitles?.color || "text-muted-foreground"}
-          title={t(`statistics.levels.${getTitles?.title || "unclassified"}`)}
+          title={t(`statistics:levels:${getTitles?.title || "unclassified"}`)}
         />
         {/* <ShareIcon className="h-4 w-4 text-muted-foreground" /> */}
       </CardHeader>
@@ -125,17 +125,17 @@ const PointsCard = () => {
           <ScoreCard
             isLoading={isLoading}
             amount={data.averageScore}
-            label={t("statistics.avgScore")}
+            label={t("statistics:avgScore")}
           />
           <ScoreCard
             isLoading={isLoading}
             amount={data.uniqueTopics}
-            label={t("statistics.uniqueTopics")}
+            label={t("statistics:uniqueTopics")}
           />
           <ScoreCard
             isLoading={isLoading}
             amount={data.totalQuizzes}
-            label={t("statistics.totalExams")}
+            label={t("statistics:totalExams")}
           />
           <ScoreCard isLoading amount={0} label="Coming Soon" />
         </section>

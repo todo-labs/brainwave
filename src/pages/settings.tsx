@@ -66,9 +66,9 @@ const SettingsPage: NextPage = (props: InferGetServerSidePropsType<typeof getSer
     <SettingsLayout>
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium">{t("settings.title")}</h3>
+          <h3 className="text-lg font-medium">{t("settings:title")}</h3>
           <p className="text-sm text-muted-foreground">
-            {t("settings.message")}
+            {t("settings:message")}
           </p>
         </div>
         <Separator />
@@ -79,8 +79,8 @@ const SettingsPage: NextPage = (props: InferGetServerSidePropsType<typeof getSer
               name="theme"
               render={({ field }) => (
                 <FormItem className="space-y-1">
-                  <FormLabel>{t("settings.theme.title")}</FormLabel>
-                  <FormDescription>{t("settings.theme.desc")}</FormDescription>
+                  <FormLabel>{t("settings:theme:title")}</FormLabel>
+                  <FormDescription>{t("settings:theme:desc")}</FormDescription>
                   <FormMessage />
                   <RadioGroup
                     onValueChange={field.onChange}
@@ -109,7 +109,7 @@ const SettingsPage: NextPage = (props: InferGetServerSidePropsType<typeof getSer
                           </div>
                         </div>
                         <span className="block w-full p-2 text-center font-normal">
-                          {t("settings.theme.light")}
+                          {t("settings:theme:light")}
                         </span>
                       </FormLabel>
                     </FormItem>
@@ -135,7 +135,7 @@ const SettingsPage: NextPage = (props: InferGetServerSidePropsType<typeof getSer
                           </div>
                         </div>
                         <span className="block w-full p-2 text-center font-normal">
-                          {t("settings.theme.dark")}
+                          {t("settings:theme:dark")}
                         </span>
                       </FormLabel>
                     </FormItem>
@@ -143,7 +143,7 @@ const SettingsPage: NextPage = (props: InferGetServerSidePropsType<typeof getSer
                 </FormItem>
               )}
             />
-            <Button type="submit">{t("settings.update")}</Button>
+            <Button type="submit">{t("settings:update")}</Button>
           </form>
         </Form>
       </div>

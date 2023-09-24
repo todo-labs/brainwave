@@ -95,10 +95,10 @@ const Exam = () => {
         {gradeQuiz.isLoading ? (
           <div className="flex">
             <Loader2Icon className="mr-2 h-5 w-5 animate-spin text-white" />
-            <span>{t("home.exam.grade")}</span>
+            <span>{t("home:exam:grade")}</span>
           </div>
         ) : (
-          <span>{t("home.exam.submit")}</span>
+          <span>{t("home:exam:submit")}</span>
         )}
       </Button>
       <DisclaimerModal />

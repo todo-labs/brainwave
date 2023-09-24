@@ -69,7 +69,7 @@ const ProfilePage: NextPage = (
   const { toast } = useToast();
   const { t, i18n } = useTranslation("common");
   const { trackEvent } = useMixpanel();
-  const { changeLocale } = useLocale(session?.user.lang);
+  const { changeLocale } = useLocale();
 
   const { data: profile } = api.user.get.useQuery();
 
@@ -121,9 +121,9 @@ const ProfilePage: NextPage = (
     <SettingsLayout>
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium">{t("profile.title")}</h3>
+          <h3 className="text-lg font-medium">{t("profile:title")}</h3>
           <p className="text-sm text-muted-foreground">
-            {t("profile.message")}
+            {t("profile:message")}
           </p>
         </div>
         <Separator />
@@ -134,15 +134,15 @@ const ProfilePage: NextPage = (
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("profile.name.title")}</FormLabel>
+                  <FormLabel>{t("profile:name:title")}</FormLabel>
                   <FormControl>
                     <Input
                       className="w-[300px]"
-                      placeholder={t("profile.name.placeholder") as string}
+                      placeholder={t("profile:name:placeholder") as string}
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>{t("profile.name.desc")}</FormDescription>
+                  <FormDescription>{t("profile:name:desc")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -152,7 +152,7 @@ const ProfilePage: NextPage = (
               name="language"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>{t("profile.language.title")}</FormLabel>
+                  <FormLabel>{t("profile:language:title")}</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -177,7 +177,7 @@ const ProfilePage: NextPage = (
                       <Command>
                         <CommandInput placeholder="Search language..." />
                         <CommandEmpty>
-                          {t("profile.language.empty")}
+                          {t("profile:language:empty")}
                         </CommandEmpty>
                         <CommandGroup>
                           {languages.map((language) => (
@@ -204,7 +204,7 @@ const ProfilePage: NextPage = (
                     </PopoverContent>
                   </Popover>
                   <FormDescription>
-                    {t("profile.language.desc")}
+                    {t("profile:language:desc")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -214,7 +214,7 @@ const ProfilePage: NextPage = (
               {updateProfileMutation.isLoading ? (
                 <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                t("profile.update")
+                t("profile:update")
               )}
             </Button>
           </form>

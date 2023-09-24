@@ -70,7 +70,7 @@ const PastExams = () => {
   const { t } = useTranslation(["common"]);
 
   return (
-    <Section title={t("home.pastExams.title")} description="">
+    <Section title={t("home:pastExams:title")} description="">
       <ScrollArea>
         <div className="flex space-x-4 pb-4">
           {isLoading &&
@@ -78,9 +78,9 @@ const PastExams = () => {
           {isError && (
             <Alert variant="destructive">
               <ExclamationTriangleIcon className="h-4 w-4" />
-              <AlertTitle>{t("home.pastExams.error.title")}</AlertTitle>
+              <AlertTitle>{t("home:pastExams:error.title")}</AlertTitle>
               <AlertDescription>
-                {t("home.pastExams.error.message")}
+                {t("home:pastExams:error.message")}
               </AlertDescription>
             </Alert>
           )}
@@ -88,12 +88,12 @@ const PastExams = () => {
             <div className="flex h-[300px] w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed">
               <FileEditIcon className="h-16 w-16 text-muted-foreground/60 dark:text-muted" />
               <h2 className="text-xl font-bold">
-                {t("home.pastExams.empty.title.pre")}{" "}
+                {t("home:pastExams:empty.title.pre")}{" "}
                 <span className="text-primary">{cleanEnum(currentTopic)}</span>{" "}
-                {t("home.pastExams.empty.title.post")}
+                {t("home:pastExams:empty.title.post")}
               </h2>
               <p className="max-w-sm text-center text-base text-muted-foreground">
-                {t("home.pastExams.empty.message")}
+                {t("home:pastExams:empty.message")}
               </p>
             </div>
           )}

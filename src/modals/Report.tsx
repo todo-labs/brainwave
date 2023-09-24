@@ -111,12 +111,12 @@ export function ReportModal() {
         <AlertDialogHeader>
           <AlertDialogTitle>
             <Heading level="h3" className="font-display font-bold">
-              {t("reportModal.title")}
+              {t("reportModal:title")}
             </Heading>
           </AlertDialogTitle>
           <AlertDialogDescription>
             <Paragraph className="text-sm text-gray-500">
-              {t("reportModal.message")}
+              {t("reportModal:message")}
             </Paragraph>
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -131,7 +131,7 @@ export function ReportModal() {
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
-                          placeholder={t("reportModal.placeholder")}
+                          placeholder={t("reportModal:placeholder")}
                         />
                       </SelectTrigger>
                     </FormControl>

@@ -26,9 +26,9 @@ const StatisticsPage: NextPage = (
     <SettingsLayout>
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium">{t("statistics.title")}</h3>
+          <h3 className="text-lg font-medium">{t("statistics:title")}</h3>
           <p className="text-sm text-muted-foreground">
-            {t("statistics.message")}
+            {t("statistics:message")}
           </p>
         </div>
         <Separator />
