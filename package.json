@@ -9,7 +9,8 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "locales": "node scripts/update-locales.mjs"
+    "locales": "node scripts/update-locales.mjs",
+    "db:push": "prisma db push"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -58,6 +59,7 @@
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
     "emailjs": "^4.0.3",
     "i18next": "^22.5.1",
     "langchain": "^0.0.78",

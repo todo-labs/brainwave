@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { SingleBar } from "cli-progress";
 import chalk from "chalk";
 import { OpenAI } from "langchain";
 
@@ -17,11 +16,10 @@ const gpt3 = new OpenAI({
   maxRetries: 3,
 });
 
-async function main() {
-  try {
-    const start = Date.now();
-    const folderContents = fs.readdirSync(FOLDER_PATH);
-
+const stages = {
+  // Stage 1: Identify all translatable directories
+  identifyTranslatableDirectories: async () => {
+    const folderContents = await fs.promises.readdir(FOLDER_PATH);
     const directories = folderContents.filter((item) => {
       const itemPath = path.join(FOLDER_PATH, item);
       return fs.statSync(itemPath).isDirectory();
@@ -31,45 +29,116 @@ async function main() {
       (directory) => directory !== DEFAULT_LANGUAGE
     );
 
-    if (filteredDirectories.length === 0) {
-      console.error(chalk.red("No directories found."));
-      process.exit(1);
-    }
-
     console.log(
-      chalk.blue(
-        `Locales found: [ ${chalk.yellow(filteredDirectories.join(", "))} ]`
+      chalk.green(
+        `✅ Successfully identified ${filteredDirectories.length} translatable directories.`
       )
     );
 
+    if (filteredDirectories.length === 0) {
+      throw new Error("No translatable directories found.");
+    }
+
+    return filteredDirectories;
+  },
+
+  // Stage 2: Load the English translation file
+  loadEnglishTranslationFile: async () => {
     const enPath = path.join(FOLDER_PATH, "en", "common.json");
-    const enContents = JSON.parse(fs.readFileSync(enPath, "utf8"));
-    const progressBar = new SingleBar({
-      format: `Progress |${chalk.green(
-        "{bar}"
-      )}| {percentage}% || {currentDirectory} || {value}/{total} Directories`,
-      barCompleteChar: "\u2588",
-      barIncompleteChar: "\u2591",
-      hideCursor: true,
-    });
+    const enContents = await fs.promises.readFile(enPath, "utf8");
+    const enTranslation = JSON.parse(enContents);
+    console.log(
+      chalk.green(
+        `✅ Successfully loaded the default translation file. Total keys: ${
+          Object.keys(enTranslation).length
+        }`
+      )
+    );
+    return enTranslation;
+  },
 
-    progressBar.start(filteredDirectories.length, 0, {
-      currentDirectory: "",
-    });
-
-    for (let [index, directory] of filteredDirectories.entries()) {
+  // Stage 3: Translate the English translation file to each translatable language
+  translateEnglishTranslationFile: async (
+    /** @type {any} */ enTranslation,
+    /** @type {any[]} */ translatableDirectories
+  ) => {
+    for (let [index, directory] of translatableDirectories.entries()) {
+      console.log("\n\n");
       const outputPath = path.join(FOLDER_PATH, directory, "common.json");
+      let translation;
 
+      console.log(
+        chalk.green(
+          `✅ Translating ${DEFAULT_LANGUAGE} => ${directory}. Directory: ${directory}`
+        )
+      );
+
+      translation = await fs.promises
+        .readFile(outputPath, "utf8")
+        .then((data) => {
+          return JSON.parse(data);
+        })
+        .catch((error) => {
+          console.error(
+            chalk.red(`File does not exist: ${outputPath}. Creating...`)
+          );
+          try {
+            fs.promises.writeFile(outputPath, `{"tmp": "tmp"}`);
+          } catch (error) {
+            console.error(chalk.red(`Error creating file: ${outputPath}.`));
+            console.error(error);
+          }
+        });
+
+      translation = JSON.parse(await fs.promises.readFile(outputPath, "utf8"));
+      const keys = Object.keys(translation);
+      console.log(
+        chalk.green(
+          `✅ Successfully loaded the translation file for directory: ${directory}. Total keys: ${keys.length}`
+        )
+      );
+
+      const missingKeys = [];
+
+      // Check which keys are missing from the translation
+      for (const key of Object.keys(enTranslation)) {
+        if (!Object.keys(translation).includes(key)) {
+          missingKeys.push(key);
+        }
+      }
+
+      // If there are no missing keys, skip the directory
+      if (missingKeys.length === 0) {
+        console.log(
+          chalk.green(
+            `✅ All keys are present in the translation for directory: ${directory}.`
+          )
+        );
+        continue;
+      } else {
+        console.log(
+          chalk.yellow(
+            `⚠️ ${missingKeys.length} missing keys in the translation for directory: ${directory}.`
+          )
+        );
+        console.log(missingKeys.join(", "));
+      }
+
+      // Create a new translation object with only the missing keys
+      translation = {};
+      for (const key of missingKeys) {
+        // @ts-ignore
+        translation[key] = enTranslation[key];
+      }
+
+      // Generate the prompt for the translation call
       const prompt = `Translate the following json translation file to the following language: ${directory}. MUST RETURN AS JSON STRING!!! \n\n ${JSON.stringify(
-        enContents,
+        translation,
         null,
         2
       )} \n\n`;
 
-      progressBar.update(index + 1, {
-        currentDirectory: chalk.cyan(directory),
-      });
-
+      console.log(chalk.green(`✅ Generating translation for ${directory}.`));
       let response = await gpt3.call(prompt);
       let parsedResponse;
 
@@ -81,7 +150,8 @@ async function main() {
         continue;
       }
 
-      if (!validateTranslation(parsedResponse, enContents)) {
+      // Validate the translation
+      if (!validateTranslation(parsedResponse, translation)) {
         console.error(
           chalk.red(
             "Validation failed. Retrying translation for directory: ",
@@ -92,31 +162,74 @@ async function main() {
         continue;
       }
 
-      fs.writeFileSync(outputPath, response);
+      console.log(
+        chalk.green(
+          `✅ Successfully generated missing translations for ${directory}. Total keys: ${
+            Object.keys(parsedResponse).length
+          }`
+        )
+      );
+
+      // Merge the translated keys with the existing translation file
+      const updatedTranslation = {
+        ...translation,
+        ...parsedResponse,
+      };
+
+      console.log(
+        chalk.green(
+          `✅ Successfully merged the translated keys with the existing translation file for directory: ${directory}. Total keys: ${
+            Object.keys(updatedTranslation).length
+          }`
+        )
+      );
+
+      console.log(chalk.green(`✅ Writing translation file to disk.`));
+      await fs.promises.writeFile(
+        outputPath,
+        JSON.stringify(updatedTranslation)
+      );
       console.log(
         chalk.green(
           `✅ Successfully translated ${DEFAULT_LANGUAGE} => ${directory}.`
         )
       );
     }
-    progressBar.stop();
+  },
 
+  // Stage 4: Validate all translations
+  validateTranslations: async (
+    /** @type {any} */ translatableDirectories,
+    /** @type {any} */ enTranslation
+  ) => {
+    for (const directory of translatableDirectories) {
+      const outputPath = path.join(FOLDER_PATH, directory, "common.json");
+      const translation = await fs.promises.readFile(outputPath, "utf8");
+      const parsedTranslation = JSON.parse(translation);
+
+      if (!validateTranslation(parsedTranslation, enTranslation)) {
+        throw new Error(
+          `Translation validation failed for directory: ${directory}`
+        );
+      }
+    }
+  },
+
+  // Stage 5: Log success message and exit
+  logSuccessMessageAndExit: async (/** @type {number} */ start) => {
     console.log(chalk.green("Done!"));
     console.log(chalk.green(`Time elapsed: ${Date.now() - start}ms`));
     process.exit(0);
-  } catch (error) {
-    console.error(chalk.red("An error occurred:"), error);
-    process.exit(1);
-  }
-}
+  },
+};
 
 /**
- * @param {{ [x: string]: any; }} translated
- * @param {{ [x: string]: any; }} enContents
+ * @param {{ [x: string]: any; }} parsedResponse
+ * @param {{ [x: string]: any; }} enTranslation
  */
-function validateTranslation(translated, enContents) {
-  const enKeys = Object.keys(enContents);
-  const translatedKeys = Object.keys(translated);
+function validateTranslation(parsedResponse, enTranslation) {
+  const enKeys = Object.keys(enTranslation);
+  const translatedKeys = Object.keys(parsedResponse);
 
   if (!enKeys.every((key) => translatedKeys.includes(key))) {
     return false;
@@ -124,8 +237,8 @@ function validateTranslation(translated, enContents) {
 
   for (const key of enKeys) {
     if (
-      typeof enContents[key] === "object" &&
-      !validateTranslation(translated[key], enContents[key])
+      typeof enTranslation[key] === "object" &&
+      !validateTranslation(parsedResponse[key], enTranslation[key])
     ) {
       return false;
     }
@@ -134,4 +247,22 @@ function validateTranslation(translated, enContents) {
   return true;
 }
 
-(async () => await main())();
+async function main() {
+  const start = Date.now();
+
+  const translatableDirectories =
+    await stages.identifyTranslatableDirectories();
+
+  const enTranslation = await stages.loadEnglishTranslationFile();
+
+  await stages.translateEnglishTranslationFile(
+    enTranslation,
+    translatableDirectories
+  );
+
+  await stages.validateTranslations(translatableDirectories, enTranslation);
+
+  await stages.logSuccessMessageAndExit(start);
+}
+
+main();
