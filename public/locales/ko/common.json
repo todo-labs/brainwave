@@ -1,174 +1,112 @@
 {
-  "appName": "Brainwave",
-  "landing": {
-    "devtagline": {
-      "pre": "지능을 불태우세요",
-      "post": "을(를) 활성화하세요"
-    },
-    "title": "AI SAT 준비",
-    "desc": "Brainwave를 소개합니다: 학습자를 위한 최고의 퀴즈 플랫폼입니다. 원하는 주제에서 원하는 난이도로 퀴즈를 풀어보세요. 지식을 쌓고 뱃지를 획득하여 여러분의 기술을 선보일 수 있습니다. Brainwave는 SAT 공부에 최적인 도구입니다.",
-    "getStarted": "시작하기",
-    "howItWorks": "사용 방법"
-  },
-  "login": {
-    "title": "계정에 로그인하세요",
-    "subheading": "계정을 만들려면 이메일을 입력하세요",
-    "description": "계속하기를 클릭하면 당사의",
-    "and": "및",
-    "terms": "서비스 약관",
-    "privacy": "개인 정보 보호 정책에 동의하는 것입니다"
-  },
-  "verifyEmail": {
-    "title": "이메일 확인",
-    "desc": "이메일 주소로 확인 링크를 보냈습니다. 계정 설정을 완료하려면 링크를 클릭하세요.",
-    "resend": "이메일 재전송",
-    "goBack": "뒤로 가기"
-  },
-  "home": {
-    "tabs": {
-      "pickAnExam": "시험 선택",
-      "config": "설정",
-      "quiz": "퀴즈",
-      "results": "결과"
-    },
-    "sidebar": {
-      "math": "수학",
-      "history": "역사",
-      "science": "과학"
-    },
-    "pickAnExam": {
-      "error": {
-        "title": "오류",
-        "message": "주제를 가져오는 중 오류가 발생했습니다. 다시 시도해주세요"
-      },
-      "comingSoon": {
-        "title": "곧 출시 예정",
-        "message": "더 많은 주제를 추가하는 작업을 진행 중입니다. 며칠 후에 다시 확인해주세요."
-      },
-      "title": "{{topic}} 주제 선택",
-      "desc": "시험을 시작하려면 하위 주제를 선택하세요."
-    },
-    "config": {
-      "title": "시험 설정",
-      "desc": "어떤 부분에 문제가 있나요?",
-      "difficulty": "난이도",
-      "questions": "문제",
-      "questionDesc": "이 세션에서 풀 문제의 수를 선택하세요.",
-      "notes": "노트",
-      "questionsLabel": "({{num}} 문제)",
-      "notesPlaceholder": "시험 문제에 표시할 노트를 입력하세요",
-      "subtopic": "하위 주제",
-      "notesDesc": "시험 문제에 사용할 노트입니다.",
-      "generating": "시험 생성 중",
-      "submit": "{{num}} 크레딧 제출"
-    },
-    "pastExams": {
-      "title": "지난 시험",
-      "error": {
-        "title": "오류",
-        "message": "지난 시험을 가져오는 중 오류가 발생했습니다. 다시 시도해주세요"
-      },
-      "empty": {
-        "title": {
-          "pre": "아직",
-          "post": "시험을 보지 않았습니다"
-        },
-        "message": "이 주제에 대한 시험을 보지 않았습니다. 조금 이상하지만, 각자의 선택입니다."
-      }
-    },
-    "exam": {
-      "grade": "시험 채점 중",
-      "submit": "제출"
-    },
-    "results": {
-      "loading": {
-        "title": "결과 불러오는 중",
-        "message": "결과를 불러오고 있습니다. 잠시 기다려주세요."
-      },
-      "error": {
-        "title": "오류",
-        "message": "결과를 가져오는 중 오류가 발생했습니다. 다시 시도해주세요",
-        "btn": "재시도"
-      }
-    }
-  },
-  "userNav": {
-    "logout": {
-      "btn": "로그아웃",
-      "title": "로그아웃하시겠습니까?",
-      "message": "계정에서 로그아웃되며, 다시 로그인하기 전까지 계정에 액세스할 수 없습니다."
-    },
-    "profile": "프로필",
-    "settings": "설정",
-    "dashboard": "대시보드",
-    "credits": "크레딧",
-    "statistics": "통계",
-    "home": "홈"
-  },
+  "appName": "브레인웨이브",
+  "landing:devtagline:pre": "지능을 불태우세요",
+  "landing:devtagline:post": "지능",
+  "landing:title": "AI SAT 준비",
+  "landing:desc": "브레인웨이브를 소개합니다: 학습자를 위한 최고의 퀴즈 플랫폼입니다. 원하는 주제에서 원하는 난이도로 퀴즈를 풀어보세요. 지식을 쌓고 자신의 기술을 보여주기 위해 배지를 획득하세요. 브레인웨이브는 SAT 공부에 최적인 도구입니다.",
+  "landing:getStarted": "시작하기",
+  "landing:howItWorks": "사용 방법",
+  "login:title": "계정에 로그인하세요",
+  "login:subheading": "계정을 만들려면 이메일을 입력하세요",
+  "login:description": "계속하기를 클릭하면 당사의",
+  "login:and": "및",
+  "login:terms": "서비스 약관",
+  "login:privacy": "개인 정보 보호 정책",
+  "verifyEmail:title": "이메일 확인",
+  "verifyEmail:desc": "이메일 주소로 확인 링크를 보냈습니다. 계정 설정을 완료하려면 링크를 클릭하세요.",
+  "verifyEmail:resend": "이메일 재전송",
+  "verifyEmail:goBack": "뒤로 가기",
+  "home:tabs:pickAnExam": "시험 선택",
+  "home:tabs:config": "설정",
+  "home:tabs:quiz": "퀴즈",
+  "home:tabs:results": "결과",
+  "home:sidebar:math": "수학",
+  "home:sidebar:history": "역사",
+  "home:sidebar:science": "과학",
+  "home:pickAnExam:error:title": "오류",
+  "home:pickAnExam:error:message": "주제를 가져오는 중 오류가 발생했습니다. 다시 시도하세요.",
+  "home:pickAnExam:comingSoon:title": "곧 출시 예정",
+  "home:pickAnExam:comingSoon:message": "더 많은 주제를 추가하는 작업을 진행 중입니다. 며칠 후에 다시 확인하세요.",
+  "home:pickAnExam:title": "{{topic}} 주제 선택",
+  "home:pickAnExam:desc": "시험을 시작하려면 하위 주제를 선택하세요.",
+  "home:config:title": "시험 만들기",
+  "home:config:desc": "어떤 부분에 문제가 있나요?",
+  "home:config:difficulty": "난이도",
+  "home:config:questions": "문제",
+  "home:config:questionDesc": "이 세션에서 풀 문제의 수를 입력하세요.",
+  "home:config:notes": "노트",
+  "home:config:questionsLabel": "({{num}} 문제)",
+  "home:config:notesPlaceholder": "시험 프롬프트에 표시할 노트를 입력하세요",
+  "home:config:subtopic": "하위 주제",
+  "home:config:notesDesc": "시험 프롬프트를 만들 때 이 노트를 사용합니다.",
+  "home:config:generating": "시험 생성 중",
+  "home:config:submit": "{{num}} 크레딧 제출",
+  "home:pastExams:title": "과거 시험",
+  "home:pastExams:error:title": "오류",
+  "home:pastExams:error:message": "과거 시험을 가져오는 중 오류가 발생했습니다. 다시 시도하세요.",
+  "home:pastExams:empty:title:pre": "아직",
+  "home:pastExams:empty:title:post": "시험을 보지 않았습니다",
+  "home:pastExams:empty:message": "이 주제에 대한 시험을 보지 않았습니다. 조금 이상하지만, 각자의 선택입니다.",
+  "home:exam:grade": "시험 채점 중",
+  "home:exam:submit": "제출",
+  "home:results:loading:title": "결과 불러오는 중",
+  "home:results:loading:message": "결과를 불러오고 있습니다. 잠시 기다려주세요.",
+  "home:results:error:title": "오류",
+  "home:results:error:message": "결과를 가져오는 중 오류가 발생했습니다. 다시 시도하세요.",
+  "home:results:error:btn": "다시 시도",
+  "userNav:logout:btn": "로그아웃",
+  "userNav:logout:title": "로그아웃하시겠습니까?",
+  "userNav:logout:message": "계정에서 로그아웃되며, 다시 로그인하기 전까지 계정에 액세스할 수 없습니다.",
+  "userNav:profile": "프로필",
+  "userNav:settings": "설정",
+  "userNav:dashboard": "대시보드",
+  "userNav:credits": "크레딧",
+  "userNav:statistics": "통계",
+  "userNav:home": "홈",
   "continue": "계속",
   "cancel": "취소",
-  "profile": {
-    "title": "프로필",
-    "message": "프로필 정보를 업데이트하세요",
-    "name": {
-      "title": "이름",
-      "placeholder": "이름을 입력하세요",
-      "desc": "경험을 개인화하기 위해 이름을 사용합니다"
-    },
-    "language": {
-      "title": "언어",
-      "desc": "선호하는 언어를 선택하세요",
-      "empty": "사용 가능한 언어가 없습니다"
-    },
-    "update": "프로필 업데이트"
-  },
-  "settings": {
-    "title": "설정",
-    "message": "계정 설정을 업데이트하세요",
-    "theme": {
-      "title": "테마",
-      "desc": "선호하는 테마를 선택하세요",
-      "light": "밝은 테마",
-      "dark": "어두운 테마"
-    },
-    "update": "설정 업데이트"
-  },
-  "statistics": {
-    "title": "통계",
-    "message": "시험 통계를 확인하세요",
-    "levels": {
-      "beginner": "초보자",
-      "novice": "초보",
-      "intermediate": "중급",
-      "advanced": "고급",
-      "expert": "전문가",
-      "unclassified": "미분류"
-    },
-    "leaderboard": {
-      "title": "리더보드",
-      "empty": "아직 이 시험을 본 사람이 없습니다. 첫 번째로 도전하세요!",
-      "description": "이 시험의 상위 10개 점수",
-      "user": "사용자",
-      "score": "점수",
-      "topic": "주제",
-      "subtopic": "하위 주제"
-    },
-    "points": "포인트",
-    "avgScore": "평균 점수",
-    "uniqueTopics": "고유 주제",
-    "totalExams": "총 시험 수"
-  },
+  "profile:title": "프로필",
+  "profile:message": "프로필 정보를 업데이트하세요",
+  "profile:name:title": "이름",
+  "profile:name:placeholder": "이름을 입력하세요",
+  "profile:name:desc": "경험을 개인화하기 위해 이름을 사용합니다",
+  "profile:language:title": "언어",
+  "profile:language:desc": "선호하는 언어를 선택하세요",
+  "profile:language:empty": "사용 가능한 언어 없음",
+  "profile:update": "프로필 업데이트",
+  "settings:title": "설정",
+  "settings:message": "계정 설정을 업데이트하세요",
+  "settings:theme:title": "테마",
+  "settings:theme:desc": "선호하는 테마를 선택하세요",
+  "settings:theme:light": "밝은",
+  "settings:theme:dark": "어두운",
+  "settings:update": "설정 업데이트",
+  "statistics:title": "통계",
+  "statistics:message": "시험 통계를 확인하세요",
+  "statistics:levels:beginner": "초보자",
+  "statistics:levels:novice": "초보",
+  "statistics:levels:intermediate": "중급",
+  "statistics:levels:advanced": "고급",
+  "statistics:levels:expert": "전문가",
+  "statistics:levels:unclassified": "미분류",
+  "statistics:leaderboard:title": "리더보드",
+  "statistics:leaderboard:empty": "아직 이 시험을 본 사람이 없습니다. 첫 번째로 도전하세요!",
+  "statistics:leaderboard:description": "이 시험의 상위 10개 점수",
+  "statistics:leaderboard:user": "사용자",
+  "statistics:leaderboard:score": "점수",
+  "statistics:leaderboard:topic": "주제",
+  "statistics:leaderboard:subtopic": "하위 주제",
+  "statistics:points": "포인트",
+  "statistics:avgScore": "평균 점수",
+  "statistics:uniqueTopics": "고유 주제",
+  "statistics:totalExams": "총 시험",
   "quizBreakdown": "퀴즈 분석",
-  "sidebar": {
-    "history": "역사",
-    "science": "과학",
-    "math": "수학"
-  },
-  "disclaimerModal": {
-    "title": "면책 조항",
-    "pre": "요청한 콘텐츠는 정확하지 않을 수 있으며, 실행하는 데 시간이 걸릴 수 있습니다. 이 콘텐츠를 사용할 때는 주의해주세요.",
-    "highlight": "이 콘텐츠는 정확성이나 완전성을 보장하지 않습니다.",
-    "post": "질문이나 문제가 있으면 문의해주세요."
-  },
+  "sidebar:history": "역사",
+  "sidebar:science": "과학",
+  "sidebar:math": "수학",
+  "disclaimerModal:title": "면책 조항",
+  "disclaimerModal:pre": "요청한 콘텐츠는 정확하지 않을 수 있으며 실행하는 데 시간이 걸릴 수 있습니다. 이 콘텐츠를 사용할 때는 주의하시기 바랍니다.",
+  "disclaimerModal:highlight": "이 콘텐츠는 정확성이나 완전성을 보장하지 않습니다.",
+  "disclaimerModal:post": "질문이나 문의 사항이 있으시면 저희에게 연락하세요.",
   "confirm": "확인"
 }

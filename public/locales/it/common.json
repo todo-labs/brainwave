@@ -1,174 +1,112 @@
 {
   "appName": "Brainwave",
-  "landing": {
-    "devtagline": {
-      "pre": "Accendi il tuo",
-      "post": "Intelligenza"
-    },
-    "title": "Preparazione AI SAT",
-    "desc": "Presentiamo Brainwave: la piattaforma di quiz definitiva per gli studenti. Fai quiz sulle tue materie preferite, al livello di difficoltà desiderato. Costruisci la tua conoscenza e guadagna distintivi per mostrare le tue competenze. Brainwave è lo strumento perfetto per studiare per il SAT.",
-    "getStarted": "Inizia",
-    "howItWorks": "Come Funziona"
-  },
-  "login": {
-    "title": "Accedi al tuo account",
-    "subheading": "Inserisci la tua email qui sotto per creare il tuo account",
-    "description": "Cliccando su continua, accetti i nostri",
-    "and": "e",
-    "terms": "Termini di Servizio",
-    "privacy": "Informativa sulla Privacy"
-  },
-  "verifyEmail": {
-    "title": "Controlla la tua email",
-    "desc": "Abbiamo inviato un link di verifica al tuo indirizzo email. Clicca sul link per completare la configurazione del tuo account.",
-    "resend": "Rispedisci Email",
-    "goBack": "Torna Indietro"
-  },
-  "home": {
-    "tabs": {
-      "pickAnExam": "Scegli un esame",
-      "config": "Configurazione",
-      "quiz": "Quiz",
-      "results": "Risultati"
-    },
-    "sidebar": {
-      "math": "Matematica",
-      "history": "Storia",
-      "science": "Scienze"
-    },
-    "pickAnExam": {
-      "error": {
-        "title": "Errore",
-        "message": "Si è verificato un errore durante il recupero dei nostri argomenti. Riprova"
-      },
-      "comingSoon": {
-        "title": "Prossimamente",
-        "message": "Stiamo ancora lavorando per aggiungere più argomenti. Controlla di nuovo tra qualche giorno."
-      },
-      "title": "Scegli il tuo argomento {{topic}}",
-      "desc": "Seleziona un sottoargomento per iniziare il tuo esame."
-    },
-    "config": {
-      "title": "Costruisci il tuo esame",
-      "desc": "In quale area hai problemi?",
-      "difficulty": "Difficoltà",
-      "questions": "Domande",
-      "questionDesc": "Quante domande vorresti risolvere in questa sessione.",
-      "notes": "Note",
-      "questionsLabel": "({{num}} domande)",
-      "notesPlaceholder": "Inserisci eventuali note che desideri vedere nel tuo prompt dell'esame",
-      "subtopic": "Sottoargomento",
-      "notesDesc": "Utilizzeremo queste note nel nostro prompt per costruire il tuo esame.",
-      "generating": "Generazione Esame",
-      "submit": "Invia {{num}} crediti"
-    },
-    "pastExams": {
-      "title": "Esami Precedenti",
-      "error": {
-        "title": "Errore",
-        "message": "Si è verificato un errore durante il recupero dei tuoi esami precedenti. Riprova"
-      },
-      "empty": {
-        "title": {
-          "pre": "Non hai ancora svolto nessun",
-          "post": "esame"
-        },
-        "message": "Non hai ancora svolto esami su questo argomento. Un po' strano, ma ognuno ha i suoi gusti."
-      }
-    },
-    "exam": {
-      "grade": "Valutazione Esame",
-      "submit": "Invia"
-    },
-    "results": {
-      "loading": {
-        "title": "Caricamento Risultati",
-        "message": "Stiamo recuperando i tuoi risultati. Attendere prego."
-      },
-      "error": {
-        "title": "Errore",
-        "message": "Si è verificato un errore durante il recupero dei tuoi risultati. Riprova",
-        "btn": "Riprova"
-      }
-    }
-  },
-  "userNav": {
-    "logout": {
-      "btn": "Logout",
-      "title": "Sei sicuro di voler effettuare il logout?",
-      "message": "Verrai disconnesso dal tuo account e non potrai accedere al tuo account fino a quando non effettui nuovamente il login."
-    },
-    "profile": "Profilo",
-    "settings": "Impostazioni",
-    "dashboard": "Dashboard",
-    "credits": "Crediti",
-    "statistics": "Statistiche",
-    "home": "Home"
-  },
+  "landing:devtagline:pre": "Accendi il tuo",
+  "landing:devtagline:post": "Intelligenza",
+  "landing:title": "Preparazione AI SAT",
+  "landing:desc": "Presentiamo Brainwave: la piattaforma di quiz definitiva per gli studenti. Fai quiz sulle tue materie preferite, al livello di difficoltà desiderato. Costruisci la tua conoscenza e guadagna distintivi per mostrare le tue competenze. Brainwave è lo strumento perfetto per studiare per il SAT.",
+  "landing:getStarted": "Inizia",
+  "landing:howItWorks": "Come Funziona",
+  "login:title": "Accedi al tuo account",
+  "login:subheading": "Inserisci la tua email qui sotto per creare il tuo account",
+  "login:description": "Cliccando su continua, accetti i nostri",
+  "login:and": "e",
+  "login:terms": "Termini di Servizio",
+  "login:privacy": "Informativa sulla Privacy",
+  "verifyEmail:title": "Controlla la tua email",
+  "verifyEmail:desc": "Abbiamo inviato un link di verifica al tuo indirizzo email. Clicca sul link per completare la configurazione del tuo account.",
+  "verifyEmail:resend": "Invia di nuovo l'email",
+  "verifyEmail:goBack": "Torna Indietro",
+  "home:tabs:pickAnExam": "Scegli un esame",
+  "home:tabs:config": "Configurazione",
+  "home:tabs:quiz": "Quiz",
+  "home:tabs:results": "Risultati",
+  "home:sidebar:math": "Matematica",
+  "home:sidebar:history": "Storia",
+  "home:sidebar:science": "Scienze",
+  "home:pickAnExam:error:title": "Errore",
+  "home:pickAnExam:error:message": "Si è verificato un errore durante il recupero dei nostri argomenti. Riprova",
+  "home:pickAnExam:comingSoon:title": "Prossimamente",
+  "home:pickAnExam:comingSoon:message": "Stiamo ancora lavorando per aggiungere più argomenti. Controlla di nuovo tra qualche giorno.",
+  "home:pickAnExam:title": "Scegli il tuo argomento {{topic}}",
+  "home:pickAnExam:desc": "Seleziona un sottoargomento per iniziare il tuo esame.",
+  "home:config:title": "Costruisci il tuo esame",
+  "home:config:desc": "In quale area hai problemi?",
+  "home:config:difficulty": "Difficoltà",
+  "home:config:questions": "Domande",
+  "home:config:questionDesc": "Quante domande vuoi risolvere in questa sessione.",
+  "home:config:notes": "Note",
+  "home:config:questionsLabel": "({{num}} domande)",
+  "home:config:notesPlaceholder": "Inserisci eventuali note che desideri vedere nel tuo prompt dell'esame",
+  "home:config:subtopic": "Sottoargomento",
+  "home:config:notesDesc": "Utilizzeremo queste note nel nostro prompt per costruire il tuo esame.",
+  "home:config:generating": "Generazione Esame",
+  "home:config:submit": "Invia {{num}} crediti",
+  "home:pastExams:title": "Esami Passati",
+  "home:pastExams:error:title": "Errore",
+  "home:pastExams:error:message": "Si è verificato un errore durante il recupero dei tuoi esami passati. Riprova",
+  "home:pastExams:empty:title:pre": "Non hai ancora svolto nessun",
+  "home:pastExams:empty:title:post": "esame",
+  "home:pastExams:empty:message": "Non hai ancora svolto esami su questo argomento. Un po' strano, ma ognuno ha i suoi gusti.",
+  "home:exam:grade": "Valutazione Esame",
+  "home:exam:submit": "Invia",
+  "home:results:loading:title": "Caricamento Risultati",
+  "home:results:loading:message": "Stiamo recuperando i tuoi risultati. Attendere prego.",
+  "home:results:error:title": "Errore",
+  "home:results:error:message": "Si è verificato un errore durante il recupero dei tuoi risultati. Riprova",
+  "home:results:error:btn": "Riprova",
+  "userNav:logout:btn": "Logout",
+  "userNav:logout:title": "Sei sicuro di voler effettuare il logout?",
+  "userNav:logout:message": "Verrai disconnesso dal tuo account e non potrai accedere al tuo account fino a quando non effettui nuovamente il login.",
+  "userNav:profile": "Profilo",
+  "userNav:settings": "Impostazioni",
+  "userNav:dashboard": "Dashboard",
+  "userNav:credits": "Crediti",
+  "userNav:statistics": "Statistiche",
+  "userNav:home": "Home",
   "continue": "Continua",
   "cancel": "Annulla",
-  "profile": {
-    "title": "Profilo",
-    "message": "Aggiorna le informazioni del tuo profilo",
-    "name": {
-      "title": "Nome",
-      "placeholder": "Inserisci il tuo nome",
-      "desc": "Il tuo nome verrà utilizzato per personalizzare la tua esperienza"
-    },
-    "language": {
-      "title": "Lingua",
-      "desc": "Seleziona la tua lingua preferita",
-      "empty": "Nessuna lingua disponibile"
-    },
-    "update": "Aggiorna Profilo"
-  },
-  "settings": {
-    "title": "Impostazioni",
-    "message": "Aggiorna le impostazioni del tuo account",
-    "theme": {
-      "title": "Tema",
-      "desc": "Seleziona il tuo tema preferito",
-      "light": "Chiaro",
-      "dark": "Scuro"
-    },
-    "update": "Aggiorna Impostazioni"
-  },
-  "statistics": {
-    "title": "Statistiche",
-    "message": "Visualizza le tue statistiche degli esami",
-    "levels": {
-      "beginner": "Principiante",
-      "novice": "Novizio",
-      "intermediate": "Intermedio",
-      "advanced": "Avanzato",
-      "expert": "Esperto",
-      "unclassified": "Non Classificato"
-    },
-    "leaderboard": {
-      "title": "Classifica",
-      "empty": "Ancora nessuno ha svolto questo esame. Sii il primo!",
-      "description": "Primi 10 punteggi per questo esame",
-      "user": "Utente",
-      "score": "Punteggio",
-      "topic": "Argomento",
-      "subtopic": "Sottoargomento"
-    },
-    "points": "Punti",
-    "avgScore": "Punteggio Medio",
-    "uniqueTopics": "Argomenti Unici",
-    "totalExams": "Esami Totali"
-  },
+  "profile:title": "Profilo",
+  "profile:message": "Aggiorna le informazioni del tuo profilo",
+  "profile:name:title": "Nome",
+  "profile:name:placeholder": "Inserisci il tuo nome",
+  "profile:name:desc": "Il tuo nome verrà utilizzato per personalizzare la tua esperienza",
+  "profile:language:title": "Lingua",
+  "profile:language:desc": "Seleziona la tua lingua preferita",
+  "profile:language:empty": "Nessuna lingua disponibile",
+  "profile:update": "Aggiorna Profilo",
+  "settings:title": "Impostazioni",
+  "settings:message": "Aggiorna le impostazioni del tuo account",
+  "settings:theme:title": "Tema",
+  "settings:theme:desc": "Seleziona il tuo tema preferito",
+  "settings:theme:light": "Chiaro",
+  "settings:theme:dark": "Scuro",
+  "settings:update": "Aggiorna Impostazioni",
+  "statistics:title": "Statistiche",
+  "statistics:message": "Visualizza le tue statistiche degli esami",
+  "statistics:levels:beginner": "Principiante",
+  "statistics:levels:novice": "Novizio",
+  "statistics:levels:intermediate": "Intermedio",
+  "statistics:levels:advanced": "Avanzato",
+  "statistics:levels:expert": "Esperto",
+  "statistics:levels:unclassified": "Non Classificato",
+  "statistics:leaderboard:title": "Classifica",
+  "statistics:leaderboard:empty": "Ancora nessuno ha svolto questo esame. Sii il primo!",
+  "statistics:leaderboard:description": "Primi 10 punteggi per questo esame",
+  "statistics:leaderboard:user": "Utente",
+  "statistics:leaderboard:score": "Punteggio",
+  "statistics:leaderboard:topic": "Argomento",
+  "statistics:leaderboard:subtopic": "Sottoargomento",
+  "statistics:points": "Punti",
+  "statistics:avgScore": "Punteggio Medio",
+  "statistics:uniqueTopics": "Argomenti Unici",
+  "statistics:totalExams": "Esami Totali",
   "quizBreakdown": "Suddivisione del Quiz",
-  "sidebar": {
-    "history": "Storia",
-    "science": "Scienze",
-    "math": "Matematica"
-  },
-  "disclaimerModal": {
-    "title": "Disclaimer",
-    "pre": "I contenuti che stai richiedendo potrebbero non essere accurati e potrebbero richiedere del tempo per essere eseguiti. Utilizza questi contenuti a tuo rischio.",
-    "highlight": "Questo contenuto non è garantito essere accurato o completo.",
-    "post": "Se hai domande o dubbi, contattaci."
-  },
+  "sidebar:history": "Storia",
+  "sidebar:science": "Scienze",
+  "sidebar:math": "Matematica",
+  "disclaimerModal:title": "Avviso Legale",
+  "disclaimerModal:pre": "Il contenuto che stai richiedendo potrebbe non essere accurato e potrebbe richiedere del tempo per essere eseguito. Utilizza questo contenuto a tuo rischio.",
+  "disclaimerModal:highlight": "Questo contenuto non è garantito essere accurato o completo.",
+  "disclaimerModal:post": "Se hai domande o dubbi, contattaci.",
   "confirm": "Conferma"
 }
