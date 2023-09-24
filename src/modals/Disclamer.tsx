@@ -9,41 +9,67 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useState } from "react";
+import { useMixpanel } from "@/lib/mixpanel";
 
-interface Props {
-  onConfirm: () => void;
-  open: boolean;
-  setShouldOpen: (open: boolean) => void;
-  onCancel?: () => void;
-}
-
-const DisclaimerModal = (props: Props) => {
+const useDisclaimerModal = (onCancel: () => void) => {
   const { t } = useTranslation(["common"]);
+  const [isOpen, setIsOpen] = useState(false);
+  const { trackEvent } = useMixpanel();
 
-  return (
-    <AlertDialog open={props.open}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{t("disclaimerModal.title")}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {t("disclaimerModal.pre")}{" "}
-            <span className="text-primary">
-              {t("disclaimerModal.highlight")}
-            </span>
-            . {t("disclaimerModal.post")}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={props.onCancel}>
-            {t("cancel")}
-          </AlertDialogCancel>
-          <AlertDialogAction onClick={props.onConfirm}>
-            {t("confirm")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
+  const open = () => {
+    setIsOpen(true);
+    trackEvent("ViewedModal", {
+      label: "Disclaimer",
+      value: "Opened",
+    });
+  };
+
+  const handleConfirm = () => {
+    setIsOpen(false);
+    trackEvent("ViewedModal", {
+      label: "Disclaimer",
+      value: "Confirmed",
+    });
+  };
+
+  const handleCancel = () => {
+    setIsOpen(false);
+    onCancel();
+    trackEvent("ViewedModal", {
+      label: "Disclaimer",
+      value: "Cancelled",
+    });
+  };
+
+  const Content = () => {
+    return (
+      <AlertDialog open={isOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("disclaimerModal.title")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("disclaimerModal.pre")}{" "}
+              <span className="text-primary">
+                {t("disclaimerModal.highlight")}
+              </span>
+              . {t("disclaimerModal.post")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleCancel}>
+              {t("cancel")}
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirm}>
+              {t("confirm")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  };
+
+  return { open, Content };
 };
 
-export default DisclaimerModal;
+export default useDisclaimerModal;

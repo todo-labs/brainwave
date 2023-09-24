@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { ScrollArea } from "./ui/scroll-area";
 import Timer from "./timer";
+import useDisclaimerModal from "@/modals/Disclamer";
 
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
@@ -14,11 +15,15 @@ import useStore from "@/hooks/useStore";
 import { useMixpanel } from "@/lib/mixpanel";
 
 const Exam = () => {
+  const utils = api.useContext();
   const { currentQuiz, setCurrentStep, setShowConfetti } = useStore();
   const [answers, setAnswers] = useState(new Map<number, string>());
   const [completed, setCompleted] = useState(false);
   const { trackEvent } = useMixpanel();
   const { toast } = useToast();
+  const { Content: DisclaimerModal, open } = useDisclaimerModal(() => {
+    gradeQuiz.reset();
+  });
 
   const gradeQuiz = api.quiz.gradeExam.useMutation({
     onSuccess: () => {
@@ -37,6 +42,7 @@ const Exam = () => {
       });
     },
     retry: 2,
+    onMutate: () => open(),
   });
 
   const submitQuiz = async () => {
@@ -95,6 +101,7 @@ const Exam = () => {
           <span>{t("home.exam.submit")}</span>
         )}
       </Button>
+      <DisclaimerModal />
     </section>
   );
 };

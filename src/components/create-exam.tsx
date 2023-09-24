@@ -3,6 +3,8 @@ import { QuizDifficulty, Role } from "@prisma/client";
 import { Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useTranslation } from "next-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +35,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import useDisclaimerModal from "@/modals/Disclamer";
 
 import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
@@ -40,8 +43,6 @@ import { type CreateQuizRequestType, createQuizSchema } from "@/server/schemas";
 import type { QuizWithQuestions } from "types";
 import { useToast } from "@/hooks/useToast";
 import { env } from "@/env.mjs";
-import { useSession } from "next-auth/react";
-import { useTranslation } from "next-i18next";
 import { useMixpanel } from "@/lib/mixpanel";
 
 export function CreateConfig() {
@@ -51,6 +52,11 @@ export function CreateConfig() {
   const { toast } = useToast();
   const { data: session } = useSession();
   const { trackEvent } = useMixpanel();
+  const { t } = useTranslation(["common"]);
+
+  const { Content: DisclaimerModal, open } = useDisclaimerModal(() => {
+    createQuizMutation.reset();
+  });
 
   const createQuizMutation = api.quiz.createExam.useMutation({
     onSuccess: (data) => {
@@ -64,6 +70,9 @@ export function CreateConfig() {
         variant: "destructive",
       });
     },
+    retry: 2,
+    retryDelay: 1000,
+    onMutate: () => open(),
   });
 
   const form = useForm<CreateQuizRequestType>({
@@ -92,8 +101,6 @@ export function CreateConfig() {
       console.log(err);
     }
   }
-
-  const { t } = useTranslation(["common"]);
 
   return (
     <div className="flex  shrink-0 items-center justify-center rounded-md border border-dashed">
@@ -229,6 +236,7 @@ export function CreateConfig() {
           </Form>
         </Card>
       </ScrollArea>
+      <DisclaimerModal />
     </div>
   );
 }
