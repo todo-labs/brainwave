@@ -16,7 +16,7 @@
     "description": "Cliccando su continua, accetti i nostri",
     "and": "e",
     "terms": "Termini di Servizio",
-    "privacy": "Politica sulla Privacy"
+    "privacy": "Informativa sulla Privacy"
   },
   "verifyEmail": {
     "title": "Controlla la tua email",
@@ -49,7 +49,7 @@
       "desc": "Seleziona un sottoargomento per iniziare il tuo esame."
     },
     "config": {
-      "title": "Costruiamo il tuo esame",
+      "title": "Costruisci il tuo esame",
       "desc": "In quale area hai problemi?",
       "difficulty": "Difficoltà",
       "questions": "Domande",
@@ -73,7 +73,7 @@
           "pre": "Non hai ancora svolto nessun",
           "post": "esame"
         },
-        "message": "Non hai ancora svolto esami su questo argomento. Un po' strano, ma ognuno ha i propri gusti."
+        "message": "Non hai ancora svolto esami su questo argomento. Un po' strano, ma ognuno ha i suoi gusti."
       }
     },
     "exam": {
@@ -163,5 +163,12 @@
     "history": "Storia",
     "science": "Scienze",
     "math": "Matematica"
-  }
+  },
+  "disclaimerModal": {
+    "title": "Disclaimer",
+    "pre": "I contenuti che stai richiedendo potrebbero non essere accurati e potrebbero richiedere del tempo per essere eseguiti. Utilizza questi contenuti a tuo rischio.",
+    "highlight": "Questo contenuto non è garantito essere accurato o completo.",
+    "post": "Se hai domande o dubbi, contattaci."
+  },
+  "confirm": "Conferma"
 }

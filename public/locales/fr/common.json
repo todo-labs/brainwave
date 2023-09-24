@@ -163,5 +163,12 @@
     "history": "Histoire",
     "science": "Science",
     "math": "Mathématiques"
-  }
+  },
+  "disclaimerModal": {
+    "title": "Clause de non-responsabilité",
+    "pre": "Le contenu que vous demandez peut ne pas être exact et peut prendre un certain temps à s'exécuter. Veuillez utiliser ce contenu à vos propres risques.",
+    "highlight": "Ce contenu n'est pas garanti d'être exact ou complet.",
+    "post": "Si vous avez des questions ou des préoccupations, veuillez nous contacter."
+  },
+  "confirm": "Confirmer"
 }

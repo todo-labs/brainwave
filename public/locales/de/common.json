@@ -60,7 +60,7 @@
       "subtopic": "Unterthema",
       "notesDesc": "Wir verwenden diese Notizen in unserer Aufgabenstellung, um Ihre Prüfung zu erstellen.",
       "generating": "Prüfung wird erstellt",
-      "submit": "{{num}} Credits senden"
+      "submit": "{{num}} Credits übermitteln"
     },
     "pastExams": {
       "title": "Vergangene Prüfungen",
@@ -163,5 +163,12 @@
     "history": "Geschichte",
     "science": "Naturwissenschaften",
     "math": "Mathematik"
-  }
+  },
+  "disclaimerModal": {
+    "title": "Haftungsausschluss",
+    "pre": "Der von Ihnen angeforderte Inhalt ist möglicherweise nicht korrekt und kann einige Zeit in Anspruch nehmen. Bitte verwenden Sie diesen Inhalt auf eigenes Risiko.",
+    "highlight": "Dieser Inhalt ist nicht garantiert korrekt oder vollständig.",
+    "post": "Bei Fragen oder Bedenken kontaktieren Sie uns bitte."
+  },
+  "confirm": "Bestätigen"
 }

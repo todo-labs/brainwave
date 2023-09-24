@@ -45,11 +45,11 @@
         "title": "Em Breve",
         "message": "Ainda estamos trabalhando para adicionar mais tópicos. Por favor, verifique novamente em alguns dias."
       },
-      "title": "Escolha seu tópico de {{topic}}",
-      "desc": "Selecione um subtema para iniciar seu exame."
+      "title": "Escolha o seu tópico de {{topic}}",
+      "desc": "Selecione um subtema para iniciar o seu exame."
     },
     "config": {
-      "title": "Vamos montar seu exame",
+      "title": "Vamos montar o seu exame",
       "desc": "Em qual área você está com dificuldades?",
       "difficulty": "Dificuldade",
       "questions": "Questões",
@@ -58,7 +58,7 @@
       "questionsLabel": "({{num}} questões)",
       "notesPlaceholder": "Digite quaisquer notas que você gostaria de ver na sua pergunta do exame",
       "subtopic": "Subtema",
-      "notesDesc": "Usaremos essas notas em nossa pergunta para montar seu exame.",
+      "notesDesc": "Usaremos essas notas em nossa pergunta para montar o seu exame.",
       "generating": "Gerando Exame",
       "submit": "Enviar {{num}} créditos"
     },
@@ -73,7 +73,7 @@
           "pre": "Você não fez nenhum",
           "post": "exame"
         },
-        "message": "Você não fez nenhum exame deste tópico. Meio estranho, mas cada um tem suas preferências."
+        "message": "Você não fez nenhum exame sobre este tópico. Meio estranho, mas cada um tem seus gostos."
       }
     },
     "exam": {
@@ -96,7 +96,7 @@
     "logout": {
       "btn": "Sair",
       "title": "Tem certeza de que deseja sair?",
-      "message": "Você será desconectado da sua conta e não poderá acessá-la novamente até fazer login novamente."
+      "message": "Você será desconectado da sua conta e não poderá acessá-la até fazer login novamente."
     },
     "profile": "Perfil",
     "settings": "Configurações",
@@ -163,5 +163,12 @@
     "history": "História",
     "science": "Ciência",
     "math": "Matemática"
-  }
+  },
+  "disclaimerModal": {
+    "title": "Aviso Legal",
+    "pre": "O conteúdo que você está solicitando pode não ser preciso e pode levar algum tempo para ser executado. Por favor, use este conteúdo por sua conta e risco.",
+    "highlight": "Este conteúdo não é garantido para ser preciso ou completo.",
+    "post": "Se você tiver alguma dúvida ou preocupação, entre em contato conosco."
+  },
+  "confirm": "Confirmar"
 }
