@@ -1,167 +1,119 @@
 {
+  "submit": "提交",
+  "reportModal-title": "举报内容",
+  "reportModal-placeholder": "输入您举报的原因",
+  "reportModal-message": "请详细描述您举报的内容。我们将审核您的举报并采取适当的行动。",
   "appName": "脑电波",
-  "landing": {
-    "devtagline": {
-      "pre": "点燃你的",
-      "post": "智慧"
-    },
-    "title": "AI SAT准备",
-    "desc": "介绍脑电波：学习者的终极测验平台。在你喜欢的科目上进行测验，选择你想要的难度级别。建立你的知识并获得徽章来展示你的技能。脑电波是备考SAT的完美工具。",
-    "getStarted": "开始",
-    "howItWorks": "工作原理"
-  },
-  "login": {
-    "title": "登录到您的帐户",
-    "subheading": "在下面输入您的电子邮件以创建您的帐户",
-    "description": "点击继续，即表示您同意我们的",
-    "and": "和",
-    "terms": "服务条款",
-    "privacy": "隐私政策"
-  },
-  "verifyEmail": {
-    "title": "检查您的电子邮件",
-    "desc": "我们已向您的电子邮件地址发送了一个验证链接。请点击链接完成您的帐户设置。",
-    "resend": "重新发送电子邮件",
-    "goBack": "返回"
-  },
-  "home": {
-    "tabs": {
-      "pickAnExam": "选择一个考试",
-      "config": "配置",
-      "quiz": "测验",
-      "results": "结果"
-    },
-    "sidebar": {
-      "math": "数学",
-      "history": "历史",
-      "science": "科学"
-    },
-    "pickAnExam": {
-      "error": {
-        "title": "错误",
-        "message": "获取主题时出错。请重试"
-      },
-      "comingSoon": {
-        "title": "即将推出",
-        "message": "我们正在努力添加更多主题。请在几天后再来查看。"
-      },
-      "title": "选择您的{{topic}}主题",
-      "desc": "选择一个子主题开始您的考试。"
-    },
-    "config": {
-      "title": "让我们构建您的考试",
-      "desc": "您在哪个领域遇到问题？",
-      "difficulty": "难度",
-      "questions": "问题",
-      "questionDesc": "您想在本次会话中解决多少个问题。",
-      "notes": "笔记",
-      "questionsLabel": "（{{num}}个问题）",
-      "notesPlaceholder": "输入您想在考试提示中看到的任何笔记",
-      "subtopic": "子主题",
-      "notesDesc": "我们将在提示中使用这些笔记来构建您的考试。",
-      "generating": "生成考试",
-      "submit": "提交{{num}}学分"
-    },
-    "pastExams": {
-      "title": "过去的考试",
-      "error": {
-        "title": "错误",
-        "message": "获取您过去的考试时出错。请重试"
-      },
-      "empty": {
-        "title": {
-          "pre": "您还没有参加过任何",
-          "post": "考试"
-        },
-        "message": "您还没有参加过此主题的任何考试。有点奇怪，但各有所好。"
-      }
-    },
-    "exam": {
-      "grade": "评分考试",
-      "submit": "提交"
-    },
-    "results": {
-      "loading": {
-        "title": "加载结果",
-        "message": "我们正在获取您的结果。请稍候。"
-      },
-      "error": {
-        "title": "错误",
-        "message": "获取您的结果时出错。请重试",
-        "btn": "重试"
-      }
-    }
-  },
-  "userNav": {
-    "logout": {
-      "btn": "注销",
-      "title": "您确定要注销吗？",
-      "message": "您将注销您的帐户，直到再次登录才能访问您的帐户。"
-    },
-    "profile": "个人资料",
-    "settings": "设置",
-    "dashboard": "仪表盘",
-    "credits": "学分",
-    "statistics": "统计",
-    "home": "主页"
-  },
+  "landing-devtagline-pre": "点燃你的",
+  "landing-devtagline-post": "智慧",
+  "landing-title": "AI SAT准备",
+  "landing-desc": "介绍脑电波：学习者的终极测验平台。在你喜欢的科目上进行测验，选择你想要的难度级别。建立你的知识并获得徽章来展示你的技能。脑电波是备考SAT的完美工具。",
+  "landing-getStarted": "开始",
+  "landing-howItWorks": "工作原理",
+  "login-title": "登录到您的帐户",
+  "login-subheading": "在下面输入您的电子邮件以创建您的帐户",
+  "login-description": "点击继续，即表示您同意我们的",
+  "login-and": "和",
+  "login-terms": "服务条款",
+  "login-privacy": "隐私政策",
+  "verifyEmail-title": "检查您的电子邮件",
+  "verifyEmail-desc": "我们已向您的电子邮件地址发送了一个验证链接。请点击链接完成您的帐户设置。",
+  "verifyEmail-resend": "重新发送电子邮件",
+  "verifyEmail-goBack": "返回",
+  "home-tabs-pickAnExam": "选择一个考试",
+  "home-tabs-config": "配置",
+  "home-tabs-quiz": "测验",
+  "home-tabs-results": "结果",
+  "home-sidebar-math": "数学",
+  "home-sidebar-history": "历史",
+  "home-sidebar-science": "科学",
+  "home-pickAnExam-error-title": "错误",
+  "home-pickAnExam-error-message": "获取我们的主题时出错。请重试",
+  "home-pickAnExam-comingSoon-title": "即将推出",
+  "home-pickAnExam-comingSoon-message": "我们仍在努力添加更多主题。请在几天后再来查看。",
+  "home-pickAnExam-title": "选择您的{{topic}}主题",
+  "home-pickAnExam-desc": "选择一个子主题开始您的考试。",
+  "home-config-title": "让我们构建您的考试",
+  "home-config-desc": "您在哪个领域遇到问题？",
+  "home-config-difficulty": "难度",
+  "home-config-questions": "问题",
+  "home-config-questionDesc": "您想在本次会话中解决多少个问题。",
+  "home-config-notes": "笔记",
+  "home-config-questionsLabel": "（{{num}}个问题）",
+  "home-config-notesPlaceholder": "输入您想在考试提示中看到的任何笔记",
+  "home-config-subtopic": "子主题",
+  "home-config-notesDesc": "我们将在提示中使用这些笔记来构建您的考试。",
+  "home-config-generating": "生成考试",
+  "home-config-submit": "提交{{num}}积分",
+  "home-pastExams-title": "过去的考试",
+  "home-pastExams-error-title": "错误",
+  "home-pastExams-error-message": "获取您过去的考试时出错。请重试",
+  "home-pastExams-empty-title-pre": "您还没有参加过任何",
+  "home-pastExams-empty-title-post": "考试",
+  "home-pastExams-empty-message": "您还没有参加过此主题的任何考试。有点奇怪，但每个人都有自己的选择。",
+  "home-exam-grade": "评分考试",
+  "home-results-loading-title": "正在加载结果",
+  "home-results-loading-message": "我们正在获取您的结果。请稍候。",
+  "home-results-error-title": "错误",
+  "home-results-error-message": "获取您的结果时出错。请重试",
+  "home-results-error-btn": "重试",
+  "userNav-logout-btn": "登出",
+  "userNav-logout-title": "您确定要登出吗？",
+  "userNav-logout-message": "您将退出您的帐户，直到再次登录才能访问您的帐户。",
+  "userNav-profile": "个人资料",
+  "userNav-settings": "设置",
+  "userNav-dashboard": "仪表盘",
+  "userNav-credits": "积分",
+  "userNav-statistics": "统计",
+  "userNav-home": "主页",
   "continue": "继续",
   "cancel": "取消",
-  "profile": {
-    "title": "个人资料",
-    "message": "更新您的个人资料信息",
-    "name": {
-      "title": "姓名",
-      "placeholder": "输入您的姓名",
-      "desc": "您的姓名将用于个性化您的体验"
-    },
-    "language": {
-      "title": "语言",
-      "desc": "选择您首选的语言",
-      "empty": "没有可用的语言"
-    },
-    "update": "更新个人资料"
-  },
-  "settings": {
-    "title": "设置",
-    "message": "更新您的帐户设置",
-    "theme": {
-      "title": "主题",
-      "desc": "选择您首选的主题",
-      "light": "明亮",
-      "dark": "黑暗"
-    },
-    "update": "更新设置"
-  },
-  "statistics": {
-    "title": "统计",
-    "message": "查看您的考试统计数据",
-    "levels": {
-      "beginner": "初学者",
-      "novice": "新手",
-      "intermediate": "中级",
-      "advanced": "高级",
-      "expert": "专家",
-      "unclassified": "未分类"
-    },
-    "leaderboard": {
-      "title": "排行榜",
-      "empty": "还没有人参加这个考试。成为第一个！",
-      "description": "此考试的前10名成绩",
-      "user": "用户",
-      "score": "分数",
-      "topic": "主题",
-      "subtopic": "子主题"
-    },
-    "points": "积分",
-    "avgScore": "平均分数",
-    "uniqueTopics": "独特主题",
-    "totalExams": "总考试次数"
-  },
+  "profile-title": "个人资料",
+  "profile-message": "更新您的个人资料信息",
+  "profile-name-title": "姓名",
+  "profile-name-placeholder": "输入您的姓名",
+  "profile-name-desc": "您的姓名将用于个性化您的体验",
+  "profile-language-title": "语言",
+  "profile-language-desc": "选择您首选的语言",
+  "profile-language-empty": "没有可用的语言",
+  "profile-update": "更新个人资料",
+  "settings-title": "设置",
+  "settings-message": "更新您的帐户设置",
+  "settings-theme-title": "主题",
+  "settings-theme-desc": "选择您首选的主题",
+  "settings-theme-light": "明亮",
+  "settings-theme-dark": "黑暗",
+  "settings-update": "更新设置",
+  "statistics-title": "统计",
+  "statistics-message": "查看您的考试统计数据",
+  "statistics-levels-beginner": "初学者",
+  "statistics-levels-novice": "新手",
+  "statistics-levels-intermediate": "中级",
+  "statistics-levels-advanced": "高级",
+  "statistics-levels-expert": "专家",
+  "statistics-levels-unclassified": "未分类",
+  "statistics-leaderboard-title": "排行榜",
+  "statistics-leaderboard-empty": "还没有人参加这个考试。成为第一个！",
+  "statistics-leaderboard-description": "此考试的前10名成绩",
+  "statistics-leaderboard-user": "用户",
+  "statistics-leaderboard-score": "分数",
+  "statistics-leaderboard-topic": "主题",
+  "statistics-leaderboard-subtopic": "子主题",
+  "statistics-points": "积分",
+  "statistics-avgScore": "平均分数",
+  "statistics-uniqueTopics": "独特主题",
+  "statistics-totalExams": "总考试",
   "quizBreakdown": "测验分析",
-  "sidebar": {
-    "history": "历史",
-    "science": "科学",
-    "math": "数学"
-  }
+  "sidebar-history": "历史",
+  "sidebar-science": "科学",
+  "sidebar-math": "数学",
+  "disclaimerModal-title": "免责声明",
+  "disclaimerModal-pre": "您请求的内容可能不准确，并且可能需要一些时间来执行。请自行承担使用此内容的风险。",
+  "disclaimerModal-highlight": "此内容不能保证准确或完整。",
+  "disclaimerModal-post": "如果您有任何问题或疑虑，请与我们联系。",
+  "confirm": "确认",
+  "toast-generic-success-title": "成功",
+  "toast-generic-success": "您的请求已成功",
+  "toast-generic-error-title": "错误",
+  "toast-generic-error": "处理您的请求时发生错误。请重试"
 }

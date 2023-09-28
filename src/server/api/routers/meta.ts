@@ -1,5 +1,8 @@
+import { shortHash } from "@/lib/utils";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { reportSchema } from "@/server/schemas";
 import { Topics } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import { subMonths } from "date-fns";
 import * as z from "zod";
 
@@ -73,5 +76,37 @@ export const metaRouter = createTRPCRouter({
       subtopic: quiz.subtopic,
       score: quiz.score,
     }));
+  }),
+  report: protectedProcedure
+  .input(reportSchema)
+  .mutation(async ({ input, ctx }) => {
+    try {
+      const ticketNumber: string = [
+        shortHash(input.userAgent || "unknown"),
+        shortHash(input.pageUrl || "unknown"),
+        new Date().getTime().toString().slice(-4),
+      ].join("-");
+      await ctx.prisma.report.create({
+        data: {
+          ticketNumber,
+          txt: input.message,
+          type: input.issueType,
+          pageUrl: input.pageUrl || "",
+          userAgent: input.userAgent,
+          user: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      throw new TRPCError({
+        message:
+          "We encountered an issue while processing your request to report a bug. Please try again later, and we apologize for any inconvenience this may have caused.",
+        code: "INTERNAL_SERVER_ERROR",
+      });
+    }
   }),
 });

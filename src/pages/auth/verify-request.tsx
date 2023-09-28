@@ -39,15 +39,15 @@ const VerifyRequestPage: NextPage = (
     <section className="body-font mx-auto flex h-screen flex-col items-center justify-center space-y-4 px-5 py-24">
       <div className="w-full text-center lg:w-2/3">
         <h1 className="title-font mb-4 text-3xl font-medium  sm:text-4xl">
-          {t("verifyEmail.title")}
+          {t("verifyEmail-title")}
         </h1>
         <p className="mb-8 leading-relaxed text-muted-foreground">
-          {t("verifyEmail.desc")}
+          {t("verifyEmail-desc")}
         </p>
         <div className="flex justify-center space-x-5">
-          <Button>{t("verifyEmail.resendEmail")}</Button>
+          <Button>{t("verifyEmail-resend")}</Button>
           <Button onClick={() => router.back()} variant="secondary">
-            {t("verifyEmail.goBack")}
+            {t("verifyEmail-goBack")}
           </Button>
         </div>
       </div>

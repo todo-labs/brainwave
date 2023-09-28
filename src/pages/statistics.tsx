@@ -3,7 +3,6 @@ import type {
   NextPage,
   InferGetServerSidePropsType,
 } from "next";
-import { AwardIcon } from "lucide-react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
@@ -12,6 +11,7 @@ import SettingsLayout from "@/components/user/sidebar-nav";
 import PointsCard from "@/components/cards/points-card";
 import QuizBreakdown from "@/components/dashboard/quiz-breakdown";
 import { LeaderboardTable } from "@/components/leaderboard-table";
+import { ReportModal } from "@/modals/Report";
 
 import { api } from "@/lib/api";
 
@@ -26,9 +26,9 @@ const StatisticsPage: NextPage = (
     <SettingsLayout>
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium">{t("statistics.title")}</h3>
+          <h3 className="text-lg font-medium">{t("statistics-title")}</h3>
           <p className="text-sm text-muted-foreground">
-            {t("statistics.message")}
+            {t("statistics-message")}
           </p>
         </div>
         <Separator />
@@ -38,6 +38,7 @@ const StatisticsPage: NextPage = (
         </section>
         <QuizBreakdown queryFn={quizBreakdown} />
       </div>
+      <ReportModal />
     </SettingsLayout>
   );
 };

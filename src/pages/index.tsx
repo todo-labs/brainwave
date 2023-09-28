@@ -31,9 +31,9 @@ const Landing: NextPage = (
               href="/auth/sign-in"
               className="relative overflow-hidden rounded-full px-4 py-1.5 text-sm leading-6 text-zinc-400 ring-1 ring-zinc-100/10 duration-150 hover:ring-zinc-100/30"
             >
-              {t("landing.devtagline.pre")}{" "}
+              {t("landing-devtagline-pre")}{" "}
               <span className="font-semibold text-zinc-200">
-                {t("landing.devtagline.post")}
+                {t("landing-devtagline-post")}
                 <span className="ml-2" aria-hidden="true">
                   &rarr;
                 </span>
@@ -42,10 +42,10 @@ const Landing: NextPage = (
           </div>
           <div>
             <h1 className="bg-gradient-to-t from-zinc-100/50 to-white bg-clip-text py-4 text-center text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
-              {t("landing.title")}
+              {t("landing-title")}
             </h1>
             <p className="mt-6 leading-5 text-zinc-600 sm:text-center">
-              {t("landing.desc")}
+              {t("landing-desc")}
             </p>
             <div className="mx-auto mt-8 flex flex-col justify-center gap-4 sm:max-w-lg sm:flex-row ">
               <Link
@@ -55,7 +55,7 @@ const Landing: NextPage = (
                   size: "lg",
                 })}
               >
-                {t("landing.getStarted")}
+                {t("landing-getStarted")}
               </Link>
               <Link
                 href="https://github.com/todo-labs/brainwave#about-the-project"
@@ -64,8 +64,10 @@ const Landing: NextPage = (
                   size: "lg",
                 })}
               >
-                <span>{t("landing.howItWorks")}</span>
-                <span className="ml-2" aria-hidden="true">&rarr;</span>
+                <span>{t("landing-howItWorks")}</span>
+                <span className="ml-2" aria-hidden="true">
+                  &rarr;
+                </span>
               </Link>
             </div>
           </div>

@@ -11,7 +11,6 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { Tailwind } from "@react-email/tailwind";
-import theme from "../../tailwind.config";
 
 interface MagicLinkEmailProps {
   url?: string;
@@ -23,7 +22,7 @@ const baseUrl = process.env.VERCEL_URL
 
 export function MagicLinkEmail(props: MagicLinkEmailProps) {
   return (
-    <Tailwind config={theme}>
+    <Tailwind>
       <Preview>Log in with this magic link.</Preview>
       <Body className="bg-white font-sans">
         <Container className="mx-auto bg-cover bg-bottom bg-no-repeat px-4 py-8">

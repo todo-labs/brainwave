@@ -48,8 +48,8 @@ export function ReportModal() {
   const reportApi = api.meta.report.useMutation({
     onSuccess: () => {
       toast({
-        title: `${t("toast.generic.success.title")}`,
-        description: t("toast.report.success"),
+        title: `${t("toast-generic-success-title")}`,
+        description: t("toast-report-success"),
       });
       form.reset();
       setOpen(false);
@@ -57,8 +57,8 @@ export function ReportModal() {
     onError: (error) => {
       toast({
         variant: "destructive",
-        title: `${t("toast.generic.error.title")}`,
-        description: error.message || `${t("toast.report.error")}`,
+        title: `${t("toast-generic-error-title")}`,
+        description: error.message || `${t("toast-report-error")}`,
       });
     },
   });
@@ -81,7 +81,8 @@ export function ReportModal() {
       });
       trackEvent("FormSubmission", {
         label: "ReportModal",
-        value: values,
+        pageUrl: window.location.href || "",
+        userAgent: window.navigator.userAgent || "",
       });
     } catch (error) {
       trackEvent("FormSubmission", {
@@ -92,6 +93,21 @@ export function ReportModal() {
     }
   };
 
+  const handleOpen = () => {
+    trackEvent("ViewedModal", {
+      label: "Report Modal",
+    });
+    setOpen(true);
+  };
+
+  const handleCancel = () => {
+    trackEvent("ButtonClick", {
+      label: "ReportModal",
+      value: "Cancel",
+    });
+    setOpen(false);
+  };
+
   return (
     <AlertDialog open={open} onOpenChange={(isOpen) => setOpen(isOpen)}>
       <AlertDialogTrigger
@@ -100,23 +116,19 @@ export function ReportModal() {
       >
         <MessageSquareIcon
           className="bg-destructive text-white"
-          onClick={() =>
-            trackEvent("ViewedModal", {
-              label: "Report Modal",
-            })
-          }
+          onClick={handleOpen}
         />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
             <Heading level="h3" className="font-display font-bold">
-              {t("reportModal.title")}
+              {t("reportModal-title")}
             </Heading>
           </AlertDialogTitle>
           <AlertDialogDescription>
             <Paragraph className="text-sm text-gray-500">
-              {t("reportModal.message")}
+              {t("reportModal-message")}
             </Paragraph>
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -131,7 +143,7 @@ export function ReportModal() {
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
-                          placeholder={t("reportModal.placeholder")}
+                          placeholder={t("reportModal-placeholder")}
                         />
                       </SelectTrigger>
                     </FormControl>
@@ -160,15 +172,7 @@ export function ReportModal() {
               )}
             />
             <AlertDialogFooter>
-              <AlertDialogCancel
-                onClick={() => {
-                  trackEvent("ButtonClick", {
-                    label: "ReportModal",
-                    value: "Cancel",
-                  });
-                  setOpen(false);
-                }}
-              >
+              <AlertDialogCancel onClick={handleCancel}>
                 {t("cancel")}
               </AlertDialogCancel>
               <Button

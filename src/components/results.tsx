@@ -24,8 +24,8 @@ const Results = () => {
       <DefaultState
         icon={Loader2Icon}
         iconClassName="animate-spin"
-        title={t("home.results.loading.title")}
-        description={t("home.results.loading.message")}
+        title={t("home-results-loading-title")}
+        description={t("home-results-loading-message")}
       />
     );
   }
@@ -34,9 +34,9 @@ const Results = () => {
     return (
       <DefaultState
         icon={BatteryWarningIcon}
-        title={t("home.results.error.title")}
-        description={t("home.results.error.message")}
-        btnText={t("home.results.error.btn")}
+        title={t("home-results-error-title")}
+        description={t("home-results-error-message")}
+        btnText={t("home-results-error-btn")}
         onClick={void refetch()}
       />
     );

@@ -29,9 +29,11 @@ import { useToast } from "@/hooks/useToast";
 import useStore from "@/hooks/useStore";
 
 interface DataTableRowActionsProps {
-  row: Row<Quiz & {
-    questions: Questions[];
-  }>;
+  row: Row<
+    Quiz & {
+      questions: Questions[];
+    }
+  >;
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
@@ -42,12 +44,11 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const { setCurrentQuiz, setCurrentStep } = useStore();
 
   const deleteMutation = api.admin.removeQuiz.useMutation({
-    async onSuccess() {
+    onSuccess() {
       toast({
         title: "Success",
         description: `The ${row.original.topic} quiz has been deleted.`,
       });
-      await utils.admin.allUsers.invalidate();
     },
     onError() {
       toast({
@@ -56,6 +57,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         variant: "destructive",
       });
     },
+    onSettled: () => utils.admin.allUsers.invalidate(),
   });
 
   const handleDelete = async () => {
@@ -79,11 +81,13 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem onClick={() => {
-            setCurrentQuiz(row.original);
-            setCurrentStep("result");
-            router.push("/home")
-          }}>
+          <DropdownMenuItem
+            onClick={() => {
+              setCurrentQuiz(row.original);
+              setCurrentStep("result");
+              router.push("/home");
+            }}
+          >
             <EyeIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             View
           </DropdownMenuItem>

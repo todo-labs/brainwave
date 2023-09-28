@@ -3,6 +3,8 @@ import { QuizDifficulty, Role } from "@prisma/client";
 import { Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useTranslation } from "next-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +35,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import useDisclaimerModal from "@/modals/Disclamer";
 
 import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
@@ -40,8 +43,6 @@ import { type CreateQuizRequestType, createQuizSchema } from "@/server/schemas";
 import type { QuizWithQuestions } from "types";
 import { useToast } from "@/hooks/useToast";
 import { env } from "@/env.mjs";
-import { useSession } from "next-auth/react";
-import { useTranslation } from "next-i18next";
 import { useMixpanel } from "@/lib/mixpanel";
 
 export function CreateConfig() {
@@ -51,6 +52,13 @@ export function CreateConfig() {
   const { toast } = useToast();
   const { data: session } = useSession();
   const { trackEvent } = useMixpanel();
+  const { t } = useTranslation(["common"]);
+
+  const { Content: DisclaimerModal, open } = useDisclaimerModal({
+    onConfirm: () => {
+      form.handleSubmit(onSubmit)();
+    },
+  });
 
   const createQuizMutation = api.quiz.createExam.useMutation({
     onSuccess: (data) => {
@@ -64,6 +72,8 @@ export function CreateConfig() {
         variant: "destructive",
       });
     },
+    retry: 2,
+    retryDelay: 1000
   });
 
   const form = useForm<CreateQuizRequestType>({
@@ -93,18 +103,16 @@ export function CreateConfig() {
     }
   }
 
-  const { t } = useTranslation(["common"]);
-
   return (
     <div className="flex  shrink-0 items-center justify-center rounded-md border border-dashed">
       <ScrollArea className="h-fit w-full">
         <Card>
           <CardHeader>
-            <CardTitle>{t("home.config.title")}</CardTitle>
-            <CardDescription>{t("home.config.desc")}</CardDescription>
+            <CardTitle>{t("home-config-title")}</CardTitle>
+            <CardDescription>{t("home-config-desc")}</CardDescription>
           </CardHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="space-y-8">
               <CardContent className="grid gap-6">
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -112,7 +120,7 @@ export function CreateConfig() {
                     name="difficulty"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("home.config.difficulty")}</FormLabel>
+                        <FormLabel>{t("home-config-difficulty")}</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -143,7 +151,7 @@ export function CreateConfig() {
                     name="subtopic"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("home.config.subtopic")}</FormLabel>
+                        <FormLabel>{t("home-config-subtopic")}</FormLabel>
                         <Input {...field} disabled={!!currentSubTopic} />
                         <FormMessage />
                       </FormItem>
@@ -155,15 +163,15 @@ export function CreateConfig() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel>
-                        {t("home.config.questions")}
+                        {t("home-config-questions")}
                         <span className="text-gray-500">
-                          {t("home.config.questionsLabel", {
+                          {t("home-config-questionsLabel", {
                             num: field.value,
                           })}
                         </span>
                       </FormLabel>
                       <FormDescription>
-                        {t("home.config.questionDesc")}
+                        {t("home-config-questionDesc")}
                       </FormDescription>
                       <FormControl>
                         <Slider
@@ -183,18 +191,18 @@ export function CreateConfig() {
                   name="notes"
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
-                      <FormLabel>{t("home.config.notes")}</FormLabel>
+                      <FormLabel>{t("home-config-notes")}</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder={
-                            t("home.config.notesPlaceholder") as string
+                            t("home-config-notesPlaceholder") as string
                           }
                           className="resize-none"
                           {...field}
                         />
                       </FormControl>
                       <FormDescription>
-                        {t("home.config.notesDesc")}
+                        {t("home-config-notesDesc")}
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -205,18 +213,18 @@ export function CreateConfig() {
                 <Button
                   className="w-full"
                   variant="default"
-                  type="submit"
                   disabled={createQuizMutation.isLoading}
+                  onClick={open}
                 >
                   {createQuizMutation.isLoading ? (
                     <>
                       <Loader2Icon className="animate-spin" />
                       <span className="ml-2">
-                        {t("home.config.generating")}
+                        {t("home-config-generating")}
                       </span>
                     </>
                   ) : (
-                    t("home.config.submit", {
+                    t("home-config-submit", {
                       num:
                         session?.user.role === Role.ADMIN
                           ? 0
@@ -225,10 +233,11 @@ export function CreateConfig() {
                   )}
                 </Button>
               </CardFooter>
-            </form>
+            </div>
           </Form>
         </Card>
       </ScrollArea>
+      <DisclaimerModal />
     </div>
   );
 }

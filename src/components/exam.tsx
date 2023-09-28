@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { ScrollArea } from "./ui/scroll-area";
 import Timer from "./timer";
+import useDisclaimerModal from "@/modals/Disclamer";
 
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
@@ -19,6 +20,12 @@ const Exam = () => {
   const [completed, setCompleted] = useState(false);
   const { trackEvent } = useMixpanel();
   const { toast } = useToast();
+  const { t } = useTranslation(["common"]);
+  const { Content: DisclaimerModal, open } = useDisclaimerModal({
+    onConfirm: () => {
+      submitQuiz();
+    },
+  });
 
   const gradeQuiz = api.quiz.gradeExam.useMutation({
     onSuccess: () => {
@@ -53,13 +60,25 @@ const Exam = () => {
         topic: currentQuiz?.topic,
         subtopic: currentQuiz?.subtopic,
         difficulty: currentQuiz?.difficulty,
+        id: currentQuiz?.id,
       });
     } catch (error) {
       console.error(error);
     }
   };
 
-  const { t } = useTranslation(["common"]);
+  const handleAnswer = (answer: string, index: number) => {
+    setAnswers(answers.set(index, answer));
+    console.log("ANSWERS:: ", answers)
+    trackEvent("ButtonClick", {
+      label: "Question",
+      value: answer,
+      questionId: currentQuiz?.questions?.[index]?.id,
+      quizId: currentQuiz?.id,
+      topic: currentQuiz?.topic,
+      subtopic: currentQuiz?.subtopic,
+    });
+  };
 
   return (
     <section>
@@ -75,7 +94,7 @@ const Exam = () => {
                 key={q.label}
                 question={q}
                 onSubmit={(answer) => {
-                  setAnswers(answers.set(index, answer));
+                  handleAnswer(answer, index);
                 }}
               />
             ))}
@@ -83,18 +102,19 @@ const Exam = () => {
       </ScrollArea>
       <Button
         className="float-right mt-5"
-        onClick={() => void submitQuiz()}
+        onClick={open}
         disabled={gradeQuiz.isLoading}
       >
         {gradeQuiz.isLoading ? (
           <div className="flex">
             <Loader2Icon className="mr-2 h-5 w-5 animate-spin text-white" />
-            <span>{t("home.exam.grade")}</span>
+            <span>{t("home-exam-grade")}</span>
           </div>
         ) : (
-          <span>{t("home.exam.submit")}</span>
+          <span>{t("home-exam-submit")}</span>
         )}
       </Button>
+      <DisclaimerModal />
     </section>
   );
 };

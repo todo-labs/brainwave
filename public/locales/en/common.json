@@ -1,167 +1,119 @@
 {
   "appName": "Brainwave",
-  "landing": {
-    "devtagline": {
-      "pre": "Ignite your",
-      "post": "Intelligence"
-    },
-    "title": "AI SAT Prep",
-    "desc": "Introducing Brainwave: the ultimate quiz platform for learners. Take quizzes on your favorite subjects, at your desired difficulty level. Build your knowledge and earn badges to showcase your skills. Brainwave is the perfect tool for studying for the SAT.",
-    "getStarted": "Get Started",
-    "howItWorks": "How It Works"
-  },
-  "login": {
-    "title": "Sign in to your account",
-    "subheading": "Enter your email below to create your account",
-    "description": " By clicking continue, you agree to our",
-    "and": "and",
-    "terms": "Terms of Service",
-    "privacy": "Privacy Policy"
-  },
-  "verifyEmail": {
-    "title": "Check Your Email",
-    "desc": "We've sent a verification link to your email address. Please click the link to complete your account setup.",
-    "resend": "Resend Email",
-    "goBack": "Go Back"
-  },
-  "home": {
-    "tabs": {
-      "pickAnExam": "Pick an exam",
-      "config": "Config",
-      "quiz": "Quiz",
-      "results": "Results"
-    },
-    "sidebar": {
-      "math": "Math",
-      "history": "History",
-      "science": "Science"
-    },
-    "pickAnExam": {
-      "error": {
-        "title": "Error",
-        "message": "There was an error fetching our topics. Please try again"
-      },
-      "comingSoon": {
-        "title": "Coming Soon",
-        "message": "We are still working on adding more topics. Please check back in a few days."
-      },
-      "title": "Choose your {{topic}} topic",
-      "desc": "Select a subtopic to start your exam."
-    },
-    "config": {
-      "title": "Lets build your exam",
-      "desc": "What area are you having problems with?",
-      "difficulty": "Difficulty",
-      "questions": "Questions",
-      "questionDesc": "How many questions would you like to solve in this session.",
-      "notes": "Notes",
-      "questionsLabel": "({{num}} questions)",
-      "notesPlaceholder": "Enter any notes you would like to see in your exam prompt",
-      "subtopic": "Subtopic",
-      "notesDesc": "We will use these notes in our prompt to build your exam.",
-      "generating": "Generating Exam",
-      "submit": "Submit {{num}} credits"
-    },
-    "pastExams": {
-      "title": "Past Exams",
-      "error": {
-        "title": "Error",
-        "message": "There was an error fetching your past exams. Please try again"
-      },
-      "empty": {
-        "title": {
-          "pre": "You have not taken any",
-          "post": "exams"
-        },
-        "message": "You have not taken any exams for this topic. Kinda weird, but to each their own."
-      }
-    },
-    "exam": {
-      "grade": "Grading Exam",
-      "submit": "Submit"
-    },
-    "results": {
-      "loading": {
-        "title": "Loading Results",
-        "message": "We are fetching your results. Please wait."
-      },
-      "error": {
-        "title": "Error",
-        "message": "There was an error fetching your results. Please try again",
-        "btn": "Retry"
-      }
-    }
-  },
-  "userNav": {
-    "logout": {
-      "btn": "Logout",
-      "title": "Are you sure you want to logout?",
-      "message": "You will be logged out of your account and will not be able to access your account until you login again."
-    },
-    "profile": "Profile",
-    "settings": "Settings",
-    "dashboard": "Dashboard",
-    "credits": "Credits",
-    "statistics": "Statistics",
-    "home": "Home"
-  },
+  "landing-devtagline-pre": "Ignite your",
+  "landing-devtagline-post": "Intelligence",
+  "landing-title": "AI SAT Prep",
+  "landing-desc": "Introducing Brainwave: the ultimate quiz platform for learners. Take quizzes on your favorite subjects, at your desired difficulty level. Build your knowledge and earn badges to showcase your skills. Brainwave is the perfect tool for studying for the SAT.",
+  "landing-getStarted": "Get Started",
+  "landing-howItWorks": "How It Works",
+  "login-title": "Sign in to your account",
+  "login-subheading": "Enter your email below to create your account",
+  "login-description": " By clicking continue, you agree to our",
+  "login-and": "and",
+  "login-terms": "Terms of Service",
+  "login-privacy": "Privacy Policy",
+  "verifyEmail-title": "Check Your Email",
+  "verifyEmail-desc": "We've sent a verification link to your email address. Please click the link to complete your account setup.",
+  "verifyEmail-resend": "Resend Email",
+  "verifyEmail-goBack": "Go Back",
+  "home-tabs-pickAnExam": "Pick an exam",
+  "home-tabs-config": "Config",
+  "home-tabs-quiz": "Quiz",
+  "home-tabs-results": "Results",
+  "home-sidebar-math": "Math",
+  "home-sidebar-history": "History",
+  "home-sidebar-science": "Science",
+  "home-pickAnExam-error-title": "Error",
+  "home-pickAnExam-error-message": "There was an error fetching our topics. Please try again",
+  "home-pickAnExam-comingSoon-title": "Coming Soon",
+  "home-pickAnExam-comingSoon-message": "We are still working on adding more topics. Please check back in a few days.",
+  "home-pickAnExam-title": "Choose your {{topic}} topic",
+  "home-pickAnExam-desc": "Select a subtopic to start your exam.",
+  "home-config-title": "Lets build your exam",
+  "home-config-desc": "What area are you having problems with?",
+  "home-config-difficulty": "Difficulty",
+  "home-config-questions": "Questions",
+  "home-config-questionDesc": "How many questions would you like to solve in this session.",
+  "home-config-notes": "Notes",
+  "home-config-questionsLabel": "({{num}} questions)",
+  "home-config-notesPlaceholder": "Enter any notes you would like to see in your exam prompt",
+  "home-config-subtopic": "Subtopic",
+  "home-config-notesDesc": "We will use these notes in our prompt to build your exam.",
+  "home-config-generating": "Generating Exam",
+  "home-config-submit": "Submit {{num}} credits",
+  "home-pastExams-title": "Past Exams",
+  "home-pastExams-error-title": "Error",
+  "home-pastExams-error-message": "There was an error fetching your past exams. Please try again",
+  "home-pastExams-empty-title-pre": "You have not taken any",
+  "home-pastExams-empty-title-post": "exams",
+  "home-pastExams-empty-message": "You have not taken any exams for this topic. Kinda weird, but to each their own.",
+  "home-exam-grade": "Grading Exam",
+  "submit": "Submit",
+  "home-results-loading-title": "Loading Results",
+  "home-results-loading-message": "We are fetching your results. Please wait.",
+  "home-results-error-title": "Error",
+  "home-results-error-message": "There was an error fetching your results. Please try again",
+  "home-results-error-btn": "Retry",
+  "userNav-logout-btn": "Logout",
+  "userNav-logout-title": "Are you sure you want to logout?",
+  "userNav-logout-message": "You will be logged out of your account and will not be able to access your account until you login again.",
+  "userNav-profile": "Profile",
+  "userNav-settings": "Settings",
+  "userNav-dashboard": "Dashboard",
+  "userNav-credits": "Credits",
+  "userNav-statistics": "Statistics",
+  "userNav-home": "Home",
   "continue": "Continue",
   "cancel": "Cancel",
-  "profile": {
-    "title": "Profile",
-    "message": "Update your profile information",
-    "name": {
-      "title": "Name",
-      "placeholder": "Enter your name",
-      "desc": "Your name will be used to personalize your experience"
-    },
-    "language": {
-      "title": "Language",
-      "desc": "Select your preferred language",
-      "empty": "No languages available"
-    },
-    "update": "Update Profile"
-  },
-  "settings": {
-    "title": "Settings",
-    "message": "Update your account settings",
-    "theme": {
-      "title": "Theme",
-      "desc": "Select your preferred theme",
-      "light": "Light",
-      "dark": "Dark"
-    },
-    "update": "Update Settings"
-  },
-  "statistics": {
-    "title": "Statistics",
-    "message": "View your exam statistics",
-    "levels": {
-      "beginner": "Beginner",
-      "novice": "Novice",
-      "intermediate": "Intermediate",
-      "advanced": "Advanced",
-      "expert": "Expert",
-      "unclassified": "Unclassified"
-    },
-    "leaderboard": {
-      "title": "Leaderboard",
-      "empty": "No one has taken this exam yet. Be the first!",
-      "description": "Top 10 scores for this exam",
-      "user": "User",
-      "score": "Score",
-      "topic": "Topic",
-      "subtopic": "Subtopic"
-    },
-    "points": "Points",
-    "avgScore": "Average Score",
-    "uniqueTopics": "Unique Topics",
-    "totalExams": "Total Exams"
-  },
+  "profile-title": "Profile",
+  "profile-message": "Update your profile information",
+  "profile-name-title": "Name",
+  "profile-name-placeholder": "Enter your name",
+  "profile-name-desc": "Your name will be used to personalize your experience",
+  "profile-language-title": "Language",
+  "profile-language-desc": "Select your preferred language",
+  "profile-language-empty": "No languages available",
+  "profile-update": "Update Profile",
+  "settings-title": "Settings",
+  "settings-message": "Update your account settings",
+  "settings-theme-title": "Theme",
+  "settings-theme-desc": "Select your preferred theme",
+  "settings-theme-light": "Light",
+  "settings-theme-dark": "Dark",
+  "settings-update": "Update Settings",
+  "statistics-title": "Statistics",
+  "statistics-message": "View your exam statistics",
+  "statistics-levels-beginner": "Beginner",
+  "statistics-levels-novice": "Novice",
+  "statistics-levels-intermediate": "Intermediate",
+  "statistics-levels-advanced": "Advanced",
+  "statistics-levels-expert": "Expert",
+  "statistics-levels-unclassified": "Unclassified",
+  "statistics-leaderboard-title": "Leaderboard",
+  "statistics-leaderboard-empty": "No one has taken this exam yet. Be the first!",
+  "statistics-leaderboard-description": "Top 10 scores for this exam",
+  "statistics-leaderboard-user": "User",
+  "statistics-leaderboard-score": "Score",
+  "statistics-leaderboard-topic": "Topic",
+  "statistics-leaderboard-subtopic": "Subtopic",
+  "statistics-points": "Points",
+  "statistics-avgScore": "Average Score",
+  "statistics-uniqueTopics": "Unique Topics",
+  "statistics-totalExams": "Total Exams",
   "quizBreakdown": "Quiz Breakdown",
-  "sidebar": {
-    "history": "History",
-    "science": "Science",
-    "math": "Math"
-  }
+  "sidebar-history": "History",
+  "sidebar-science": "Science",
+  "sidebar-math": "Math",
+  "disclaimerModal-title": "Disclaimer",
+  "disclaimerModal-pre": "The content you are requesting may not be accurate and may take some time to execute. Please use this content at your own risk.",
+  "disclaimerModal-highlight": "This content is not guaranteed to be accurate or complete.",
+  "disclaimerModal-post": "If you have any questions or concerns, please contact us.",
+  "confirm": "Confirm",
+  "reportModal-title": "Report Content",
+  "reportModal-placeholder": "Enter your reason for reporting",
+  "reportModal-message": "Please enter a detailed report of the content you are reporting. We will review your report and take appropriate action.",
+  "toast-generic-success-title": "Success",
+  "toast-generic-success": "Your request was successful",
+  "toast-generic-error-title": "Error",
+  "toast-generic-error": "There was an error processing your request. Please try again"
 }
