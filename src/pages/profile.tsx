@@ -59,9 +59,7 @@ const languages = [
   { label: "Russian", value: "ru" },
 ] as const;
 
-const ProfilePage: NextPage = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const ProfilePage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session, update } = useSession();
   const router = useRouter();
   const { toast } = useToast();

@@ -13,6 +13,7 @@ import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
 import useStore from "@/hooks/useStore";
 import { useMixpanel } from "@/lib/mixpanel";
+import { useSentry } from "@/lib/sentry";
 
 const Exam = () => {
   const { currentQuiz, setCurrentStep, setShowConfetti } = useStore();
@@ -23,7 +24,7 @@ const Exam = () => {
   const { t } = useTranslation(["common"]);
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
     onConfirm: () => {
-      submitQuiz();
+      useSentry("GradeExam", submitQuiz())
     },
   });
 

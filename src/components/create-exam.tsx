@@ -44,6 +44,7 @@ import type { QuizWithQuestions } from "types";
 import { useToast } from "@/hooks/useToast";
 import { env } from "@/env.mjs";
 import { useMixpanel } from "@/lib/mixpanel";
+import { useSentry } from "@/lib/sentry";
 
 export function CreateConfig() {
   const { currentTopic, setCurrentQuiz, currentSubTopic, setCurrentStep } =
@@ -56,7 +57,7 @@ export function CreateConfig() {
 
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
     onConfirm: () => {
-      form.handleSubmit(onSubmit)();
+      useSentry("CreateExam", form.handleSubmit(onSubmit)())
     },
   });
 
@@ -73,7 +74,7 @@ export function CreateConfig() {
       });
     },
     retry: 2,
-    retryDelay: 1000
+    retryDelay: 1000,
   });
 
   const form = useForm<CreateQuizRequestType>({

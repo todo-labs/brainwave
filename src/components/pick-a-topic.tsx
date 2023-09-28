@@ -28,10 +28,8 @@ const PickATopic = () => {
   );
 
   const { trackEvent } = useMixpanel();
-
-  const cleanTopic = topic.replace(/_/g, " ").toLocaleLowerCase();
-
   const { t } = useTranslation(["common"]);
+  const cleanTopic = topic.replace(/_/g, " ").toLocaleLowerCase();
 
   const handleCardClick = (subtopic: string) => {
     setCurrentSubTopic(subtopic);
@@ -63,7 +61,7 @@ const PickATopic = () => {
               <ExclamationTriangleIcon className="h-4 w-4" />
               <AlertTitle>{t("home-pickAnExam-error-title")}</AlertTitle>
               <AlertDescription>
-                {t("home-pickAnExam:error-message")}
+                {t("home-pickAnExam-error-message")}
               </AlertDescription>
             </Alert>
           )}
