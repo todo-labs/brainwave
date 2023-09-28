@@ -30,7 +30,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <MixpanelProvider session={session}>
+      <MixpanelProvider>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <QueryErrorResetBoundary>
             {({ reset }) => (
