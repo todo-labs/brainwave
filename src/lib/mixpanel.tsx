@@ -35,16 +35,17 @@ const MixpanelContext = createContext({
 
 type Props = {
   children: React.ReactNode;
-  session?: Session | null;
+  session: Session | null;
 };
 
 export function MixpanelProvider({ children, session }: Props) {
   useEffect(() => {
-    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED) return;
+    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED || !session) return;
     Mixpanel.identify(session?.user?.id);
     Mixpanel.people.set({
-      $email: session?.user?.email,
-      $name: session?.user?.name,
+      $email: session.user?.email,
+      $name: session.user?.name,
+      lang: session.user?.lang,
     });
 
     trackEvent("PageView", {
@@ -60,7 +61,7 @@ export function MixpanelProvider({ children, session }: Props) {
     event: keyof typeof mixpanelEventConfig,
     properties?: Partial<MixpanelPayload>
   ) {
-    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED) return;
+    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED || !session) return;
     Mixpanel.track(mixpanelEventConfig[event], properties);
   }
 
