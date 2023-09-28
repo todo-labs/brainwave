@@ -41,12 +41,12 @@ export function MixpanelProvider({ children }: Props) {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED || !session) return;
+    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED) return;
     Mixpanel.identify(session?.user?.id);
     Mixpanel.people.set({
-      $email: session.user?.email,
-      $name: session.user?.name,
-      lang: session.user?.lang,
+      $email: session?.user?.email,
+      $name: session?.user?.name,
+      lang: session?.user?.lang,
     });
 
     trackEvent("PageView", {
@@ -62,7 +62,7 @@ export function MixpanelProvider({ children }: Props) {
     event: keyof typeof mixpanelEventConfig,
     properties?: Partial<MixpanelPayload>
   ) {
-    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED || !session) return;
+    if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED) return;
     Mixpanel.track(mixpanelEventConfig[event], properties);
   }
 
