@@ -73,31 +73,31 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   const sidebarNavItems = [
     {
       icon: <HomeIcon />,
-      title: "userNav.home",
+      title: "userNav-home",
       href: "/home",
       enabled: true,
     },
     {
       icon: <User2Icon />,
-      title: "userNav.profile",
+      title: "userNav-profile",
       href: "/profile",
       enabled: true,
     },
     {
       icon: <CogIcon />,
-      title: "userNav.settings",
+      title: "userNav-settings",
       href: "/settings",
       enabled: true,
     },
     {
       icon: <BarChart2Icon />,
-      title: "userNav.statistics",
+      title: "userNav-statistics",
       href: "/statistics",
       enabled: true,
     },
     {
       icon: <LayoutDashboardIcon />,
-      title: "userNav.dashboard",
+      title: "userNav-dashboard",
       href: "/dashboard",
       enabled: session?.user?.role === Role.ADMIN,
     },

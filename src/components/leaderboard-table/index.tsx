@@ -54,19 +54,19 @@ export function LeaderboardTable() {
 
   return (
     <Table>
-      <TableCaption>{t("statistics:leaderboard:description")}</TableCaption>
+      <TableCaption>{t("statistics-leaderboard-description")}</TableCaption>
       <TableHeader>
         <h1 className="pb-4 text-2xl font-medium">
-          {t("statistics:leaderboard:title")}
+          {t("statistics-leaderboard-title")}
         </h1>
         <TableRow>
           <TableHead className="text-left">
-            {t("statistics:leaderboard:user")}
+            {t("statistics-leaderboard-user")}
           </TableHead>
-          <TableHead>{t("statistics:leaderboard:topic")}</TableHead>
-          <TableHead>{t("statistics:leaderboard:subtopic")}</TableHead>
+          <TableHead>{t("statistics-leaderboard-topic")}</TableHead>
+          <TableHead>{t("statistics-leaderboard-subtopic")}</TableHead>
           <TableHead className="text-right">
-            {t("statistics:leaderboard:score")}
+            {t("statistics-leaderboard-score")}
           </TableHead>
         </TableRow>
       </TableHeader>

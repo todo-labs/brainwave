@@ -51,7 +51,7 @@ const stages = {
       chalk.green(
         `✅ Successfully loaded the default translation file. Total keys: ${
           Object.keys(enTranslation).length
-        }`
+        }\n`
       )
     );
     return enTranslation;
@@ -63,9 +63,7 @@ const stages = {
     /** @type {any[]} */ translatableDirectories
   ) => {
     for (let [index, directory] of translatableDirectories.entries()) {
-      console.log("\n\n");
       const outputPath = path.join(FOLDER_PATH, directory, "common.json");
-      let translation;
 
       console.log(
         chalk.green(
@@ -73,24 +71,19 @@ const stages = {
         )
       );
 
-      translation = await fs.promises
-        .readFile(outputPath, "utf8")
-        .then((data) => {
-          return JSON.parse(data);
-        })
-        .catch((error) => {
-          console.error(
-            chalk.red(`File does not exist: ${outputPath}. Creating...`)
-          );
-          try {
-            fs.promises.writeFile(outputPath, `{"tmp": "tmp"}`);
-          } catch (error) {
-            console.error(chalk.red(`Error creating file: ${outputPath}.`));
-            console.error(error);
-          }
-        });
+      const fileExists = fs.existsSync(outputPath);
 
-      translation = JSON.parse(await fs.promises.readFile(outputPath, "utf8"));
+      if (!fileExists) {
+        console.error(
+          chalk.yellow(`File does not exist: ${outputPath}. Creating...`)
+        );
+        fs.writeFileSync(outputPath, `{"appName": "Brainwave"}`);
+      }
+
+      let translation = JSON.parse(
+        await fs.promises.readFile(outputPath, "utf8")
+      );
+      
       const keys = Object.keys(translation);
       console.log(
         chalk.green(
@@ -131,7 +124,6 @@ const stages = {
         translation[key] = enTranslation[key];
       }
 
-      // Generate the prompt for the translation call
       const prompt = `Translate the following json translation file to the following language: ${directory}. MUST RETURN AS JSON STRING!!! \n\n ${JSON.stringify(
         translation,
         null,
@@ -150,7 +142,6 @@ const stages = {
         continue;
       }
 
-      // Validate the translation
       if (!validateTranslation(parsedResponse, translation)) {
         console.error(
           chalk.red(
@@ -170,7 +161,6 @@ const stages = {
         )
       );
 
-      // Merge the translated keys with the existing translation file
       const updatedTranslation = {
         ...translation,
         ...parsedResponse,
@@ -247,7 +237,7 @@ function validateTranslation(parsedResponse, enTranslation) {
   return true;
 }
 
-async function main() {
+(async function () {
   const start = Date.now();
 
   const translatableDirectories =
@@ -263,6 +253,8 @@ async function main() {
   await stages.validateTranslations(translatableDirectories, enTranslation);
 
   await stages.logSuccessMessageAndExit(start);
-}
-
-main();
+})().catch((error) => {
+  console.error(chalk.red("Error running script."));
+  console.error(error);
+  process.exit(1);
+});

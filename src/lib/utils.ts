@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Topics, ReportStatus } from "@prisma/client";
+import crypto from "crypto";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -17,14 +18,14 @@ type TopicList = {
 
 export const topics: TopicList[] = [
   {
-    name: "sidebar.math",
+    name: "sidebar-math",
     children: [
       { name: "Math I", emoji: "🔢", topic: Topics.MATH_I },
       { name: "Math II", emoji: "📈", topic: Topics.MATH_II },
     ],
   },
   {
-    name: "sidebar.history",
+    name: "sidebar-history",
     children: [
       {
         name: "World History",
@@ -39,7 +40,7 @@ export const topics: TopicList[] = [
     ],
   },
   {
-    name: "sidebar.science",
+    name: "sidebar-science",
     children: [
       {
         name: "Chemistry",
@@ -94,3 +95,11 @@ export type Languages =
   | "ko"
   | "pt"
   | "ru";
+
+export const shortHash = (str: string, len?: number) =>
+  crypto
+    .createHash("md5")
+    .update(str)
+    .digest("hex")
+    .toUpperCase()
+    .slice(0, len || 4);

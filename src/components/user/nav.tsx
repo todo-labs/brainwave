@@ -62,7 +62,7 @@ export function UserNav() {
   const handleSignOut = async () => {
     reset();
     trackEvent("Logout");
-    await signOut();
+    void signOut();
   };
 
   const { t } = useTranslation(["common"]);
@@ -120,7 +120,7 @@ export function UserNav() {
                     <InfinityIcon className="h-4 w-4" />
                   </Paragraph>
                   <Paragraph className="capitalize">
-                    {t("userNav.credits")}
+                    {t("userNav-credits")}
                   </Paragraph>
                 </div>
               ) : (
@@ -130,7 +130,7 @@ export function UserNav() {
                       {profileQuery.data?.credits}
                     </Paragraph>
                     <Paragraph className="capitalize">
-                      {t("userNav.credits")}
+                      {t("userNav-credits")}
                     </Paragraph>
                   </div>
                 )
@@ -141,20 +141,20 @@ export function UserNav() {
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => handleNavigate(`/profile`)}>
               <User className="mr-2 h-4 w-4" />
-              <p className="capitalize">{t("userNav.profile")}</p>
+              <p className="capitalize">{t("userNav-profile")}</p>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleNavigate(`/settings`)}>
               <Settings className="mr-2 h-4 w-4" />
-              <p className="capitalize">{t("userNav.settings")}</p>
+              <p className="capitalize">{t("userNav-settings")}</p>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleNavigate(`/statistics`)}>
               <BarChart2Icon className="mr-2 h-4 w-4" />
-              <p className="capitalize">{t("userNav.statistics")}</p>
+              <p className="capitalize">{t("userNav-statistics")}</p>
             </DropdownMenuItem>
             {session.user.role === Role.ADMIN && (
               <DropdownMenuItem onClick={() => handleNavigate(`/dashboard`)}>
                 <LayoutDashboardIcon className="mr-2 h-4 w-4" />
-                <p className="capitalize">{t("userNav.dashboard")}</p>
+                <p className="capitalize">{t("userNav-dashboard")}</p>
               </DropdownMenuItem>
             )}
           </DropdownMenuGroup>
@@ -163,16 +163,16 @@ export function UserNav() {
             <AlertDialogTrigger asChild>
               <Button variant="link">
                 <LogOut className="mr-2 h-4 w-4" />
-                {t("userNav.logout.btn")}
+                {t("userNav-logout-btn")}
               </Button>
             </AlertDialogTrigger>
           </DropdownMenuItem>
         </DropdownMenuContent>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t("userNav.logout.title")}</AlertDialogTitle>
+            <AlertDialogTitle>{t("userNav-logout-title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t("userNav.logout.message")}
+              {t("userNav-logout-message")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -51,8 +51,8 @@ const PickATopic = () => {
 
   return (
     <Section
-      title={t("home:pickAnExam:title", { topic: cleanTopic })}
-      description={t("home:pickAnExam:desc")}
+      title={t("home-pickAnExam-title", { topic: cleanTopic })}
+      description={t("home-pickAnExam-desc")}
     >
       <ScrollArea>
         <div className="flex space-x-4 pb-4">
@@ -61,18 +61,18 @@ const PickATopic = () => {
           {isError && (
             <Alert variant="destructive">
               <ExclamationTriangleIcon className="h-4 w-4" />
-              <AlertTitle>{t("home:pickAnExam:error.title")}</AlertTitle>
+              <AlertTitle>{t("home-pickAnExam-error-title")}</AlertTitle>
               <AlertDescription>
-                {t("home:pickAnExam:error.message")}
+                {t("home-pickAnExam:error-message")}
               </AlertDescription>
             </Alert>
           )}
           {data && data.length === 0 && (
             <Alert className="w-fit">
               <RocketIcon className="h-4 w-4" />
-              <AlertTitle>{t("home:pickAnExam:comingSoon.title")}</AlertTitle>
+              <AlertTitle>{t("home-pickAnExam-comingSoon-title")}</AlertTitle>
               <AlertDescription>
-                {t("home:pickAnExam:comingSoon.message")}
+                {t("home-pickAnExam-comingSoon-message")}
               </AlertDescription>
             </Alert>
           )}

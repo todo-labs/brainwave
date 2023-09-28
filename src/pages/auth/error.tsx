@@ -1,12 +1,10 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { Command } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
 
 const ErrorPage: React.FC = (props) => {
   const router = useRouter();

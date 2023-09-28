@@ -12,7 +12,11 @@ import {
 import { useState } from "react";
 import { useMixpanel } from "@/lib/mixpanel";
 
-const useDisclaimerModal = (onCancel: () => void) => {
+type Props = {
+  onConfirm: () => void;
+};
+
+const useDisclaimerModal = (props: Props) => {
   const { t } = useTranslation(["common"]);
   const [isOpen, setIsOpen] = useState(false);
   const { trackEvent } = useMixpanel();
@@ -21,12 +25,12 @@ const useDisclaimerModal = (onCancel: () => void) => {
     setIsOpen(true);
     trackEvent("ViewedModal", {
       label: "Disclaimer",
-      value: "Opened",
     });
   };
 
   const handleConfirm = () => {
     setIsOpen(false);
+    props.onConfirm();
     trackEvent("ViewedModal", {
       label: "Disclaimer",
       value: "Confirmed",
@@ -35,7 +39,6 @@ const useDisclaimerModal = (onCancel: () => void) => {
 
   const handleCancel = () => {
     setIsOpen(false);
-    onCancel();
     trackEvent("ViewedModal", {
       label: "Disclaimer",
       value: "Cancelled",
@@ -47,13 +50,13 @@ const useDisclaimerModal = (onCancel: () => void) => {
       <AlertDialog open={isOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t("disclaimerModal:title")}</AlertDialogTitle>
+            <AlertDialogTitle>{t("disclaimerModal-title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t("disclaimerModal:pre")}{" "}
+              {t("disclaimerModal-pre")}{" "}
               <span className="text-primary">
-                {t("disclaimerModal:highlight")}
+                {t("disclaimerModal-highlight")}
               </span>
-              . {t("disclaimerModal:post")}
+              . {t("disclaimerModal-post")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

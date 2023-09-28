@@ -1,4 +1,4 @@
-import { QuizDifficulty, Topics } from "@prisma/client";
+import { QuizDifficulty, ReportType, Topics } from "@prisma/client";
 import z from "zod";
 
 export const createQuizSchema = z.object({
@@ -35,7 +35,16 @@ export const gradeQuizSchema = z.object({
   answers: z.array(z.string()),
 });
 
+export const reportSchema = z.object({
+  pageUrl: z.string(),
+  message: z.string().min(10).max(5000),
+  userAgent: z.string(),
+  issueType: z.nativeEnum(ReportType).optional(),
+  meta: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
+});
+
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;
 export type ProfileRequestType = z.infer<typeof profileSchema>;
 export type GradeQuizRequestType = z.infer<typeof gradeQuizSchema>;
 export type PaginationRequestType = z.infer<typeof paginationSchema>;
+export type ReportRequestType = z.infer<typeof reportSchema>;

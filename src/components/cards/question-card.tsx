@@ -2,7 +2,6 @@ import React from "react";
 import { QuestionType, type Questions } from "@prisma/client";
 
 import { Heading } from "@/components/ui/typography";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -23,7 +22,7 @@ const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
       </Heading>
       {question.type === QuestionType.MCQ && (
         <div className="pb-4">
-          <RadioGroup>
+          <RadioGroup onValueChange={onSubmit}>
             {question.options?.map((option, index) => (
               <div className="flex items-center space-x-2" key={index}>
                 <RadioGroupItem value={option} id={`option-${index}`} />

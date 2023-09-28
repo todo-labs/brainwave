@@ -48,8 +48,8 @@ export function ReportModal() {
   const reportApi = api.meta.report.useMutation({
     onSuccess: () => {
       toast({
-        title: `${t("toast.generic.success.title")}`,
-        description: t("toast.report.success"),
+        title: `${t("toast-generic-success-title")}`,
+        description: t("toast-report-success"),
       });
       form.reset();
       setOpen(false);
@@ -57,8 +57,8 @@ export function ReportModal() {
     onError: (error) => {
       toast({
         variant: "destructive",
-        title: `${t("toast.generic.error.title")}`,
-        description: error.message || `${t("toast.report.error")}`,
+        title: `${t("toast-generic-error-title")}`,
+        description: error.message || `${t("toast-report-error")}`,
       });
     },
   });
@@ -111,12 +111,12 @@ export function ReportModal() {
         <AlertDialogHeader>
           <AlertDialogTitle>
             <Heading level="h3" className="font-display font-bold">
-              {t("reportModal:title")}
+              {t("reportModal-title")}
             </Heading>
           </AlertDialogTitle>
           <AlertDialogDescription>
             <Paragraph className="text-sm text-gray-500">
-              {t("reportModal:message")}
+              {t("reportModal-message")}
             </Paragraph>
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -131,7 +131,7 @@ export function ReportModal() {
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
-                          placeholder={t("reportModal:placeholder")}
+                          placeholder={t("reportModal-placeholder")}
                         />
                       </SelectTrigger>
                     </FormControl>

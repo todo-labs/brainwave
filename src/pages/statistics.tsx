@@ -3,7 +3,6 @@ import type {
   NextPage,
   InferGetServerSidePropsType,
 } from "next";
-import { AwardIcon } from "lucide-react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
