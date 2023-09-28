@@ -13,6 +13,7 @@ import "@/styles/globals.css";
 import "src/styles/verify-request.css";
 import { api } from "@/lib/api";
 import Head from "next/head.js";
+import { MixpanelProvider } from "@/lib/mixpanel";
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -26,16 +27,18 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-        <main className={cn(dmSans.className)}>
-          <Head>
-            <title>Brainwave</title>
-            <link rel="icon" href="/logo.svg" />
-          </Head>
-          <Component {...pageProps} />
-          <Toaster />
-        </main>
-      </ThemeProvider>
+      <MixpanelProvider session={session}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <main className={cn(dmSans.className)}>
+            <Head>
+              <title>Brainwave</title>
+              <link rel="icon" href="/logo.svg" />
+            </Head>
+            <Component {...pageProps} />
+            <Toaster />
+          </main>
+        </ThemeProvider>
+      </MixpanelProvider>
     </SessionProvider>
   );
 };

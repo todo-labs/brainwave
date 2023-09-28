@@ -96,6 +96,7 @@ export function ReportModal() {
   const handleOpen = () => {
     trackEvent("ViewedModal", {
       label: "Report Modal",
+      pageUrl: window.location.href || "",
     });
     setOpen(true);
   };
@@ -104,6 +105,7 @@ export function ReportModal() {
     trackEvent("ButtonClick", {
       label: "ReportModal",
       value: "Cancel",
+      pageUrl: window.location.href || "",  
     });
     setOpen(false);
   };

@@ -111,7 +111,7 @@ const Exam = () => {
             <span>{t("home-exam-grade")}</span>
           </div>
         ) : (
-          <span>{t("home-exam-submit")}</span>
+          <span>{t("submit")}</span>
         )}
       </Button>
       <DisclaimerModal />
