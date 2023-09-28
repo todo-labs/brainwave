@@ -73,8 +73,6 @@ export function CreateConfig() {
         variant: "destructive",
       });
     },
-    retry: 2,
-    retryDelay: 1000,
   });
 
   const form = useForm<CreateQuizRequestType>({
