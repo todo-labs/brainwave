@@ -3,6 +3,7 @@ import Mixpanel from "mixpanel-browser";
 
 import { env } from "@/env.mjs";
 import { useSession } from "next-auth/react";
+import useStore from "@/hooks/useStore";
 
 Mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN);
 
@@ -39,6 +40,7 @@ type Props = {
 
 export function MixpanelProvider({ children }: Props) {
   const { data: session } = useSession();
+  const { currentStep } = useStore();
 
   useEffect(() => {
     if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED) return;
@@ -51,6 +53,8 @@ export function MixpanelProvider({ children }: Props) {
 
     trackEvent("PageView", {
       label: window.location.pathname,
+      ...(currentStep &&
+        window.location.pathname === "/home" && { step: currentStep }),
     });
 
     return () => {
