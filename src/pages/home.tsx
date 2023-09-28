@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import useLocale from "@/hooks/useLocale";
+import { ReportModal } from "@/modals/Report";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -102,6 +103,7 @@ export default function Home(
           </div>
         </div>
       </div>
+      <ReportModal />
     </div>
   );
 }

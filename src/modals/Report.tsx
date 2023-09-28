@@ -81,7 +81,8 @@ export function ReportModal() {
       });
       trackEvent("FormSubmission", {
         label: "ReportModal",
-        value: values,
+        pageUrl: window.location.href || "",
+        userAgent: window.navigator.userAgent || "",
       });
     } catch (error) {
       trackEvent("FormSubmission", {
@@ -92,6 +93,21 @@ export function ReportModal() {
     }
   };
 
+  const handleOpen = () => {
+    trackEvent("ViewedModal", {
+      label: "Report Modal",
+    });
+    setOpen(true);
+  };
+
+  const handleCancel = () => {
+    trackEvent("ButtonClick", {
+      label: "ReportModal",
+      value: "Cancel",
+    });
+    setOpen(false);
+  };
+
   return (
     <AlertDialog open={open} onOpenChange={(isOpen) => setOpen(isOpen)}>
       <AlertDialogTrigger
@@ -100,11 +116,7 @@ export function ReportModal() {
       >
         <MessageSquareIcon
           className="bg-destructive text-white"
-          onClick={() =>
-            trackEvent("ViewedModal", {
-              label: "Report Modal",
-            })
-          }
+          onClick={handleOpen}
         />
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -160,15 +172,7 @@ export function ReportModal() {
               )}
             />
             <AlertDialogFooter>
-              <AlertDialogCancel
-                onClick={() => {
-                  trackEvent("ButtonClick", {
-                    label: "ReportModal",
-                    value: "Cancel",
-                  });
-                  setOpen(false);
-                }}
-              >
+              <AlertDialogCancel onClick={handleCancel}>
                 {t("cancel")}
               </AlertDialogCancel>
               <Button

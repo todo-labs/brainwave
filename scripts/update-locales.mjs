@@ -80,10 +80,10 @@ const stages = {
         fs.writeFileSync(outputPath, `{"appName": "Brainwave"}`);
       }
 
-      let translation = JSON.parse(
+      const translation = JSON.parse(
         await fs.promises.readFile(outputPath, "utf8")
       );
-      
+
       const keys = Object.keys(translation);
       console.log(
         chalk.green(
@@ -93,14 +93,12 @@ const stages = {
 
       const missingKeys = [];
 
-      // Check which keys are missing from the translation
       for (const key of Object.keys(enTranslation)) {
         if (!Object.keys(translation).includes(key)) {
           missingKeys.push(key);
         }
       }
 
-      // If there are no missing keys, skip the directory
       if (missingKeys.length === 0) {
         console.log(
           chalk.green(
@@ -117,21 +115,20 @@ const stages = {
         console.log(missingKeys.join(", "));
       }
 
-      // Create a new translation object with only the missing keys
-      translation = {};
+      const _translation = {};
       for (const key of missingKeys) {
         // @ts-ignore
-        translation[key] = enTranslation[key];
+        _translation[key] = enTranslation[key];
       }
 
       const prompt = `Translate the following json translation file to the following language: ${directory}. MUST RETURN AS JSON STRING!!! \n\n ${JSON.stringify(
-        translation,
+        _translation,
         null,
         2
       )} \n\n`;
 
       console.log(chalk.green(`✅ Generating translation for ${directory}.`));
-      let response = await gpt3.call(prompt);
+      const response = await gpt3.call(prompt);
       let parsedResponse;
 
       try {
@@ -142,7 +139,7 @@ const stages = {
         continue;
       }
 
-      if (!validateTranslation(parsedResponse, translation)) {
+      if (!validateTranslation(parsedResponse, _translation)) {
         console.error(
           chalk.red(
             "Validation failed. Retrying translation for directory: ",
@@ -175,13 +172,19 @@ const stages = {
       );
 
       console.log(chalk.green(`✅ Writing translation file to disk.`));
-      await fs.promises.writeFile(
-        outputPath,
-        JSON.stringify(updatedTranslation)
-      );
+
+      const ordered = {};
+      Object.keys(updatedTranslation)
+        .sort()
+        .forEach(function (key) {
+          // @ts-ignore
+          ordered[key] = updatedTranslation[key];
+        });
+
+      await fs.promises.writeFile(outputPath, JSON.stringify(ordered));
       console.log(
         chalk.green(
-          `✅ Successfully translated ${DEFAULT_LANGUAGE} => ${directory}.`
+          `✅ Successfully translated ${DEFAULT_LANGUAGE} => ${directory}.\n\n`
         )
       );
     }
@@ -208,8 +211,14 @@ const stages = {
   // Stage 5: Log success message and exit
   logSuccessMessageAndExit: async (/** @type {number} */ start) => {
     console.log(chalk.green("Done!"));
-    console.log(chalk.green(`Time elapsed: ${Date.now() - start}ms`));
-    process.exit(0);
+    const ms = Date.now() - start;
+    const s = Math.floor(ms / 1000);
+
+    if (s < 1) {
+      console.log(chalk.green(`Total time: ${ms}ms`));
+    } else {
+      console.log(chalk.green(`Total time: ${s}s`));
+    }
   },
 };
 
