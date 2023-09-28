@@ -114,7 +114,7 @@ export function ReportModal() {
     <AlertDialog open={open} onOpenChange={(isOpen) => setOpen(isOpen)}>
       <AlertDialogTrigger
         asChild
-        className="fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-lg p-1"
+        className="fixed bottom-4 left-8 z-50 flex h-12 w-12 items-center justify-center rounded-lg p-1"
       >
         <MessageSquareIcon
           className="bg-destructive text-white"
