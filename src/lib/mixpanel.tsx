@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import Mixpanel from "mixpanel-browser";
 
 import { env } from "@/env.mjs";
+import { Session } from "next-auth";
 
 Mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN);
 
@@ -33,20 +33,27 @@ const MixpanelContext = createContext({
   trackEvent: (() => {}) as TrackEvent,
 });
 
-export function MixpanelProvider({ children }: { children: React.ReactNode }) {
-  const { data: session } = useSession();
+type Props = {
+  children: React.ReactNode;
+  session?: Session | null;
+};
 
+export function MixpanelProvider({ children, session }: Props) {
   useEffect(() => {
     if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED) return;
     Mixpanel.identify(session?.user?.id);
     Mixpanel.people.set({
       $email: session?.user?.email,
-      $fullName: session?.user?.name,
+      $name: session?.user?.name,
     });
 
     trackEvent("PageView", {
       label: window.location.pathname,
     });
+
+    return () => {
+      Mixpanel.reset();
+    };
   }, [session, env.NEXT_PUBLIC_MIXPANEL_ENABLED]);
 
   function trackEvent(
