@@ -99,14 +99,19 @@ To switch to a different language, simply click on the language selector on the 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Integrations
+## 🧩 Integrations
 
 **Mixpanel**
 
 we prioritize data-driven decision-making to enhance the user experience and continuously improve our services.
 To achieve this, we have integrated Mixpanel, a powerful analytics and user engagement platform, into our application.
 
-**Sentry (Coming Soon)**
+**Sentry**
+
+We have integrated Sentry, an open-source error tracking tool, into our application using 
+[Sentry's Next.js SDK](https://docs.sentry.io/platforms/javascript/guides/nextjs/). 
+This allows us to monitor and fix crashes in real-time, as well as monitor our application's performance and identify potential bottlenecks. 
+Sentry's session replay feature also allows us to see exactly what our users are experiencing, which helps us to improve our application's usability.
 
 ### Prerequisites
 
