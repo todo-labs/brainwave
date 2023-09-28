@@ -55,8 +55,7 @@ const Exam = () => {
       });
       setCompleted(true);
       trackEvent("FormSubmission", {
-        label: "Exam",
-        value: currentQuiz?.id,
+        label: "Grade Exam",
         questions: currentQuiz?.questions?.length,
         topic: currentQuiz?.topic,
         subtopic: currentQuiz?.subtopic,
