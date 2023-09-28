@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect } from "react";
 import Mixpanel from "mixpanel-browser";
 
 import { env } from "@/env.mjs";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
 Mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN);
 
@@ -35,10 +35,11 @@ const MixpanelContext = createContext({
 
 type Props = {
   children: React.ReactNode;
-  session: Session | null;
 };
 
-export function MixpanelProvider({ children, session }: Props) {
+export function MixpanelProvider({ children }: Props) {
+  const { data: session } = useSession();
+
   useEffect(() => {
     if (!env.NEXT_PUBLIC_MIXPANEL_ENABLED || !session) return;
     Mixpanel.identify(session?.user?.id);
