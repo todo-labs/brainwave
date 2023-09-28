@@ -31,7 +31,10 @@ export const env = createEnv({
     UPLOADTHING_SECRET: z.string().min(1).optional(),
     UPLOADTHING_APP_ID: z.string().min(1).optional(),
     CREDITS_PER_QUIZ: z.coerce.number().default(1),
-    LANGCHAIN_TRACING_V2: z.coerce.boolean(),
+    LANGCHAIN_TRACING_V2: z
+      .string()
+      .refine((s) => s === "true" || s === "false")
+      .transform((s) => s === "true"),
     LANGCHAIN_ENDPOINT: z.string().url(),
     LANGCHAIN_API_KEY: z.string().min(1),
     LANGCHAIN_PROJECT: z.string().default("default"),
@@ -50,7 +53,10 @@ export const env = createEnv({
     NEXT_PUBLIC_MAX_TIME_PER_QUIZ: z.coerce.number().default(5),
     NEXT_PUBLIC_CREDITS_PER_QUIZ: z.coerce.number().default(1),
     NEXT_PUBLIC_MIXPANEL_TOKEN: z.string().min(1),
-    NEXT_PUBLIC_MIXPANEL_ENABLED: z.coerce.boolean().default(false),
+    NEXT_PUBLIC_MIXPANEL_ENABLED: z
+      .string()
+      .refine((s) => s === "true" || s === "false")
+      .transform((s) => s === "true"),
     NEXT_PUBLIC_SENTRY_DSN: z.string().url(),
   },
 
