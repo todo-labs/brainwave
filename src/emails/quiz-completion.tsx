@@ -35,12 +35,13 @@ export const QuizCompletionEmail = ({
       <Body className="bg-white font-sans">
         <Container className="mx-auto px-4 py-8">
           <Heading className="mb-8 text-2xl font-bold">
-            Congratulations {name}, on completing your {cleanEnum(topic)}: {subtopic} quiz!
+            Congratulations {name}, on completing your {cleanEnum(topic)}:{" "}
+            {subtopic} quiz!
           </Heading>
           <Section className="mb-8">
             <Text className="mb-4 text-lg leading-6">
-              You have completed your quiz with a score of <Text className="text-primary font-bold">{score}</Text>. You can view
-              your progress on the statistics page.
+              You have completed your quiz with a score of{" "}
+              <span className="font-bold text-primary">{score}</span>.
             </Text>
             <Button
               href={`${baseUrl}/statistics`}

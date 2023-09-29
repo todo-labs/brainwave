@@ -48,7 +48,7 @@ const AddTopics: React.FC = () => {
           <AlertDescription>{error.message}</AlertDescription>
         </Alert>
       )}
-      <div className="grid w-full grid-cols-5 gap-4 rounded-lg p-4">
+      <div className="flex flex-wrap gap-3 rounded-lg p-4">
         {isLoading &&
           new Array(10).fill(0).map((_, i) => <TopicSkeleton key={i} />)}
         {!isLoading && <AddSubtopicModal topic={topic} />}

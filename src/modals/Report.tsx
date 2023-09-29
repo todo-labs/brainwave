@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Loader2Icon, MessageSquareIcon } from "lucide-react";
+import { AlertCircleIcon, BugIcon, Loader2Icon, MessageSquareIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReportType } from "@prisma/client";
 import { useTranslation } from "next-i18next";
@@ -114,10 +114,10 @@ export function ReportModal() {
     <AlertDialog open={open} onOpenChange={(isOpen) => setOpen(isOpen)}>
       <AlertDialogTrigger
         asChild
-        className="fixed bottom-4 left-8 z-50 flex h-12 w-12 items-center justify-center rounded-lg p-1"
+        className="fixed bottom-4 left-8 z-50 flex h-8 w-8 items-center justify-center rounded-lg p-1"
       >
-        <MessageSquareIcon
-          className="bg-destructive text-white"
+        <AlertCircleIcon
+          className="bg-destructive text-white cursor-pointer rounded-lg"
           onClick={handleOpen}
         />
       </AlertDialogTrigger>

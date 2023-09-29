@@ -1,6 +1,5 @@
 import type { Row } from "@tanstack/react-table";
 import { EyeIcon, MoreHorizontal, Tags, Trash } from "lucide-react";
-import { format } from "date-fns";
 import { type Report, ReportStatus, User } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
@@ -17,27 +16,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Paragraph } from "@/components/ui/typography";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ViewReportModal from "@/modals/ViewReport";
+import RemoveReportModal from "@/modals/RemoveReport";
 
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
@@ -51,34 +33,23 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const utils = api.useContext();
   const { toast } = useToast();
 
-  const deleteReportMutation = api.admin.removeReport.useMutation({
-    async onSuccess() {
+  const updateTicketStatusMutation = api.admin.updateTicketStatus.useMutation({
+    async onSuccess(data) {
       toast({
-        title: "Report deleted successfully",
+        title: "Ticket status updated successfully",
         description: (
           <h3>
-            Ticket Number: <span>{row.original.ticketNumber}</span> has been
-            deleted`
+            Ticket Number:{" "}
+            <span className="font-bold text-primary">
+              {row.original.ticketNumber}
+            </span>{" "}
+            is now{" "}
+            <span className={cn(statusToColor(data.status))}>
+              {data.status}
+            </span>
           </h3>
         ),
       });
-      await utils.admin.allReports.invalidate();
-    },
-    onError() {
-      toast({
-        title: "Failed to delete reminder",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const updateTicketStatusMutation = api.admin.updateTicketStatus.useMutation({
-    async onSuccess() {
-      toast({
-        title: "Ticket status updated successfully",
-        description: `Ticket Number: ${row.original.ticketNumber} is now ${row.original.status}`,
-      });
-      await utils.admin.allReports.invalidate();
     },
     onError() {
       toast({
@@ -86,15 +57,8 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         variant: "destructive",
       });
     },
+    onSettled: async () => await utils.admin.allReports.invalidate(),
   });
-
-  const handleDelete = async () => {
-    try {
-      await deleteReportMutation.mutateAsync(row.original.id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleUpdateTicketStatus = async (status: ReportStatus) => {
     try {
@@ -159,68 +123,8 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             </AlertDialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              Ticket Number: {row.original.ticketNumber} and all of its data.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="capitalize">
-              {row.original.ticketNumber || "No Ticket Number"}
-            </DialogTitle>
-            <DialogDescription className="space-y-2">
-              <div className="my-6 w-full overflow-y-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="m-0 border-t p-0 even:bg-muted">
-                      <th className="border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right">
-                        Status
-                      </th>
-                      <th className="border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right">
-                        Created
-                      </th>
-                      <th className="border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right">
-                        Type
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="m-0 border-t p-0 even:bg-muted">
-                      <td
-                        className={cn(
-                          "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
-                          statusToColor(row.original.status)
-                        )}
-                      >
-                        {row.original.status}
-                      </td>
-                      <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-                        {format(row.original.createdAt, "MM/dd/yyyy")}
-                      </td>
-                      <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-                        {row.original.type}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <Paragraph className="text-muted-foreground">
-                {row.original.txt}
-              </Paragraph>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
+        <RemoveReportModal {...row.original} />
+        <ViewReportModal {...row.original} />
       </Dialog>
     </AlertDialog>
   );

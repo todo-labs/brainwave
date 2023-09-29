@@ -37,7 +37,7 @@ const TopicCard: React.FC<TopicCardProps> = ({
     <CardHeader>
       <CardTitle className="flex flex-col w-full">
         {!!actionComponent && (
-          <span className="flex flex-row-reverse">{actionComponent}</span>
+          <span className="flex flex-row-reverse pb-2">{actionComponent}</span>
         )}
         {title}
       </CardTitle>
