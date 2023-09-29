@@ -16,6 +16,7 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { api } from "@/lib/api";
 import { cleanEnum } from "@/lib/utils";
 import AddSubtopicModal from "@/modals/AddSubtopic";
+import RemoveSubtopicModal from "@/modals/RemoveSubtopic";
 
 const AddTopics: React.FC = () => {
   const [topic, setTopic] = useState<Topics | null>(null);
@@ -47,12 +48,20 @@ const AddTopics: React.FC = () => {
           <AlertDescription>{error.message}</AlertDescription>
         </Alert>
       )}
-      <div className="grid w-full grid-cols-5 gap-4 rounded-lg border border-dashed p-4">
+      <div className="grid w-full grid-cols-5 gap-4 rounded-lg p-4">
         {isLoading &&
           new Array(10).fill(0).map((_, i) => <TopicSkeleton key={i} />)}
         {!isLoading && <AddSubtopicModal topic={topic} />}
         {!!data &&
-          data.map((subtopic) => <TopicCard key={subtopic} title={subtopic} />)}
+          data.map((subtopic) => (
+            <TopicCard
+              key={subtopic}
+              title={subtopic}
+              actionComponent={
+                <RemoveSubtopicModal topic={topic} subtopic={subtopic} />
+              }
+            />
+          ))}
       </div>
     </div>
   );

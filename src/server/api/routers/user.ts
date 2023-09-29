@@ -96,4 +96,30 @@ export const userRouter = createTRPCRouter({
       amount: amount ?? 0,
     }));
   }),
+  rank: protectedProcedure.query(async ({ ctx }) => {
+    const users = await ctx.prisma.user.findMany({
+      select: {
+        name: true,
+        quizzes: {
+          select: {
+            score: true,
+          },
+        },
+      },
+    });
+
+    const usersWithScore = users.map((user) => ({
+      name: user.name,
+      score: user.quizzes.reduce((acc, quiz) => {
+        return acc + quiz.score;
+      }, 0),
+    }));
+
+    const sortedUsers = usersWithScore.sort((a, b) => b.score - a.score);
+
+    const rank =
+      sortedUsers.findIndex((user) => user.name === ctx.session?.user.name) + 1;
+
+    return rank;
+  }),
 });

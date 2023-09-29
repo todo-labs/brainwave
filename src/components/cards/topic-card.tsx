@@ -14,6 +14,7 @@ interface TopicCardProps {
   selected?: boolean;
   documents?: number;
   children?: React.ReactNode;
+  actionComponent?: React.ReactNode;
 }
 
 const TopicCard: React.FC<TopicCardProps> = ({
@@ -22,6 +23,7 @@ const TopicCard: React.FC<TopicCardProps> = ({
   documents,
   onClick,
   children,
+  actionComponent,
 }) => (
   <Card
     className={cn(
@@ -33,7 +35,12 @@ const TopicCard: React.FC<TopicCardProps> = ({
     onClick={onClick}
   >
     <CardHeader>
-      <CardTitle>{title}</CardTitle>
+      <CardTitle className="flex flex-col w-full">
+        {!!actionComponent && (
+          <span className="flex flex-row-reverse">{actionComponent}</span>
+        )}
+        {title}
+      </CardTitle>
       {!!documents && (
         <CardDescription>
           {documents} {documents === 1 ? "document" : "documents"}

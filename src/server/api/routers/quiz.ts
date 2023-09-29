@@ -13,6 +13,7 @@ import {
 } from "@/lib/ai/quiz";
 import { env } from "@/env.mjs";
 import { Languages } from "@/lib/utils";
+import { sendEmail } from "@/lib/mailer";
 
 export const quizRouter = createTRPCRouter({
   getPastExams: protectedProcedure
@@ -214,13 +215,20 @@ export const quizRouter = createTRPCRouter({
             difficulty: quiz.difficulty,
             score,
           },
-          ctx.session.user.name || "[NOT_SUPPLIED]",
+          ctx.session.user.name || "Anonymous",
           ctx.session.user.lang || "en"
         );
 
         await ctx.prisma.quiz.update({
           where: { id: input.quizId },
           data: { score, reviewNotes },
+        });
+
+        await sendEmail(ctx.session.user.email as string, "quizCompletion", {
+          name: ctx.session.user.name || "Anonymous",
+          score,
+          topic: quiz.topic,
+          subtopic: quiz.subtopic,
         });
       } catch (e) {
         console.error(e);

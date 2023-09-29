@@ -1,8 +1,9 @@
 import * as z from "zod";
 import { adminProcedure, createTRPCRouter } from "@/server/api/trpc";
-import { paginationSchema } from "@/server/schemas";
+import { modifySubtopicSchema, paginationSchema } from "@/server/schemas";
 import { cleanEnum } from "@/lib/utils";
-import { ReportStatus, Topics } from "@prisma/client";
+import { ReportStatus } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 export const adminRouter = createTRPCRouter({
   totalUsers: adminProcedure.query(async ({ ctx }) => {
@@ -158,20 +159,41 @@ export const adminRouter = createTRPCRouter({
       });
     }),
   addSubtopic: adminProcedure
-    .input(
-      z.object({
-        topic: z.nativeEnum(Topics).nullable(),
-        subtopic: z.string().min(1).max(100),
-      })
-    )
+    .input(modifySubtopicSchema)
     .mutation(async ({ input, ctx }) => {
       const topic = await ctx.prisma.metadata.findUniqueOrThrow({
         where: {
           topic: input.topic || undefined,
         },
       });
-      console.log(topic);
+      const isUnique = !topic.subtopics.includes(input.subtopic);
+      if (!isUnique) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Subtopic already exists",
+        });
+      }
       topic.subtopics.push(input.subtopic);
+      return await ctx.prisma.metadata.update({
+        where: {
+          topic: input.topic || undefined,
+        },
+        data: {
+          subtopics: topic.subtopics,
+        },
+      });
+    }),
+  removeSubtopic: adminProcedure
+    .input(modifySubtopicSchema)
+    .mutation(async ({ input, ctx }) => {
+      const topic = await ctx.prisma.metadata.findUniqueOrThrow({
+        where: {
+          topic: input.topic || undefined,
+        },
+      });
+      topic.subtopics = topic.subtopics.filter(
+        (subtopic) => subtopic !== input.subtopic
+      );
       return await ctx.prisma.metadata.update({
         where: {
           topic: input.topic || undefined,

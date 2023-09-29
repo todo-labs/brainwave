@@ -18,7 +18,7 @@ import ReportTable from "@/components/dashboard/report-table";
 
 import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
-import AddTopics from "@/components/dashboard/add-topics";
+import AddTopics from "@/components/dashboard/manage-topics";
 
 export default function DashboardPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>

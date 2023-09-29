@@ -26,12 +26,9 @@ import { Button } from "@/components/ui/button";
 
 import { useToast } from "@/hooks/useToast";
 import { api } from "@/lib/api";
+import { ModifySubtopicRequestType } from "@/server/schemas";
 
-type Props = {
-  topic: Topics | null;
-};
-
-const AddSubtopicModal = (props: Props) => {
+const AddSubtopicModal = (props: Pick<ModifySubtopicRequestType, "topic">) => {
   const { toast } = useToast();
 
   const utils = api.useContext();
@@ -84,7 +81,7 @@ const AddSubtopicModal = (props: Props) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="cursor-pointer">
         <DialogHeader>
           <DialogTitle className="flex items-center space-x-3">
             Add Subtopic

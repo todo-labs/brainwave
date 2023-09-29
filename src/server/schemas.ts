@@ -43,8 +43,14 @@ export const reportSchema = z.object({
   meta: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
 });
 
+export const modifySubtopicSchema = z.object({
+  topic: z.nativeEnum(Topics).nullable(),
+  subtopic: z.string().min(1).max(100),
+});
+
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;
 export type ProfileRequestType = z.infer<typeof profileSchema>;
 export type GradeQuizRequestType = z.infer<typeof gradeQuizSchema>;
 export type PaginationRequestType = z.infer<typeof paginationSchema>;
 export type ReportRequestType = z.infer<typeof reportSchema>;
+export type ModifySubtopicRequestType = z.infer<typeof modifySubtopicSchema>;

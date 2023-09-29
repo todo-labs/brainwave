@@ -29,6 +29,7 @@ type ScoreCardProps = {
 
 const PointsCard = () => {
   const { data, isLoading } = api.user.pointsBreakdown.useQuery();
+  const { data: ranking, isLoading: isRankLoading } = api.user.rank.useQuery();
 
   const totalScore = data?.totalScore || 0;
   const maxScore = 5000;
@@ -123,6 +124,11 @@ const PointsCard = () => {
       <CardFooter className="flex flex-col">
         <section className="grid w-full grid-cols-2 gap-4">
           <ScoreCard
+            isLoading={isRankLoading}
+            amount={ranking || 0}
+            label={t("statistics-ranking")}
+          />
+          <ScoreCard
             isLoading={isLoading}
             amount={data.averageScore}
             label={t("statistics-avgScore")}
@@ -137,7 +143,6 @@ const PointsCard = () => {
             amount={data.totalQuizzes}
             label={t("statistics-totalExams")}
           />
-          <ScoreCard isLoading amount={0} label="Coming Soon" />
         </section>
       </CardFooter>
     </Card>
