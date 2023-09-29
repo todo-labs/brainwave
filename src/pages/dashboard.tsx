@@ -18,18 +18,17 @@ import ReportTable from "@/components/dashboard/report-table";
 
 import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
+import AddTopics from "@/components/dashboard/add-topics";
 
 export default function DashboardPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
+  const { setDashboardTab, dashboardTab } = useStore();
   const totalUsers = api.admin.totalUsers.useQuery();
   const totalQuizzes = api.admin.totalQuizzes.useQuery();
   const averageScore = api.admin.averageScore.useQuery();
   const totalReports = api.admin.totalReports.useQuery();
-
   const quizBreakdown = api.admin.quizBreakdown.useQuery();
-
-  const { setDashboardTab, dashboardTab } = useStore();
 
   return (
     <SettingsLayout>
@@ -63,6 +62,12 @@ export default function DashboardPage(
                 >
                   Quizzes
                 </TabsTrigger>
+                <TabsTrigger
+                  value="topics"
+                  onClick={() => setDashboardTab("topics")}
+                >
+                  Topics
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="overview" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -88,9 +93,6 @@ export default function DashboardPage(
                   />
                 </div>
                 <QuizBreakdown queryFn={quizBreakdown} />
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                  {/* <StudyGuideBacklog /> */}
-                </div>
               </TabsContent>
               <TabsContent value="user-management">
                 <Card className="col-span-4">
@@ -129,6 +131,16 @@ export default function DashboardPage(
                   </CardHeader>
                   <CardContent className="pl-2">
                     <QuizTable />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="topics">
+                <Card className="col-span-4">
+                  <CardHeader>
+                    <CardTitle>Topics</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                    <AddTopics />
                   </CardContent>
                 </Card>
               </TabsContent>

@@ -4,7 +4,12 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { Topics } from "@prisma/client";
 import type { QuizWithQuestions, Tabs } from "types";
 
-type DashboardTabs = 'overview' | 'user-management' | 'reports' | 'quizzes';
+type DashboardTabs =
+  | "overview"
+  | "user-management"
+  | "reports"
+  | "quizzes"
+  | "topics";
 
 interface State {
   showConfetti: boolean;
@@ -29,7 +34,7 @@ const store: StateCreator<State> = persist(
     currentTopic: Topics.MATH_I,
     currentSubTopic: null,
     currentQuiz: null,
-    dashboardTab: 'overview',
+    dashboardTab: "overview",
     setShowConfetti: (showConfetti) => set({ showConfetti }),
     setCurrentTopic: (currentTopic) =>
       set({ currentTopic: currentTopic as Topics }),
@@ -44,7 +49,7 @@ const store: StateCreator<State> = persist(
         currentQuiz: null,
         currentSubTopic: null,
         currentStep: "choice",
-        dashboardTab: 'overview',
+        dashboardTab: "overview",
       }),
   }),
   {

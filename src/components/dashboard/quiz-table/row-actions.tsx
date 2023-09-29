@@ -57,7 +57,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         variant: "destructive",
       });
     },
-    onSettled: () => utils.admin.allUsers.invalidate(),
+    onSettled: async () => await utils.admin.allQuizzes.invalidate(),
   });
 
   const handleDelete = async () => {

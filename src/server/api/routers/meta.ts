@@ -10,13 +10,13 @@ export const metaRouter = createTRPCRouter({
   getSubtopics: protectedProcedure
     .input(
       z.object({
-        topic: z.nativeEnum(Topics),
+        topic: z.nativeEnum(Topics).nullable(),
       })
     )
     .query(async ({ input, ctx }) => {
       const subtopics = await ctx.prisma.metadata.findMany({
         where: {
-          topic: input.topic,
+          topic: input.topic ?? undefined,
         },
         select: {
           subtopics: true,
@@ -25,30 +25,6 @@ export const metaRouter = createTRPCRouter({
       return subtopics
         .flatMap((meta) => meta.subtopics)
         .sort((a, b) => a.localeCompare(b));
-    }),
-  addSubtopic: protectedProcedure
-    .input(
-      z.object({
-        topic: z.nativeEnum(Topics),
-        subtopic: z.string().min(1).max(100),
-      })
-    )
-    .mutation(async ({ input, ctx }) => {
-      const topic = await ctx.prisma.metadata.findUniqueOrThrow({
-        where: {
-          topic: input.topic,
-        },
-      });
-
-      topic.subtopics.push(input.subtopic);
-      return await ctx.prisma.metadata.update({
-        where: {
-          topic: input.topic,
-        },
-        data: {
-          subtopics: topic.subtopics,
-        },
-      });
     }),
   leaderboard: protectedProcedure.query(async ({ ctx }) => {
     // top 10 users with the highest score in the past 30 days
@@ -78,35 +54,35 @@ export const metaRouter = createTRPCRouter({
     }));
   }),
   report: protectedProcedure
-  .input(reportSchema)
-  .mutation(async ({ input, ctx }) => {
-    try {
-      const ticketNumber: string = [
-        shortHash(input.userAgent || "unknown"),
-        shortHash(input.pageUrl || "unknown"),
-        new Date().getTime().toString().slice(-4),
-      ].join("-");
-      await ctx.prisma.report.create({
-        data: {
-          ticketNumber,
-          txt: input.message,
-          type: input.issueType,
-          pageUrl: input.pageUrl || "",
-          userAgent: input.userAgent,
-          user: {
-            connect: {
-              id: ctx.session.user.id,
+    .input(reportSchema)
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const ticketNumber: string = [
+          shortHash(input.userAgent || "unknown"),
+          shortHash(input.pageUrl || "unknown"),
+          new Date().getTime().toString().slice(-4),
+        ].join("-");
+        await ctx.prisma.report.create({
+          data: {
+            ticketNumber,
+            txt: input.message,
+            type: input.issueType,
+            pageUrl: input.pageUrl || "",
+            userAgent: input.userAgent,
+            user: {
+              connect: {
+                id: ctx.session.user.id,
+              },
             },
           },
-        },
-      });
-    } catch (error) {
-      console.error(error);
-      throw new TRPCError({
-        message:
-          "We encountered an issue while processing your request to report a bug. Please try again later, and we apologize for any inconvenience this may have caused.",
-        code: "INTERNAL_SERVER_ERROR",
-      });
-    }
-  }),
+        });
+      } catch (error) {
+        console.error(error);
+        throw new TRPCError({
+          message:
+            "We encountered an issue while processing your request to report a bug. Please try again later, and we apologize for any inconvenience this may have caused.",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    }),
 });

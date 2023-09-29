@@ -10,7 +10,8 @@
     "lint": "next lint",
     "start": "next start",
     "locales": "node scripts/update-locales.mjs",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

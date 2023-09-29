@@ -2,7 +2,7 @@ import * as z from "zod";
 import { adminProcedure, createTRPCRouter } from "@/server/api/trpc";
 import { paginationSchema } from "@/server/schemas";
 import { cleanEnum } from "@/lib/utils";
-import { ReportStatus } from "@prisma/client";
+import { ReportStatus, Topics } from "@prisma/client";
 
 export const adminRouter = createTRPCRouter({
   totalUsers: adminProcedure.query(async ({ ctx }) => {
@@ -154,6 +154,30 @@ export const adminRouter = createTRPCRouter({
         },
         data: {
           status: input.status,
+        },
+      });
+    }),
+  addSubtopic: adminProcedure
+    .input(
+      z.object({
+        topic: z.nativeEnum(Topics).nullable(),
+        subtopic: z.string().min(1).max(100),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const topic = await ctx.prisma.metadata.findUniqueOrThrow({
+        where: {
+          topic: input.topic || undefined,
+        },
+      });
+      console.log(topic);
+      topic.subtopics.push(input.subtopic);
+      return await ctx.prisma.metadata.update({
+        where: {
+          topic: input.topic || undefined,
+        },
+        data: {
+          subtopics: topic.subtopics,
         },
       });
     }),

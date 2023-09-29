@@ -1,7 +1,8 @@
 import { ExclamationTriangleIcon, RocketIcon } from "@radix-ui/react-icons";
 import { useTranslation } from "next-i18next";
+
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import QuizCard from "./cards/topic-card";
+import TopicCard from "./cards/topic-card";
 import React from "react";
 import Section from "./section";
 import { TopicSkeleton } from "./loading-cards";
@@ -76,7 +77,7 @@ const PickATopic = () => {
           )}
           {data &&
             data.map((subtopic) => (
-              <QuizCard
+              <TopicCard
                 key={subtopic}
                 title={subtopic}
                 selected={subtopic === currentSubTopic}

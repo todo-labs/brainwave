@@ -51,26 +51,6 @@ export const QuizConfigEditor: React.FC = () => {
     }
   );
 
-  const addSubtopic = api.meta.addSubtopic.useMutation({
-    onSuccess: () => {
-      toast({
-        title: "Subtopic Added",
-        description: "The subtopic has been added successfully",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error with adding subtopic",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
-  });
-
-  const schema = z.object({
-    topic: z.nativeEnum(Topics),
-    subtopic: z.string(),
-  });
 
   type CreateQuizRequestType = z.infer<typeof schema>;
 
@@ -168,7 +148,6 @@ export const QuizConfigEditor: React.FC = () => {
                       "text-white": selected,
                     })}
                   >
-                    {cleanEnum(topic)}
                   </h1>
                 </CardDescription>
               </Card>
