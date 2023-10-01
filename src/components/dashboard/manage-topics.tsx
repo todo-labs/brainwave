@@ -17,9 +17,11 @@ import { api } from "@/lib/api";
 import { cleanEnum } from "@/lib/utils";
 import AddSubtopicModal from "@/modals/AddSubtopic";
 import RemoveSubtopicModal from "@/modals/RemoveSubtopic";
+import AddDocumentsModal from "@/modals/AddDocuments";
 
 const AddTopics: React.FC = () => {
   const [topic, setTopic] = useState<Topics | null>(null);
+  const [currentSubtopic, setCurrentSubtopic] = useState<string>("");
   const { isLoading, data, isError, error } = api.meta.getSubtopics.useQuery(
     { topic },
     {
@@ -29,18 +31,21 @@ const AddTopics: React.FC = () => {
 
   return (
     <div className="space-y-6 p-4">
-      <Select onValueChange={(val) => setTopic(val as Topics)}>
-        <SelectTrigger className="w-[250px]">
-          <SelectValue placeholder="Topic" />
-        </SelectTrigger>
-        <SelectContent>
-          {Object.keys(Topics).map((topic) => (
-            <SelectItem key={topic} value={topic}>
-              {cleanEnum(topic)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <section className="flex w-full space-x-3">
+        <Select onValueChange={(val) => setTopic(val as Topics)}>
+          <SelectTrigger className="w-[250px]">
+            <SelectValue placeholder="Topic" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.keys(Topics).map((topic) => (
+              <SelectItem key={topic} value={topic}>
+                {cleanEnum(topic)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <AddDocumentsModal topic={topic} subtopic={currentSubtopic} />
+      </section>
       {isError && (
         <Alert variant="destructive">
           <ExclamationTriangleIcon className="h-4 w-4" />
@@ -57,6 +62,8 @@ const AddTopics: React.FC = () => {
             <TopicCard
               key={subtopic}
               title={subtopic}
+              selected={currentSubtopic === subtopic}
+              onClick={() => setCurrentSubtopic(subtopic)}
               actionComponent={
                 <RemoveSubtopicModal topic={topic} subtopic={subtopic} />
               }

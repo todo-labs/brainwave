@@ -13,22 +13,6 @@ import { env } from "@/env.mjs";
 
 const f = createUploadthing();
 
-const vectorStore = PrismaVectorStore.withModel<Document>(prisma).create(
-  new OpenAIEmbeddings({
-    openAIApiKey: env.OPEN_API_KEY,
-    modelName: "ada",
-  }),
-  {
-    prisma: Prisma,
-    tableName: "Document",
-    vectorColumnName: "vector",
-    columns: {
-      id: PrismaVectorStore.IdColumn,
-      content: PrismaVectorStore.ContentColumn,
-    },
-  }
-);
-
 export const ourFileRouter = {
   uploader: f({
     pdf: {
@@ -68,21 +52,6 @@ export const ourFileRouter = {
       });
       docs = await text_splitter.splitDocuments(docs);
       console.log("docs", docs);
-      // await vectorStore.addModels(
-      //   await prisma.$transaction(
-      //     docs.map((content) => db.document.create({ data: { content } }))
-      //   )
-      // );
-      // await prisma.document.create({
-      //   data: {
-      //     name: file.name,
-      //     url: file.url,
-      //     topic: metadata.topic,
-      //     subtopic: metadata.subtopic,
-      //     email: metadata.email,
-      //     // type: file.,
-      //   },
-      // });
     }),
 } satisfies FileRouter;
 

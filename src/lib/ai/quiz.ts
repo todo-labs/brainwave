@@ -2,6 +2,8 @@ import { QuestionType, Questions, QuizDifficulty } from "@prisma/client";
 import { z } from "zod";
 import { PromptTemplate } from "langchain/prompts";
 import { StructuredOutputParser } from "langchain/output_parsers";
+import { Calculator } from "langchain/tools/calculator";
+import { SerpAPI } from "langchain/tools";
 
 import type { CreateQuizRequestType } from "@/server/schemas";
 import PromptBuilder from "./prompt";
@@ -56,12 +58,6 @@ const sentimentParser = StructuredOutputParser.fromZodSchema(
 type SentimentParserResponseType = z.infer<typeof sentimentParser.schema>;
 type QuizResponseType = z.infer<typeof quizParser.schema>;
 type GradeQuizResponseType = z.infer<typeof gradeQuizParser.schema>;
-
-type ContextDocument = {
-  title: string;
-  url: string;
-  text: string;
-};
 
 // ------------------------------------ [Functions] ------------------------------------
 
