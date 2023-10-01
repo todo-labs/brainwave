@@ -116,5 +116,7 @@
   "toast-generic-success-title": "Success",
   "toast-generic-success": "Your request was successful",
   "toast-generic-error-title": "Error",
-  "toast-generic-error": "There was an error processing your request. Please try again"
+  "toast-generic-error": "There was an error processing your request. Please try again",
+  "toast-report-success": "Your report was submitted successfully",
+  "toast-report-error": "There was an error submitting your report. Please try again"
 }
