@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import chalk from "chalk";
 import { OpenAI } from "langchain";
+import chunk from "lodash.chunk";
 
 import "dotenv/config";
 
@@ -44,17 +45,17 @@ const stages = {
 
   // Stage 2: Load the English translation file
   loadEnglishTranslationFile: async () => {
-    const enPath = path.join(FOLDER_PATH, "en", "common.json");
-    const enContents = await fs.promises.readFile(enPath, "utf8");
-    const enTranslation = JSON.parse(enContents);
+    const defaultPath = path.join(FOLDER_PATH, DEFAULT_LANGUAGE, "common.json");
+    const contents = await fs.promises.readFile(defaultPath, "utf8");
+    const translation = JSON.parse(contents);
     console.log(
       chalk.green(
         `✅ Successfully loaded the default translation file. Total keys: ${
-          Object.keys(enTranslation).length
+          Object.keys(translation).length
         }\n`
       )
     );
-    return enTranslation;
+    return translation;
   },
 
   // Stage 3: Translate the English translation file to each translatable language
@@ -121,22 +122,43 @@ const stages = {
         _translation[key] = enTranslation[key];
       }
 
-      const prompt = `Translate the following json translation file to the following language: ${directory}. MUST RETURN AS JSON STRING!!! \n\n ${JSON.stringify(
-        _translation,
-        null,
-        2
-      )} \n\n`;
+      const arrayFromObject = Object.entries(_translation).map(
+        ([key, value]) => ({
+          [key]: value,
+        })
+      );
+      const final = chunk(arrayFromObject, 50);
 
-      console.log(chalk.green(`✅ Generating translation for ${directory}.`));
-      const response = await gpt3.call(prompt);
-      let parsedResponse;
-
-      try {
-        parsedResponse = JSON.parse(response);
-      } catch (error) {
-        console.error(chalk.red("Error parsing JSON response."));
-        console.error(error);
-        continue;
+      let parsedResponse = {};
+      for (let i = 0; i < final.length; i++) {
+        console.log(
+          chalk.green(
+            `✅ Generating translation for ${directory}. Chunk ${i + 1} of ${
+              final.length
+            }.`
+          )
+        );
+        // @ts-ignore
+        const chunk = Object.assign({}, ...final[i]);
+        console.log(
+          `✅ Current set contains ${Object.keys(chunk).length} keys.`
+        );
+        console.log(`✅ Current set: ${Object.keys(chunk).join(", ")}`);
+        const prompt = `Translate the following json translation file to the following language: ${directory}. MUST RETURN AS JSON STRING!!! \n\n ${JSON.stringify(
+          chunk,
+          null,
+          2
+        )} \n\n`;
+        try {
+          const response = await gpt3.call(prompt);
+          parsedResponse = Object.assign(parsedResponse, JSON.parse(response));
+          continue;
+        } catch (error) {
+          console.error(chalk.red("Error parsing JSON response."));
+          console.error(error);
+          index--;
+          continue;
+        }
       }
 
       if (!validateTranslation(parsedResponse, _translation)) {
