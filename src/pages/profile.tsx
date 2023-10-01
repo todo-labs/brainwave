@@ -47,6 +47,7 @@ import { useMixpanel } from "@/lib/mixpanel";
 import useLocale from "@/hooks/useLocale";
 
 const languages = [
+  { label: "Arabic", value: "ar"},
   { label: "Chinese", value: "cn" },
   { label: "German", value: "de" },
   { label: "English", value: "en" },
