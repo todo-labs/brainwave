@@ -26,7 +26,7 @@ export const profileSchema = z.object({
       message: "Name must not be longer than 30 characters.",
     }),
   language: z
-    .enum(["en", "es", "fr", "de", "it", "ja", "ko", "pt", "ru", "cn", "ar"])
+    .enum(["en", "es", "fr", "de", "it", "ja", "ko", "pt", "ru", "cn", "ar", "yo"])
     .optional(),
 });
 

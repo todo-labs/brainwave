@@ -2,12 +2,18 @@ import fs from "fs";
 import path from "path";
 import chalk from "chalk";
 import { OpenAI } from "langchain";
+import z from "zod";
 import chunk from "lodash.chunk";
 
 import "dotenv/config";
 
 const FOLDER_PATH = path.join("public", "locales");
+const APP_NAME = "Brainwave";
 const DEFAULT_LANGUAGE = "en";
+
+const envSchema = z.object({
+  keys: z.array(z.string()).nullable(),
+});
 
 const gpt3 = new OpenAI({
   openAIApiKey: process.env.OPEN_API_KEY || "",
@@ -43,8 +49,8 @@ const stages = {
     return filteredDirectories;
   },
 
-  // Stage 2: Load the English translation file
-  loadEnglishTranslationFile: async () => {
+  // Stage 2: Load the Default translation file
+  loadDefaultTranslationFile: async () => {
     const defaultPath = path.join(FOLDER_PATH, DEFAULT_LANGUAGE, "common.json");
     const contents = await fs.promises.readFile(defaultPath, "utf8");
     const translation = JSON.parse(contents);
@@ -58,8 +64,8 @@ const stages = {
     return translation;
   },
 
-  // Stage 3: Translate the English translation file to each translatable language
-  translateEnglishTranslationFile: async (
+  // Stage 3: Translate the Default translation file to each translatable language
+  translateDefaultTranslationFile: async (
     /** @type {any} */ enTranslation,
     /** @type {any[]} */ translatableDirectories
   ) => {
@@ -78,7 +84,7 @@ const stages = {
         console.error(
           chalk.yellow(`File does not exist: ${outputPath}. Creating...`)
         );
-        fs.writeFileSync(outputPath, `{"appName": "Brainwave"}`);
+        fs.writeFileSync(outputPath, `{"appName": "${APP_NAME}"}`);
       }
 
       const translation = JSON.parse(
@@ -271,17 +277,39 @@ function validateTranslation(parsedResponse, enTranslation) {
 (async function () {
   const start = Date.now();
 
+  // const modifiedKeys = process.env.argv?.slice(2);
+
+  // console.log(modifiedKeys)
+
+  // // Check if modified keys are present in the translation file
+  // const env = envSchema.parse({
+  //   // @ts-ignore
+  //   keys: modifiedKeys,
+  // });
+
+  // if (env.keys) {
+  //   console.log(
+  //     chalk.green(
+  //       `✅ Successfully identified ${env.keys?.length} modified keys.`
+  //     )
+  //   );
+  //   console.log(chalk.yellow(env.keys?.join(", ")));
+  // }
+
   const translatableDirectories =
     await stages.identifyTranslatableDirectories();
 
-  const enTranslation = await stages.loadEnglishTranslationFile();
+  const defaultTranslation = await stages.loadDefaultTranslationFile();
 
-  await stages.translateEnglishTranslationFile(
-    enTranslation,
+  await stages.translateDefaultTranslationFile(
+    defaultTranslation,
     translatableDirectories
   );
 
-  await stages.validateTranslations(translatableDirectories, enTranslation);
+  await stages.validateTranslations(
+    translatableDirectories,
+    defaultTranslation
+  );
 
   await stages.logSuccessMessageAndExit(start);
 })().catch((error) => {

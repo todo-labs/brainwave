@@ -42,12 +42,13 @@ import {
 } from "@/components/ui/popover";
 
 import { api } from "@/lib/api";
-import { Languages, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useMixpanel } from "@/lib/mixpanel";
 import useLocale from "@/hooks/useLocale";
+import { Languages } from "types";
 
 const languages = [
-  { label: "Arabic", value: "ar"},
+  { label: "Arabic", value: "ar" },
   { label: "Chinese", value: "cn" },
   { label: "German", value: "de" },
   { label: "English", value: "en" },
@@ -58,9 +59,12 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Portuguese", value: "pt" },
   { label: "Russian", value: "ru" },
+  { label: "Yorùbá", value: "yo" },
 ] as const;
 
-const ProfilePage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const ProfilePage: NextPage = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const { data: session, update } = useSession();
   const router = useRouter();
   const { toast } = useToast();
