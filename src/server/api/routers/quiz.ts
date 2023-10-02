@@ -12,8 +12,8 @@ import {
   reviewComment,
 } from "@/lib/ai/quiz";
 import { env } from "@/env.mjs";
-import { Languages } from "@/lib/utils";
 import { sendEmail } from "@/lib/mailer";
+import { Languages } from "types";
 
 export const quizRouter = createTRPCRouter({
   getPastExams: protectedProcedure
@@ -192,7 +192,7 @@ export const quizRouter = createTRPCRouter({
           quiz.difficulty,
           quiz.questions.map((q, index) => ({
             ...q,
-            answer: input.answers[index] ?? "[NOT_SUPPLIED]",
+            answer: input.answers[index] ?? "Anonymous",
           })),
           (quiz.language as Languages) || "en"
         );
