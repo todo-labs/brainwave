@@ -33,7 +33,7 @@ export const quizRouter = createTRPCRouter({
           },
         });
       } catch (e) {
-        console.log(e);
+        console.error(e);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to get past exams",

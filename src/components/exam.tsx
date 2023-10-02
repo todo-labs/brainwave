@@ -69,7 +69,6 @@ const Exam = () => {
 
   const handleAnswer = (answer: string, index: number) => {
     setAnswers(answers.set(index, answer));
-    console.log("ANSWERS:: ", answers)
     trackEvent("ButtonClick", {
       label: "Question",
       value: answer,
