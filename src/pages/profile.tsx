@@ -48,18 +48,19 @@ import useLocale from "@/hooks/useLocale";
 import { Languages } from "types";
 
 const languages = [
-  { label: "Arabic", value: "ar" },
-  { label: "Chinese", value: "cn" },
-  { label: "German", value: "de" },
-  { label: "English", value: "en" },
-  { label: "Spanish", value: "es" },
-  { label: "French", value: "fr" },
-  { label: "Italian", value: "it" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Yorùbá", value: "yo" },
+  { label: "Arabic 🇦🇪", value: "ar" },
+  { label: "Chinese 🇨🇳", value: "cn" },
+  { label: "English 🇺🇸", value: "en" },
+  { label: "French 🇫🇷", value: "fr" },
+  { label: "German 🇩🇪", value: "de" },
+  { label: "Hindi 🇮🇳", value: "hi" },
+  { label: "Italian 🇮🇹", value: "it" },
+  { label: "Japanese 🇯🇵", value: "ja" },
+  { label: "Korean 🇰🇷", value: "ko" },
+  { label: "Portuguese 🇵🇹", value: "pt" },
+  { label: "Russian 🇷🇺", value: "ru" },
+  { label: "Spanish 🇪🇸", value: "es" },
+  { label: "Yorùbá 🇳🇬", value: "yo" },
 ] as const;
 
 const ProfilePage: NextPage = (
