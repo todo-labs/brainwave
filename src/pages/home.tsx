@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import useLocale from "@/hooks/useLocale";
 import { ReportModal } from "@/modals/Report";
+import FullScreenConfetti from "@/components/ui/confetti";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -30,7 +31,7 @@ export default function Home(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const router = useRouter();
-  const { currentStep } = useStore();
+  const { currentStep, showConfetti } = useStore();
   const { t, i18n } = useTranslation(["common"]);
   const { data: session } = useSession();
   const { changeLocale } = useLocale();
@@ -104,6 +105,11 @@ export default function Home(
         </div>
       </div>
       <ReportModal />
+      {showConfetti && (
+        <div className="pointer-events-none fixed inset-0 z-50">
+          <FullScreenConfetti active={showConfetti} />
+        </div>
+      )}
     </div>
   );
 }

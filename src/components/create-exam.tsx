@@ -98,7 +98,7 @@ export function CreateConfig() {
         questions: values.questions,
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
