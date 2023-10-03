@@ -36,16 +36,20 @@ export type QuizWithQuestions = Quiz & {
 
 export type Tabs = "choice" | "config" | "exam" | "result";
 
-export type Languages =
-  | "ar"
-  | "cn"
-  | "de"
-  | "en"
-  | "es"
-  | "fr"
-  | "it"
-  | "ja"
-  | "ko"
-  | "pt"
-  | "ru"
-  | "yo";
+export const languages = [
+  "ar",
+  "cn",
+  "de",
+  "en",
+  "es",
+  "fr",
+  "it",
+  "ja",
+  "ko",
+  "pt",
+  "ru",
+  "hi",
+  "yo",
+] as const;
+
+export type Languages = (typeof languages)[number];
