@@ -24,7 +24,7 @@ const Exam = () => {
   const { t } = useTranslation(["common"]);
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
     onConfirm: () => {
-      useSentry("GradeExam", submitQuiz())
+      useSentry("GradeExam", submitQuiz());
     },
   });
 
@@ -55,7 +55,7 @@ const Exam = () => {
       });
       setCompleted(true);
       trackEvent("FormSubmission", {
-        label: "Grade Exam",
+        label: "GradeExam",
         questions: currentQuiz?.questions?.length,
         topic: currentQuiz?.topic,
         subtopic: currentQuiz?.subtopic,
@@ -69,7 +69,6 @@ const Exam = () => {
 
   const handleAnswer = (answer: string, index: number) => {
     setAnswers(answers.set(index, answer));
-    console.log("ANSWERS:: ", answers)
     trackEvent("ButtonClick", {
       label: "Question",
       value: answer,
@@ -111,7 +110,7 @@ const Exam = () => {
             <span>{t("home-exam-grade")}</span>
           </div>
         ) : (
-          <span>{t("submit")}</span>
+          t("submit")
         )}
       </Button>
       <DisclaimerModal />
