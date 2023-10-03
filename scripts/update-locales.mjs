@@ -10,6 +10,7 @@ import "dotenv/config";
 const FOLDER_PATH = path.join("public", "locales");
 const APP_NAME = "Brainwave";
 const DEFAULT_LANGUAGE = "en";
+const CHUNK_SIZE = 50;
 
 const envSchema = z.object({
   keys: z.array(z.string()).nullable(),
@@ -21,6 +22,7 @@ const gpt3 = new OpenAI({
   modelName: "gpt-3.5-turbo",
   maxTokens: -1,
   maxRetries: 3,
+  verbose: true,
 });
 
 const stages = {
@@ -38,7 +40,7 @@ const stages = {
 
     console.log(
       chalk.green(
-        `✅ Successfully identified ${filteredDirectories.length} translatable directories.`
+        `\n✅ Successfully identified ${filteredDirectories.length} translatable directories.`
       )
     );
 
@@ -67,7 +69,8 @@ const stages = {
   // Stage 3: Translate the Default translation file to each translatable language
   translateDefaultTranslationFile: async (
     /** @type {any} */ enTranslation,
-    /** @type {any[]} */ translatableDirectories
+    /** @type {any[]} */ translatableDirectories,
+    /** @type {string[]} */ modifiedKeys
   ) => {
     for (let [index, directory] of translatableDirectories.entries()) {
       const outputPath = path.join(FOLDER_PATH, directory, "common.json");
@@ -98,7 +101,7 @@ const stages = {
         )
       );
 
-      const missingKeys = [];
+      const missingKeys = [...modifiedKeys];
 
       for (const key of Object.keys(enTranslation)) {
         if (!Object.keys(translation).includes(key)) {
@@ -133,7 +136,7 @@ const stages = {
           [key]: value,
         })
       );
-      const final = chunk(arrayFromObject, 50);
+      const final = chunk(arrayFromObject, CHUNK_SIZE);
 
       let parsedResponse = {};
       for (let i = 0; i < final.length; i++) {
@@ -167,7 +170,7 @@ const stages = {
         }
       }
 
-      if (!validateTranslation(parsedResponse, _translation)) {
+      if (!validate(parsedResponse, _translation)) {
         console.error(
           chalk.red(
             "Validation failed. Retrying translation for directory: ",
@@ -228,7 +231,7 @@ const stages = {
       const translation = await fs.promises.readFile(outputPath, "utf8");
       const parsedTranslation = JSON.parse(translation);
 
-      if (!validateTranslation(parsedTranslation, enTranslation)) {
+      if (!validate(parsedTranslation, enTranslation)) {
         throw new Error(
           `Translation validation failed for directory: ${directory}`
         );
@@ -254,7 +257,7 @@ const stages = {
  * @param {{ [x: string]: any; }} parsedResponse
  * @param {{ [x: string]: any; }} enTranslation
  */
-function validateTranslation(parsedResponse, enTranslation) {
+function validate(parsedResponse, enTranslation) {
   const enKeys = Object.keys(enTranslation);
   const translatedKeys = Object.keys(parsedResponse);
 
@@ -265,7 +268,7 @@ function validateTranslation(parsedResponse, enTranslation) {
   for (const key of enKeys) {
     if (
       typeof enTranslation[key] === "object" &&
-      !validateTranslation(parsedResponse[key], enTranslation[key])
+      !validate(parsedResponse[key], enTranslation[key])
     ) {
       return false;
     }
@@ -277,33 +280,44 @@ function validateTranslation(parsedResponse, enTranslation) {
 (async function () {
   const start = Date.now();
 
-  // const modifiedKeys = process.env.argv?.slice(2);
-
-  // console.log(modifiedKeys)
-
-  // // Check if modified keys are present in the translation file
-  // const env = envSchema.parse({
-  //   // @ts-ignore
-  //   keys: modifiedKeys,
-  // });
-
-  // if (env.keys) {
-  //   console.log(
-  //     chalk.green(
-  //       `✅ Successfully identified ${env.keys?.length} modified keys.`
-  //     )
-  //   );
-  //   console.log(chalk.yellow(env.keys?.join(", ")));
-  // }
+  const modifiedKeys = process.argv?.slice(2);
+  const env = envSchema.parse({ keys: modifiedKeys });
 
   const translatableDirectories =
     await stages.identifyTranslatableDirectories();
 
   const defaultTranslation = await stages.loadDefaultTranslationFile();
 
+  if (env.keys && env.keys.length > 0) {
+    console.log(
+      chalk.green(
+        `✅ Successfully identified ${env.keys.length} modified keys.`
+      )
+    );
+
+    console.log(chalk.yellow(env.keys?.join(", ")));
+
+    const validSubset = env.keys.every((/** @type {string} */ element) => {
+      return Object.keys(defaultTranslation).includes(element);
+    });
+
+    if (!validSubset) {
+      throw new Error(
+        "Not all modified keys exist in the default translation file."
+      );
+    } else {
+      console.log(
+        chalk.green(
+          `✅ All modified keys exist in the default translation file.`
+        )
+      );
+    }
+  }
+
   await stages.translateDefaultTranslationFile(
     defaultTranslation,
-    translatableDirectories
+    translatableDirectories,
+    env.keys || []
   );
 
   await stages.validateTranslations(
