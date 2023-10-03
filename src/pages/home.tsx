@@ -1,6 +1,9 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserNav } from "@/components/user/nav";
@@ -10,14 +13,11 @@ import PickATopic from "@/components/pick-a-topic";
 import Results from "@/components/results";
 import PastExams from "@/components/past-exams";
 import Exam from "@/components/exam";
+import FullScreenConfetti from "@/components/ui/confetti";
+import { ReportModal } from "@/modals/Report";
 
 import useStore from "@/hooks/useStore";
-import { useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import useLocale from "@/hooks/useLocale";
-import { ReportModal } from "@/modals/Report";
-import FullScreenConfetti from "@/components/ui/confetti";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -31,7 +31,7 @@ export default function Home(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const router = useRouter();
-  const { currentStep, showConfetti } = useStore();
+  const { currentStep, showConfetti, currentQuiz, setCurrentStep } = useStore();
   const { t, i18n } = useTranslation(["common"]);
   const { data: session } = useSession();
   const { changeLocale } = useLocale();

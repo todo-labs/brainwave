@@ -77,7 +77,7 @@ const stages = {
 
       console.log(
         chalk.green(
-          `✅ Translating ${DEFAULT_LANGUAGE} => ${directory}. Directory: ${directory}`
+          `\n✅ Translating ${DEFAULT_LANGUAGE} => ${directory}. Directory: ${directory}`
         )
       );
 
