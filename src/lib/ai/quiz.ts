@@ -8,7 +8,7 @@ import { SerpAPI } from "langchain/tools";
 import type { CreateQuizRequestType } from "@/server/schemas";
 import PromptBuilder from "./prompt";
 import { callOpenAi } from ".";
-import { Languages } from "../utils";
+import { Languages } from "types";
 
 // ------------------------------------ [Schemas] ------------------------------------
 const quizParser = StructuredOutputParser.fromZodSchema(

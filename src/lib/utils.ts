@@ -83,19 +83,6 @@ export const statusToColor = (status: ReportStatus) => {
   }
 };
 
-export type Languages =
-  | "ar"
-  | "cn"
-  | "de"
-  | "en"
-  | "es"
-  | "fr"
-  | "it"
-  | "ja"
-  | "ko"
-  | "pt"
-  | "ru";
-
 export const shortHash = (str: string, len?: number) =>
   crypto
     .createHash("md5")

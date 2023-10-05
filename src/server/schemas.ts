@@ -1,4 +1,5 @@
 import { QuizDifficulty, ReportType, Topics } from "@prisma/client";
+import { languages } from "types";
 import z from "zod";
 
 export const createQuizSchema = z.object({
@@ -25,9 +26,7 @@ export const profileSchema = z.object({
     .max(30, {
       message: "Name must not be longer than 30 characters.",
     }),
-  language: z
-    .enum(["en", "es", "fr", "de", "it", "ja", "ko", "pt", "ru", "cn", "ar"])
-    .optional(),
+  language: z.enum(languages).optional(),
 });
 
 export const gradeQuizSchema = z.object({

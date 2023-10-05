@@ -12,9 +12,15 @@ export interface IQuestionCardProps {
   question: Questions;
   onSubmit: (answer: string) => void;
   width?: string;
+  disabled?: boolean;
 }
 
-const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
+const QuestionCard = ({
+  question,
+  onSubmit,
+  width,
+  disabled,
+}: IQuestionCardProps) => {
   return (
     <div className={cn("flex flex-col space-y-4", width)}>
       <Heading level="h3" className="font-bold capitalize">
@@ -22,11 +28,11 @@ const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
       </Heading>
       {question.type === QuestionType.MCQ && (
         <div className="pb-4">
-          <RadioGroup onValueChange={onSubmit}>
+          <RadioGroup onValueChange={onSubmit} disabled={disabled}>
             {question.options?.map((option, index) => (
               <div className="flex items-center space-x-2" key={index}>
-                <RadioGroupItem value={option} id={`option-${index}`} />
-                <Label htmlFor={`option-${index}`}>{option}</Label>
+                <RadioGroupItem value={option} id={option} />
+                <Label htmlFor={option}>{option}</Label>
               </div>
             ))}
           </RadioGroup>
@@ -37,6 +43,7 @@ const QuestionCard = ({ question, onSubmit, width }: IQuestionCardProps) => {
           onChange={(e) => onSubmit(e.target.value)}
           className="pb-4"
           placeholder="Enter your answer"
+          disabled={disabled}
         />
       )}
     </div>

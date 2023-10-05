@@ -2,11 +2,19 @@ import fs from "fs";
 import path from "path";
 import chalk from "chalk";
 import { OpenAI } from "langchain";
+import z from "zod";
+import chunk from "lodash.chunk";
 
 import "dotenv/config";
 
 const FOLDER_PATH = path.join("public", "locales");
+const APP_NAME = "Brainwave";
 const DEFAULT_LANGUAGE = "en";
+const CHUNK_SIZE = 50;
+
+const envSchema = z.object({
+  keys: z.array(z.string()).nullable(),
+});
 
 const gpt3 = new OpenAI({
   openAIApiKey: process.env.OPEN_API_KEY || "",
@@ -14,6 +22,7 @@ const gpt3 = new OpenAI({
   modelName: "gpt-3.5-turbo",
   maxTokens: -1,
   maxRetries: 3,
+  verbose: true,
 });
 
 const stages = {
@@ -31,7 +40,7 @@ const stages = {
 
     console.log(
       chalk.green(
-        `✅ Successfully identified ${filteredDirectories.length} translatable directories.`
+        `\n✅ Successfully identified ${filteredDirectories.length} translatable directories.`
       )
     );
 
@@ -42,32 +51,33 @@ const stages = {
     return filteredDirectories;
   },
 
-  // Stage 2: Load the English translation file
-  loadEnglishTranslationFile: async () => {
-    const enPath = path.join(FOLDER_PATH, "en", "common.json");
-    const enContents = await fs.promises.readFile(enPath, "utf8");
-    const enTranslation = JSON.parse(enContents);
+  // Stage 2: Load the Default translation file
+  loadDefaultTranslationFile: async () => {
+    const defaultPath = path.join(FOLDER_PATH, DEFAULT_LANGUAGE, "common.json");
+    const contents = await fs.promises.readFile(defaultPath, "utf8");
+    const translation = JSON.parse(contents);
     console.log(
       chalk.green(
         `✅ Successfully loaded the default translation file. Total keys: ${
-          Object.keys(enTranslation).length
+          Object.keys(translation).length
         }\n`
       )
     );
-    return enTranslation;
+    return translation;
   },
 
-  // Stage 3: Translate the English translation file to each translatable language
-  translateEnglishTranslationFile: async (
+  // Stage 3: Translate the Default translation file to each translatable language
+  translateDefaultTranslationFile: async (
     /** @type {any} */ enTranslation,
-    /** @type {any[]} */ translatableDirectories
+    /** @type {any[]} */ translatableDirectories,
+    /** @type {string[]} */ modifiedKeys
   ) => {
     for (let [index, directory] of translatableDirectories.entries()) {
       const outputPath = path.join(FOLDER_PATH, directory, "common.json");
 
       console.log(
         chalk.green(
-          `✅ Translating ${DEFAULT_LANGUAGE} => ${directory}. Directory: ${directory}`
+          `\n✅ Translating ${DEFAULT_LANGUAGE} => ${directory}. Directory: ${directory}`
         )
       );
 
@@ -77,7 +87,7 @@ const stages = {
         console.error(
           chalk.yellow(`File does not exist: ${outputPath}. Creating...`)
         );
-        fs.writeFileSync(outputPath, `{"appName": "Brainwave"}`);
+        fs.writeFileSync(outputPath, `{"appName": "${APP_NAME}"}`);
       }
 
       const translation = JSON.parse(
@@ -91,7 +101,7 @@ const stages = {
         )
       );
 
-      const missingKeys = [];
+      const missingKeys = [...modifiedKeys];
 
       for (const key of Object.keys(enTranslation)) {
         if (!Object.keys(translation).includes(key)) {
@@ -121,25 +131,46 @@ const stages = {
         _translation[key] = enTranslation[key];
       }
 
-      const prompt = `Translate the following json translation file to the following language: ${directory}. MUST RETURN AS JSON STRING!!! \n\n ${JSON.stringify(
-        _translation,
-        null,
-        2
-      )} \n\n`;
+      const arrayFromObject = Object.entries(_translation).map(
+        ([key, value]) => ({
+          [key]: value,
+        })
+      );
+      const final = chunk(arrayFromObject, CHUNK_SIZE);
 
-      console.log(chalk.green(`✅ Generating translation for ${directory}.`));
-      const response = await gpt3.call(prompt);
-      let parsedResponse;
-
-      try {
-        parsedResponse = JSON.parse(response);
-      } catch (error) {
-        console.error(chalk.red("Error parsing JSON response."));
-        console.error(error);
-        continue;
+      let parsedResponse = {};
+      for (let i = 0; i < final.length; i++) {
+        console.log(
+          chalk.green(
+            `✅ Generating translation for ${directory}. Chunk ${i + 1} of ${
+              final.length
+            }.`
+          )
+        );
+        // @ts-ignore
+        const chunk = Object.assign({}, ...final[i]);
+        console.log(
+          `✅ Current set contains ${Object.keys(chunk).length} keys.`
+        );
+        console.log(`✅ Current set: ${Object.keys(chunk).join(", ")}`);
+        const prompt = `Translate the following json translation file to the following language: ${directory}. MUST RETURN AS JSON STRING!!! \n\n ${JSON.stringify(
+          chunk,
+          null,
+          2
+        )} \n\n`;
+        try {
+          const response = await gpt3.call(prompt);
+          parsedResponse = Object.assign(parsedResponse, JSON.parse(response));
+          continue;
+        } catch (error) {
+          console.error(chalk.red("Error parsing JSON response."));
+          console.error(error);
+          index--;
+          continue;
+        }
       }
 
-      if (!validateTranslation(parsedResponse, _translation)) {
+      if (!validate(parsedResponse, _translation)) {
         console.error(
           chalk.red(
             "Validation failed. Retrying translation for directory: ",
@@ -200,7 +231,7 @@ const stages = {
       const translation = await fs.promises.readFile(outputPath, "utf8");
       const parsedTranslation = JSON.parse(translation);
 
-      if (!validateTranslation(parsedTranslation, enTranslation)) {
+      if (!validate(parsedTranslation, enTranslation)) {
         throw new Error(
           `Translation validation failed for directory: ${directory}`
         );
@@ -226,7 +257,7 @@ const stages = {
  * @param {{ [x: string]: any; }} parsedResponse
  * @param {{ [x: string]: any; }} enTranslation
  */
-function validateTranslation(parsedResponse, enTranslation) {
+function validate(parsedResponse, enTranslation) {
   const enKeys = Object.keys(enTranslation);
   const translatedKeys = Object.keys(parsedResponse);
 
@@ -237,7 +268,7 @@ function validateTranslation(parsedResponse, enTranslation) {
   for (const key of enKeys) {
     if (
       typeof enTranslation[key] === "object" &&
-      !validateTranslation(parsedResponse[key], enTranslation[key])
+      !validate(parsedResponse[key], enTranslation[key])
     ) {
       return false;
     }
@@ -249,17 +280,50 @@ function validateTranslation(parsedResponse, enTranslation) {
 (async function () {
   const start = Date.now();
 
+  const modifiedKeys = process.argv?.slice(2);
+  const env = envSchema.parse({ keys: modifiedKeys });
+
   const translatableDirectories =
     await stages.identifyTranslatableDirectories();
 
-  const enTranslation = await stages.loadEnglishTranslationFile();
+  const defaultTranslation = await stages.loadDefaultTranslationFile();
 
-  await stages.translateEnglishTranslationFile(
-    enTranslation,
-    translatableDirectories
+  if (env.keys && env.keys.length > 0) {
+    console.log(
+      chalk.green(
+        `✅ Successfully identified ${env.keys.length} modified keys.`
+      )
+    );
+
+    console.log(chalk.yellow(env.keys?.join(", ")));
+
+    const validSubset = env.keys.every((/** @type {string} */ element) => {
+      return Object.keys(defaultTranslation).includes(element);
+    });
+
+    if (!validSubset) {
+      throw new Error(
+        "Not all modified keys exist in the default translation file."
+      );
+    } else {
+      console.log(
+        chalk.green(
+          `✅ All modified keys exist in the default translation file.`
+        )
+      );
+    }
+  }
+
+  await stages.translateDefaultTranslationFile(
+    defaultTranslation,
+    translatableDirectories,
+    env.keys || []
   );
 
-  await stages.validateTranslations(translatableDirectories, enTranslation);
+  await stages.validateTranslations(
+    translatableDirectories,
+    defaultTranslation
+  );
 
   await stages.logSuccessMessageAndExit(start);
 })().catch((error) => {

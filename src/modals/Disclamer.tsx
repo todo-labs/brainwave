@@ -51,12 +51,9 @@ const useDisclaimerModal = (props: Props) => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t("disclaimerModal-title")}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t("disclaimerModal-pre")}{" "}
-              <span className="text-primary">
-                {t("disclaimerModal-highlight")}
-              </span>
-              . {t("disclaimerModal-post")}
+            <AlertDialogDescription className="space-y-3">
+              <p className="text-primary">{t("disclaimerModal-highlight")}</p>
+              <p>{t("disclaimerModal-post")}</p>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

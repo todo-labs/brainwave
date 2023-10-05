@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { Loader2Icon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import QuestionCard from "./cards/question-card";
 import { Button } from "./ui/button";
@@ -8,6 +8,7 @@ import { Separator } from "./ui/separator";
 import { ScrollArea } from "./ui/scroll-area";
 import Timer from "./timer";
 import useDisclaimerModal from "@/modals/Disclamer";
+import DefaultState from "./default";
 
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
@@ -23,10 +24,14 @@ const Exam = () => {
   const { toast } = useToast();
   const { t } = useTranslation(["common"]);
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
-    onConfirm: () => {
-      useSentry("GradeExam", submitQuiz())
-    },
+    onConfirm: () => useSentry("GradeExam", submitQuiz()),
   });
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const textList = Array.from(
+    { length: 30 },
+    (_, index) => `loading-exam-${index + 1}`
+  );
 
   const gradeQuiz = api.quiz.gradeExam.useMutation({
     onSuccess: () => {
@@ -55,7 +60,7 @@ const Exam = () => {
       });
       setCompleted(true);
       trackEvent("FormSubmission", {
-        label: "Grade Exam",
+        label: "GradeExam",
         questions: currentQuiz?.questions?.length,
         topic: currentQuiz?.topic,
         subtopic: currentQuiz?.subtopic,
@@ -69,16 +74,35 @@ const Exam = () => {
 
   const handleAnswer = (answer: string, index: number) => {
     setAnswers(answers.set(index, answer));
-    console.log("ANSWERS:: ", answers)
+    const { id: questionId, type } = currentQuiz?.questions?.[index] ?? {};
     trackEvent("ButtonClick", {
       label: "Question",
       value: answer,
-      questionId: currentQuiz?.questions?.[index]?.id,
+      questionId,
       quizId: currentQuiz?.id,
       topic: currentQuiz?.topic,
       subtopic: currentQuiz?.subtopic,
+      type,
     });
   };
+
+  useEffect(() => {
+    if (gradeQuiz.isLoading) {
+      const interval = setInterval(() => {
+        const index = Math.floor(Math.random() * textList.length);
+        setCurrentIndex(index);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [gradeQuiz.isLoading]);
+
+  const Loading = () => (
+    <DefaultState
+      icon={Loader2Icon}
+      iconClassName="animate-spin"
+      title={t(textList[currentIndex] || "loading-exam")}
+    />
+  );
 
   return (
     <section>
@@ -86,20 +110,25 @@ const Exam = () => {
         <Timer completed={completed} />
       </div>
       <Separator className="my-4" />
-      <ScrollArea className="xxl:h-[800px] h-[300px] md:h-[500px]">
-        <div className="flex-col space-y-4">
-          {!!currentQuiz &&
-            currentQuiz.questions?.map((q, index) => (
-              <QuestionCard
-                key={q.label}
-                question={q}
-                onSubmit={(answer) => {
-                  handleAnswer(answer, index);
-                }}
-              />
-            ))}
-        </div>
-      </ScrollArea>
+      {gradeQuiz.isLoading ? (
+        <Loading />
+      ) : (
+        <ScrollArea className="xxl:h-[800px] h-[300px] md:h-[500px]">
+          <div className="flex-col space-y-4">
+            {!!currentQuiz &&
+              currentQuiz.questions?.map((q, index) => (
+                <QuestionCard
+                  key={q.label}
+                  question={q}
+                  onSubmit={(answer) => {
+                    handleAnswer(answer, index);
+                  }}
+                  disabled={completed || gradeQuiz.isLoading}
+                />
+              ))}
+          </div>
+        </ScrollArea>
+      )}
       <Button
         className="float-right mt-5"
         onClick={open}
@@ -111,7 +140,7 @@ const Exam = () => {
             <span>{t("home-exam-grade")}</span>
           </div>
         ) : (
-          <span>{t("submit")}</span>
+          t("submit")
         )}
       </Button>
       <DisclaimerModal />

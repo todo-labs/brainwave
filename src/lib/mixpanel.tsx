@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useEffect } from "react";
 import Mixpanel from "mixpanel-browser";
+import { useSession } from "next-auth/react";
 
 import { env } from "@/env.mjs";
-import { useSession } from "next-auth/react";
 import useStore from "@/hooks/useStore";
 
-Mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN);
+Mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
+  api_host: "https://www.brainwave.quest/mp",
+});
 
 export const mixpanelEventConfig = {
   PageView: "Page View" as const,
@@ -14,14 +16,13 @@ export const mixpanelEventConfig = {
   ViewedModal: "Viewed Modal" as const,
   Login: "Login" as const,
   Logout: "Logout" as const,
-  Search: "Search" as const,
-  Filter: "Filter" as const,
-  Sort: "Sort" as const,
+  Input: "Input" as const,
 };
 
 export type MixpanelPayload = {
   is_error: boolean;
   label: string;
+  value: string;
   [key: string]: any;
 };
 
@@ -70,9 +71,7 @@ export function MixpanelProvider({ children }: Props) {
     Mixpanel.track(mixpanelEventConfig[event], properties);
   }
 
-  const contextValue = {
-    trackEvent,
-  };
+  const contextValue = { trackEvent };
 
   return (
     <MixpanelContext.Provider value={contextValue}>

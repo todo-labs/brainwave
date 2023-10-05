@@ -35,7 +35,8 @@ const PickATopic = () => {
   const handleCardClick = (subtopic: string) => {
     setCurrentSubTopic(subtopic);
     trackEvent("ButtonClick", {
-      topic,
+      label: "TopicCard",
+      value: topic,
       subtopic,
     });
   };
@@ -43,6 +44,8 @@ const PickATopic = () => {
   const handleContinueClick = () => {
     setCurrentStep("config");
     trackEvent("ButtonClick", {
+      label: "TopicCard",
+      value: "Continue",
       topic,
       subtopic: currentSubTopic,
     });
