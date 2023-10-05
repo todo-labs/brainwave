@@ -16,14 +16,13 @@ export const mixpanelEventConfig = {
   ViewedModal: "Viewed Modal" as const,
   Login: "Login" as const,
   Logout: "Logout" as const,
-  Search: "Search" as const,
-  Filter: "Filter" as const,
-  Sort: "Sort" as const,
+  Input: "Input" as const,
 };
 
 export type MixpanelPayload = {
   is_error: boolean;
   label: string;
+  value: string;
   [key: string]: any;
 };
 
@@ -59,7 +58,9 @@ export function MixpanelProvider({ children }: Props) {
         window.location.pathname === "/home" && { step: currentStep }),
     });
 
-    return () => { Mixpanel.reset() };
+    return () => {
+      Mixpanel.reset();
+    };
   }, [session, env.NEXT_PUBLIC_MIXPANEL_ENABLED]);
 
   function trackEvent(

@@ -7,7 +7,7 @@ interface IDefaultStateProps {
   title: string;
   icon?: LucideIcon;
   iconClassName?: string;
-  description: string;
+  description?: string;
   btnText?: string | null;
   onClick?: () => void;
   size?: "sm" | "lg";

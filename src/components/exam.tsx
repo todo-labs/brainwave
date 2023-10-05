@@ -24,9 +24,7 @@ const Exam = () => {
   const { toast } = useToast();
   const { t } = useTranslation(["common"]);
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
-    onConfirm: () => {
-      useSentry("GradeExam", submitQuiz());
-    },
+    onConfirm: () => useSentry("GradeExam", submitQuiz()),
   });
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -76,13 +74,15 @@ const Exam = () => {
 
   const handleAnswer = (answer: string, index: number) => {
     setAnswers(answers.set(index, answer));
+    const { id: questionId, type } = currentQuiz?.questions?.[index] ?? {};
     trackEvent("ButtonClick", {
       label: "Question",
       value: answer,
-      questionId: currentQuiz?.questions?.[index]?.id,
+      questionId,
       quizId: currentQuiz?.id,
       topic: currentQuiz?.topic,
       subtopic: currentQuiz?.subtopic,
+      type,
     });
   };
 
@@ -92,9 +92,7 @@ const Exam = () => {
         const index = Math.floor(Math.random() * textList.length);
         setCurrentIndex(index);
       }, 3000);
-      return () => {
-        clearInterval(interval);
-      };
+      return () => clearInterval(interval);
     }
   }, [gradeQuiz.isLoading]);
 
@@ -103,7 +101,6 @@ const Exam = () => {
       icon={Loader2Icon}
       iconClassName="animate-spin"
       title={t(textList[currentIndex] || "loading-exam")}
-      description={""}
     />
   );
 
