@@ -6,7 +6,7 @@ import { env } from "@/env.mjs";
 import useStore from "@/hooks/useStore";
 
 Mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
-  api_host: "https://www.brainwave.quest/mp",
+  api_host: `https://${process.env.VERCEL_URL}/mp`,
 });
 
 export const mixpanelEventConfig = {
@@ -20,9 +20,9 @@ export const mixpanelEventConfig = {
 };
 
 export type MixpanelPayload = {
-  is_error: boolean;
   label: string;
-  value: string;
+  value: unknown;
+  error: unknown;
   [key: string]: any;
 };
 

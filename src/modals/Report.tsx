@@ -81,13 +81,13 @@ export function ReportModal() {
       });
       trackEvent("FormSubmission", {
         label: "ReportModal",
-        pageUrl: window.location.href || "",
-        userAgent: window.navigator.userAgent || "",
+        pageUrl: window.location.href,
+        userAgent: window.navigator.userAgent,
       });
     } catch (error) {
       trackEvent("FormSubmission", {
         label: "ReportModal",
-        value: error,
+        error,
       });
       console.error(error);
     }
