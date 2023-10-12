@@ -1,7 +1,9 @@
 "use client";
 
-import * as z from "zod";
-import { Topics } from "@prisma/client";
+import { useState } from "react";
+import Dropzone from "react-dropzone";
+import { Cloud, File, Loader2 } from "lucide-react";
+import { FileSpreadsheet, UploadCloudIcon } from "lucide-react";
 
 import {
   Dialog,
@@ -11,79 +13,63 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 
 import { useToast } from "@/hooks/useToast";
 import { api } from "@/lib/api";
-import {
-  ModifySubtopicRequestType,
-  modifySubtopicSchema,
-} from "@/server/schemas";
-import { FileSpreadsheet, UploadCloudIcon } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useState } from "react";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { cleanEnum } from "@/lib/utils";
+import { useUploadThing } from "@/hooks/useUploadThing";
+import { Topics } from "@prisma/client";
 
-const AddDocumentsModal = (props: ModifySubtopicRequestType) => {
+const AddDocumentsModal = ({ topic }: { topic: Topics | null }) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
   const { toast } = useToast();
-
-  const steps = [
-    {
-      title: "Find Documents",
-      description: "Find documents to add to the subtopic",
-      icon: <MagnifyingGlassIcon className="h-4 w-4" />,
-      action: () => {},
-    },
-    {
-      title: "Parse Documents",
-      description: "Parse the documents to extract the content",
-      icon: <FileSpreadsheet className="h-4 w-4" />,
-      action: () => {},
-    },
-    {
-      title: "Upload Documents",
-      description: "Upload the documents to the subtopic",
-      icon: <UploadCloudIcon className="h-4 w-4" />,
-      action: () => {},
-    },
-  ];
-
-  const [currentStep, setCurrentStep] = useState<number>(0);
-
   const utils = api.useContext();
+  const { startUpload } = useUploadThing("documents");
 
-  const addSubtopic = api.admin.addSubtopic.useMutation({
-    onSuccess: async () => {
+  const startSimulatedProgress = () => {
+    setUploadProgress(0);
+
+    const interval = setInterval(() => {
+      setUploadProgress((prevProgress) => {
+        if (prevProgress >= 95) {
+          clearInterval(interval);
+          return prevProgress;
+        }
+        return prevProgress + 5;
+      });
+    }, 500);
+
+    return interval;
+  };
+
+  const { mutate: startPolling } = api.meta.getFile.useMutation({
+    onSuccess: () => {
+      setOpen(false);
       toast({
-        title: "Subtopic Added",
-        description: "The subtopic has been added successfully",
+        title: "File uploaded successfully",
       });
     },
-    onError: (error) => {
-      toast({
-        title: "Error with adding subtopic",
-        description: error.message || "There was an error adding the subtopic",
-        variant: "destructive",
-      });
-    },
-    onSettled: async () => await utils.meta.getSubtopics.reset(),
+    retry: true,
+    retryDelay: 500,
   });
 
-  async function onSubmit(values: z.infer<typeof modifySubtopicSchema>) {
-    try {
-      await addSubtopic.mutateAsync(values);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open);
+        if (!open) {
+          setIsUploading(false);
+          setUploadProgress(0);
+        }
+      }}
+    >
       <DialogTrigger className="float-right">
-        {props.subtopic !== "" && (
+        {!!topic && (
           <Button variant="outline">
             <UploadCloudIcon className="h-4 w-4" />
           </Button>
@@ -98,30 +84,104 @@ const AddDocumentsModal = (props: ModifySubtopicRequestType) => {
             <p>
               Topic:{" "}
               <span className="font-bold text-primary">
-                {cleanEnum(props.topic || "")}
+                {!!topic && cleanEnum(topic)}
               </span>
-            </p>
-            <p>
-              Subtopic:{" "}
-              <span className="font-bold text-primary">{props.subtopic}</span>
             </p>
           </DialogDescription>
         </DialogHeader>
-        <Alert>
-          {steps[currentStep]?.icon}
-          <AlertTitle>{steps[currentStep]?.title}</AlertTitle>
-          <AlertDescription>{steps[currentStep]?.description}</AlertDescription>
-        </Alert>
-        {currentStep === 0 && (
-          <div className="flex h-[200px] flex-col items-center justify-center space-y-3 border border-dashed">
-            <p className="text-gray-400">
-              Documents will appear here once found
-            </p>
-          </div>
-        )}
-        <Button type="submit" onClick={steps[currentStep]?.action}>
-          Continue
-        </Button>
+        <Dropzone
+          multiple={false}
+          onDrop={async (acceptedFile) => {
+            setIsUploading(true);
+
+            const progressInterval = startSimulatedProgress();
+
+            const res = await startUpload(acceptedFile, {
+              topic: topic as Topics,
+            });
+
+            if (!res) {
+              return toast({
+                title: "Something went wrong",
+                description: "Please try again later",
+                variant: "destructive",
+              });
+            }
+
+            const [fileResponse] = res;
+
+            const key = fileResponse?.key;
+
+            if (!key) {
+              return toast({
+                title: "Something went wrong",
+                description: "Please try again later",
+                variant: "destructive",
+              });
+            }
+
+            clearInterval(progressInterval);
+            setUploadProgress(100);
+
+            startPolling({ key });
+          }}
+        >
+          {({ getRootProps, getInputProps, acceptedFiles }) => (
+            <div
+              {...getRootProps()}
+              className="m-4 h-64 rounded-lg border border-dashed border-gray-600"
+            >
+              <div className="flex h-full w-full items-center justify-center">
+                <label
+                  htmlFor="dropzone-file"
+                  className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg hover:bg-muted"
+                >
+                  <div className="flex flex-col items-center justify-center pb-6 pt-5">
+                    <Cloud className="mb-2 h-6 w-6 text-zinc-500" />
+                    <p className="mb-2 text-sm text-zinc-700">
+                      <span className="font-semibold">Click to upload</span> or
+                      drag and drop
+                    </p>
+                    <p className="text-xs text-zinc-500">PDF (up to 1GB)</p>
+                  </div>
+
+                  {acceptedFiles && acceptedFiles[0] ? (
+                    <div className="flex max-w-xs items-center divide-x divide-muted overflow-hidden rounded-md outline outline-[1px] outline-muted">
+                      <div className="grid h-full place-items-center px-3 py-2">
+                        <File className="h-4 w-4 text-blue-500" />
+                      </div>
+                      <div className="h-full truncate px-3 py-2 text-sm">
+                        {acceptedFiles[0].name}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {isUploading ? (
+                    <div className="mx-auto mt-4 w-full max-w-xs">
+                      <Progress
+                        value={uploadProgress}
+                        className="h-1 w-full bg-zinc-200"
+                      />
+                      {uploadProgress === 100 ? (
+                        <div className="flex items-center justify-center gap-1 pt-2 text-center text-sm text-muted-foreground">
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                          Parsing...
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  <input
+                    {...getInputProps()}
+                    type="file"
+                    id="dropzone-file"
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            </div>
+          )}
+        </Dropzone>
       </DialogContent>
     </Dialog>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AlertCircleIcon, BugIcon, Loader2Icon, MessageSquareIcon } from "lucide-react";
+import { AlertCircleIcon, Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReportType } from "@prisma/client";
 import { useTranslation } from "next-i18next";
@@ -58,7 +58,7 @@ export function ReportModal() {
       toast({
         variant: "destructive",
         title: `${t("toast-generic-error-title")}`,
-        description: error.message || `${t("toast-report-error")}`,
+        description: error.message || t("toast-report-error"),
       });
     },
   });
@@ -80,14 +80,14 @@ export function ReportModal() {
         userAgent: window.navigator.userAgent || "",
       });
       trackEvent("FormSubmission", {
-        label: "ReportModal",
+        label: "Report Modal",
         pageUrl: window.location.href || "",
         userAgent: window.navigator.userAgent || "",
       });
     } catch (error) {
       trackEvent("FormSubmission", {
-        label: "ReportModal",
-        value: error,
+        label: "Report Modal",
+        error,
       });
       console.error(error);
     }
@@ -103,7 +103,7 @@ export function ReportModal() {
 
   const handleCancel = () => {
     trackEvent("ButtonClick", {
-      label: "ReportModal",
+      label: "Report Modal",
       value: "Cancel",
       pageUrl: window.location.href || "",  
     });

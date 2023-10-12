@@ -110,17 +110,23 @@ enum DocumentType {
   TXT
 }
 
+enum UploadStatus {
+  PENDING
+  UPLOADED
+  PARSED
+  REJECTED
+}
+
 model Document {
   id        String       @id @default(cuid())
-  email     String
+  key       String       @unique
   name      String
   topic     Topics
-  subtopic  String
   type      DocumentType
   url       String
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
-  content   String
+  status    UploadStatus @default(PENDING)
 }
 
 model Metadata {

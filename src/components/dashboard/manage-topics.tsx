@@ -21,7 +21,6 @@ import AddDocumentsModal from "@/modals/AddDocuments";
 
 const AddTopics: React.FC = () => {
   const [topic, setTopic] = useState<Topics | null>(null);
-  const [currentSubtopic, setCurrentSubtopic] = useState<string>("");
   const { isLoading, data, isError, error } = api.meta.getSubtopics.useQuery(
     { topic },
     {
@@ -44,7 +43,7 @@ const AddTopics: React.FC = () => {
             ))}
           </SelectContent>
         </Select>
-        <AddDocumentsModal topic={topic} subtopic={currentSubtopic} />
+        <AddDocumentsModal topic={topic} />
       </section>
       {isError && (
         <Alert variant="destructive">
@@ -62,8 +61,6 @@ const AddTopics: React.FC = () => {
             <TopicCard
               key={subtopic}
               title={subtopic}
-              selected={currentSubtopic === subtopic}
-              onClick={() => setCurrentSubtopic(subtopic)}
               actionComponent={
                 <RemoveSubtopicModal topic={topic} subtopic={subtopic} />
               }

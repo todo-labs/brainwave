@@ -1,57 +1,38 @@
-/** server/uploadthing.ts */
 import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
-import { Role, Topics, type Document, Prisma } from "@prisma/client";
-import { z } from "zod";
-import { PrismaVectorStore } from "langchain/vectorstores/prisma";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { CharacterTextSplitter } from "langchain/text_splitter";
-import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 
 import { getServerAuthSession } from "./auth";
 import { prisma } from "./db";
-import { env } from "@/env.mjs";
+import { DocumentType, Topics, UploadStatus } from "@prisma/client";
+import { parseDocument } from "@/lib/pinecone";
+import { z } from "zod";
 
 const f = createUploadthing();
 
 export const ourFileRouter = {
-  uploader: f({
-    pdf: {
-      maxFileSize: "16MB",
-    },
-    // text: {
-    //   maxFileSize: "4MB",
-    // },
-  })
-    // .input(
-    //   z.object({
-    //     topic: z.nativeEnum(Topics),
-    //     subtopic: z.string(),
-    //   })
-    // )
-    // Set permissions and file types for this FileRoute
+  documents: f({ pdf: { maxFileSize: "1GB" } })
+    .input(z.object({ topic: z.nativeEnum(Topics) }))
     .middleware(async ({ req, res, input }) => {
-      // This code runs on your server before upload
-      const session = await getServerAuthSession({ req, res });
-
-      // If you throw, the user will not be able to upload
-      // if (session?.user.role != Role.ADMIN) throw new Error("Unauthorized");
-
-      return {
-        // email: session.user.email as string,
-        // topic: input.topic,
-        // subtopic: input.subtopic,
-      };
+      const ctx = await getServerAuthSession({ req, res });
+      if (!ctx) throw new Error("Unauthorized");
+      return input;
     })
-    .onUploadComplete(async ({ metadata, file }) => {
-      console.log("file", file);
-      const loader = new PDFLoader(file.url);
-      let docs = await loader.load();
-      const text_splitter = new CharacterTextSplitter({
-        chunkSize: 6,
-        chunkOverlap: 6,
+    .onUploadComplete(async ({ file, metadata }) => {
+      await prisma.document.create({
+        data: {
+          name: file.name,
+          url: file.url,
+          topic: metadata.topic as Topics,
+          type: DocumentType.PDF,
+          status: UploadStatus.UPLOADED,
+          key: file.key,
+        },
       });
-      docs = await text_splitter.splitDocuments(docs);
-      console.log("docs", docs);
+
+      await parseDocument({
+        topic: metadata.topic,
+        key: file.key,
+        url: file.url,
+      });
     }),
 } satisfies FileRouter;
 

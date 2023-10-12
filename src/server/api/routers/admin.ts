@@ -2,7 +2,7 @@ import * as z from "zod";
 import { adminProcedure, createTRPCRouter } from "@/server/api/trpc";
 import { modifySubtopicSchema, paginationSchema } from "@/server/schemas";
 import { cleanEnum } from "@/lib/utils";
-import { ReportStatus } from "@prisma/client";
+import { ReportStatus, UploadStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 export const adminRouter = createTRPCRouter({
@@ -202,5 +202,16 @@ export const adminRouter = createTRPCRouter({
           subtopics: topic.subtopics,
         },
       });
+    }),
+  getFileUploadStatus: adminProcedure
+    .input(z.object({ key: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const file = await ctx.prisma.document.findFirst({
+        where: { key: input.key },
+      });
+
+      if (!file) return { status: UploadStatus.PENDING };
+
+      return { status: file.status };
     }),
 });

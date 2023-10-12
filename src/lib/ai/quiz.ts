@@ -2,13 +2,15 @@ import { QuestionType, Questions, QuizDifficulty } from "@prisma/client";
 import { z } from "zod";
 import { PromptTemplate } from "langchain/prompts";
 import { StructuredOutputParser } from "langchain/output_parsers";
-import { Calculator } from "langchain/tools/calculator";
-import { SerpAPI } from "langchain/tools";
 
 import type { CreateQuizRequestType } from "@/server/schemas";
 import PromptBuilder from "./prompt";
 import { callOpenAi } from ".";
 import { Languages } from "types";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { env } from "@/env.mjs";
+import { getPineConeClient } from "../pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
 
 // ------------------------------------ [Schemas] ------------------------------------
 const quizParser = StructuredOutputParser.fromZodSchema(
@@ -65,6 +67,23 @@ export async function genQuiz(
   config: CreateQuizRequestType & { lang: Languages }
 ): Promise<QuizResponseType | undefined> {
   try {
+    const embeddings = new OpenAIEmbeddings({
+      openAIApiKey: env.OPEN_API_KEY,
+    });
+
+    const pineconeClient = await getPineConeClient();
+    const pineconeIndex = pineconeClient.Index(config.subject);
+
+    const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex,
+      namespace: "SAT_PRACTICE_EXAMS",
+    });
+
+    const results = await vectorStore.similaritySearch(
+      `SUBJECT: ${config.subtopic}, DIFFICULTY: ${config.difficulty} SUBTOPIC: ${config.subtopic}`,
+      4
+    );
+
     const prompt = new PromptBuilder()
       .setContext()
       .setInstructions(
@@ -74,6 +93,7 @@ export async function genQuiz(
         "The exam should focus on the subtopic: [{subtopic}] as it pertains to your discipline.",
         "Here are some user notes: {notes}"
       )
+      .setRelevance(results.map((r) => r.pageContent).join("\n\n"))
       .setConstraints(
         "Here are our supported question formats:",
         "Multiple Choice Questions (MCQ), Short Answer Questions (SA).",
@@ -84,8 +104,10 @@ export async function genQuiz(
 
     const format = quizParser.getFormatInstructions();
 
+    const template = prompt.build();
+
     const promptTemplate = new PromptTemplate({
-      template: prompt.build(),
+      template,
       inputVariables: [
         "subject",
         "questions",

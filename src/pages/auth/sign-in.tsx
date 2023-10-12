@@ -39,9 +39,9 @@ export default function AuthenticationPage(
               backgroundImage: "url(/auth-bg.jpeg)",
             }}
           />
-          <div className="relative z-20 flex items-center text-lg font-medium">
+          <Link href="/" className="relative z-20 flex items-center text-lg font-medium">
             <Command className="mr-2 h-6 w-6" /> {t("appName")}
-          </div>
+          </Link>
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
