@@ -57,16 +57,19 @@ Introducing Brainwave, an innovative quiz platform that harnesses the capabiliti
 
 We're excited to announce that we now support multiple languages! Thanks to the power of [next-i18next](https://www.npmjs.com/package/next-i18next) & [Open Ai](https://openai.com/), we've added E2E support for the following languages:
 
+- 🇦🇪 Arabic
 - 🇨🇳 Chinese
-- 🇺🇸 English (default)
-- 🇫🇷 French
 - 🇩🇪 German
+- 🇺🇸 English (default)
+- 🇪🇸 Spanish
+- 🇫🇷 French
+- 🇮🇳 Hindi
 - 🇮🇹 Italian
 - 🇯🇵 Japanese
 - 🇰🇷 Korean
+- 🇳🇬 Yorùbá
 - 🇵🇹 Portuguese
 - 🇷🇺 Russian
-- 🇪🇸 Spanish
 
 To switch to a different language, simply click on the language selector on the profile page and choose your preferred language. We hope this new feature makes Brainwave more accessible and user-friendly for everyone!
 
