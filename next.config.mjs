@@ -45,6 +45,10 @@ const config = {
         source: "/mp/:slug",
         destination: "https://api.mixpanel.com/:slug",
       },
+      { source: "/healthz", destination: "/api/health" },
+      { source: "/api/healthz", destination: "/api/health" },
+      { source: "/health", destination: "/api/health" },
+      { source: "/ping", destination: "/api/health" },
     ];
   },
 };

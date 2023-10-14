@@ -69,7 +69,11 @@ const columns: ColumnDef<Column>[] = [
       if (!quizzes || (Array.isArray(quizzes) && quizzes.length === 0)) {
         return <h3 className="font-medium text-destructive">0</h3>;
       } else if (Array.isArray(quizzes) && quizzes.length > 0) {
-        return <div className="w-[100px] flex flex-row-reverse">{quizzes.length}</div>;
+        return (
+          <div className="flex w-[100px] flex-row-reverse">
+            {quizzes.length}
+          </div>
+        );
       }
     },
   },

@@ -6,13 +6,21 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx}\"",
+    "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "start": "next start",
     "locales": "node scripts/update-locales.mjs",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "test": "cross-env FORCE_COLOR=1 jest --passWithNoTests",
+    "e2e:headless": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "npx patch-package -y && prisma generate",
+    "preinstall": "npx only-allow pnpm"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -56,6 +64,7 @@
     "@trpc/react-query": "^10.38.1",
     "@trpc/server": "^10.38.1",
     "@uploadthing/react": "^5.5.0",
+    "@vercel/otel": "^0.3.0",
     "async": "^3.2.4",
     "chalk": "^5.3.0",
     "class-variance-authority": "^0.6.1",
@@ -107,6 +116,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.39.0",
     "@types/async": "^3.2.20",
     "@types/chalk": "^2.2.0",
     "@types/cli-progress": "^3.11.2",

@@ -57,7 +57,7 @@ export function CreateConfig() {
 
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
     onConfirm: () => {
-      useSentry("CreateExam", form.handleSubmit(onSubmit)())
+      useSentry("CreateExam", form.handleSubmit(onSubmit)());
     },
   });
 

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AlertCircleIcon, BugIcon, Loader2Icon, MessageSquareIcon } from "lucide-react";
+import {
+  AlertCircleIcon,
+  BugIcon,
+  Loader2Icon,
+  MessageSquareIcon,
+} from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReportType } from "@prisma/client";
 import { useTranslation } from "next-i18next";
@@ -105,7 +110,7 @@ export function ReportModal() {
     trackEvent("ButtonClick", {
       label: "ReportModal",
       value: "Cancel",
-      pageUrl: window.location.href || "",  
+      pageUrl: window.location.href || "",
     });
     setOpen(false);
   };
@@ -117,7 +122,7 @@ export function ReportModal() {
         className="fixed bottom-4 left-8 z-50 flex h-8 w-8 items-center justify-center rounded-lg p-1"
       >
         <AlertCircleIcon
-          className="bg-destructive text-white cursor-pointer rounded-lg"
+          className="cursor-pointer rounded-lg bg-destructive text-white"
           onClick={handleOpen}
         />
       </AlertDialogTrigger>

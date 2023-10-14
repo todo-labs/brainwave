@@ -79,10 +79,7 @@ export function DataTable<TData>({
                   colSpan={columns.length}
                   className="py-20 text-center"
                 >
-                  <Default
-                    title={empty}
-                    description={emptyDesc}
-                  />
+                  <Default title={empty} description={emptyDesc} />
                 </TableCell>
               </TableRow>
             )}

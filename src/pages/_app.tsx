@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/ui/theme-wrapper";
 import { Toaster } from "@/components/ui/toaster";
 import Head from "next/head.js";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
-import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorBoundary } from "react-error-boundary";
 
 import "@/styles/globals.css";
 import "src/styles/verify-request.css";
@@ -39,9 +39,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
                 fallbackRender={({ resetErrorBoundary }) => (
                   <div>
                     There was an error!
-                    <Button onClick={resetErrorBoundary}>
-                      Try again
-                    </Button>
+                    <Button onClick={resetErrorBoundary}>Try again</Button>
                   </div>
                 )}
               >
