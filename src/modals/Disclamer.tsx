@@ -24,23 +24,23 @@ const useDisclaimerModal = (props: Props) => {
   const open = () => {
     setIsOpen(true);
     trackEvent("ViewedModal", {
-      label: "Disclaimer",
+      label: "Disclaimer Modal",
     });
   };
 
   const handleConfirm = () => {
     setIsOpen(false);
     props.onConfirm();
-    trackEvent("ViewedModal", {
-      label: "Disclaimer",
+    trackEvent("ButtonClick", {
+      label: "Disclaimer Modal",
       value: "Confirmed",
     });
   };
 
   const handleCancel = () => {
     setIsOpen(false);
-    trackEvent("ViewedModal", {
-      label: "Disclaimer",
+    trackEvent("ButtonClick", {
+      label: "DisclaimerModal",
       value: "Cancelled",
     });
   };
