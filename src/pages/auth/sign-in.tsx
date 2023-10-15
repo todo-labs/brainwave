@@ -39,17 +39,17 @@ export default function AuthenticationPage(
               backgroundImage: "url(/auth-bg.jpeg)",
             }}
           />
-          <div className="relative z-20 flex items-center text-lg font-medium">
+          <div className="relative z-20 flex items-center text-lg font-medium" data-testid="auth-title">
             <Command className="mr-2 h-6 w-6" /> {t("appName")}
           </div>
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">
+              <h1 className="text-2xl font-semibold tracking-tight" data-testid="auth-header">
                 {t("login-title")}
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground" data-testid="auth-subtitle">
                 {t("login-subheading")}
               </p>
             </div>
@@ -58,6 +58,7 @@ export default function AuthenticationPage(
               {t("login-description")}{" "}
               <Link
                 href="/terms"
+                data-testid="auth-terms"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 {t("login-terms")}
@@ -65,6 +66,7 @@ export default function AuthenticationPage(
               {t("login.and")}{" "}
               <Link
                 href="/privacy"
+                data-testid="auth-privacy"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 {t("login-privacy")}

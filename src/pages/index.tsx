@@ -28,6 +28,7 @@ const Landing: NextPage = (
         <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center px-8 sm:mt-0 sm:min-h-screen sm:px-0">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <Link
+              data-testid="landing-devtagline"
               href="/auth/sign-in"
               className="relative overflow-hidden rounded-full px-4 py-1.5 text-sm leading-6 text-zinc-400 ring-1 ring-zinc-100/10 duration-150 hover:ring-zinc-100/30"
             >
@@ -41,14 +42,21 @@ const Landing: NextPage = (
             </Link>
           </div>
           <div>
-            <h1 className="bg-gradient-to-t from-zinc-100/50 to-white bg-clip-text py-4 text-center text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
+            <h1
+              data-testid="landing-title"
+              className="bg-gradient-to-t from-zinc-100/50 to-white bg-clip-text py-4 text-center text-5xl font-bold tracking-tight text-transparent sm:text-7xl"
+            >
               {t("landing-title")}
             </h1>
-            <p className="mt-6 leading-5 text-zinc-600 sm:text-center">
+            <p
+              data-testid="landing-desc"
+              className="mt-6 leading-5 text-zinc-600 sm:text-center"
+            >
               {t("landing-desc")}
             </p>
             <div className="mx-auto mt-8 flex flex-col justify-center gap-4 sm:max-w-lg sm:flex-row ">
               <Link
+                data-testid="landing-getStarted"
                 href="/auth/sign-in"
                 className={buttonVariants({
                   variant: "default",
@@ -58,6 +66,7 @@ const Landing: NextPage = (
                 {t("landing-getStarted")}
               </Link>
               <Link
+                data-testid="landing-howItWorks"
                 href="https://github.com/todo-labs/brainwave#about-the-project"
                 className={buttonVariants({
                   variant: "outline",

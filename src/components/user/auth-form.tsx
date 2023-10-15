@@ -40,6 +40,7 @@ export function UserAuthForm({ className, ...props }: AuthFormProps) {
           </Label>
           <Input
             id="email"
+            data-testid="auth-email"
             placeholder="name@example.com"
             {...register("email", { required: true })}
             type="email"
@@ -49,7 +50,7 @@ export function UserAuthForm({ className, ...props }: AuthFormProps) {
             disabled={isLoading}
           />
         </div>
-        <Button disabled={isLoading} onClick={handleSubmit(onSubmit)}>
+        <Button data-testid="auth-continue" disabled={isLoading} onClick={handleSubmit(onSubmit)}>
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           ) : (

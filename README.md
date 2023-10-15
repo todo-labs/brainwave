@@ -82,6 +82,7 @@ To switch to a different language, simply click on the language selector on the 
 - [![Vercel][Vercel]][Verce-url]
 - [![OpenAi][OpenAi]][OpenAi-url]
 - [Next Auth](https://next-auth.js.org/)
+- [Zustand](https://zustand-demo.pmnd.rs/)
 - [Langchain](https://js.langchain.com/docs/get_started/introduction)
 - [shadcn/ui](https://ui.shadcn.com/docs)
 - [TRPC](https://trpc.io/)
@@ -149,14 +150,21 @@ To get started with Brainwave, you will need to set up your development environm
    ```
 7. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+8. This project uses a git hook to enforce [conventional commits](https://github.com/qoomon/git-conventional-commits). To install the git hook, run the following command in the root directory of the project:
+
+```sh
+brew install pre-commit
+pre-commit install -t commit-msg
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Roadmap
 
 - [ ] Setup the vector database
   - [ ] Pre load a dataset of past SAT Practice Exams
-  - [ ] Setup a cron job to update the database with new exams
   - [ ] Link vector db to quiz generation query
+  - [ ] Setup a cron job to update the database with new exams
 - [ ] Enhance the quiz generation procedure
   - [ ] Add support for different question types
 - [x] Enhance results breakdown UI and functionality
