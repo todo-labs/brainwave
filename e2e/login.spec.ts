@@ -34,10 +34,10 @@ test("Has Description", async ({ page }) => {
 
 test("Invalid Email", async ({ page }) => {
     const item = page.getByTestId("auth-email");
-    await item.fill('wring_email_format')
+    await item.fill('wrong_email_format')
     const btn = page.getByTestId("auth-continue");
     await btn.click();
-    expect(page).toHaveURL('http://localhost:3000/auth/sign-in?callbackUrl=http%3A%2F%2Flocalhost%3A3000')
+    expect(page.url()).toContain('error=EmailSignin')
 })
 
 test("Valid Email", async ({ page }) => {

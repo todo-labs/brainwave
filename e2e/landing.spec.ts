@@ -5,7 +5,6 @@ test.beforeEach(async ({ page }) => {
   await page.goto("./");
 });
 
-// Verify Content
 
 test("Has Title", async ({ page }) => {
   await expect(page).toHaveTitle(content["appName"]);
@@ -44,7 +43,6 @@ test("Has How It Works", async ({ page }) => {
   expect(item).toBeVisible();
 });
 
-// Verify Connectivity
 
 test("Navigate To Login", async ({ page }) => {
   const item = page.getByTestId("landing-getStarted");
