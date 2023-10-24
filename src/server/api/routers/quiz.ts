@@ -2,10 +2,15 @@ import { z } from "zod";
 import sentiment from "sentiment";
 import { Role, Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { createQuizSchema, gradeQuizSchema } from "@/server/schemas";
+import {
+  GradeQuizRequestType,
+  createQuizSchema,
+  gradeQuizSchema,
+} from "@/server/schemas";
 import { TRPCError } from "@trpc/server";
 
 import {
+  GradeQuizResponseType,
   genQuiz,
   genReviewNotes,
   gradeQuiz,
@@ -207,21 +212,9 @@ export const quizRouter = createTRPCRouter({
         const correctAnswers = result.filter((answer) => answer.correct);
         const score = Math.floor((correctAnswers.length / result.length) * 100);
 
-        const reviewNotes = await genReviewNotes(
-          result,
-          {
-            subject: quiz.topic,
-            subtopic: quiz.subtopic,
-            difficulty: quiz.difficulty,
-            score,
-          },
-          ctx.session.user.name || "Anonymous",
-          ctx.session.user.lang || "en"
-        );
-
         await ctx.prisma.quiz.update({
           where: { id: input.quizId },
-          data: { score, reviewNotes },
+          data: { score },
         });
 
         await sendEmail(ctx.session.user.email as string, "quizCompletion", {
@@ -238,6 +231,52 @@ export const quizRouter = createTRPCRouter({
           message: "Failed to grade quiz",
         });
       }
+    }),
+  genReviewNotes: protectedProcedure
+    .input(z.object({ quizId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const quiz = await ctx.prisma.quiz.findUnique({
+        where: { id: input.quizId },
+        include: { questions: true },
+      });
+
+      if (!quiz) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Quiz not found",
+        });
+      }
+
+      if (!quiz.score) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Quiz not graded",
+        });
+      }
+
+      const results = quiz?.questions.map((q) => ({
+        question: q.label,
+        type: q.type,
+        studentAnswer: q.answer || "NOT ANSWERED",
+        answer: q.solution,
+      }));
+
+      const reviewNotes = await genReviewNotes(
+        results,
+        {
+          subject: quiz.topic,
+          subtopic: quiz.subtopic,
+          difficulty: quiz.difficulty,
+          score: quiz.score,
+        },
+        ctx.session.user.name || "Anonymous",
+        ctx.session.user.lang || "en"
+      );
+
+      await ctx.prisma.quiz.update({
+        where: { id: input.quizId },
+        data: { reviewNotes },
+      });
     }),
   getQuiz: protectedProcedure
     .input(

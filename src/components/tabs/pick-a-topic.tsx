@@ -1,13 +1,13 @@
 import { ExclamationTriangleIcon, RocketIcon } from "@radix-ui/react-icons";
 import { useTranslation } from "next-i18next";
 
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import TopicCard from "./cards/topic-card";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import TopicCard from "../cards/topic-card";
 import React from "react";
-import Section from "./section";
-import { TopicSkeleton } from "./loading-cards";
-import { Button } from "./ui/button";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import Section from "../section";
+import { TopicSkeleton } from "../loading-cards";
+import { Button } from "../ui/button";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 import useStore from "@/hooks/useStore";
 import { api } from "@/lib/api";

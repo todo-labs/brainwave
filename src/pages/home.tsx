@@ -7,12 +7,12 @@ import { useRouter } from "next/router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserNav } from "@/components/user/nav";
-import { CreateConfig } from "@/components/create-exam";
+import { CreateConfig } from "@/components/tabs/create-exam";
 import { Sidebar } from "@/components/sidebar";
-import PickATopic from "@/components/pick-a-topic";
+import PickATopic from "@/components/tabs/pick-a-topic";
 import Results from "@/components/results";
-import PastExams from "@/components/past-exams";
-import Exam from "@/components/exam";
+import PastExams from "@/components/tabs/past-exams";
+import Exam from "@/components/tabs/exam";
 import FullScreenConfetti from "@/components/ui/confetti";
 import { ReportModal } from "@/modals/Report";
 

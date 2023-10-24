@@ -1,20 +1,19 @@
 import { useTranslation } from "next-i18next";
-import { Loader2Icon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import QuestionCard from "./cards/question-card";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import { ScrollArea } from "./ui/scroll-area";
-import Timer from "./timer";
+import QuestionCard from "@/components/cards/question-card";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Timer from "@/components/timer";
 import useDisclaimerModal from "@/modals/Disclamer";
-import DefaultState from "./default";
 
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
 import useStore from "@/hooks/useStore";
 import { useMixpanel } from "@/lib/mixpanel";
 import { useSentry } from "@/lib/sentry";
+import LoadingStepper from "../cards/loading-stepper";
 
 const Exam = () => {
   const { currentQuiz, setCurrentStep, setShowConfetti } = useStore();
@@ -26,12 +25,7 @@ const Exam = () => {
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
     onConfirm: () => useSentry("GradeExam", submitQuiz()),
   });
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const textList = Array.from(
-    { length: 30 },
-    (_, index) => `loading-exam-${index + 1}`
-  );
+  const utils = api.useContext();
 
   const gradeQuiz = api.quiz.gradeExam.useMutation({
     onSuccess: () => {
@@ -39,14 +33,51 @@ const Exam = () => {
         title: "Success",
         description: "Your quiz has been graded. Check your results now.",
       });
-      setCurrentStep("result");
       setAnswers(new Map<number, string>());
+    },
+    onSettled: async () => {
+      await utils?.quiz.getQuiz.refetch({
+        quizId: currentQuiz?.id ?? "",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
+      trackEvent("Error", {
+        label: "GradeExam",
+        error: error.message,
+        topic: currentQuiz?.topic,
+        subtopic: currentQuiz?.subtopic,
+        difficulty: currentQuiz?.difficulty,
+        id: currentQuiz?.id,
+      });
+    },
+    retry: 2,
+  });
+
+  const genReviewNotesMutation = api.quiz.genReviewNotes.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Your review notes has been generated.",
+      });
+      setCurrentStep("result");
       setShowConfetti(true);
     },
     onError: (error) => {
       toast({
         title: "Error",
         description: error.message,
+      });
+      trackEvent("Error", {
+        label: "GenerateReviewNotes",
+        error: error.message,
+        topic: currentQuiz?.topic,
+        subtopic: currentQuiz?.subtopic,
+        difficulty: currentQuiz?.difficulty,
+        id: currentQuiz?.id,
       });
     },
     retry: 2,
@@ -72,6 +103,23 @@ const Exam = () => {
     }
   };
 
+  const generateReviewNotes = async () => {
+    try {
+      await genReviewNotesMutation.mutateAsync({
+        quizId: currentQuiz?.id ?? "",
+      });
+      trackEvent("ButtonClick", {
+        label: "GenerateReviewNotes",
+        topic: currentQuiz?.topic,
+        subtopic: currentQuiz?.subtopic,
+        difficulty: currentQuiz?.difficulty,
+        id: currentQuiz?.id,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleAnswer = (answer: string, index: number) => {
     setAnswers(answers.set(index, answer));
     const { id: questionId, type } = currentQuiz?.questions?.[index] ?? {};
@@ -86,22 +134,20 @@ const Exam = () => {
     });
   };
 
-  useEffect(() => {
-    if (gradeQuiz.isLoading) {
-      const interval = setInterval(() => {
-        const index = Math.floor(Math.random() * textList.length);
-        setCurrentIndex(index);
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [gradeQuiz.isLoading]);
-
   const Loading = () => (
-    <DefaultState
-      icon={Loader2Icon}
-      iconClassName="animate-spin"
-      title={t(textList[currentIndex] || "loading-exam")}
-    />
+    <section className="flex flex-col space-y-3">
+      <LoadingStepper
+        title={"Grade Exam"}
+        loading={gradeQuiz.isLoading}
+        completed={!!currentQuiz?.score}
+      />
+      <LoadingStepper
+        title={"Generate Review Notes"}
+        loading={genReviewNotesMutation.isLoading && !gradeQuiz.isLoading}
+        onClick={generateReviewNotes}
+        completed={!!currentQuiz?.reviewNotes}
+      />
+    </section>
   );
 
   return (
@@ -110,7 +156,7 @@ const Exam = () => {
         <Timer completed={completed} />
       </div>
       <Separator className="my-4" />
-      {gradeQuiz.isLoading ? (
+      {gradeQuiz.isLoading || !currentQuiz?.reviewNotes ? (
         <Loading />
       ) : (
         <ScrollArea className="xxl:h-[800px] h-[300px] md:h-[500px]">
@@ -129,20 +175,15 @@ const Exam = () => {
           </div>
         </ScrollArea>
       )}
-      <Button
-        className="float-right mt-5"
-        onClick={open}
-        disabled={gradeQuiz.isLoading}
-      >
-        {gradeQuiz.isLoading ? (
-          <div className="flex">
-            <Loader2Icon className="mr-2 h-5 w-5 animate-spin text-white" />
-            <span>{t("home-exam-grade")}</span>
-          </div>
-        ) : (
-          t("submit")
-        )}
-      </Button>
+      {!gradeQuiz.isLoading && (
+        <Button
+          className="float-right mt-5"
+          onClick={open}
+          disabled={!!currentQuiz?.score}
+        >
+          {t("submit")}
+        </Button>
+      )}
       <DisclaimerModal />
     </section>
   );
