@@ -148,5 +148,10 @@
   "loading-exam-27": "Stirring the cauldron of curiosity...",
   "loading-exam-28": "Setting up a quantum computer to calculate your brilliance...",
   "loading-exam-29": "Inventing a new theorem while you wait...",
-  "loading-exam-30": "Setting up a hotdog stand for your brain cells..."
+  "loading-exam-30": "Setting up a hotdog stand for your brain cells...",
+  "quit-exam-title": "Are you sure?",
+  "quit-exam-btn": "Quit",
+  "quit-exam-desc": "You will lose all progress on this exam if you quit. This will not affect your overall score.",
+  "yes": "Yes",
+  "no": "No"
 }
