@@ -24,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Form,
@@ -57,7 +56,7 @@ export function CreateConfig() {
 
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
     onConfirm: () => {
-      useSentry("CreateExam", form.handleSubmit(onSubmit)())
+      useSentry("CreateExam", form.handleSubmit(onSubmit)());
     },
   });
 
@@ -162,8 +161,10 @@ export function CreateConfig() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel>
-                        {t("home-config-questions")}
-                        <span className="text-gray-500">
+                        <span className="mr-3">
+                          {t("home-config-questions")}
+                        </span>
+                        <span className="space-x-3 text-gray-500">
                           {t("home-config-questionsLabel", {
                             num: field.value,
                           })}
@@ -181,28 +182,6 @@ export function CreateConfig() {
                           step={1}
                         />
                       </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="notes"
-                  render={({ field }) => (
-                    <FormItem className="grid gap-2">
-                      <FormLabel>{t("home-config-notes")}</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder={
-                            t("home-config-notesPlaceholder") as string
-                          }
-                          className="resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        {t("home-config-notesDesc")}
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
