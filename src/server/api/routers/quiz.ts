@@ -3,14 +3,12 @@ import sentiment from "sentiment";
 import { Role, Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
-  GradeQuizRequestType,
   createQuizSchema,
   gradeQuizSchema,
 } from "@/server/schemas";
 import { TRPCError } from "@trpc/server";
 
 import {
-  GradeQuizResponseType,
   genQuiz,
   genReviewNotes,
   gradeQuiz,
@@ -18,7 +16,7 @@ import {
 } from "@/lib/ai/quiz";
 import { env } from "@/env.mjs";
 import { sendEmail } from "@/lib/mailer";
-import { Languages } from "types";
+import type { Languages } from "types";
 
 export const quizRouter = createTRPCRouter({
   getPastExams: protectedProcedure
@@ -34,6 +32,7 @@ export const quizRouter = createTRPCRouter({
             user: {
               email: ctx.session.user.email as string,
             },
+            didUserQuit: false,
             topic: input.topic,
           },
         });
@@ -337,8 +336,9 @@ export const quizRouter = createTRPCRouter({
           });
         }
 
-        await ctx.prisma.quiz.delete({
+        await ctx.prisma.quiz.update({
           where: { id: input.quizId },
+          data: { didUserQuit: true },
         });
       } catch (e) {
         console.error(e);
