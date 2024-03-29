@@ -311,4 +311,42 @@ export const quizRouter = createTRPCRouter({
         });
       }
     }),
+  quitQuiz: protectedProcedure
+    .input(
+      z.object({
+        quizId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const quiz = await ctx.prisma.quiz.findUnique({
+          where: { id: input.quizId },
+        });
+
+        if (!quiz) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Quiz not found",
+          });
+        }
+
+        if (quiz.score) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Quiz already graded",
+          });
+        }
+
+        await ctx.prisma.quiz.delete({
+          where: { id: input.quizId },
+        });
+      } catch (e) {
+        console.error(e);
+        if (e instanceof TRPCError) throw e;
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to quit quiz",
+        });
+      }
+    }),
 });
