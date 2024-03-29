@@ -3,9 +3,9 @@ import { Quiz } from "@prisma/client";
 import { useTranslation } from "next-i18next";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
-import { QuizSkeleton } from "../loading-cards";
-import Section from "../section";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { QuizSkeleton } from "./loading-cards";
+import Section from "./section";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
@@ -13,9 +13,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Badge } from "../ui/badge";
-import { Progress } from "../ui/progress";
+} from "./ui/card";
+import { Badge } from "./ui/badge";
+import { Progress } from "./ui/progress";
 
 import { api } from "@/lib/api";
 import { cleanEnum } from "@/lib/utils";
