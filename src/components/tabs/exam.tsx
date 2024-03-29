@@ -4,16 +4,16 @@ import { useState } from "react";
 import QuestionCard from "@/components/cards/question-card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Timer from "@/components/timer";
 import useDisclaimerModal from "@/modals/Disclamer";
+import LoadingStepper from "../cards/loading-stepper";
 
 import { api } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
 import useStore from "@/hooks/useStore";
 import { useMixpanel } from "@/lib/mixpanel";
 import { useSentry } from "@/lib/sentry";
-import LoadingStepper from "../cards/loading-stepper";
 
 const Exam = () => {
   const { currentQuiz, setCurrentStep, setShowConfetti } = useStore();
@@ -25,7 +25,7 @@ const Exam = () => {
   const { Content: DisclaimerModal, open } = useDisclaimerModal({
     onConfirm: () => useSentry("GradeExam", submitQuiz()),
   });
-  const utils = api.useContext();
+  const utils = api.useUtils();
 
   const gradeQuiz = api.quiz.gradeExam.useMutation({
     onSuccess: () => {
@@ -34,11 +34,6 @@ const Exam = () => {
         description: "Your quiz has been graded. Check your results now.",
       });
       setAnswers(new Map<number, string>());
-    },
-    onSettled: async () => {
-      await utils?.quiz.getQuiz.refetch({
-        quizId: currentQuiz?.id ?? "",
-      });
     },
     onError: (error) => {
       toast({
@@ -98,6 +93,7 @@ const Exam = () => {
         difficulty: currentQuiz?.difficulty,
         id: currentQuiz?.id,
       });
+      await generateReviewNotes();
     } catch (error) {
       console.error(error);
     }
@@ -144,7 +140,6 @@ const Exam = () => {
       <LoadingStepper
         title={"Generate Review Notes"}
         loading={genReviewNotesMutation.isLoading && !gradeQuiz.isLoading}
-        onClick={generateReviewNotes}
         completed={!!currentQuiz?.reviewNotes}
       />
     </section>
@@ -156,33 +151,34 @@ const Exam = () => {
         <Timer completed={completed} />
       </div>
       <Separator className="my-4" />
-      {gradeQuiz.isLoading || !currentQuiz?.reviewNotes ? (
+      {gradeQuiz.isLoading || genReviewNotesMutation.isLoading ? (
         <Loading />
       ) : (
-        <ScrollArea className="xxl:h-[800px] h-[300px] md:h-[500px]">
-          <div className="flex-col space-y-4">
-            {!!currentQuiz &&
-              currentQuiz.questions?.map((q, index) => (
-                <QuestionCard
-                  key={q.label}
-                  question={q}
-                  onSubmit={(answer) => {
-                    handleAnswer(answer, index);
-                  }}
-                  disabled={completed || gradeQuiz.isLoading}
-                />
-              ))}
-          </div>
-        </ScrollArea>
-      )}
-      {!gradeQuiz.isLoading && (
-        <Button
-          className="float-right mt-5"
-          onClick={open}
-          disabled={!!currentQuiz?.score}
-        >
-          {t("submit")}
-        </Button>
+        <>
+          <ScrollArea className="xxl:h-[800px] h-[600px] md:h-[500px]">
+            <div className="flex-col space-y-4">
+              {!!currentQuiz &&
+                currentQuiz.questions?.map((q, index) => (
+                  <QuestionCard
+                    key={q.label}
+                    question={q}
+                    onSubmit={(answer) => {
+                      handleAnswer(answer, index);
+                    }}
+                    disabled={completed || gradeQuiz.isLoading}
+                  />
+                ))}
+            </div>
+            <ScrollBar orientation="vertical" />
+          </ScrollArea>
+          <Button
+            className="float-right mt-5"
+            onClick={open}
+            disabled={!!currentQuiz?.score}
+          >
+            {t("submit")}
+          </Button>
+        </>
       )}
       <DisclaimerModal />
     </section>

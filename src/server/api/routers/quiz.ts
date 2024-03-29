@@ -185,12 +185,7 @@ export const quizRouter = createTRPCRouter({
           });
         }
 
-        if (quiz.score > 0) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Quiz already graded",
-          });
-        }
+        if (quiz.score > 0) return;
 
         const result = await gradeQuiz(
           quiz.topic,
@@ -212,17 +207,18 @@ export const quizRouter = createTRPCRouter({
         const correctAnswers = result.filter((answer) => answer.correct);
         const score = Math.floor((correctAnswers.length / result.length) * 100);
 
-        await ctx.prisma.quiz.update({
-          where: { id: input.quizId },
-          data: { score },
-        });
-
-        await sendEmail(ctx.session.user.email as string, "quizCompletion", {
-          name: ctx.session.user.name || "Anonymous",
-          score,
-          topic: quiz.topic,
-          subtopic: quiz.subtopic,
-        });
+        await Promise.all([
+          ctx.prisma.quiz.update({
+            where: { id: input.quizId },
+            data: { score },
+          }),
+          sendEmail(ctx.session.user.email as string, "quizCompletion", {
+            name: ctx.session.user.name || "Anonymous",
+            score,
+            topic: quiz.topic,
+            subtopic: quiz.subtopic,
+          }),
+        ]);
       } catch (e) {
         console.error(e);
         if (e instanceof TRPCError) throw e;
@@ -251,6 +247,13 @@ export const quizRouter = createTRPCRouter({
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Quiz not graded",
+        });
+      }
+
+      if (!!quiz.reviewNotes) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Review notes already generated",
         });
       }
 
