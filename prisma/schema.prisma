@@ -101,6 +101,7 @@ model Quiz {
   reviewNotes String         @default("")
   approved    Boolean        @default(false)
   language    String         @default("en")
+  didUserQuit Boolean        @default(false)
 }
 
 enum DocumentType {

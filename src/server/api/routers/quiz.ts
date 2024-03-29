@@ -3,14 +3,12 @@ import sentiment from "sentiment";
 import { Role, Topics } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
-  GradeQuizRequestType,
   createQuizSchema,
   gradeQuizSchema,
 } from "@/server/schemas";
 import { TRPCError } from "@trpc/server";
 
 import {
-  GradeQuizResponseType,
   genQuiz,
   genReviewNotes,
   gradeQuiz,
@@ -18,7 +16,7 @@ import {
 } from "@/lib/ai/quiz";
 import { env } from "@/env.mjs";
 import { sendEmail } from "@/lib/mailer";
-import { Languages } from "types";
+import type { Languages } from "types";
 
 export const quizRouter = createTRPCRouter({
   getPastExams: protectedProcedure
@@ -34,6 +32,7 @@ export const quizRouter = createTRPCRouter({
             user: {
               email: ctx.session.user.email as string,
             },
+            didUserQuit: false,
             topic: input.topic,
           },
         });
@@ -308,6 +307,45 @@ export const quizRouter = createTRPCRouter({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to get quiz",
+        });
+      }
+    }),
+  quitQuiz: protectedProcedure
+    .input(
+      z.object({
+        quizId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const quiz = await ctx.prisma.quiz.findUnique({
+          where: { id: input.quizId },
+        });
+
+        if (!quiz) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Quiz not found",
+          });
+        }
+
+        if (quiz.score) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Quiz already graded",
+          });
+        }
+
+        await ctx.prisma.quiz.update({
+          where: { id: input.quizId },
+          data: { didUserQuit: true },
+        });
+      } catch (e) {
+        console.error(e);
+        if (e instanceof TRPCError) throw e;
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to quit quiz",
         });
       }
     }),

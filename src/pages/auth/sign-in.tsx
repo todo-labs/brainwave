@@ -40,7 +40,9 @@ export default function AuthenticationPage(
             }}
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
+            <Link href="/" className="flex items-center space-x-2">
             <Command className="mr-2 h-6 w-6" /> {t("appName")}
+            </Link>
           </div>
         </div>
         <div className="lg:p-8">

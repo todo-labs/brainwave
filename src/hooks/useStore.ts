@@ -21,7 +21,7 @@ interface State {
   setCurrentTopic: (topic: Topics | null) => void;
   setCurrentSubTopic: (subTopic: string | null) => void;
   setShowConfetti: (showConfetti: boolean) => void;
-  setCurrentQuiz: (quiz: QuizWithQuestions) => void;
+  setCurrentQuiz: (quiz: QuizWithQuestions | null) => void;
   setCurrentStep: (step: Tabs) => void;
   setDashboardTab: (tab: DashboardTabs) => void;
   reset: () => void;
