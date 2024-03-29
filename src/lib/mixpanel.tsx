@@ -17,6 +17,7 @@ export const mixpanelEventConfig = {
   Login: "Login" as const,
   Logout: "Logout" as const,
   Input: "Input" as const,
+  Error: "API Error" as const,
 };
 
 export type MixpanelPayload = {

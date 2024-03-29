@@ -53,15 +53,11 @@ const sentimentParser = StructuredOutputParser.fromZodSchema(
   })
 );
 
-type SentimentParserResponseType = z.infer<typeof sentimentParser.schema>;
-type QuizResponseType = z.infer<typeof quizParser.schema>;
-type GradeQuizResponseType = z.infer<typeof gradeQuizParser.schema>;
-
-type ContextDocument = {
-  title: string;
-  url: string;
-  text: string;
-};
+export type SentimentParserResponseType = z.infer<
+  typeof sentimentParser.schema
+>;
+export type QuizResponseType = z.infer<typeof quizParser.schema>;
+export type GradeQuizResponseType = z.infer<typeof gradeQuizParser.schema>;
 
 // ------------------------------------ [Functions] ------------------------------------
 
@@ -75,13 +71,13 @@ export async function genQuiz(
         "Generate a SAT Practice Exam with {questions} questions."
       )
       .setRelevance(
-        "The exam should focus on the subtopic: [{subtopic}] as it pertains to your discipline.",
+        "The exam should focus on the following subtopic: {subtopic}. As it pertains to your discipline.",
         "Here are some user notes: {notes}"
       )
       .setConstraints(
         "Here are our supported question formats:",
         "Multiple Choice Questions (MCQ), Short Answer Questions (SA).",
-        "And should have a {difficulty} difficulty level"
+        "Difficulty of this exam should be {difficulty}"
       )
       .setPersonalization({ language: config.lang })
       .setRequirements();
@@ -170,7 +166,7 @@ export async function gradeQuiz(
 }
 
 export async function genReviewNotes(
-  results: GradeQuizResponseType,
+  results: Omit<GradeQuizResponseType[0], "correct">[],
   data: {
     subject: string;
     subtopic: string;
