@@ -101,6 +101,7 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: "/auth/verify-request",
     error: "/auth/error",
     signIn: "/auth/sign-in",
+    newUser: "/profile",
   },
   debug: env.NODE_ENV === "development",
 };
