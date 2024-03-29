@@ -101,11 +101,6 @@ export const userRouter = createTRPCRouter({
       select: {
         name: true,
         quizzes: {
-          where: {
-            score: {
-              gt: 0,
-            },
-          },
           select: {
             score: true,
           },

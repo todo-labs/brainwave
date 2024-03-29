@@ -23,9 +23,9 @@ const QuestionCard = ({
 }: IQuestionCardProps) => {
   return (
     <div className={cn("flex flex-col space-y-4", width)}>
-      <label className="text-xl font-bold capitalize xl:text-2xl">
+      <Heading level="h3" className="font-bold capitalize">
         {question.label}
-      </label>
+      </Heading>
       {question.type === QuestionType.MCQ && (
         <div className="pb-4">
           <RadioGroup onValueChange={onSubmit} disabled={disabled}>
