@@ -14,10 +14,10 @@ import { useToast } from "@/hooks/useToast";
 import useStore from "@/hooks/useStore";
 import { useMixpanel } from "@/lib/mixpanel";
 import { useSentry } from "@/lib/sentry";
-import { Loader2Icon } from "lucide-react";
+import QuitExamModal from "@/modals/QuitExam";
 
 const Exam = () => {
-  const { currentQuiz, setCurrentStep, setShowConfetti, setCurrentQuiz } =
+  const { currentQuiz, setCurrentStep, setShowConfetti } =
     useStore();
   const [answers, setAnswers] = useState(new Map<number, string>());
   const [completed, setCompleted] = useState(false);
@@ -79,32 +79,6 @@ const Exam = () => {
     retry: 2,
   });
 
-  const quitQuizMutation = api.quiz.quitQuiz.useMutation({
-    onSuccess: () => {
-      setCurrentQuiz(null);
-      setCurrentStep("choice");
-      toast({
-        title: "Success",
-        description:
-          "Your Quiz has been deleted. If you found any issues, please report it.",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-      });
-      trackEvent("Error", {
-        label: "QuitQuiz",
-        error: error.message,
-        topic: currentQuiz?.topic,
-        subtopic: currentQuiz?.subtopic,
-        difficulty: currentQuiz?.difficulty,
-        id: currentQuiz?.id,
-      });
-    },
-    retry: 2,
-  });
 
   const submitQuiz = async () => {
     try {
@@ -144,22 +118,6 @@ const Exam = () => {
     }
   };
 
-  const quitQuiz = async () => {
-    try {
-      await quitQuizMutation.mutateAsync({
-        quizId: currentQuiz?.id ?? "",
-      });
-      trackEvent("ButtonClick", {
-        label: "QuitQuiz",
-        topic: currentQuiz?.topic,
-        subtopic: currentQuiz?.subtopic,
-        difficulty: currentQuiz?.difficulty,
-        id: currentQuiz?.id,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleAnswer = (answer: string, index: number) => {
     setAnswers(answers.set(index, answer));
@@ -190,25 +148,11 @@ const Exam = () => {
     </section>
   );
 
-  const QuitButton = () => (
-    <Button
-      onClick={quitQuiz}
-      variant="destructive"
-      disabled={completed || gradeQuiz.isLoading}
-    >
-      {quitQuizMutation.isLoading ? (
-        <Loader2Icon className="animate-spin" />
-      ) : (
-        t("quit")
-      )}
-    </Button>
-  );
-
   return (
     <section>
       <div className="flex items-center justify-between space-x-4">
         <Timer completed={completed} />
-        <QuitButton />
+        <QuitExamModal />
       </div>
       <Separator className="my-4" />
       {gradeQuiz.isLoading || genReviewNotesMutation.isLoading ? (
