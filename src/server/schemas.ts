@@ -47,9 +47,15 @@ export const modifySubtopicSchema = z.object({
   subtopic: z.string().min(1).max(100),
 });
 
+export const uploadDocumentSchema = z.object({
+  topic: z.nativeEnum(Topics),
+  subtopic: z.string().min(1).max(100).optional(),
+});
+
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;
 export type ProfileRequestType = z.infer<typeof profileSchema>;
 export type GradeQuizRequestType = z.infer<typeof gradeQuizSchema>;
 export type PaginationRequestType = z.infer<typeof paginationSchema>;
 export type ReportRequestType = z.infer<typeof reportSchema>;
 export type ModifySubtopicRequestType = z.infer<typeof modifySubtopicSchema>;
+export type UploadDocumentRequestType = z.infer<typeof uploadDocumentSchema>;

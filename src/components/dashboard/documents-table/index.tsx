@@ -1,9 +1,9 @@
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  PaginationState,
-  SortingState,
-  VisibilityState,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type PaginationState,
+  type SortingState,
+  type VisibilityState,
   getCoreRowModel,
   getFacetedRowModel,
   getFacetedUniqueValues,
@@ -12,106 +12,86 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { formatDistance } from "date-fns";
-import { type Report, type User } from "@prisma/client";
+import { format } from "date-fns";
+import { type Document } from "@prisma/client";
 import { useMemo, useState } from "react";
 
 import { DataTableColumnHeader } from "@/components/query-table/header";
-import { Badge } from "@/components/ui/badge";
 import Default from "@/components/default";
 import { DataTableRowActions } from "./row-actions";
 import { DataTableToolbar } from "./toolbar";
 
-import { cn, cleanEnum, statusToColor } from "@/lib/utils";
+import { cleanEnum } from "@/lib/utils";
 import { api } from "@/lib/api";
 import { DataTable } from "@/components/query-table/data-table";
 import { Loader2Icon } from "lucide-react";
 
-type ReportWithUser = Report & {
-  user: User;
-};
-
-const columns: ColumnDef<ReportWithUser>[] = [
+const columns: ColumnDef<Document>[] = [
   {
-    accessorKey: "ticketNumber",
+    accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Ticket Number" />
+      <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("ticketNumber")}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "txt",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Text" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <Badge variant="outline" className="capitalize">
-            {row.original.type.toLowerCase()}
-          </Badge>
           <span className="max-w-[300px] truncate font-medium">
-            {row.getValue("txt")}
+            {row.original.name}
           </span>
         </div>
       );
     },
   },
   {
-    accessorKey: "status",
+    accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
+      <DataTableColumnHeader column={column} title="Type" />
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex space-x-2">
-          <span
-            className={cn(
-              "max-w-[500px] truncate font-medium capitalize",
-              statusToColor(row.original.status)
-            )}
-          >
-            {cleanEnum(row.original.status)}
-          </span>
-        </div>
+        <div className="flex space-x-2">{cleanEnum(row.original.type)}</div>
       );
     },
   },
   {
-    accessorKey: "user",
+    accessorKey: "topic",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="User" />
+      <DataTableColumnHeader column={column} title="Topic" />
     ),
     cell: ({ row }) => {
-      const user: User = row.getValue("user");
       return (
         <div className="flex space-x-2">
           <span className="max-w-[500px] truncate font-medium">
-            {user.name}
+            {cleanEnum(row.original.topic)}
           </span>
         </div>
       );
     },
   },
   {
-    accessorKey: "last updated",
+    accessorKey: "subtopic",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Last Updated" />
+      <DataTableColumnHeader column={column} title="Subtopic" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">
+            {row.original.subtopic}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "uploaded",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Uploaded" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2 text-muted-foreground">
-          {formatDistance(row.original.updatedAt, new Date(), {
-            addSuffix: true,
-          })}
+          {format(row.original.createdAt, "MMM dd, yyyy")}
         </div>
       );
     },
@@ -122,7 +102,7 @@ const columns: ColumnDef<ReportWithUser>[] = [
   },
 ];
 
-const ReportTable = () => {
+const DocumentsTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -143,14 +123,14 @@ const ReportTable = () => {
     [pageIndex, pageSize]
   );
 
-  const { data, isLoading } = api.admin.allReports.useQuery({
+  const { data, isLoading } = api.admin.allDocuments.useQuery({
     pageIndex,
     pageSize,
     query: searchTerm,
   });
 
   const table = useReactTable({
-    data: data?.reports ?? defaultData,
+    data: data?.documents ?? defaultData,
     columns,
     pageCount: Math.ceil((data?.count || 0) / pageSize),
     state: {
@@ -179,20 +159,20 @@ const ReportTable = () => {
 
   return isLoading ? (
     <Default
-      title="Loading Reports"
-      description="Please wait while we load the reports."
+      title="Loading Documents"
+      description="Please wait while we load all documents."
       icon={Loader2Icon}
       iconClassName="animate-spin"
     />
   ) : (
-    <DataTable<ReportWithUser>
+    <DataTable<Document>
       columns={columns}
       toolbar={<DataTableToolbar table={table} />}
-      empty="No reports found."
+      empty="No Documents found."
       emptyDesc="Please try again later."
       table={table}
     />
   );
 };
 
-export default ReportTable;
+export default DocumentsTable;
