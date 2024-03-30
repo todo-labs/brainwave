@@ -22,9 +22,6 @@ interface DataTableRowActionsProps {
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
-
-  console.log(row.original)
-  
   return (
     <AlertDialog>
       <Dialog>
@@ -40,7 +37,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
             <DropdownMenuItem>
-                <EyeIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              <EyeIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
               <Link href={row.original.url} target="_blank">
                 View
               </Link>

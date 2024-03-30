@@ -49,7 +49,7 @@ export const modifySubtopicSchema = z.object({
 
 export const uploadDocumentSchema = z.object({
   topic: z.nativeEnum(Topics),
-  subtopic: z.string().min(1).max(100).optional(),
+  subtopic: z.string().max(100).optional(),
 });
 
 export type CreateQuizRequestType = z.infer<typeof createQuizSchema>;

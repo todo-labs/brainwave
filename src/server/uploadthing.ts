@@ -8,13 +8,12 @@ import { uploadDocumentSchema } from "./schemas";
 
 import { UTApi } from "uploadthing/server";
 
-
 const f = createUploadthing();
 
 export const ourFileRouter = {
   documents: f({
     pdf: {
-      maxFileSize: "16MB",
+      maxFileSize: "32MB",
     },
   })
     .input(uploadDocumentSchema)
@@ -58,5 +57,4 @@ export const ourFileRouter = {
 } satisfies FileRouter;
 
 export const utapi = new UTApi();
-
 export type OurFileRouter = typeof ourFileRouter;

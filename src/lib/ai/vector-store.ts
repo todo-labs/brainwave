@@ -1,5 +1,5 @@
 import { Pinecone } from "@pinecone-database/pinecone";
-import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { WebPDFLoader } from "langchain/document_loaders/web/pdf";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "@langchain/pinecone";
 
@@ -13,6 +13,11 @@ export const getPineConeClient = () => {
   });
 };
 
+export const getPineconeIndex = () => {
+  const pineconeClient = getPineConeClient();
+  return pineconeClient.Index("test");
+}
+
 type Args = {
   topic: Topics;
   subtopic: string;
@@ -22,70 +27,32 @@ type Args = {
 
 export async function parseDocument(args: Args) {
   try {
-    console.log("Fetching document from URL:", args.url);
     const response = await fetch(args.url);
-    console.log("Document fetched successfully");
-
     const blob = await response.blob();
-    console.log("Document blob created");
-
-    const loader = new PDFLoader(blob);
-    console.log("PDFLoader initialized");
-
-    const pageLevelDocs = await loader.loadAndSplit();
-    console.log("PDF loaded and split into pages");
+    const loader = new WebPDFLoader(blob);
+    const pageLevelDocs = await loader.load();
 
     pageLevelDocs.forEach((doc) => {
       doc.metadata = {
         topic: args.topic,
-        subtopic: args.subtopic,
+        ...(args.subtopic && { subtopic: args.subtopic })
       };
     });
 
-    console.log("Metadata added to each page");
-
-    const pineconeClient = getPineConeClient();
-    console.log("Pinecone client created");
-
-    await pineconeClient.createIndex({
-      name: args.topic.toString(),
-      suppressConflicts: true,
-      metric: "cosine",
-      dimension: 1536,
-      waitUntilReady: true,
-      spec: {
-        serverless: {
-          cloud: "aws",
-          region: "us-west-2",
-        },
-      },
-    });
-
-    console.log("Pinecone index created");
-
-    const pineconeIndex = pineconeClient.Index(args.topic);
-    console.log("Pinecone index retrieved");
-
+    const pineconeIndex = getPineconeIndex();
     const embeddings = new OpenAIEmbeddings({
       openAIApiKey: env.OPEN_API_KEY,
       verbose: env.NODE_ENV !== "production",
     });
 
-    console.log("OpenAI embeddings initialized");
-
     await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
       pineconeIndex,
     });
-
-    console.log("Documents stored in Pinecone");
 
     await prisma.document.update({
       data: { status: UploadStatus.PARSED },
       where: { id: args.id },
     });
-
-    console.log("Document status updated to PARSED");
-
   } catch (err) {
     console.error("An error occurred:", err);
 

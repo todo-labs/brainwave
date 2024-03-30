@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { type Document } from "@prisma/client";
+import { UploadStatus, type Document } from "@prisma/client";
 import { useMemo, useState } from "react";
 
 import { DataTableColumnHeader } from "@/components/query-table/header";
@@ -21,10 +21,25 @@ import Default from "@/components/default";
 import { DataTableRowActions } from "./row-actions";
 import { DataTableToolbar } from "./toolbar";
 
-import { cleanEnum } from "@/lib/utils";
+import { cleanEnum, cn } from "@/lib/utils";
 import { api } from "@/lib/api";
 import { DataTable } from "@/components/query-table/data-table";
 import { Loader2Icon } from "lucide-react";
+
+const mapStatusToColor = (status: UploadStatus): string => {
+  switch (status) {
+    case UploadStatus.PENDING:
+      return "text-muted-foreground";
+    case UploadStatus.UPLOADED:
+      return "text-primary-foreground";
+    case UploadStatus.PARSED:
+      return "text-success";
+    case UploadStatus.REJECTED:
+      return "text-destructive-foreground";
+    default:
+      return "text-muted";
+  }
+};
 
 const columns: ColumnDef<Document>[] = [
   {
@@ -78,6 +93,26 @@ const columns: ColumnDef<Document>[] = [
         <div className="flex space-x-2">
           <span className="max-w-[500px] truncate font-medium">
             {row.original.subtopic}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span
+            className={cn(
+              "font-medium",
+              mapStatusToColor(row.original.status)
+            )}
+          >
+            {row.original.status}
           </span>
         </div>
       );

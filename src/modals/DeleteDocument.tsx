@@ -23,8 +23,8 @@ const DeleteDocumentModal = (props: Pick<Document, "key" | "name" | "url">) => {
         description: (
           <h3>
             Document:{" "}
-            <span className="font-bold text-primary">{props.name}</span>{" "}
-            has been deleted
+            <span className="font-bold text-primary">{props.name}</span> has
+            been deleted
           </h3>
         ),
       });
@@ -52,9 +52,11 @@ const DeleteDocumentModal = (props: Pick<Document, "key" | "name" | "url">) => {
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete the following
-          document:{" "}
-          <Link href={props.url} className="font-bold text-primary">{props.name}</Link>{" "}
+          This action cannot be undone. This will permanently delete the
+          following document:{" "}
+          <Link href={props.url} className="font-bold text-primary">
+            {props.name}
+          </Link>{" "}
           and all of its data.
         </AlertDialogDescription>
       </AlertDialogHeader>
