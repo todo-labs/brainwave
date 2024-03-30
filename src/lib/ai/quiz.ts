@@ -1,4 +1,8 @@
-import { QuestionType, Questions, QuizDifficulty } from "@prisma/client";
+import {
+  QuestionType,
+  type Questions,
+  type QuizDifficulty,
+} from "@prisma/client";
 import { z } from "zod";
 import { PromptTemplate } from "langchain/prompts";
 import { StructuredOutputParser } from "langchain/output_parsers";
@@ -6,7 +10,11 @@ import { StructuredOutputParser } from "langchain/output_parsers";
 import type { CreateQuizRequestType } from "@/server/schemas";
 import PromptBuilder from "./prompt";
 import { callOpenAi } from ".";
-import { Languages } from "types";
+import { type Languages } from "types";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { env } from "@/env.mjs";
+import { getPineconeIndex } from "./vector-store";
+import { PineconeStore } from "@langchain/pinecone";
 
 // ------------------------------------ [Schemas] ------------------------------------
 const quizParser = StructuredOutputParser.fromZodSchema(
@@ -19,7 +27,6 @@ const quizParser = StructuredOutputParser.fromZodSchema(
         .max(5)
         .optional()
         .describe("the options, if the question type supports it"),
-      answer: z.string().min(1).max(500).describe("the correct answer"),
     })
   )
 );
@@ -28,12 +35,13 @@ const gradeQuizParser = StructuredOutputParser.fromZodSchema(
   z.array(
     z.object({
       question: z.string().describe("the question"),
-      answer: z.string().describe("the answer to the current question"),
-      studentAnswer: z.string().describe("the answer to the current question"),
+      studentAnswer: z
+        .string()
+        .describe("the answer to the student has supplied."),
       type: z.nativeEnum(QuestionType),
       correct: z
         .boolean()
-        .describe("whether the student got the answer correct"),
+        .describe("whether the student got the answer correct or not"),
     })
   )
 );
@@ -65,15 +73,32 @@ export async function genQuiz(
   config: CreateQuizRequestType & { lang: Languages }
 ): Promise<QuizResponseType | undefined> {
   try {
+    const embeddings = new OpenAIEmbeddings({
+      openAIApiKey: env.OPEN_API_KEY,
+    });
+
+    const pineconeIndex = getPineconeIndex();
+
+    const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex,
+    });
+
+    const results = await vectorStore.similaritySearch(
+      `SUBJECT: ${config.subtopic} SUBTOPIC: ${config.subtopic}`,
+      4
+    );
+
+    console.log("Results: ", results);
+
     const prompt = new PromptBuilder()
       .setContext()
       .setInstructions(
         "Generate a SAT Practice Exam with {questions} questions."
       )
       .setRelevance(
-        "The exam should focus on the following subtopic: {subtopic}. As it pertains to your discipline.",
-        "Here are some user notes: {notes}"
+        "The exam should focus on the following subtopic: {subtopic}. As it pertains to your discipline."
       )
+      .setRelevance(results.map((r) => r.pageContent).join("\n\n"))
       .setConstraints(
         "Here are our supported question formats:",
         "Multiple Choice Questions (MCQ), Short Answer Questions (SA).",
@@ -135,12 +160,11 @@ export async function gradeQuiz(
     });
 
     const results = data
-      .map(({ label = "NA", type = "NA", answer = "NA", solution = "NA" }) => {
+      .map(({ label = "NA", type = "NA", answer = "NA" }) => {
         return [
           "--- BEGIN ----",
           `Question: ${label}`,
           `Type: ${type}`,
-          `Correct Answer: ${solution}`,
           `Student Answer: ${answer}`,
           "--- END ----",
         ].join("\n");
