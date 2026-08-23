@@ -46,7 +46,8 @@ const ErrorPage: React.FC = (props) => {
           <div
             className="absolute inset-0 bg-cover"
             style={{
-              backgroundImage: "url(https://images.pexels.com/photos/7092346/pexels-photo-7092346.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+              backgroundImage:
+                "url(https://images.pexels.com/photos/7092346/pexels-photo-7092346.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
             }}
           />
           <div
@@ -63,7 +64,7 @@ const ErrorPage: React.FC = (props) => {
               <p className="mb-8 text-lg">
                 Sorry, we were unable to complete your request at this time.
               </p>
-              <Button onClick={() => router.push('/auth/sign-in')}>
+              <Button onClick={() => router.push("/auth/sign-in")}>
                 Go Back
               </Button>
             </div>

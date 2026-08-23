@@ -19,7 +19,9 @@ function PowerCard({ query, title, icon }: QueryCardProps) {
         {isLoading ? (
           <Skeleton className="h-6 w-[50px] pb-4" />
         ) : (
-          <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
+          <CardTitle className="text-sm font-medium text-muted-foreground">
+            {title}
+          </CardTitle>
         )}
         {React.createElement(
           icon,

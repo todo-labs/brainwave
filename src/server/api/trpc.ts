@@ -127,7 +127,6 @@ const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
   });
 });
 
-
 /**
  * Protected (authenticated) procedure
  *
