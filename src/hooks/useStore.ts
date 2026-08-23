@@ -9,6 +9,7 @@ type DashboardTabs =
   | "user-management"
   | "reports"
   | "quizzes"
+  | "documents"
   | "topics";
 
 interface State {

@@ -39,6 +39,7 @@ export const env = createEnv({
     LANGCHAIN_API_KEY: z.string().min(1),
     LANGCHAIN_PROJECT: z.string().default("default"),
     SENTRY_DSN: z.string().url(),
+    PINECONE_API_KEY: z.string().min(1).optional(),
   },
 
   /**
@@ -97,5 +98,6 @@ export const env = createEnv({
     NEXT_PUBLIC_MIXPANEL_ENABLED: process.env.NEXT_PUBLIC_MIXPANEL_ENABLED,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     SENTRY_DSN: process.env.SENTRY_DSN,
+    PINECONE_API_KEY: process.env.PINECONE_API_KEY,
   },
 });

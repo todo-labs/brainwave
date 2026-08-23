@@ -4,6 +4,7 @@ import { modifySubtopicSchema, paginationSchema } from "@/server/schemas";
 import { cleanEnum } from "@/lib/utils";
 import { ReportStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { utapi } from "@/server/uploadthing";
 
 export const adminRouter = createTRPCRouter({
   totalUsers: adminProcedure.query(async ({ ctx }) => {
@@ -202,5 +203,29 @@ export const adminRouter = createTRPCRouter({
           subtopics: topic.subtopics,
         },
       });
+    }),
+  allDocuments: adminProcedure
+    .input(paginationSchema)
+    .query(async ({ ctx, input }) => {
+      const documents = await ctx.prisma.document.findMany({
+        take: input.pageSize,
+        skip: input.pageIndex * input.pageSize,
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      const count = await ctx.prisma.document.count();
+      return { documents, count };
+    }),
+  deleteDocument: adminProcedure
+    .input(z.string().uuid())
+    .mutation(async ({ ctx, input }) => {
+      // NOTE: should use a transaction here
+      return await Promise.all([
+        utapi.deleteFiles(input),
+        ctx.prisma.document.delete({
+          where: { key: input },
+        })
+      ]);
     }),
 });

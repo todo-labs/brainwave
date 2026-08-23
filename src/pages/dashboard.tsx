@@ -19,6 +19,7 @@ import ReportTable from "@/components/dashboard/report-table";
 import { api } from "@/lib/api";
 import useStore from "@/hooks/useStore";
 import AddTopics from "@/components/dashboard/manage-topics";
+import DocumentsTable from "@/components/dashboard/documents-table";
 
 export default function DashboardPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -67,6 +68,12 @@ export default function DashboardPage(
                   onClick={() => setDashboardTab("topics")}
                 >
                   Topics
+                </TabsTrigger>
+                <TabsTrigger
+                  value="documents"
+                  onClick={() => setDashboardTab("documents")}
+                >
+                  Documents
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="overview" className="space-y-4">
@@ -141,6 +148,16 @@ export default function DashboardPage(
                   </CardHeader>
                   <CardContent className="pl-2">
                     <AddTopics />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="documents">
+                <Card className="col-span-4">
+                  <CardHeader>
+                    <CardTitle>Documents</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                    <DocumentsTable />
                   </CardContent>
                 </Card>
               </TabsContent>

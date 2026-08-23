@@ -89,10 +89,10 @@ const metadata = [
     topic: Topics.WORLD_HISTORY,
     subtopics: ["Geographic material", "Chronological material"],
   },
-  // {
-  //   topic: Topics.PHYSICS,
-  //   subtopics: ["Kinematics"],
-  // },
+  {
+    topic: Topics.PHYSICS,
+    subtopics: ["Kinematics"],
+  },
 ];
 
 const seedMetadata = async () => {

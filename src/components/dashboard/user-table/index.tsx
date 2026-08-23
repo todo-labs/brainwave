@@ -1,10 +1,10 @@
 import {
   useReactTable,
   type ColumnDef,
-  VisibilityState,
-  ColumnFiltersState,
-  SortingState,
-  PaginationState,
+  type VisibilityState,
+  type ColumnFiltersState,
+  type SortingState,
+  type PaginationState,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
@@ -84,11 +84,11 @@ export const UserTable = () => {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery] = useState("");
   const defaultData = useMemo(() => [], []);
 
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
-    pageIndex: 1,
+    pageIndex: 0,
     pageSize: 10,
   });
 

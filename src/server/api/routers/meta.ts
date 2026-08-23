@@ -85,4 +85,13 @@ export const metaRouter = createTRPCRouter({
         });
       }
     }),
+  getFile: protectedProcedure
+    .input(z.object({ id: z.string().cuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const file = await ctx.prisma.document.findFirst({
+        where: { id: input.id },
+      });
+
+      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+    }),
 });
