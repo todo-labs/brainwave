@@ -1,10 +1,11 @@
+import { subMonths } from "date-fns";
+import * as z from "zod";
+
 import { shortHash } from "@/lib/utils";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { reportSchema } from "@/server/schemas";
 import { Topics } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import { subMonths } from "date-fns";
-import * as z from "zod";
 
 export const metaRouter = createTRPCRouter({
   getSubtopics: protectedProcedure
@@ -86,10 +87,10 @@ export const metaRouter = createTRPCRouter({
       }
     }),
   getFile: protectedProcedure
-    .input(z.object({ id: z.string().cuid() }))
+    .input(z.object({ key: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const file = await ctx.prisma.document.findFirst({
-        where: { id: input.id },
+        where: { key: input.key },
       });
 
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });

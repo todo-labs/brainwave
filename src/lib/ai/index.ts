@@ -1,11 +1,13 @@
 import { env } from "@/env.mjs";
 import { OpenAI } from "langchain";
+import { ChatOpenAI } from "langchain/chat_models/openai";
 import {
   OutputFixingParser,
   StructuredOutputParser,
 } from "langchain/output_parsers";
 import { OpenAIModerationChain } from "langchain/chains";
 import { z } from "zod";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 
 export const gpt4 = new OpenAI({
   openAIApiKey: env.OPEN_API_KEY,
@@ -24,6 +26,13 @@ export const gpt3 = new OpenAI({
   maxTokens: 2500,
   verbose: env.NODE_ENV != "production",
 });
+
+export const chat = new ChatOpenAI({ 
+  openAIApiKey: env.OPEN_API_KEY,
+  verbose: env.NODE_ENV != "production",
+  temperature: 0 
+});
+
 
 export async function callOpenAi<T>(
   prompt: string,

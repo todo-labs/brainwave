@@ -39,7 +39,7 @@ export const env = createEnv({
     LANGCHAIN_API_KEY: z.string().min(1),
     LANGCHAIN_PROJECT: z.string().default("default"),
     SENTRY_DSN: z.string().url(),
-    PINECONE_API_KEY: z.string().min(1).optional(),
+    PINECONE_API_KEY: z.string().min(1),
   },
 
   /**

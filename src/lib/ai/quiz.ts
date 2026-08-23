@@ -10,11 +10,11 @@ import { StructuredOutputParser } from "langchain/output_parsers";
 import type { CreateQuizRequestType } from "@/server/schemas";
 import PromptBuilder from "./prompt";
 import { callOpenAi } from ".";
-import { type Languages } from "types";
+import { Languages } from "types";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { env } from "@/env.mjs";
-import { getPineconeIndex } from "./vector-store";
-import { PineconeStore } from "@langchain/pinecone";
+import { getPineConeClient } from "../pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
 
 // ------------------------------------ [Schemas] ------------------------------------
 const quizParser = StructuredOutputParser.fromZodSchema(
@@ -61,11 +61,9 @@ const sentimentParser = StructuredOutputParser.fromZodSchema(
   })
 );
 
-export type SentimentParserResponseType = z.infer<
-  typeof sentimentParser.schema
->;
-export type QuizResponseType = z.infer<typeof quizParser.schema>;
-export type GradeQuizResponseType = z.infer<typeof gradeQuizParser.schema>;
+type SentimentParserResponseType = z.infer<typeof sentimentParser.schema>;
+type QuizResponseType = z.infer<typeof quizParser.schema>;
+type GradeQuizResponseType = z.infer<typeof gradeQuizParser.schema>;
 
 // ------------------------------------ [Functions] ------------------------------------
 
@@ -77,18 +75,18 @@ export async function genQuiz(
       openAIApiKey: env.OPEN_API_KEY,
     });
 
-    const pineconeIndex = getPineconeIndex();
+    const pineconeClient = await getPineConeClient();
+    const pineconeIndex = pineconeClient.Index(config.subject);
 
     const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
       pineconeIndex,
+      namespace: "SAT_PRACTICE_EXAMS",
     });
 
     const results = await vectorStore.similaritySearch(
-      `SUBJECT: ${config.subtopic} SUBTOPIC: ${config.subtopic}`,
+      `SUBJECT: ${config.subtopic}, DIFFICULTY: ${config.difficulty} SUBTOPIC: ${config.subtopic}`,
       4
     );
-
-    console.log("Results: ", results);
 
     const prompt = new PromptBuilder()
       .setContext()
@@ -109,8 +107,10 @@ export async function genQuiz(
 
     const format = quizParser.getFormatInstructions();
 
+    const template = prompt.build();
+
     const promptTemplate = new PromptTemplate({
-      template: prompt.build(),
+      template,
       inputVariables: [
         "subject",
         "questions",

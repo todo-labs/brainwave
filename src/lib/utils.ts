@@ -66,7 +66,8 @@ export const topics: TopicList[] = [
   },
 ];
 
-export const cleanEnum = (str: string) => {
+export const cleanEnum = (str: string | undefined) => {
+  if (!str) return str;
   return str.replace(/_/g, " ");
 };
 
